@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 40 40" fill="none">
+  <defs>
+    <linearGradient id="yukyuGrad" x1="5" y1="5" x2="35" y2="35" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34D399"></stop>
+      <stop offset="100%" stop-color="#059669"></stop>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="10" width="30" height="26" rx="4" fill="#ECFDF5"></rect>
+  <rect x="5" y="10" width="30" height="11" rx="4" fill="url(#yukyuGrad)"></rect>
+  <rect x="12" y="6" width="4" height="8" rx="2" fill="#047857"></rect>
+  <rect x="24" y="6" width="4" height="8" rx="2" fill="#047857"></rect>
+  <ellipse cx="15" cy="26" rx="5" ry="3" fill="#86EFAC" transform="rotate(-30 15 26)"></ellipse>
+  <ellipse cx="20" cy="24" rx="5" ry="3" fill="#4ADE80" transform="rotate(10 20 24)"></ellipse>
+  <line x1="20" y1="32" x2="20" y2="24" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"></line>
+</svg>

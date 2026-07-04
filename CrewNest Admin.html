@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — 管理</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50;
+    --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  /* パネル切替（Tailwindのdisplayユーティリティに負けないよう:not+!important） */
+  [data-adminpanel]:not(.active) { display: none !important; }
+  [data-qpanel]:not(.active) { display: none !important; }
+  [data-dpanel]:not(.active) { display: none !important; }
+  [data-epanel]:not(.active) { display: none !important; }
+  /* AdminShell 左レールタブ */
+  .admin-rail-tab { position: relative; display: flex; align-items: center; padding: .5rem .75rem; font-size: .875rem; font-weight: 500; color: var(--color-subtle); cursor: pointer; transition: color .15s, background-color .15s; }
+  .admin-rail-tab:hover { background: #FFFFFF; color: #333333; }
+  .admin-rail-tab.is-active { border-right: 3px solid var(--color-primary); background: rgba(4,33,84,0.05); color: var(--color-primary); }
+  /* primaryTabs（下線インジケータ型） */
+  .ptab { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; gap: .5rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s, border-color .15s; cursor: pointer; background: none; color: var(--color-subtle); }
+  .ptab:hover { border-color: var(--color-border); color: #333333; }
+  .ptab.is-active { border-color: var(--color-primary); color: var(--color-primary); }
+  .ptab-primary { padding: .75rem 1rem; font-size: .875rem; font-weight: 500; }
+  .ptab-secondary { padding: .625rem .75rem; font-size: .75rem; font-weight: 500; }
+  .ptab-list { display: flex; gap: .25rem; overflow-x: auto; overscroll-behavior-x: contain; border-bottom: 1px solid var(--color-border); scrollbar-width: none; }
+  .ptab-list::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body>
+
+<!-- モバイルヘッダー -->
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/icons/management.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white" data-admin-section-title>クエスト管理</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <a href="CrewNest Notifications.html" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </a>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<!-- デスクトップサイドバー -->
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <a href="CrewNest Notifications.html" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </a>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      <a href="CrewNest Home.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+      </a>
+      <a href="CrewNest My Achievements.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+      <a href="CrewNest Proposals.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+      </a>
+      <a href="CrewNest Documents.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      <a href="CrewNest Expense Claims.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+      <a href="CrewNest Admin.html" aria-current="page" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+      </a>
+    </div>
+  </nav>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+
+<!-- メイン -->
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1600px] py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.5rem)] md:p-6 md:pt-4">
+    <div class="min-h-0 flex-1 md:flex">
+
+      <!-- AdminShell 左レール（デスクトップのみ） -->
+      <nav class="hidden md:flex flex-col w-[110px] shrink-0 border-r border-border py-2" aria-label="管理ナビゲーション">
+        <div data-admintab="quests" data-admin-label="クエスト管理" class="admin-rail-tab is-active"><span class="flex-1">クエスト</span></div>
+        <div data-admintab="ideas" data-admin-label="アイデア管理" class="admin-rail-tab"><span class="flex-1">アイデア</span><span class="ml-1 rounded-full bg-warning-surface border border-warning-border px-1.5 py-0.5 text-[10px] font-bold text-warning leading-none">2</span></div>
+        <div data-admintab="users" data-admin-label="ユーザー管理" class="admin-rail-tab"><span class="flex-1">ユーザー</span></div>
+        <div data-admintab="system" data-admin-label="システム設定" class="admin-rail-tab"><span class="flex-1">システム</span></div>
+        <div data-admintab="announcements" data-admin-label="お知らせ管理" class="admin-rail-tab"><span class="flex-1">お知らせ</span></div>
+        <div data-admintab="documents" data-admin-label="書類管理" class="admin-rail-tab"><span class="flex-1">書類</span></div>
+        <div data-admintab="safety" data-admin-label="安否確認管理" class="admin-rail-tab"><span class="flex-1">安否確認</span><span data-testid="safety-badge" class="ml-1 rounded-full bg-danger-surface border border-danger-border px-1.5 py-0.5 text-[10px] font-bold text-danger leading-none">1</span></div>
+        <div data-admintab="expenses" data-admin-label="経費精算管理" class="admin-rail-tab"><span class="flex-1">経費精算</span></div>
+      </nav>
+
+      <!-- モバイル: 横スクロールのレールタブ -->
+      <div class="flex w-full gap-1 overflow-x-auto border-b border-border px-4 pb-2 md:hidden" style="scrollbar-width:none;">
+        <div data-admintab="quests" data-admin-label="クエスト管理" class="admin-rail-tab is-active rounded-lg">クエスト</div>
+        <div data-admintab="ideas" data-admin-label="アイデア管理" class="admin-rail-tab rounded-lg">アイデア</div>
+        <div data-admintab="users" data-admin-label="ユーザー管理" class="admin-rail-tab rounded-lg">ユーザー</div>
+        <div data-admintab="system" data-admin-label="システム設定" class="admin-rail-tab rounded-lg">システム</div>
+        <div data-admintab="announcements" data-admin-label="お知らせ管理" class="admin-rail-tab rounded-lg">お知らせ</div>
+        <div data-admintab="documents" data-admin-label="書類管理" class="admin-rail-tab rounded-lg">書類</div>
+        <div data-admintab="safety" data-admin-label="安否確認管理" class="admin-rail-tab rounded-lg">安否確認</div>
+        <div data-admintab="expenses" data-admin-label="経費精算管理" class="admin-rail-tab rounded-lg">経費精算</div>
+      </div>
+      <div class="min-w-0 flex-1 px-4 pt-3 pb-4 md:px-6 md:pt-4">
+        <h1 class="hidden md:block mb-4 text-xl font-bold text-text" data-admin-section-title>クエスト管理</h1>
+
+        <!-- ================= クエスト管理 ================= -->
+        <div data-adminpanel="quests" class="active">
+          <nav aria-label="クエスト管理タブ" class="mb-4 bg-background">
+            <div class="ptab-list">
+              <button type="button" data-qtab="dashboard" class="ptab ptab-primary is-active">サマリー</button>
+              <button type="button" data-qtab="achievements" class="ptab ptab-primary">申請一覧</button>
+              <button type="button" data-qtab="quests" class="ptab ptab-primary">クエスト一覧</button>
+              <button type="button" data-qtab="levels" class="ptab ptab-primary">レベル定義</button>
+              <button type="button" data-qtab="budget" class="ptab ptab-primary">予算</button>
+              <button type="button" data-qtab="settings" class="ptab ptab-primary">設定</button>
+            </div>
+          </nav>
+
+          <!-- サマリー（ダッシュボード） -->
+          <div data-qpanel="dashboard" class="active">
+            <section class="mb-0 md:mb-3 w-full max-w-full bg-background px-0 md:px-4 py-2 md:py-3.5">
+              <header class="mb-2.5 flex flex-wrap items-center justify-end gap-2">
+                <div class="flex items-center gap-1.5">
+                  <select aria-label="年" class="h-8 rounded-lg border border-border bg-background-light px-2.5 text-[12px] text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <option>2024年</option><option>2025年</option><option selected>2026年</option>
+                  </select>
+                  <select aria-label="月" class="h-8 rounded-lg border border-border bg-background-light px-2.5 text-[12px] text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <option>5月</option><option selected>6月</option><option>7月</option>
+                  </select>
+                </div>
+              </header>
+
+              <div class="space-y-2.5">
+                <!-- 年間予算ゲージ -->
+                <article class="rounded-lg bg-background-light px-4 py-3.5 shadow-sm">
+                  <div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+                    <p class="text-[12px] font-semibold text-subtle">2026年 予算消化</p>
+                    <p class="text-[12px] text-subtle"><span class="text-[18px] font-bold text-accent">45,450</span> / 100,000 pt<span class="ml-2 text-subtle-light">（承認済み 42,300 ＋ 申請中 3,150）</span></p>
+                  </div>
+                  <div class="flex h-2.5 w-full overflow-hidden rounded-full bg-border">
+                    <div class="h-full bg-primary" style="width:42.3%;"></div>
+                    <div class="h-full bg-warning-fill" style="width:3.15%;"></div>
+                  </div>
+                  <div class="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 text-[11px] text-subtle">
+                    <span class="inline-flex items-center gap-1"><span class="inline-block h-2 w-2 rounded-full bg-primary"></span>承認済み</span>
+                    <span class="inline-flex items-center gap-1"><span class="inline-block h-2 w-2 rounded-full bg-warning-fill"></span>申請中</span>
+                    <span class="ml-auto">ボーナスレート 1pt = 1円</span>
+                  </div>
+                </article>
+
+                <!-- KPIカード -->
+                <section aria-label="主要KPI" class="grid grid-cols-2 gap-2.5 min-[768px]:grid-cols-3 min-[1200px]:grid-cols-6">
+                  <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                    <p class="truncate text-[12px] font-semibold text-subtle">今年獲得pt</p>
+                    <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">42,300</span><span class="pb-0.5 text-[12px] text-subtle">pt</span></p>
+                    <p class="mt-1 truncate text-[12px] text-success">前年比 <span class="inline-flex items-center gap-0.5">↑ 12.4%</span></p>
+                  </article>
+                  <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                    <p class="truncate text-[12px] font-semibold text-subtle">今月獲得pt</p>
+                    <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">6,850</span><span class="pb-0.5 text-[12px] text-subtle">pt</span></p>
+                    <p class="mt-1 truncate text-[12px] text-danger">前年同月比 <span class="inline-flex items-center gap-0.5">↓ 3.2%</span></p>
+                  </article>
+                  <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                    <p class="truncate text-[12px] font-semibold text-subtle">今年クエスト達成数</p>
+                    <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">1,284</span><span class="pb-0.5 text-[12px] text-subtle">件</span></p>
+                    <p class="mt-1 truncate text-[12px] text-success">前年比 <span class="inline-flex items-center gap-0.5">↑ 8.1%</span></p>
+                  </article>
+                  <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                    <p class="truncate text-[12px] font-semibold text-subtle">今月クエスト達成数</p>
+                    <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">196</span><span class="pb-0.5 text-[12px] text-subtle">件</span></p>
+                    <p class="mt-1 truncate text-[12px] text-success">前月比 <span class="inline-flex items-center gap-0.5">↑ 5.9%</span></p>
+                  </article>
+                  <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                    <p class="truncate text-[12px] font-semibold text-subtle">1週間以上承認待ち件数</p>
+                    <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">3</span><span class="pb-0.5 text-[12px] text-subtle">件</span></p>
+                  </article>
+                  <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                    <p class="truncate text-[12px] font-semibold text-subtle">予算消化率（全体）</p>
+                    <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">45</span><span class="pb-0.5 text-[12px] text-subtle">%</span></p>
+                    <p class="mt-1 truncate text-[12px] text-success">前年比 <span class="inline-flex items-center gap-0.5">↑ 2.3pt</span></p>
+                  </article>
+                </section>
+
+                <!-- 2カラムカード群 -->
+                <div class="grid gap-2.5 md:grid-cols-2">
+                  <!-- カテゴリ別予算 -->
+                  <article class="h-[260px] overflow-hidden rounded-lg bg-background-light px-4 py-3.5 shadow-sm">
+                    <p class="mb-3 text-[12px] font-semibold text-subtle">カテゴリ別予算</p>
+                    <ul class="space-y-3">
+                      <li>
+                        <div class="mb-1 flex items-center justify-between text-[12px]"><span class="inline-flex items-center gap-1.5 text-text"><span class="inline-block h-2.5 w-2.5 rounded-full" style="background:#5B7FC0;"></span>日々の業務</span><span class="text-subtle">18,400 / 40,000 pt</span></div>
+                        <div class="h-1.5 w-full overflow-hidden rounded-full bg-border"><div class="h-full rounded-full" style="width:46%;background:#5B7FC0;"></div></div>
+                      </li>
+                      <li>
+                        <div class="mb-1 flex items-center justify-between text-[12px]"><span class="inline-flex items-center gap-1.5 text-text"><span class="inline-block h-2.5 w-2.5 rounded-full" style="background:#B89B52;"></span>会社行事</span><span class="text-subtle">12,600 / 25,000 pt</span></div>
+                        <div class="h-1.5 w-full overflow-hidden rounded-full bg-border"><div class="h-full rounded-full" style="width:50.4%;background:#B89B52;"></div></div>
+                      </li>
+                      <li>
+                        <div class="mb-1 flex items-center justify-between text-[12px]"><span class="inline-flex items-center gap-1.5 text-text"><span class="inline-block h-2.5 w-2.5 rounded-full" style="background:#5A9E74;"></span>自己啓発</span><span class="text-subtle">11,300 / 35,000 pt</span></div>
+                        <div class="h-1.5 w-full overflow-hidden rounded-full bg-border"><div class="h-full rounded-full" style="width:32.3%;background:#5A9E74;"></div></div>
+                      </li>
+                    </ul>
+                  </article>
+
+                  <!-- 月次推移 -->
+                  <article class="h-[260px] overflow-hidden rounded-lg bg-background-light px-4 py-3.5 shadow-sm">
+                    <div class="mb-2 flex items-center justify-between">
+                      <p class="text-[12px] font-semibold text-subtle">月次獲得pt推移</p>
+                      <div class="flex gap-3 text-[11px] text-subtle">
+                        <span class="inline-flex items-center gap-1"><span class="inline-block h-0.5 w-4 bg-primary"></span>2026年</span>
+                        <span class="inline-flex items-center gap-1"><span class="inline-block h-0.5 w-4 border-t border-dashed border-subtle-light"></span>2025年</span>
+                      </div>
+                    </div>
+                    <svg viewBox="0 0 480 180" class="h-[190px] w-full" role="img" aria-label="月次獲得pt推移グラフ">
+                      <line x1="30" y1="150" x2="470" y2="150" stroke="#E3E6ED" stroke-width="1"></line>
+                      <line x1="30" y1="100" x2="470" y2="100" stroke="#E3E6ED" stroke-width="1"></line>
+                      <line x1="30" y1="50" x2="470" y2="50" stroke="#E3E6ED" stroke-width="1"></line>
+                      <text x="26" y="153" text-anchor="end" font-size="9" fill="#8A99B8">0</text>
+                      <text x="26" y="103" text-anchor="end" font-size="9" fill="#8A99B8">4k</text>
+                      <text x="26" y="53" text-anchor="end" font-size="9" fill="#8A99B8">8k</text>
+                      <polyline points="50,95 120,102 190,88 260,72 330,80 400,64" fill="none" stroke="#8A99B8" stroke-width="1.5" stroke-dasharray="4 3"></polyline>
+                      <polyline points="50,90 120,85 190,70 260,60 330,75 400,64" fill="none" stroke="#042154" stroke-width="2"></polyline>
+                      <circle cx="50" cy="90" r="3" fill="#042154"></circle><circle cx="120" cy="85" r="3" fill="#042154"></circle><circle cx="190" cy="70" r="3" fill="#042154"></circle><circle cx="260" cy="60" r="3" fill="#042154"></circle><circle cx="330" cy="75" r="3" fill="#042154"></circle><circle cx="400" cy="64" r="3" fill="#C6A75E" stroke="#042154" stroke-width="1.5"></circle>
+                      <text x="50" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">1月</text>
+                      <text x="120" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">2月</text>
+                      <text x="190" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">3月</text>
+                      <text x="260" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">4月</text>
+                      <text x="330" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">5月</text>
+                      <text x="400" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">6月</text>
+                    </svg>
+                  </article>
+
+                  <!-- 最近の承認 -->
+                  <article class="h-[260px] overflow-hidden rounded-lg bg-background-light px-4 py-3.5 shadow-sm">
+                    <p class="mb-2 text-[12px] font-semibold text-subtle">最近の承認</p>
+                    <ul class="divide-y divide-border text-[13px]">
+                      <li class="flex items-center gap-2.5 py-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#5B7FC0;">佐</span><span class="min-w-0 flex-1 truncate text-text">佐藤 恵子 — 月次レポート提出</span><span class="shrink-0 text-[11px] font-bold text-primary">+50 pt</span><span class="shrink-0 text-[11px] text-subtle-light">今日</span></li>
+                      <li class="flex items-center gap-2.5 py-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#5A9E74;">鈴</span><span class="min-w-0 flex-1 truncate text-text">鈴木 一郎 — 社内勉強会に参加</span><span class="shrink-0 text-[11px] font-bold text-primary">+200 pt</span><span class="shrink-0 text-[11px] text-subtle-light">昨日</span></li>
+                      <li class="flex items-center gap-2.5 py-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C07B8A;">伊</span><span class="min-w-0 flex-1 truncate text-text">伊藤 健太 — 資格試験に合格</span><span class="shrink-0 text-[11px] font-bold text-primary">+1,000 pt</span><span class="shrink-0 text-[11px] text-subtle-light">2日前</span></li>
+                      <li class="flex items-center gap-2.5 py-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C6A75E;">田</span><span class="min-w-0 flex-1 truncate text-text">田中 佑樹 — 日報を提出</span><span class="shrink-0 text-[11px] font-bold text-primary">+10 pt</span><span class="shrink-0 text-[11px] text-subtle-light">2日前</span></li>
+                    </ul>
+                  </article>
+
+                  <!-- 消化額上位カテゴリ -->
+                  <article class="h-[260px] overflow-hidden rounded-lg bg-background-light px-4 py-3.5 shadow-sm">
+                    <p class="mb-2 text-[12px] font-semibold text-subtle">消化額上位カテゴリ</p>
+                    <ul class="divide-y divide-border text-[13px]">
+                      <li class="flex items-center gap-2.5 py-2.5"><span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#D4AF37;">1</span><span class="min-w-0 flex-1 truncate text-text">日々の業務</span><span class="shrink-0 font-bold text-primary">18,400 pt</span></li>
+                      <li class="flex items-center gap-2.5 py-2.5"><span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#B0B0B0;">2</span><span class="min-w-0 flex-1 truncate text-text">会社行事</span><span class="shrink-0 font-bold text-primary">12,600 pt</span></li>
+                      <li class="flex items-center gap-2.5 py-2.5"><span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#CD7F32;">3</span><span class="min-w-0 flex-1 truncate text-text">自己啓発</span><span class="shrink-0 font-bold text-primary">11,300 pt</span></li>
+                    </ul>
+                  </article>
+
+                  <!-- 最近更新されたクエスト -->
+                  <article class="h-[260px] overflow-hidden rounded-lg bg-background-light px-4 py-3.5 shadow-sm md:col-span-2">
+                    <p class="mb-2 text-[12px] font-semibold text-subtle">最近更新されたクエスト</p>
+                    <ul class="divide-y divide-border text-[13px]">
+                      <li class="flex items-center gap-2.5 py-2"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style="background:#5A9E74;"></span><span class="min-w-0 flex-1 truncate text-text">ISO研修を受講する</span><span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">400 pt</span><span class="shrink-0 text-[11px] text-subtle-light">2026/06/28 更新</span></li>
+                      <li class="flex items-center gap-2.5 py-2"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style="background:#B89B52;"></span><span class="min-w-0 flex-1 truncate text-text">夏季全社イベントに参加する</span><span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">300 pt</span><span class="shrink-0 text-[11px] text-subtle-light">2026/06/25 新規</span></li>
+                      <li class="flex items-center gap-2.5 py-2"><span class="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style="background:#5B7FC0;"></span><span class="min-w-0 flex-1 truncate text-text">月次目標を達成する</span><span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span><span class="shrink-0 text-[11px] text-subtle-light">2026/06/20 更新</span></li>
+                    </ul>
+                  </article>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- 申請一覧 -->
+          <div data-qpanel="achievements">
+            <div class="ptab-list" style="border-bottom:none;">
+              <button type="button" data-astatus="ALL" class="ptab ptab-secondary is-active">すべて</button>
+              <button type="button" data-astatus="PENDING" class="ptab ptab-secondary">申請中<span class="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">2</span></button>
+              <button type="button" data-astatus="APPROVED" class="ptab ptab-secondary">承認済み</button>
+              <button type="button" data-astatus="RETURNED" class="ptab ptab-secondary">差し戻し</button>
+              <button type="button" data-astatus="REJECTED" class="ptab ptab-secondary">却下</button>
+            </div>
+            <div class="mt-3 flex flex-col gap-3">
+              <div data-arow data-status="PENDING" class="rounded-xl border-l-4 bg-background-light p-4 shadow-sm" style="border-left-color:#5B7FC0;">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">申請中</span>
+                  <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span>
+                  <span class="ml-auto text-xs text-subtle">2026/06/29 09:30</span>
+                </div>
+                <p class="mt-1.5 font-semibold text-text">月次レポート提出 6月分</p>
+                <div class="mt-2 flex items-center gap-2.5">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C07B8A;">伊</span>
+                  <span class="min-w-0 flex-1 truncate text-sm text-subtle">伊藤 健太</span>
+                  <button type="button" class="shrink-0 rounded-full bg-primary px-3.5 py-2 text-xs font-semibold text-white hover:bg-primary-mid">承認</button>
+                  <button type="button" class="shrink-0 rounded-full border border-border bg-background-light px-3.5 py-2 text-xs font-medium text-subtle hover:bg-background">差し戻し</button>
+                </div>
+              </div>
+              <div data-arow data-status="PENDING" class="rounded-xl border-l-4 bg-background-light p-4 shadow-sm" style="border-left-color:#5A9E74;">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">申請中</span>
+                  <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">400 pt</span>
+                  <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">100 xp</span>
+                  <span class="ml-auto text-xs text-subtle">2026/06/27 16:20</span>
+                </div>
+                <p class="mt-1.5 font-semibold text-text">ISO研修を受講する</p>
+                <div class="mt-2 flex items-center gap-2.5">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#7A6030;">渡</span>
+                  <span class="min-w-0 flex-1 truncate text-sm text-subtle">渡辺 さゆり</span>
+                  <button type="button" class="shrink-0 rounded-full bg-primary px-3.5 py-2 text-xs font-semibold text-white hover:bg-primary-mid">承認</button>
+                  <button type="button" class="shrink-0 rounded-full border border-border bg-background-light px-3.5 py-2 text-xs font-medium text-subtle hover:bg-background">差し戻し</button>
+                </div>
+              </div>
+              <div data-arow data-status="APPROVED" class="rounded-xl border-l-4 bg-background-light p-4 shadow-sm" style="border-left-color:#5B7FC0;">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">承認済み</span>
+                  <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span>
+                  <span class="ml-auto text-xs text-subtle">2026/06/28 09:12</span>
+                </div>
+                <p class="mt-1.5 font-semibold text-text">月次レポート提出 6月分</p>
+                <div class="mt-2 flex items-center gap-2.5">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C6A75E;">田</span>
+                  <span class="min-w-0 flex-1 truncate text-sm text-subtle">田中 佑樹 ・ 承認者: 鈴木 一郎</span>
+                </div>
+              </div>
+              <div data-arow data-status="RETURNED" class="rounded-xl border-l-4 bg-background-light p-4 shadow-sm" style="border-left-color:#5A9E74;">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded-full border border-border bg-background px-2.5 py-0.5 text-xs font-semibold text-subtle">差し戻し</span>
+                  <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">1,000 pt</span>
+                  <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">300 xp</span>
+                  <span class="ml-auto text-xs text-subtle">2026/06/25 10:40</span>
+                </div>
+                <p class="mt-1.5 font-semibold text-text">資格試験に合格する</p>
+                <div class="mt-2 flex items-center gap-2.5">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C6A75E;">田</span>
+                  <span class="min-w-0 flex-1 truncate text-sm text-subtle">田中 佑樹 ・ 合格証明書の添付をお願いします</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- クエスト一覧（QuestTree） -->
+          <div data-qpanel="quests">
+            <div class="mb-3 flex flex-wrap items-center gap-2">
+              <input type="search" placeholder="クエストを検索" class="w-56 rounded-lg border border-border bg-background-light px-3 py-1.5 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <button type="button" class="ml-auto rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">+ カテゴリを追加</button>
+            </div>
+            <div class="overflow-hidden rounded-lg border border-border bg-background-light">
+              <!-- カテゴリ: 日々の業務 -->
+              <div class="flex items-center gap-2.5 border-b border-border bg-background px-4 py-2.5">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0 text-subtle-light"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg>
+                <span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#5B7FC0;"></span>
+                <span class="min-w-0 flex-1 truncate text-sm font-bold text-text">日々の業務</span>
+                <span class="shrink-0 text-xs text-subtle">3クエスト</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">日報を提出する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">10 pt</span>
+                <span class="shrink-0 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] text-subtle">1日1回</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">月次目標を達成する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span>
+                <span class="shrink-0 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] text-subtle">月1回</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">毎日ログインする</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">5 pt</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">自動承認</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <!-- カテゴリ: 会社行事 -->
+              <div class="flex items-center gap-2.5 border-b border-border bg-background px-4 py-2.5">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0 text-subtle-light"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg>
+                <span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#B89B52;"></span>
+                <span class="min-w-0 flex-1 truncate text-sm font-bold text-text">会社行事</span>
+                <span class="shrink-0 text-xs text-subtle">2クエスト</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">忘年会に参加する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">300 pt</span>
+                <span class="shrink-0 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] text-subtle">生涯1回</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">社内表彰式に参加する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">150 pt</span>
+                <span class="shrink-0 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] text-subtle">年1回</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <!-- カテゴリ: 自己啓発 -->
+              <div class="flex items-center gap-2.5 border-b border-border bg-background px-4 py-2.5">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0 text-subtle-light"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg>
+                <span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#5A9E74;"></span>
+                <span class="min-w-0 flex-1 truncate text-sm font-bold text-text">自己啓発</span>
+                <span class="shrink-0 text-xs text-subtle">3クエスト</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">社内勉強会に参加する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">200 pt</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">80 xp</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <div class="flex items-center gap-2.5 border-b border-border px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-text">資格試験に合格する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">1,000 pt</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">300 xp</span>
+                <span class="shrink-0 rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">公開中</span>
+              </div>
+              <div class="flex items-center gap-2.5 px-4 py-2.5 pl-10 hover:bg-background cursor-pointer">
+                <span class="min-w-0 flex-1 truncate text-sm text-subtle-light">ISO研修を受講する</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary opacity-60">400 pt</span>
+                <span class="shrink-0 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-semibold text-subtle">停止中</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- レベル定義 -->
+          <div data-qpanel="levels">
+            <div class="overflow-x-auto rounded-lg border border-border bg-background-light">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border bg-background text-[10.5px] font-bold uppercase tracking-wide text-subtle">
+                    <th class="px-4 py-2 text-left">ランク</th>
+                    <th class="px-4 py-2 text-left">称号</th>
+                    <th class="px-4 py-2 text-left">レベル</th>
+                    <th class="px-4 py-2 text-right">必要XP（累計）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-border hover:bg-background"><td class="px-4 py-2.5 text-subtle">ランク1</td><td class="px-4 py-2.5 font-semibold text-text">ルーキー</td><td class="px-4 py-2.5 text-subtle">Lv.1〜5</td><td class="px-4 py-2.5 text-right font-bold text-primary">0</td></tr>
+                  <tr class="border-b border-border hover:bg-background"><td class="px-4 py-2.5 text-subtle">ランク2</td><td class="px-4 py-2.5 font-semibold text-text">クルー</td><td class="px-4 py-2.5 text-subtle">Lv.6〜10</td><td class="px-4 py-2.5 text-right font-bold text-primary">1,500</td></tr>
+                  <tr class="border-b border-border bg-primary/[0.04] hover:bg-background"><td class="px-4 py-2.5 text-subtle">ランク3</td><td class="px-4 py-2.5 font-semibold text-text">フィールドリーダー</td><td class="px-4 py-2.5 text-subtle">Lv.11〜15</td><td class="px-4 py-2.5 text-right font-bold text-primary">4,500</td></tr>
+                  <tr class="border-b border-border hover:bg-background"><td class="px-4 py-2.5 text-subtle">ランク4</td><td class="px-4 py-2.5 font-semibold text-text">マネージャー</td><td class="px-4 py-2.5 text-subtle">Lv.16〜20</td><td class="px-4 py-2.5 text-right font-bold text-primary">10,000</td></tr>
+                  <tr class="hover:bg-background"><td class="px-4 py-2.5 text-subtle">ランク5</td><td class="px-4 py-2.5 font-semibold text-text">キャプテン</td><td class="px-4 py-2.5 text-subtle">Lv.21〜</td><td class="px-4 py-2.5 text-right font-bold text-primary">20,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 予算 -->
+          <div data-qpanel="budget">
+            <div class="flex flex-col gap-3">
+              <div class="rounded-lg border border-border bg-background-light p-4">
+                <p class="mb-2 text-[12px] font-semibold text-subtle">2026年 年間予算</p>
+                <div class="flex flex-wrap items-end gap-4">
+                  <p><span class="text-[26px] font-bold tracking-tight text-accent">100,000</span><span class="ml-1 text-[12px] text-subtle">pt</span></p>
+                  <p class="pb-1 text-xs text-subtle">消化 45,450 pt（45%） ・ 残り 54,550 pt</p>
+                  <button type="button" class="ml-auto rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+                </div>
+              </div>
+              <div class="overflow-x-auto rounded-lg border border-border bg-background-light">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-border bg-background text-[10.5px] font-bold uppercase tracking-wide text-subtle">
+                      <th class="px-4 py-2 text-left">年度</th>
+                      <th class="px-4 py-2 text-right">ボーナスレート</th>
+                      <th class="px-4 py-2 text-right">申請済みボーナス</th>
+                      <th class="px-4 py-2 text-left">状態</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-border"><td class="px-4 py-2.5 text-text">2026年</td><td class="px-4 py-2.5 text-right text-text">1pt = 1.0円</td><td class="px-4 py-2.5 text-right font-bold text-primary">¥28,400</td><td class="px-4 py-2.5"><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">受付中</span></td></tr>
+                    <tr><td class="px-4 py-2.5 text-text">2025年</td><td class="px-4 py-2.5 text-right text-text">1pt = 1.0円</td><td class="px-4 py-2.5 text-right font-bold text-primary">¥96,200</td><td class="px-4 py-2.5"><span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">精算済み</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- 設定 -->
+          <div data-qpanel="settings">
+            <div class="flex max-w-xl flex-col divide-y divide-border rounded-lg border border-border bg-background-light">
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">デフォルト承認者</p><p class="text-xs text-subtle">承認者未設定ユーザーの申請の宛先</p></div>
+                <select class="h-9 shrink-0 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option selected>鈴木 一郎</option><option>佐藤 恵子</option>
+                </select>
+              </div>
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">承認リマインド</p><p class="text-xs text-subtle">7日以上未対応の申請を承認者へ通知</p></div>
+                <span class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary"><span class="absolute right-0.5 h-5 w-5 rounded-full bg-white shadow"></span></span>
+              </div>
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">Teams通知</p><p class="text-xs text-subtle">承認結果をTeamsチャネルに投稿</p></div>
+                <span class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-border"><span class="absolute left-0.5 h-5 w-5 rounded-full bg-white shadow"></span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= アイデア管理 ================= -->
+        <div data-adminpanel="ideas">
+          <div class="ptab-list" style="border-bottom:none;">
+            <button type="button" data-istatus="ALL" class="ptab ptab-secondary is-active">すべて</button>
+            <button type="button" data-istatus="PENDING" class="ptab ptab-secondary">審査中<span class="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">2</span></button>
+            <button type="button" data-istatus="APPROVED" class="ptab ptab-secondary">投票中</button>
+            <button type="button" data-istatus="ADOPTED" class="ptab ptab-secondary">採用済み</button>
+            <button type="button" data-istatus="REJECTED" class="ptab ptab-secondary">却下</button>
+          </div>
+          <div class="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div data-icard data-status="PENDING" role="button" tabindex="0" class="w-full cursor-pointer rounded-2xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
+              <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                <span class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">審査中</span>
+                <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">業務改善</span>
+              </div>
+              <div class="mb-2"><p class="min-w-0 font-semibold text-text">リモートワーク手当の新設</p></div>
+              <div class="flex items-center gap-3 text-sm text-subtle">
+                <span class="shrink-0 whitespace-nowrap">2026/06/20 14:32</span>
+                <span class="min-w-0 truncate">田中佑樹</span>
+                <span class="ml-auto flex shrink-0 gap-1.5">
+                  <button type="button" class="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-mid">承認</button>
+                  <button type="button" class="rounded-full border border-border bg-background-light px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">却下</button>
+                </span>
+              </div>
+            </div>
+            <div data-icard data-status="PENDING" role="button" tabindex="0" class="w-full cursor-pointer rounded-2xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5A9E74;">
+              <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                <span class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">審査中</span>
+                <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">オフィス環境</span>
+              </div>
+              <div class="mb-2"><p class="min-w-0 font-semibold text-text">オフィス内の防音ブース設置</p></div>
+              <div class="flex items-center gap-3 text-sm text-subtle">
+                <span class="shrink-0 whitespace-nowrap">2026/06/18 10:05</span>
+                <span class="min-w-0 truncate">伊藤健太</span>
+                <span class="ml-auto flex shrink-0 gap-1.5">
+                  <button type="button" class="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-mid">承認</button>
+                  <button type="button" class="rounded-full border border-border bg-background-light px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">却下</button>
+                </span>
+              </div>
+            </div>
+            <div data-icard data-status="APPROVED" role="button" tabindex="0" class="w-full cursor-pointer rounded-2xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5A9E74;">
+              <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                <span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">投票中</span>
+                <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">オフィス環境</span>
+              </div>
+              <div class="mb-2"><p class="min-w-0 font-semibold text-text">フリーアドレス制の導入</p></div>
+              <div class="flex items-center gap-3 text-sm text-subtle">
+                <span class="shrink-0 whitespace-nowrap">2026/06/22 11:48</span>
+                <span class="min-w-0 truncate">伊藤健太</span>
+                <span class="ml-auto shrink-0 inline-flex items-center gap-1" style="color:#333333;"><svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Z"></path></svg><span class="text-[11px]">58</span></span>
+              </div>
+            </div>
+            <div data-icard data-status="ADOPTED" role="button" tabindex="0" class="w-full cursor-pointer rounded-2xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
+              <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                <span class="rounded-full border border-border bg-primary-lightest px-2.5 py-0.5 text-xs font-semibold text-primary-mid">採用済み</span>
+                <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">業務改善</span>
+              </div>
+              <div class="mb-2"><p class="min-w-0 font-semibold text-text">ペーパーレス化推進</p></div>
+              <div class="flex items-center gap-3 text-sm text-subtle">
+                <span class="shrink-0 whitespace-nowrap">2026/03/01 10:05</span>
+                <span class="min-w-0 truncate">鈴木一郎</span>
+                <span class="ml-auto shrink-0 inline-flex items-center gap-1" style="color:#333333;"><svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Z"></path></svg><span class="text-[11px]">102</span></span>
+              </div>
+            </div>
+            <div data-icard data-status="REJECTED" role="button" tabindex="0" class="w-full cursor-pointer rounded-2xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#B89B52;">
+              <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                <span class="rounded-full border border-danger-border bg-danger-surface px-2.5 py-0.5 text-xs font-semibold text-danger">却下</span>
+                <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">福利厚生</span>
+              </div>
+              <div class="mb-2"><p class="min-w-0 font-semibold text-text">社員旅行の復活</p></div>
+              <div class="flex items-center gap-3 text-sm text-subtle">
+                <span class="shrink-0 whitespace-nowrap">2026/04/10 09:00</span>
+                <span class="min-w-0 truncate">高橋美咲</span>
+                <span class="ml-auto shrink-0 inline-flex items-center gap-1" style="color:#333333;"><svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Z"></path></svg><span class="text-[11px]">9</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= ユーザー管理 ================= -->
+        <div data-adminpanel="users">
+          <div class="flex min-h-0 flex-1 flex-col">
+            <div class="border-b border-border bg-background px-2 py-2 md:px-4">
+              <div class="grid grid-cols-[96px_1fr] gap-2 md:flex md:items-center md:gap-2">
+                <select aria-label="ロールで絞り込み" class="h-9 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option selected>全員</option><option>管理者</option><option>リーダー</option><option>一般</option>
+                </select>
+                <input type="text" placeholder="名前・メールで検索" class="w-full rounded-lg border border-border bg-background-light px-3 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary md:max-w-xs">
+              </div>
+              <div class="mt-2 flex flex-wrap gap-1.5">
+                <button type="button" class="rounded-full border border-border bg-background-light px-2.5 py-1 text-xs text-subtle">要対応あり</button>
+              </div>
+            </div>
+            <div class="min-h-0 flex-1 overflow-y-auto">
+              <table class="w-full border-collapse">
+                <thead>
+                  <tr class="border-b border-border bg-background">
+                    <th class="w-[28%] px-4 py-2 text-left text-[10.5px] font-bold uppercase tracking-wide text-subtle">ユーザー</th>
+                    <th class="w-[18%] px-4 py-2 text-left text-[10.5px] font-bold uppercase tracking-wide text-subtle">ロール</th>
+                    <th class="w-[14%] px-4 py-2 text-left text-[10.5px] font-bold uppercase tracking-wide text-subtle">役職</th>
+                    <th class="w-[40%] px-4 py-2 text-left text-[10.5px] font-bold uppercase tracking-wide text-subtle">要対応</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="cursor-pointer border-b border-border transition-colors hover:bg-background">
+                    <td class="px-4 py-2.5"><div class="flex items-center gap-2.5"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#5A9E74;">鈴</span><div><div class="text-sm font-semibold text-text">鈴木 一郎</div><div class="text-xs text-subtle">suzuki@ict-o.com</div></div></div></td>
+                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full border border-border bg-primary-lightest px-2 py-0.5 text-xs font-semibold text-primary">管理者</span></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">部長</div></td>
+                    <td class="px-4 py-2.5"><div class="flex flex-wrap gap-1"><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-bold text-warning">クエスト承認 2</span></div></td>
+                  </tr>
+                  <tr class="cursor-pointer border-b border-border transition-colors hover:bg-background">
+                    <td class="px-4 py-2.5"><div class="flex items-center gap-2.5"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#5B7FC0;">佐</span><div><div class="text-sm font-semibold text-text">佐藤 恵子</div><div class="text-xs text-subtle">sato@ict-o.com</div></div></div></td>
+                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full border border-accent-border bg-accent-light px-2 py-0.5 text-xs font-semibold text-accent-dark">リーダー</span></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">課長</div></td>
+                    <td class="px-4 py-2.5"><div class="flex flex-wrap gap-1"><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-bold text-warning">書類承認 1</span><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-bold text-warning">経費 3</span></div></td>
+                  </tr>
+                  <tr class="cursor-pointer border-b border-border transition-colors hover:bg-background">
+                    <td class="px-4 py-2.5"><div class="flex items-center gap-2.5"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#C6A75E;">田</span><div><div class="text-sm font-semibold text-text">田中 佑樹</div><div class="text-xs text-subtle">tanaka@ict-o.com</div></div></div></td>
+                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">一般</span></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">-</div></td>
+                    <td class="px-4 py-2.5"><div class="flex flex-wrap gap-1"><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-bold text-warning">書類提出 1</span></div></td>
+                  </tr>
+                  <tr class="cursor-pointer border-b border-border transition-colors hover:bg-background">
+                    <td class="px-4 py-2.5"><div class="flex items-center gap-2.5"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#C07B8A;">伊</span><div><div class="text-sm font-semibold text-text">伊藤 健太</div><div class="text-xs text-subtle">ito@ict-o.com</div></div></div></td>
+                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">一般</span></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">-</div></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle-light">-</div></td>
+                  </tr>
+                  <tr class="cursor-pointer border-b border-border transition-colors hover:bg-background">
+                    <td class="px-4 py-2.5"><div class="flex items-center gap-2.5"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#7A6030;">渡</span><div><div class="text-sm font-semibold text-text">渡辺 さゆり</div><div class="text-xs text-subtle">watanabe@ict-o.com</div></div></div></td>
+                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">一般</span></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">-</div></td>
+                    <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle-light">-</div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= システム設定 ================= -->
+        <div data-adminpanel="system">
+          <div class="flex max-w-2xl flex-col gap-4">
+            <div class="rounded-lg border border-border bg-background-light">
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">デフォルト承認者</p><p class="text-xs text-subtle">承認者が未設定のユーザーの申請宛先</p></div>
+                <select class="h-9 shrink-0 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option selected>鈴木 一郎</option><option>佐藤 恵子</option>
+                </select>
+              </div>
+            </div>
+            <div class="rounded-lg border border-border bg-background-light">
+              <div class="flex items-center justify-between border-b border-border px-4 py-3">
+                <p class="text-sm font-bold text-text">クイックリンク</p>
+                <button type="button" class="rounded-full bg-primary px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-primary-mid">+ 追加</button>
+              </div>
+              <ul class="divide-y divide-border">
+                <li class="flex items-center gap-3 px-4 py-2.5">
+                  <img src="public/icons/links/keihi.svg" alt="" class="h-8 w-8 shrink-0">
+                  <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-text">経費精算</p><p class="truncate text-xs text-subtle">https://expense.example.com</p></div>
+                  <button type="button" class="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-2.5">
+                  <img src="public/icons/links/kyuyo.svg" alt="" class="h-8 w-8 shrink-0">
+                  <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-text">給与明細</p><p class="truncate text-xs text-subtle">https://payroll.example.com</p></div>
+                  <button type="button" class="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-2.5">
+                  <img src="public/icons/links/loop.svg" alt="" class="h-8 w-8 shrink-0">
+                  <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-text">勤怠</p><p class="truncate text-xs text-subtle">https://attendance.example.com</p></div>
+                  <button type="button" class="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-2.5">
+                  <img src="public/icons/links/yukyu.svg" alt="" class="h-8 w-8 shrink-0">
+                  <div class="min-w-0 flex-1"><p class="truncate text-sm font-medium text-text">有給申請</p><p class="truncate text-xs text-subtle">https://leave.example.com</p></div>
+                  <button type="button" class="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= お知らせ管理 ================= -->
+        <div data-adminpanel="announcements">
+          <div class="mb-3 flex items-center justify-between">
+            <p class="text-sm text-subtle">全3件</p>
+            <button type="button" class="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">+ 新規お知らせ</button>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+              <div class="flex min-w-0 items-center gap-2">
+                <span class="shrink-0 rounded-full border border-danger-border bg-danger-surface px-2 py-0.5 text-[10px] font-bold text-danger">重要</span>
+                <div class="min-w-0"><p class="truncate font-medium text-text">年末年始の休業期間について</p><p class="text-xs text-subtle">公開期間 2026/06/29 〜 2027/01/05</p></div>
+              </div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">公開中</span>
+                <button type="button" class="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+              <div class="min-w-0"><p class="truncate font-medium text-text">オフィスWiFi更新のお知らせ</p><p class="text-xs text-subtle">公開期間 2026/06/27 〜 2026/07/01</p></div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">公開中</span>
+                <button type="button" class="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+              <div class="min-w-0"><p class="truncate font-medium text-text">健康診断のご案内（秋季）</p><p class="text-xs text-subtle">公開予定 2026/09/01 〜</p></div>
+              <div class="flex shrink-0 items-center gap-2">
+                <span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">下書き</span>
+                <button type="button" class="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 書類管理 ================= -->
+        <div data-adminpanel="documents">
+          <nav aria-label="書類管理タブ" class="mb-4 bg-background">
+            <div class="ptab-list">
+              <button type="button" data-dtab="submissions" class="ptab ptab-primary is-active">提出状況</button>
+              <button type="button" data-dtab="requests" class="ptab ptab-primary">提出依頼</button>
+              <button type="button" data-dtab="types" class="ptab ptab-primary">書類タイプ</button>
+            </div>
+          </nav>
+          <div data-dpanel="submissions" class="active">
+            <div class="overflow-x-auto rounded-lg border border-border bg-background-light">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border bg-background text-[10.5px] font-bold uppercase tracking-wide text-subtle">
+                    <th class="px-4 py-2 text-left">提出者</th><th class="px-4 py-2 text-left">書類</th><th class="px-4 py-2 text-left">提出日</th><th class="px-4 py-2 text-left">状態</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="cursor-pointer border-b border-border hover:bg-background"><td class="px-4 py-2.5"><div class="flex items-center gap-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#8A6FA8;">山</span><span class="text-text">山田 太郎</span></div></td><td class="px-4 py-2.5"><span class="rounded-full border px-2 py-0.5 text-[10px] font-medium" style="border-color:#5A9E74;color:#5A9E74;">雇用契約</span></td><td class="px-4 py-2.5 text-subtle">2026/06/20 16:00</td><td class="px-4 py-2.5"><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-xs font-semibold text-warning">承認待ち</span></td></tr>
+                  <tr class="cursor-pointer border-b border-border hover:bg-background"><td class="px-4 py-2.5"><div class="flex items-center gap-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C6A75E;">田</span><span class="text-text">田中 佑樹</span></div></td><td class="px-4 py-2.5"><span class="rounded-full border px-2 py-0.5 text-[10px] font-medium" style="border-color:#5B7FC0;color:#5B7FC0;">健康診断</span></td><td class="px-4 py-2.5 text-subtle">2026/05/01 09:00</td><td class="px-4 py-2.5"><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">承認済み</span></td></tr>
+                  <tr class="cursor-pointer hover:bg-background"><td class="px-4 py-2.5"><div class="flex items-center gap-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C07B8A;">伊</span><span class="text-text">伊藤 健太</span></div></td><td class="px-4 py-2.5"><span class="rounded-full border px-2 py-0.5 text-[10px] font-medium" style="border-color:#B89B52;color:#B89B52;">税務</span></td><td class="px-4 py-2.5 text-subtle">2026/06/01 14:20</td><td class="px-4 py-2.5"><span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">差し戻し</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div data-dpanel="requests">
+            <div class="mb-3 flex items-center justify-between">
+              <p class="text-sm text-subtle">進行中の依頼 2件</p>
+              <button type="button" class="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">+ 新規依頼</button>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+                <div class="min-w-0"><p class="font-medium text-text">健康診断結果の提出</p><p class="text-xs text-subtle">期限 2026/07/15 ・ 宛先 42名 ・ 提出済み 28名</p></div>
+                <div class="flex shrink-0 items-center gap-2"><span class="text-sm font-bold text-primary">67%</span><button type="button" class="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">詳細</button></div>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+                <div class="min-w-0"><p class="font-medium text-text">雇用契約書の更新</p><p class="text-xs text-subtle">期限 2026/07/01 ・ 宛先 5名 ・ 提出済み 4名</p></div>
+                <div class="flex shrink-0 items-center gap-2"><span class="text-sm font-bold text-primary">80%</span><button type="button" class="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">詳細</button></div>
+              </div>
+            </div>
+          </div>
+          <div data-dpanel="types">
+            <div class="mb-3 flex items-center justify-between">
+              <p class="text-sm text-subtle">全4タイプ</p>
+              <button type="button" class="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">+ 新規タイプ</button>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm"><div class="flex min-w-0 items-center gap-2.5"><span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#5B7FC0;"></span><p class="font-medium text-text">健康診断</p></div><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">要承認</span></div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm"><div class="flex min-w-0 items-center gap-2.5"><span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#5A9E74;"></span><p class="font-medium text-text">雇用契約</p></div><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">要承認</span></div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm"><div class="flex min-w-0 items-center gap-2.5"><span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#B89B52;"></span><p class="font-medium text-text">税務</p></div><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">要承認</span></div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm"><div class="flex min-w-0 items-center gap-2.5"><span class="inline-block h-3 w-3 shrink-0 rounded-full" style="background:#C07B8A;"></span><p class="font-medium text-text">その他</p></div><span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">承認不要</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 安否確認管理 ================= -->
+        <div data-adminpanel="safety">
+          <div class="mb-4 rounded-lg border border-border bg-background-light">
+            <div class="border-b border-border px-4 py-3"><p class="text-sm font-bold text-text">自動発報設定</p></div>
+            <div class="divide-y divide-border">
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">地震（自動発報）</p><p class="text-xs text-subtle">震度しきい値: 5強 以上</p></div>
+                <span class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary"><span class="absolute right-0.5 h-5 w-5 rounded-full bg-white shadow"></span></span>
+              </div>
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">特別警報（自動発報）</p><p class="text-xs text-subtle">気象庁の特別警報発表時に発報</p></div>
+                <span class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary"><span class="absolute right-0.5 h-5 w-5 rounded-full bg-white shadow"></span></span>
+              </div>
+              <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                <div class="min-w-0"><p class="text-sm font-medium text-text">洪水（自動発報）</p><p class="text-xs text-subtle">警戒レベル 3 以上</p></div>
+                <span class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-border"><span class="absolute left-0.5 h-5 w-5 rounded-full bg-white shadow"></span></span>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 flex items-center justify-between">
+            <p class="text-sm font-bold text-text">イベント一覧</p>
+            <button type="button" class="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">+ 手動発報</button>
+          </div>
+          <div class="overflow-x-auto rounded-lg border border-border bg-background-light">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-border bg-background text-[10.5px] font-bold uppercase tracking-wide text-subtle">
+                  <th class="px-4 py-2 text-left">イベント</th><th class="px-4 py-2 text-left">種別</th><th class="px-4 py-2 text-left">発生日時</th><th class="px-4 py-2 text-right">回答率</th><th class="px-4 py-2 text-left">状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="cursor-pointer border-b border-border hover:bg-background"><td class="px-4 py-2.5 font-medium text-text">関東地方 震度5強の地震</td><td class="px-4 py-2.5 text-subtle">地震</td><td class="px-4 py-2.5 text-subtle">2026/06/30 14:22</td><td class="px-4 py-2.5 text-right"><span class="font-bold text-warning">62%</span><span class="ml-1 text-xs text-subtle">(26/42)</span></td><td class="px-4 py-2.5"><span class="rounded-full border border-danger-border bg-danger-surface px-2 py-0.5 text-xs font-semibold text-danger">対応中</span></td></tr>
+                <tr class="cursor-pointer hover:bg-background"><td class="px-4 py-2.5 font-medium text-text">避難訓練（秋季）</td><td class="px-4 py-2.5 text-subtle">訓練</td><td class="px-4 py-2.5 text-subtle">2025/10/15 10:00</td><td class="px-4 py-2.5 text-right"><span class="font-bold text-success">98%</span><span class="ml-1 text-xs text-subtle">(41/42)</span></td><td class="px-4 py-2.5"><span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-subtle">終了</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ================= 経費精算管理 ================= -->
+        <div data-adminpanel="expenses">
+          <nav aria-label="経費精算管理タブ" class="mb-4 bg-background">
+            <div class="ptab-list">
+              <button type="button" data-etab="summary" class="ptab ptab-primary is-active">集計</button>
+              <button type="button" data-etab="list" class="ptab ptab-primary">経費一覧</button>
+              <button type="button" data-etab="requests" class="ptab ptab-primary">受領依頼<span class="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span></button>
+              <button type="button" data-etab="sources" class="ptab ptab-primary">ソース管理</button>
+            </div>
+          </nav>
+          <div data-epanel="summary" class="active">
+            <div class="mb-4 grid grid-cols-2 gap-2.5 md:grid-cols-3">
+              <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                <p class="truncate text-[12px] font-semibold text-subtle">未精算合計</p>
+                <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">86,400</span><span class="pb-0.5 text-[12px] text-subtle">円</span></p>
+                <p class="mt-1 truncate text-[12px] text-subtle">12件 ・ 7/5 精算予定</p>
+              </article>
+              <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                <p class="truncate text-[12px] font-semibold text-subtle">今月精算額</p>
+                <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">54,200</span><span class="pb-0.5 text-[12px] text-subtle">円</span></p>
+                <p class="mt-1 truncate text-[12px] text-success">前月比 <span class="inline-flex items-center gap-0.5">↑ 8.4%</span></p>
+              </article>
+              <article class="min-h-[92px] rounded-lg bg-background-light px-3.5 py-3 shadow-sm">
+                <p class="truncate text-[12px] font-semibold text-subtle">受領依頼中</p>
+                <p class="mt-1.5 flex items-end gap-1 leading-none"><span class="text-[24px] font-bold tracking-tight text-accent md:text-[26px]">3,600</span><span class="pb-0.5 text-[12px] text-subtle">円</span></p>
+                <p class="mt-1 truncate text-[12px] text-subtle">1件</p>
+              </article>
+            </div>
+            <div class="overflow-x-auto rounded-lg border border-border bg-background-light">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border bg-background text-[10.5px] font-bold uppercase tracking-wide text-subtle">
+                    <th class="px-4 py-2 text-left">社員</th><th class="px-4 py-2 text-right">未精算</th><th class="px-4 py-2 text-right">受領依頼中</th><th class="px-4 py-2 text-right">今月精算済み</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="cursor-pointer border-b border-border hover:bg-background"><td class="px-4 py-2.5"><div class="flex items-center gap-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C6A75E;">田</span><span class="text-text">田中 佑樹</span></div></td><td class="px-4 py-2.5 text-right font-bold text-primary">¥24,800</td><td class="px-4 py-2.5 text-right text-subtle">¥3,600</td><td class="px-4 py-2.5 text-right text-subtle">¥6,900</td></tr>
+                  <tr class="cursor-pointer border-b border-border hover:bg-background"><td class="px-4 py-2.5"><div class="flex items-center gap-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#5B7FC0;">佐</span><span class="text-text">佐藤 恵子</span></div></td><td class="px-4 py-2.5 text-right font-bold text-primary">¥38,200</td><td class="px-4 py-2.5 text-right text-subtle">—</td><td class="px-4 py-2.5 text-right text-subtle">¥18,400</td></tr>
+                  <tr class="cursor-pointer hover:bg-background"><td class="px-4 py-2.5"><div class="flex items-center gap-2"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style="background:#C07B8A;">伊</span><span class="text-text">伊藤 健太</span></div></td><td class="px-4 py-2.5 text-right font-bold text-primary">¥23,400</td><td class="px-4 py-2.5 text-right text-subtle">—</td><td class="px-4 py-2.5 text-right text-subtle">¥28,900</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div data-epanel="list">
+            <div class="mb-3 flex flex-wrap items-center gap-2">
+              <select class="h-9 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50"><option selected>すべて</option><option>MF入力待ち</option><option>精算待ち</option><option>受領依頼中</option><option>精算済み</option></select>
+              <input type="search" placeholder="社員・科目で検索" class="w-56 rounded-lg border border-border bg-background-light px-3 py-1.5 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50">
+            </div>
+            <div class="overflow-x-auto rounded-lg border border-border bg-background-light">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border bg-background text-[10.5px] font-bold uppercase tracking-wide text-subtle">
+                    <th class="px-4 py-2 text-left">社員</th><th class="px-4 py-2 text-left">経費科目</th><th class="px-4 py-2 text-left">利用日</th><th class="px-4 py-2 text-left">精算方法</th><th class="px-4 py-2 text-right">金額</th><th class="px-4 py-2 text-left">状態</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-border hover:bg-background"><td class="px-4 py-2.5 text-text">田中 佑樹</td><td class="px-4 py-2.5 text-subtle">交通費</td><td class="px-4 py-2.5 text-subtle">2026/06/28</td><td class="px-4 py-2.5 text-subtle">振込</td><td class="px-4 py-2.5 text-right font-bold text-primary">¥1,200</td><td class="px-4 py-2.5"><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-xs font-semibold text-warning">精算待ち</span></td></tr>
+                  <tr class="border-b border-border hover:bg-background"><td class="px-4 py-2.5 text-text">田中 佑樹</td><td class="px-4 py-2.5 text-subtle">会議費</td><td class="px-4 py-2.5 text-subtle">2026/06/20</td><td class="px-4 py-2.5 text-subtle">現金</td><td class="px-4 py-2.5 text-right font-bold text-primary">¥3,600</td><td class="px-4 py-2.5"><span class="rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-xs font-semibold text-info">受領依頼中</span></td></tr>
+                  <tr class="border-b border-border hover:bg-background"><td class="px-4 py-2.5 text-text">佐藤 恵子</td><td class="px-4 py-2.5 text-subtle">消耗品費</td><td class="px-4 py-2.5 text-subtle">2026/06/15</td><td class="px-4 py-2.5 text-subtle">振込</td><td class="px-4 py-2.5 text-right font-bold text-primary">¥20,000</td><td class="px-4 py-2.5"><span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-xs font-semibold text-warning">精算待ち</span></td></tr>
+                  <tr class="hover:bg-background"><td class="px-4 py-2.5 text-text">伊藤 健太</td><td class="px-4 py-2.5 text-subtle">交通費</td><td class="px-4 py-2.5 text-subtle">2026/05/10</td><td class="px-4 py-2.5 text-subtle">振込</td><td class="px-4 py-2.5 text-right font-bold text-primary">¥980</td><td class="px-4 py-2.5"><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">精算済み</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div data-epanel="requests">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-accent bg-accent-light p-4 shadow-sm">
+                <div class="min-w-0"><p class="font-bold text-primary">¥3,600（1件）</p><p class="mt-0.5 text-xs text-subtle">田中 佑樹 ・ 2026/07/05 精算予定 ・ 送信 2026/06/30</p></div>
+                <span class="shrink-0 rounded-full border border-warning-border bg-warning-surface px-2.5 py-1 text-xs font-semibold text-warning">受領確認待ち</span>
+              </div>
+            </div>
+          </div>
+          <div data-epanel="sources">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+                <div class="min-w-0"><p class="font-medium text-text">マネーフォワード クラウド経費</p><p class="text-xs text-subtle">CSV取込 ・ 最終取込 2026/06/30 09:00</p></div>
+                <div class="flex shrink-0 items-center gap-2">
+                  <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-xs font-semibold text-success">連携中</span>
+                  <button type="button" class="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">設定</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+                <div class="min-w-0"><p class="font-medium text-text">テンプレート: 通勤定期</p><p class="text-xs text-subtle">交通費 ・ 毎月自動生成</p></div>
+                <button type="button" class="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+                <div class="min-w-0"><p class="font-medium text-text">ルール: 5,000円未満は自動受領</p><p class="text-xs text-subtle">受領依頼をスキップして精算待ちへ</p></div>
+                <button type="button" class="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-subtle hover:bg-background">編集</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- モバイル ボトムナビ -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  <a href="CrewNest Home.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+  </a>
+  <a href="CrewNest Quests.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+  </a>
+  <a href="CrewNest Documents.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">書類提出</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </a>
+  <a href="CrewNest Expense Claims.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">経費精算</span>
+  </a>
+</nav>
+
+<script>
+// 左レール（管理セクション切替）
+document.addEventListener('click', function(e){
+  var railBtn = e.target.closest('[data-admintab]');
+  if (railBtn) {
+    var key = railBtn.getAttribute('data-admintab');
+    document.querySelectorAll('[data-admintab]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-admintab') === key); });
+    document.querySelectorAll('[data-adminpanel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-adminpanel') === key); });
+    document.querySelectorAll('[data-admin-section-title]').forEach(function(t){ t.textContent = railBtn.getAttribute('data-admin-label'); });
+    return;
+  }
+  // クエスト管理サブタブ
+  var qBtn = e.target.closest('[data-qtab]');
+  if (qBtn) {
+    var qk = qBtn.getAttribute('data-qtab');
+    document.querySelectorAll('[data-qtab]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-qtab') === qk); });
+    document.querySelectorAll('[data-qpanel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-qpanel') === qk); });
+    return;
+  }
+  // 書類管理サブタブ
+  var dBtn = e.target.closest('[data-dtab]');
+  if (dBtn) {
+    var dk = dBtn.getAttribute('data-dtab');
+    document.querySelectorAll('[data-dtab]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-dtab') === dk); });
+    document.querySelectorAll('[data-dpanel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-dpanel') === dk); });
+    return;
+  }
+  // 経費精算管理サブタブ
+  var eBtn = e.target.closest('[data-etab]');
+  if (eBtn) {
+    var ek = eBtn.getAttribute('data-etab');
+    document.querySelectorAll('[data-etab]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-etab') === ek); });
+    document.querySelectorAll('[data-epanel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-epanel') === ek); });
+    return;
+  }
+  // 申請一覧 ステータスフィルタ
+  var aBtn = e.target.closest('[data-astatus]');
+  if (aBtn) {
+    var ak = aBtn.getAttribute('data-astatus');
+    document.querySelectorAll('[data-astatus]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-astatus') === ak); });
+    document.querySelectorAll('[data-arow]').forEach(function(r){ r.style.display = (ak === 'ALL' || r.getAttribute('data-status') === ak) ? '' : 'none'; });
+    return;
+  }
+  // アイデア ステータスフィルタ
+  var iBtn = e.target.closest('[data-istatus]');
+  if (iBtn) {
+    var ik = iBtn.getAttribute('data-istatus');
+    document.querySelectorAll('[data-istatus]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-istatus') === ik); });
+    document.querySelectorAll('[data-icard]').forEach(function(c){ c.style.display = (ik === 'ALL' || c.getAttribute('data-status') === ik) ? '' : 'none'; });
+    return;
+  }
+});
+</script>
+
+<script src="user-menu.js"></script>
+</body>
+</html>

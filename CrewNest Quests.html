@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — クエストボード</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --sidebar-w: 280px; --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  .mask { display:block; background-color: currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+  [data-panel]:not(.active) { display: none !important; }
+  [data-view]:not(.active) { display: none !important; }
+  .tab-btn { position:relative; display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; border-bottom:2px solid transparent; color: var(--color-subtle); transition: color .15s, border-color .15s; cursor:pointer; background:none; }
+  .tab-btn:hover { border-color: var(--color-border); color:#333; }
+  .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
+  .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .ring-gauge { border-radius:9999px; display:inline-block; }
+  .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.375rem; cursor:pointer; border-right:3px solid transparent; }
+  .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); font-weight:700; }
+</style>
+</head>
+<body>
+
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/icons/quest.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">クエストボード</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </button>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <button type="button" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </button>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      
+      <a href="CrewNest Home.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+        
+      </a>
+      <div>
+        
+      <a href="CrewNest My Achievements.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+        <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[1fr]" style="overflow:hidden;">
+          <div class="min-h-0 overflow-hidden">
+            
+        <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
+          
+          <a href="CrewNest My Achievements.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">承認状況</span>
+            <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+          </a>
+          <a href="CrewNest Quests.html" aria-current="page" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium bg-white/20 text-white">
+            <span class="truncate">クエストボード</span>
+            
+          </a>
+          <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">ランキング</span>
+            
+          </a>
+        </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="CrewNest Proposals.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+        
+      </a>
+      
+      <a href="CrewNest Documents.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      
+      <a href="CrewNest Expense Claims.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+        
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+      
+      <a href="CrewNest Admin.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+        
+      </a>
+    </div>
+  </nav>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1600px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+
+    <div class="flex min-h-0 flex-col">
+      <div class="hidden items-center justify-between md:mb-4 md:flex">
+        <h1 class="flex items-center gap-3 text-2xl font-bold text-text">
+          <img src="public/icons/quest.png" alt="" class="h-7 w-7" data-boardtitle-icon>
+          <span data-boardtitle-text>クエストボード</span>
+        </h1>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="toggleQuestView()" class="inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary-lightest px-4 py-2 text-sm font-medium text-primary hover:bg-black/[0.08]">
+            <span data-toggle-label>ランキング</span>
+          </button>
+          <a href="CrewNest My Achievements.html" class="inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary-lightest px-4 py-2 text-sm font-medium text-primary hover:bg-black/[0.08]">
+            <img src="public/icons/apply.png" alt="" class="h-4 w-4"> 承認状況
+          </a>
+        </div>
+      </div>
+      <div data-view data-view-key="board" class="active">
+        <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end border-b border-border pb-1">
+          <div class="flex-1 flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="qcat" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">8</span></button><button type="button" data-tabgroup="qcat" data-tabkey="work" class="tab-btn tab-btn-secondary ">日々の業務<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="event" class="tab-btn tab-btn-secondary ">会社行事<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button><button type="button" data-tabgroup="qcat" data-tabkey="growth" class="tab-btn tab-btn-secondary ">自己啓発<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button></div>
+          <div class="flex shrink-0 items-center gap-2">
+            <input type="search" placeholder="検索" class="w-36 rounded-lg border border-border bg-background-light py-1.5 px-3 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <div class="flex gap-1"><button type="button" data-tabgroup="qstatus" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-tabgroup="qstatus" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中</button><button type="button" data-tabgroup="qstatus" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">達成済み</button></div>
+          </div>
+        </div>
+        <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <div data-item data-cat="work" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">日報を提出する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">10 pt</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">その日の業務内容と進捗を報告する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">1日1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 144deg, var(--color-border) 0deg);" title="40%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 72deg, var(--color-border) 0deg);" title="20%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 144deg, var(--color-border) 0deg);" title="40%"></span></span>
+        <span class="text-[11px] font-bold text-primary">234人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="work" data-status="PENDING" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">月次目標を達成する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">月間の個人目標を達成し報告する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        <span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning">申請中</span>
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">月1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 216deg, var(--color-border) 0deg);" title="60%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 108deg, var(--color-border) 0deg);" title="30%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 216deg, var(--color-border) 0deg);" title="60%"></span></span>
+        <span class="text-[11px] font-bold text-primary">88人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">忘年会に参加する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">300 pt</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">年末の全社イベントに参加する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 252deg, var(--color-border) 0deg);" title="70%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 252deg, var(--color-border) 0deg);" title="70%"></span></span>
+        <span class="text-[11px] font-bold text-primary">89人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">社内表彰式に参加する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">150 pt</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">年次の社内表彰式に出席する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">年1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span></span>
+        <span class="text-[11px] font-bold text-primary">120人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="growth" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">社内勉強会に参加する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">200 pt</span><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">80 xp</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">月次の社内勉強会に参加し学びを共有する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">無制限</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 108deg, var(--color-border) 0deg);" title="30%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 36deg, var(--color-border) 0deg);" title="10%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 108deg, var(--color-border) 0deg);" title="30%"></span></span>
+        <span class="text-[11px] font-bold text-primary">45人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="growth" data-status="APPROVED" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg opacity-60 grayscale" style="border-left-color:#5A9E74;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">資格試験に合格する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">1,000 pt</span><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">300 xp</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">業務に関連する資格試験に合格する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 72deg, var(--color-border) 0deg);" title="20%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 72deg, var(--color-border) 0deg);" title="20%"></span></span>
+        <span class="text-[11px] font-bold text-primary">12人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="growth" data-status="RETURNED" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">ISO研修を受講する</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">400 pt</span><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">100 xp</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">情報セキュリティ研修を受講し理解度テストに合格する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-semibold text-subtle">差し戻し</span>
+        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 144deg, var(--color-border) 0deg);" title="40%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 144deg, var(--color-border) 0deg);" title="40%"></span></span>
+        <span class="text-[11px] font-bold text-primary">30人達成</span></div>
+      
+    </div>
+    <div data-item data-cat="work" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">毎日ログインする</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">5 pt</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">ポータルに毎日ログインする</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+        <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">自動承認</span>
+        <span class="text-[11px] font-bold text-primary">80%</span>
+        <span class="ml-auto text-[11px] font-bold text-primary">512人達成</span></div>
+      <div class="px-4 pb-3"><div class="h-1.5 w-full rounded-full bg-border overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:80%;"></div></div></div>
+    </div></div>
+      </div>
+      <div data-view data-view-key="ranking">
+    <div class="pt-2">
+      <div class="mb-2.5 flex items-center gap-2"><span class="text-[11px] font-medium tracking-wider text-primary">月間</span><div class="h-px flex-1 bg-border"></div></div>
+      <div class="mb-6 grid gap-3 md:grid-cols-3">
+        
+    <div class="rounded-lg border shadow-sm overflow-hidden border-border bg-background-light">
+      <div class="px-3 py-2" style="background:linear-gradient(135deg, #042154 0%, #0d3b86 100%);">
+        <span class="text-xs font-bold md:text-[13px]" style="color:#fff;">ポイント獲得</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#D4AF37;color:#fff;">1</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5B7FC0;font-size:10px;">佐</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">佐藤 恵子</span>
+        <span class="shrink-0 text-sm font-bold text-primary">1,240 pt</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#B0B0B0;color:#fff;">2</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5A9E74;font-size:10px;">鈴</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">鈴木 一郎</span>
+        <span class="shrink-0 text-sm font-bold text-primary">980 pt</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#CD7F32;color:#fff;">3</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#B89B52;font-size:10px;">高</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">高橋 美咲</span>
+        <span class="shrink-0 text-sm font-bold text-primary">870 pt</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 bg-accent-light border-t-2 border-accent">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold bg-background text-subtle" style="">4</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C6A75E;font-size:10px;">田</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">田中 佑樹（自分）</span>
+        <span class="shrink-0 text-sm font-bold text-primary">540 pt</span>
+      </div>
+    </div>
+        
+    <div class="rounded-lg border shadow-sm overflow-hidden border-border bg-background-light">
+      <div class="px-3 py-2" style="background:linear-gradient(135deg, #042154 0%, #0d3b86 100%);">
+        <span class="text-xs font-bold md:text-[13px]" style="color:#fff;">XP獲得</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#D4AF37;color:#fff;">1</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C07B8A;font-size:10px;">伊</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">伊藤 健太</span>
+        <span class="shrink-0 text-sm font-bold text-primary">320 xp</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#B0B0B0;color:#fff;">2</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5B7FC0;font-size:10px;">佐</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">佐藤 恵子</span>
+        <span class="shrink-0 text-sm font-bold text-primary">280 xp</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#CD7F32;color:#fff;">3</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#7A6030;font-size:10px;">渡</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">渡辺 さゆり</span>
+        <span class="shrink-0 text-sm font-bold text-primary">210 xp</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 bg-accent-light border-t-2 border-accent">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold bg-background text-subtle" style="">4</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C6A75E;font-size:10px;">田</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">田中 佑樹（自分）</span>
+        <span class="shrink-0 text-sm font-bold text-primary">120 xp</span>
+      </div>
+    </div>
+        
+    <div class="rounded-lg border shadow-sm overflow-hidden border-border bg-background-light">
+      <div class="px-3 py-2" style="background:linear-gradient(135deg, #042154 0%, #0d3b86 100%);">
+        <span class="text-xs font-bold md:text-[13px]" style="color:#fff;">クエスト達成数</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#D4AF37;color:#fff;">1</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5A9E74;font-size:10px;">鈴</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">鈴木 一郎</span>
+        <span class="shrink-0 text-sm font-bold text-primary">18 件</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#B0B0B0;color:#fff;">2</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5B7FC0;font-size:10px;">佐</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">佐藤 恵子</span>
+        <span class="shrink-0 text-sm font-bold text-primary">15 件</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#CD7F32;color:#fff;">3</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#B89B52;font-size:10px;">高</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">高橋 美咲</span>
+        <span class="shrink-0 text-sm font-bold text-primary">12 件</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 bg-accent-light border-t-2 border-accent">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold bg-background text-subtle" style="">4</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C6A75E;font-size:10px;">田</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">田中 佑樹（自分）</span>
+        <span class="shrink-0 text-sm font-bold text-primary">8 件</span>
+      </div>
+    </div>
+      </div>
+      <div class="mb-2.5 flex items-center gap-2"><span class="text-[11px] font-medium tracking-wider text-subtle">年間</span><div class="h-px flex-1 bg-accent-border"></div></div>
+      <div class="grid gap-3 md:grid-cols-3">
+        
+    <div class="rounded-lg border shadow-sm overflow-hidden border-accent-border bg-accent-lightest">
+      <div class="px-3 py-2" style="background:#FBF6EA;">
+        <span class="text-xs font-bold md:text-[13px]" style="color:#7A6030;">ポイント獲得</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#D4AF37;color:#fff;">1</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5B7FC0;font-size:10px;">佐</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">佐藤 恵子</span>
+        <span class="shrink-0 text-sm font-bold text-primary">12,800 pt</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#B0B0B0;color:#fff;">2</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5A9E74;font-size:10px;">鈴</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">鈴木 一郎</span>
+        <span class="shrink-0 text-sm font-bold text-primary">11,200 pt</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#CD7F32;color:#fff;">3</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C07B8A;font-size:10px;">伊</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">伊藤 健太</span>
+        <span class="shrink-0 text-sm font-bold text-primary">9,800 pt</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 bg-accent-light border-t-2 border-accent">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold bg-background text-subtle" style="">4</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C6A75E;font-size:10px;">田</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">田中 佑樹（自分）</span>
+        <span class="shrink-0 text-sm font-bold text-primary">8,900 pt</span>
+      </div>
+    </div>
+        
+    <div class="rounded-lg border shadow-sm overflow-hidden border-accent-border bg-accent-lightest">
+      <div class="px-3 py-2" style="background:#FBF6EA;">
+        <span class="text-xs font-bold md:text-[13px]" style="color:#7A6030;">XP獲得</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#D4AF37;color:#fff;">1</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#7A6030;font-size:10px;">渡</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">渡辺 さゆり</span>
+        <span class="shrink-0 text-sm font-bold text-primary">2,400 xp</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#B0B0B0;color:#fff;">2</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5B7FC0;font-size:10px;">佐</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">佐藤 恵子</span>
+        <span class="shrink-0 text-sm font-bold text-primary">2,100 xp</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#CD7F32;color:#fff;">3</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5A9E74;font-size:10px;">鈴</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">鈴木 一郎</span>
+        <span class="shrink-0 text-sm font-bold text-primary">1,900 xp</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 bg-accent-light border-t-2 border-accent">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold bg-background text-subtle" style="">4</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C6A75E;font-size:10px;">田</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">田中 佑樹（自分）</span>
+        <span class="shrink-0 text-sm font-bold text-primary">1,200 xp</span>
+      </div>
+    </div>
+        
+    <div class="rounded-lg border shadow-sm overflow-hidden border-accent-border bg-accent-lightest">
+      <div class="px-3 py-2" style="background:#FBF6EA;">
+        <span class="text-xs font-bold md:text-[13px]" style="color:#7A6030;">クエスト達成数</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#D4AF37;color:#fff;">1</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5B7FC0;font-size:10px;">佐</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">佐藤 恵子</span>
+        <span class="shrink-0 text-sm font-bold text-primary">142 件</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#B0B0B0;color:#fff;">2</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#5A9E74;font-size:10px;">鈴</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">鈴木 一郎</span>
+        <span class="shrink-0 text-sm font-bold text-primary">130 件</span>
+      </div>
+      <div class="flex items-center gap-3 px-4 py-2.5 border-t border-border">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold " style="background:#CD7F32;color:#fff;">3</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#B89B52;font-size:10px;">高</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">高橋 美咲</span>
+        <span class="shrink-0 text-sm font-bold text-primary">110 件</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-2.5 bg-accent-light border-t-2 border-accent">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold bg-background text-subtle" style="">4</span>
+        <span class="flex shrink-0 items-center justify-center rounded-full text-white font-bold" style="width:28px;height:28px;background:#C6A75E;font-size:10px;">田</span>
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-text">田中 佑樹（自分）</span>
+        <span class="shrink-0 text-sm font-bold text-primary">72 件</span>
+      </div>
+    </div>
+      </div>
+    </div></div>
+    </div>
+  </main>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  
+  <a href="CrewNest Home.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+    
+  </a>
+  <a href="CrewNest Quests.html" aria-current="page" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-primary">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+    
+  </a>
+  <a href="CrewNest Documents.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">書類提出</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </a>
+  <a href="CrewNest Expense Claims.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">経費精算</span>
+    
+  </a>
+</nav>
+<script>
+function filterQuests(){
+  var cat = document.querySelector('[data-tabgroup="qcat"].is-active').getAttribute('data-tabkey');
+  var status = document.querySelector('[data-tabgroup="qstatus"].is-active').getAttribute('data-tabkey');
+  document.querySelectorAll('[data-item]').forEach(function(el){
+    var okCat = cat === 'all' || el.getAttribute('data-cat') === cat;
+    var okStatus = status === 'all' || el.getAttribute('data-status') === status;
+    el.style.display = (okCat && okStatus) ? '' : 'none';
+  });
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-tabgroup="qcat"], [data-tabgroup="qstatus"]');
+  if (!b) return;
+  document.querySelectorAll('[data-tabgroup="'+b.getAttribute('data-tabgroup')+'"]').forEach(function(x){x.classList.remove('is-active');});
+  b.classList.add('is-active');
+  filterQuests();
+});
+function showView(key){
+  document.querySelectorAll('[data-view]').forEach(function(v){v.classList.toggle('active', v.getAttribute('data-view-key')===key);});
+  document.querySelector('[data-toggle-label]').textContent = key==='ranking' ? 'クエストボード' : 'ランキング';
+  document.querySelector('[data-boardtitle-text]').textContent = key==='ranking' ? 'ランキング' : 'クエストボード';
+}
+function toggleQuestView(){
+  var current = document.querySelector('[data-view].active').getAttribute('data-view-key');
+  var next = current === 'ranking' ? 'board' : 'ranking';
+  location.hash = next === 'ranking' ? 'ranking' : '';
+  showView(next);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  filterQuests();
+  if (location.hash === '#ranking') showView('ranking');
+});
+window.addEventListener('hashchange', function(){
+  showView(location.hash === '#ranking' ? 'ranking' : 'board');
+});
+</script>
+<script src="user-menu.js"></script>
+</body>
+</html>

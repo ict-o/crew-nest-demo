@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — 通知</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --sidebar-w: 280px; --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  .mask { display:block; background-color: currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+  [data-panel]:not(.active) { display: none !important; }
+  .tab-btn { position:relative; display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; border-bottom:2px solid transparent; color: var(--color-subtle); transition: color .15s, border-color .15s; cursor:pointer; background:none; }
+  .tab-btn:hover { border-color: var(--color-border); color:#333; }
+  .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
+  .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.375rem; cursor:pointer; border-right:3px solid transparent; }
+  .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); font-weight:700; }
+</style>
+</head>
+<body>
+
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/images/logo.png" alt="" aria-hidden="true" class="h-8 w-auto" style="filter: brightness(0) invert(1);">
+    <span class="font-bold tracking-wide text-white">CREW NEST</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </button>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <button type="button" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </button>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      
+      <a href="CrewNest Home.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+        
+      </a>
+      <div>
+        
+      <a href="CrewNest My Achievements.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+        <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[0fr]" style="overflow:hidden;">
+          <div class="min-h-0 overflow-hidden">
+            
+        <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
+          
+          <a href="CrewNest My Achievements.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">承認状況</span>
+            <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+          </a>
+          <a href="CrewNest Quests.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">クエストボード</span>
+            
+          </a>
+          <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">ランキング</span>
+            
+          </a>
+        </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="CrewNest Proposals.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+        
+      </a>
+      
+      <a href="CrewNest Documents.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      
+      <a href="CrewNest Expense Claims.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+        
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+      
+      <a href="CrewNest Admin.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+        
+      </a>
+    </div>
+  </nav>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+
+    <div class="flex min-h-0 flex-col">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-text">通知</h1>
+        <button type="button" class="inline-flex h-10 items-center rounded-full border border-border px-4 text-sm font-medium text-subtle hover:bg-background hover:text-primary">すべて既読にする</button>
+      </div>
+      <div class="mt-3 flex gap-1 border-b border-border overflow-x-auto">
+        <button type="button" data-tabgroup="nf" data-tabkey="all" class="tab-btn tab-btn-primary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">4</span></button>
+        <button type="button" data-tabgroup="nf" data-tabkey="quest" class="tab-btn tab-btn-primary ">クエスト<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
+        <button type="button" data-tabgroup="nf" data-tabkey="proposal" class="tab-btn tab-btn-primary ">アイデア<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
+        <button type="button" data-tabgroup="nf" data-tabkey="document" class="tab-btn tab-btn-primary ">書類提出<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
+        <button type="button" data-tabgroup="nf" data-tabkey="expense" class="tab-btn tab-btn-primary ">経費精算</button>
+        <button type="button" data-tabgroup="nf" data-tabkey="announcement" class="tab-btn tab-btn-primary ">お知らせ<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
+      </div>
+      <div class="mt-4 rounded-lg border border-border bg-background-light shadow-sm">
+        <ul class="divide-y divide-border" id="notif-list">
+          <li data-item data-group="announcement">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#dc26261a;">
+              <img src="public/icons/megaphone.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              <span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-urgent ring-2 ring-background-light"></span>
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="shrink-0 rounded-full border border-danger-border bg-danger-surface px-2 py-0.5 text-[10px] font-bold text-danger">重要</span>
+                <p class="truncate text-sm font-medium text-text">年末年始の休業期間について</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle">12/29〜1/4を休業とさせていただきます。</p>
+              <time class="text-xs text-subtle-light">2時間前</time>
+            </div>
+          </button>
+        </li><li data-item data-group="quest">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#C6A75E1a;">
+              <img src="public/icons/quest.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              <span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-urgent ring-2 ring-background-light"></span>
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm font-medium text-text">クエスト「月次レポート提出」が承認されました</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle">+150 pt を獲得しました</p>
+              <time class="text-xs text-subtle-light">5時間前</time>
+            </div>
+          </button>
+        </li><li data-item data-group="proposal">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#5B7FC01a;">
+              <img src="public/icons/proposal.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              <span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-urgent ring-2 ring-background-light"></span>
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm font-medium text-text">あなたの提案に投票がありました</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle">「社内サークル活動費補助」に投票が集まっています</p>
+              <time class="text-xs text-subtle-light">昨日</time>
+            </div>
+          </button>
+        </li><li data-item data-group="document">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#0421541a;">
+              <img src="public/icons/airplane.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              <span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-urgent ring-2 ring-background-light"></span>
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm font-medium text-text">書類提出の依頼が届いています</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle">健康診断結果の提出をお願いします</p>
+              <time class="text-xs text-subtle-light">昨日</time>
+            </div>
+          </button>
+        </li><li data-item data-group="expense">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#0421541a;">
+              <img src="public/icons/apply.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm text-subtle">経費の受領依頼が届いています</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle-light">¥3,600の受領確認をお願いします</p>
+              <time class="text-xs text-subtle-light">2日前</time>
+            </div>
+          </button>
+        </li><li data-item data-group="announcement">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#5C6B8A1a;">
+              <img src="public/icons/megaphone.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm text-subtle">オフィスWiFi更新のお知らせ</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle-light">6/30深夜にWiFi機器のメンテナンスを行います</p>
+              <time class="text-xs text-subtle-light">3日前</time>
+            </div>
+          </button>
+        </li><li data-item data-group="quest">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#C6A75E1a;">
+              <img src="public/icons/quest.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm text-subtle">クエスト「資格試験に合格する」が差し戻されました</p>
+              </div>
+              <p class="mt-0.5 text-xs line-clamp-2 text-subtle-light">添付書類をご確認ください</p>
+              <time class="text-xs text-subtle-light">4日前</time>
+            </div>
+          </button>
+        </li><li data-item data-group="document">
+        
+          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+            <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#0421541a;">
+              <img src="public/icons/airplane.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+              
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                
+                <p class="truncate text-sm text-subtle">雇用契約書が承認されました</p>
+              </div>
+              
+              <time class="text-xs text-subtle-light">1週間前</time>
+            </div>
+          </button>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  
+  <a href="CrewNest Home.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+    
+  </a>
+  <a href="CrewNest Quests.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+    
+  </a>
+  <a href="CrewNest Documents.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">書類提出</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </a>
+  <a href="CrewNest Expense Claims.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">経費精算</span>
+    
+  </a>
+</nav>
+<script>
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-tabgroup="nf"]');
+  if (!b) return;
+  document.querySelectorAll('[data-tabgroup="nf"]').forEach(function(x){x.classList.remove('is-active');});
+  b.classList.add('is-active');
+  var key = b.getAttribute('data-tabkey');
+  document.querySelectorAll('#notif-list > [data-item]').forEach(function(li){
+    li.style.display = (key === 'all' || li.getAttribute('data-group') === key) ? '' : 'none';
+  });
+});
+</script>
+<script src="user-menu.js"></script>
+</body>
+</html>

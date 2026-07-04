@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — 経費精算</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --sidebar-w: 280px; --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  .mask { display:block; background-color: currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+  [data-panel]:not(.active) { display: none !important; }
+  .tab-btn { position:relative; display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; border-bottom:2px solid transparent; color: var(--color-subtle); transition: color .15s, border-color .15s; cursor:pointer; background:none; }
+  .tab-btn:hover { border-color: var(--color-border); color:#333; }
+  .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
+  .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.375rem; cursor:pointer; border-right:3px solid transparent; }
+  .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); font-weight:700; }
+</style>
+</head>
+<body>
+
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/icons/apply.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">経費精算</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </button>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <button type="button" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </button>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      
+      <a href="CrewNest Home.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+        
+      </a>
+      <div>
+        
+      <a href="CrewNest My Achievements.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+        <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[0fr]" style="overflow:hidden;">
+          <div class="min-h-0 overflow-hidden">
+            
+        <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
+          
+          <a href="CrewNest My Achievements.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">承認状況</span>
+            <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+          </a>
+          <a href="CrewNest Quests.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">クエストボード</span>
+            
+          </a>
+          <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">ランキング</span>
+            
+          </a>
+        </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="CrewNest Proposals.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+        
+      </a>
+      
+      <a href="CrewNest Documents.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      
+      <a href="CrewNest Expense Claims.html" aria-current="page" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+        
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+      
+      <a href="CrewNest Admin.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+        
+      </a>
+    </div>
+  </nav>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+
+    <div class="flex min-h-0 flex-col">
+      <h1 class="mb-4 hidden text-2xl font-bold text-text md:block">経費精算</h1>
+
+      <div class="rounded-lg border border-primary/20 bg-primary-lightest p-5 mb-4">
+        <p class="text-xs font-medium text-primary/80">未精算合計</p>
+        <div class="mt-1 flex items-end gap-3">
+          <span class="text-3xl font-bold text-primary">¥24,800</span>
+          <span class="text-sm text-subtle mb-1">未精算 3件</span>
+        </div>
+      </div>
+
+      <div class="flex gap-1 border-b border-border">
+        <button type="button" data-tabgroup="primary" data-tabkey="pending" class="tab-btn tab-btn-primary is-active">精算待ち<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button>
+        <button type="button" data-tabgroup="primary" data-tabkey="requests" class="tab-btn tab-btn-primary">受領依頼<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
+        <button type="button" data-tabgroup="primary" data-tabkey="settled" class="tab-btn tab-btn-primary">精算済み</button>
+      </div>
+
+      <div data-panel="pending" class="active mt-4 flex flex-col gap-3">
+        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div class="min-w-0">
+            <p class="font-bold text-text">交通費</p>
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle">
+              <span>利用日 2026/06/28</span>
+              <span class="rounded-full px-2 py-0.5 font-medium bg-warning-surface text-warning border border-warning-border">精算待ち</span>
+            </div>
+          </div>
+          <span class="shrink-0 text-lg font-bold text-primary">¥1,200</span>
+        </div>
+        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div class="min-w-0">
+            <p class="font-bold text-text">会議費</p>
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle">
+              <span>利用日 2026/06/20</span>
+              <span class="rounded-full px-2 py-0.5 font-medium bg-info-surface text-info border border-info-border">受領依頼中</span>
+            </div>
+          </div>
+          <span class="shrink-0 text-lg font-bold text-primary">¥3,600</span>
+        </div>
+        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div class="min-w-0">
+            <p class="font-bold text-text">消耗品費</p>
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle">
+              <span>利用日 2026/06/15</span>
+              <span class="rounded-full px-2 py-0.5 font-medium bg-warning-surface text-warning border border-warning-border">精算待ち</span>
+            </div>
+          </div>
+          <span class="shrink-0 text-lg font-bold text-primary">¥20,000</span>
+        </div></div>
+      <div data-panel="requests" class="mt-4 flex flex-col gap-3">
+        <div class="flex items-center gap-3 rounded-lg border border-accent bg-accent-light p-4 shadow-sm">
+          <input type="checkbox" class="h-5 w-5 shrink-0 accent-primary">
+          <div class="flex flex-1 items-center justify-between gap-3">
+            <div class="min-w-0">
+              <p class="font-bold text-primary">¥3,600(1件)</p>
+              <p class="mt-0.5 text-xs text-subtle">2026/07/05 精算予定 ・ 依頼元 経理部</p>
+            </div>
+            <span class="inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-4 text-sm font-medium text-white">確認する</span>
+          </div>
+        </div></div>
+      <div data-panel="settled" class="mt-4">
+        <div class="flex flex-col gap-3 md:hidden">
+        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div class="min-w-0"><p class="font-bold text-text">交通費</p>
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle"><span>利用日 2026/05/10</span><span>銀行振込</span><span>精算日 2026/05/25</span></div>
+          </div>
+          <span class="shrink-0 text-lg font-bold text-primary">¥980</span>
+        </div>
+        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div class="min-w-0"><p class="font-bold text-text">会議費</p>
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle"><span>利用日 2026/04/22</span><span>銀行振込</span><span>精算日 2026/05/25</span></div>
+          </div>
+          <span class="shrink-0 text-lg font-bold text-primary">¥5,400</span>
+        </div>
+        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div class="min-w-0"><p class="font-bold text-text">交通費</p>
+            <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle"><span>利用日 2026/03/02</span><span>現金</span><span>精算日 2026/03/10</span></div>
+          </div>
+          <span class="shrink-0 text-lg font-bold text-primary">¥640</span>
+        </div></div>
+        <div class="hidden md:block overflow-x-auto rounded-lg border border-border bg-background-light">
+          <table class="w-full text-sm">
+            <thead><tr class="border-b border-border text-xs text-subtle">
+              <th class="px-4 py-2.5 text-left font-medium">経費科目</th><th class="px-4 py-2.5 text-left font-medium">利用日</th>
+              <th class="px-4 py-2.5 text-left font-medium">精算方法</th><th class="px-4 py-2.5 text-left font-medium">精算日</th>
+              <th class="px-4 py-2.5 text-right font-medium">金額</th></tr></thead>
+            <tbody><tr class="border-b border-border last:border-b-0">
+              <td class="px-4 py-2.5 font-medium text-text">交通費</td><td class="px-4 py-2.5 text-subtle">2026/05/10</td>
+              <td class="px-4 py-2.5 text-subtle">銀行振込</td><td class="px-4 py-2.5 text-subtle">2026/05/25</td>
+              <td class="px-4 py-2.5 text-right font-bold text-primary">¥980</td></tr><tr class="border-b border-border last:border-b-0">
+              <td class="px-4 py-2.5 font-medium text-text">会議費</td><td class="px-4 py-2.5 text-subtle">2026/04/22</td>
+              <td class="px-4 py-2.5 text-subtle">銀行振込</td><td class="px-4 py-2.5 text-subtle">2026/05/25</td>
+              <td class="px-4 py-2.5 text-right font-bold text-primary">¥5,400</td></tr><tr class="border-b border-border last:border-b-0">
+              <td class="px-4 py-2.5 font-medium text-text">交通費</td><td class="px-4 py-2.5 text-subtle">2026/03/02</td>
+              <td class="px-4 py-2.5 text-subtle">現金</td><td class="px-4 py-2.5 text-subtle">2026/03/10</td>
+              <td class="px-4 py-2.5 text-right font-bold text-primary">¥640</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  
+  <a href="CrewNest Home.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+    
+  </a>
+  <a href="CrewNest Quests.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+    
+  </a>
+  <a href="CrewNest Documents.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">書類提出</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </a>
+  <a href="CrewNest Expense Claims.html" aria-current="page" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-primary">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;">
+    <span class="whitespace-nowrap">経費精算</span>
+    
+  </a>
+</nav>
+<script>
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-tabgroup]');
+  if (!b) return;
+  var group = b.getAttribute('data-tabgroup');
+  if (group === 'primary') {
+    document.querySelectorAll('[data-tabgroup="primary"]').forEach(function(x){ x.classList.remove('is-active'); });
+    b.classList.add('is-active');
+    var key = b.getAttribute('data-tabkey');
+    document.querySelectorAll('[data-panel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-panel') === key); });
+    return;
+  }
+  var panel = b.closest('[data-panel]') || document;
+  panel.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(x){ x.classList.remove('is-active'); });
+  b.classList.add('is-active');
+  var skey = b.getAttribute('data-tabkey');
+  panel.querySelectorAll('[data-item]').forEach(function(item){
+    var st = item.getAttribute('data-status');
+    item.style.display = (skey === 'ALL' || st === skey) ? '' : 'none';
+  });
+});
+</script>
+<script src="user-menu.js"></script>
+</body>
+</html>
