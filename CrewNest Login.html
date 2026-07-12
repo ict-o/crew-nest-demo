@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — ログイン</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0' },
+          danger: { DEFAULT: '#995C6B', surface: '#F5EDEF', border: '#E5CDD3' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  html, body { background: #042154; }
+  body { color: #ffffff; font-family: Arial, Helvetica, sans-serif; }
+  a { color: #C6A75E; }
+  a:hover { color: #E8C66A; }
+</style>
+</head>
+<body>
+<div class="flex min-h-screen items-center justify-center bg-primary">
+  <div class="w-full max-w-md rounded-2xl border border-white/10 bg-primary p-8 shadow-md">
+    <div class="mb-8 text-center">
+      <img src="public/images/logo.png" alt="Crew Nest" class="mx-auto h-40 rounded-2xl bg-primary p-4">
+      <p class="mt-3 text-3xl font-bold tracking-widest text-white">CREW NEST</p>
+    </div>
+
+    <!-- ステップ1: メールアドレス -->
+    <form data-login-step="email" onsubmit="return false;">
+      <label for="login-email" class="mb-1 block text-sm font-medium text-white/75">メールアドレス</label>
+      <input id="login-email" type="email" autocomplete="email" autofocus required class="w-full rounded-lg border border-white/25 bg-white/[0.08] px-3 py-3 text-base text-white placeholder:text-white/40 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/60">
+      <div data-login-error="email" role="alert" class="mt-2 rounded-lg border border-danger-border bg-danger-surface p-3 text-xs text-danger" style="display:none;"></div>
+      <button type="submit" data-login-send class="mt-4 w-full rounded-full bg-accent px-6 py-3.5 text-base font-bold text-primary transition-colors hover:bg-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 disabled:cursor-not-allowed disabled:opacity-[0.38]">ログイン</button>
+    </form>
+
+    <!-- ステップ2: ログインコード -->
+    <form data-login-step="code" onsubmit="return false;" style="display:none;">
+      <p class="mb-3 text-center text-sm leading-relaxed text-white/70"><span data-login-sent-email>tanaka@ict-o.com</span> 宛にログインコードを送信しました</p>
+      <label for="login-code" class="sr-only">ログインコード</label>
+      <input id="login-code" type="text" inputmode="numeric" autocomplete="one-time-code" required maxlength="8" class="w-full rounded-lg border border-white/25 bg-white/[0.08] px-3 py-3 text-center text-xl tracking-[0.3em] text-white placeholder:text-white/40 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/60">
+      <div data-login-error="code" role="alert" class="mt-2 rounded-lg border border-danger-border bg-danger-surface p-3 text-xs text-danger" style="display:none;"></div>
+      <button type="submit" data-login-submit disabled class="mt-4 w-full rounded-full bg-accent px-6 py-3.5 text-base font-bold text-primary transition-colors hover:bg-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 disabled:cursor-not-allowed disabled:opacity-[0.38]">ログイン</button>
+      <div class="mt-4 flex justify-center gap-5 text-sm">
+        <button type="button" data-login-resend class="text-white/65 underline disabled:no-underline disabled:opacity-[0.38]">コードを再送</button>
+        <button type="button" data-login-back class="text-white/65 underline">メールアドレスを変更</button>
+      </div>
+    </form>
+
+    <!-- 他のアカウントでログイン -->
+    <div class="mt-6 rounded-xl border border-white/[0.14] bg-white/[0.04] p-4">
+      <p class="mb-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">他のアカウントでログイン</p>
+      <a href="CrewNest Home.html" class="group flex w-full items-center justify-center gap-3 rounded-full border-2 border-accent/60 bg-accent/10 px-6 py-3 text-sm font-medium text-white transition-colors hover:border-accent hover:bg-accent/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60">
+        <svg class="h-5 w-5 transition-transform group-hover:scale-110" viewBox="0 -960 960 960" fill="currentColor">
+          <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"></path>
+        </svg>
+        ゲストでログイン
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var emailForm = document.querySelector('[data-login-step="email"]');
+  var codeForm = document.querySelector('[data-login-step="code"]');
+  var emailInput = document.getElementById('login-email');
+  var codeInput = document.getElementById('login-code');
+  var submitBtn = document.querySelector('[data-login-submit]');
+  var resendBtn = document.querySelector('[data-login-resend]');
+  var resendWait = 0;
+  var timer = null;
+
+  function startResendTimer(){
+    resendWait = 60;
+    if (timer) clearInterval(timer);
+    resendBtn.disabled = true;
+    timer = setInterval(function(){
+      resendWait--;
+      if (resendWait <= 0) {
+        clearInterval(timer);
+        resendBtn.disabled = false;
+        resendBtn.textContent = 'コードを再送';
+      } else {
+        resendBtn.textContent = 'コードを再送 (' + resendWait + '秒)';
+      }
+    }, 1000);
+  }
+  function showError(key, msg){
+    var el = document.querySelector('[data-login-error="' + key + '"]');
+    el.textContent = msg;
+    el.style.display = msg ? '' : 'none';
+  }
+  emailForm.addEventListener('submit', function(){
+    var email = emailInput.value.trim();
+    if (!email) { showError('email', 'メールアドレスを入力してください'); return; }
+    showError('email', '');
+    document.querySelector('[data-login-sent-email]').textContent = email;
+    emailForm.style.display = 'none';
+    codeForm.style.display = '';
+    codeInput.value = '';
+    submitBtn.disabled = true;
+    codeInput.focus();
+    startResendTimer();
+  });
+  codeInput.addEventListener('input', function(){
+    codeInput.value = codeInput.value.replace(/\D/g, '');
+    submitBtn.disabled = codeInput.value.length < 6;
+  });
+  codeForm.addEventListener('submit', function(){
+    if (codeInput.value.length < 6) return;
+    window.location.href = 'CrewNest Home.html';
+  });
+  resendBtn.addEventListener('click', function(){ if (!resendBtn.disabled) startResendTimer(); });
+  document.querySelector('[data-login-back]').addEventListener('click', function(){
+    codeForm.style.display = 'none';
+    emailForm.style.display = '';
+    showError('code', '');
+    emailInput.focus();
+  });
+})();
+</script>
+</body>
+</html>

@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CREW NEST — ホーム</title>
+<template id="__bundler_thumbnail" data-bg-color="#042154">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#042154"/>
+    <circle cx="50" cy="50" r="22" fill="none" stroke="#C6A75E" stroke-width="4"/>
+    <text x="50" y="58" font-family="Arial" font-size="20" font-weight="900" text-anchor="middle" fill="#C6A75E">CN</text>
+  </svg>
+</template>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -716,8 +723,14 @@
     <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">経費精算</span>
   </a>
+
+  <a href="CrewNest Admin.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/management.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">管理</span>
+  </a>
 </nav>
 
+<script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
 </body>
 </html>

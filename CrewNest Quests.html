@@ -50,6 +50,8 @@
   .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
   .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
   .ring-gauge { border-radius:9999px; display:inline-block; }
+  .tab-btn.is-active > span.rounded-full { background-color: #EEF3FF !important; color: #042154 !important; font-weight: 500; }
+
   .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.375rem; cursor:pointer; border-right:3px solid transparent; }
   .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); font-weight:700; }
 </style>
@@ -158,7 +160,7 @@
   </div>
 </aside>
 <div class="md:ml-[280px]">
-  <main class="mx-auto max-w-[1600px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+4.5rem)] md:pb-16 pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
 
     <div class="flex min-h-0 flex-col">
       <div class="hidden items-center justify-between md:mb-4 md:flex">
@@ -179,125 +181,125 @@
         <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end border-b border-border pb-1">
           <div class="flex-1 flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="qcat" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">8</span></button><button type="button" data-tabgroup="qcat" data-tabkey="work" class="tab-btn tab-btn-secondary ">日々の業務<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="event" class="tab-btn tab-btn-secondary ">会社行事<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button><button type="button" data-tabgroup="qcat" data-tabkey="growth" class="tab-btn tab-btn-secondary ">自己啓発<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button></div>
           <div class="flex shrink-0 items-center gap-2">
-            <input type="search" placeholder="検索" class="w-36 rounded-lg border border-border bg-background-light py-1.5 px-3 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <div class="relative w-36"><svg viewBox="0 -960 960 960" width="13" height="13" fill="#8A99B8" aria-hidden="true" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"></path></svg><input type="search" placeholder="検索" class="w-full rounded-lg border border-border bg-background-light py-1.5 pl-7 pr-3 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50"></div>
             <div class="flex gap-1"><button type="button" data-tabgroup="qstatus" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-tabgroup="qstatus" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中</button><button type="button" data-tabgroup="qstatus" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">達成済み</button></div>
           </div>
         </div>
-        <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-    <div data-item data-cat="work" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+        <div class="mt-4 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
+    <div data-open-slide="quest-detail" data-item data-cat="work" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">日報を提出する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">10 pt</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">10 pt</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">その日の業務内容と進捗を報告する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
         
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">1日1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">1日1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 144deg, var(--color-border) 0deg);" title="40%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 72deg, var(--color-border) 0deg);" title="20%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 144deg, var(--color-border) 0deg);" title="40%"></span></span>
         <span class="text-[11px] font-bold text-primary">234人達成</span></div>
       
     </div>
-    <div data-item data-cat="work" data-status="PENDING" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+    <div data-open-slide="quest-detail" data-item data-cat="work" data-status="PENDING" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">月次目標を達成する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">月間の個人目標を達成し報告する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
-        <span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning">申請中</span>
+        <span class="whitespace-nowrap rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning">申請中</span>
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">月1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">月1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 216deg, var(--color-border) 0deg);" title="60%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 108deg, var(--color-border) 0deg);" title="30%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5B7FC0 216deg, var(--color-border) 0deg);" title="60%"></span></span>
         <span class="text-[11px] font-bold text-primary">88人達成</span></div>
       
     </div>
-    <div data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
+    <div data-open-slide="quest-detail" data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">忘年会に参加する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">300 pt</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">300 pt</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">年末の全社イベントに参加する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
         
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 252deg, var(--color-border) 0deg);" title="70%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 252deg, var(--color-border) 0deg);" title="70%"></span></span>
         <span class="text-[11px] font-bold text-primary">89人達成</span></div>
       
     </div>
-    <div data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
+    <div data-open-slide="quest-detail" data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">社内表彰式に参加する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">150 pt</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">150 pt</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">年次の社内表彰式に出席する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
         
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">年1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">年1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span></span>
         <span class="text-[11px] font-bold text-primary">120人達成</span></div>
       
     </div>
-    <div data-item data-cat="growth" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
+    <div data-open-slide="quest-detail" data-item data-cat="growth" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">社内勉強会に参加する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">200 pt</span><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">80 xp</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">200 pt</span><span class="whitespace-nowrap rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">80 xp</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">月次の社内勉強会に参加し学びを共有する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
         
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">無制限</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">無制限</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 108deg, var(--color-border) 0deg);" title="30%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 36deg, var(--color-border) 0deg);" title="10%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 108deg, var(--color-border) 0deg);" title="30%"></span></span>
         <span class="text-[11px] font-bold text-primary">45人達成</span></div>
       
     </div>
-    <div data-item data-cat="growth" data-status="APPROVED" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg opacity-60 grayscale" style="border-left-color:#5A9E74;">
+    <div data-open-slide="quest-detail" data-item data-cat="growth" data-status="APPROVED" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg opacity-60 grayscale" style="border-left-color:#5A9E74;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">資格試験に合格する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">1,000 pt</span><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">300 xp</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">1,000 pt</span><span class="whitespace-nowrap rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">300 xp</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">業務に関連する資格試験に合格する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
         
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 72deg, var(--color-border) 0deg);" title="20%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 72deg, var(--color-border) 0deg);" title="20%"></span></span>
         <span class="text-[11px] font-bold text-primary">12人達成</span></div>
       
     </div>
-    <div data-item data-cat="growth" data-status="RETURNED" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
+    <div data-open-slide="quest-detail" data-item data-cat="growth" data-status="RETURNED" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5A9E74;color:#5A9E74;background-color:#5A9E7418;">自己啓発</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">ISO研修を受講する</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">400 pt</span><span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">100 xp</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">400 pt</span><span class="whitespace-nowrap rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">100 xp</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">情報セキュリティ研修を受講し理解度テストに合格する</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
         
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-semibold text-subtle">差し戻し</span>
-        <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-semibold text-subtle">差し戻し</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 144deg, var(--color-border) 0deg);" title="40%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#5A9E74 144deg, var(--color-border) 0deg);" title="40%"></span></span>
         <span class="text-[11px] font-bold text-primary">30人達成</span></div>
       
     </div>
-    <div data-item data-cat="work" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+    <div data-open-slide="quest-detail" data-item data-cat="work" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
-        <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">毎日ログインする</h3>
-        <span class="flex shrink-0 items-center gap-1"><span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">5 pt</span></span>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">5 pt</span></span>
       </div>
       <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">ポータルに毎日ログインする</p></div>
       <div class="flex items-center gap-1.5 px-4 pb-3">
-        <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">自動承認</span>
+        <span class="whitespace-nowrap rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[10px] font-semibold text-success">自動承認</span>
         <span class="text-[11px] font-bold text-primary">80%</span>
         <span class="ml-auto text-[11px] font-bold text-primary">512人達成</span></div>
       <div class="px-4 pb-3"><div class="h-1.5 w-full rounded-full bg-border overflow-hidden"><div class="h-full rounded-full bg-primary" style="width:80%;"></div></div></div>
@@ -535,6 +537,11 @@
     <span class="whitespace-nowrap">経費精算</span>
     
   </a>
+
+  <a href="CrewNest Admin.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/management.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">管理</span>
+  </a>
 </nav>
 <script>
 function filterQuests(){
@@ -557,6 +564,10 @@ function showView(key){
   document.querySelectorAll('[data-view]').forEach(function(v){v.classList.toggle('active', v.getAttribute('data-view-key')===key);});
   document.querySelector('[data-toggle-label]').textContent = key==='ranking' ? 'クエストボード' : 'ランキング';
   document.querySelector('[data-boardtitle-text]').textContent = key==='ranking' ? 'ランキング' : 'クエストボード';
+  var pg = document.querySelector('[data-quest-pagination]');
+  if (pg) pg.style.display = key==='ranking' ? 'none' : '';
+  var fi = document.querySelector('[data-fab-toggle-icon]');
+  if (fi) fi.src = key==='ranking' ? 'public/icons/quest.png' : 'public/icons/crown.svg';
 }
 function toggleQuestView(){
   var current = document.querySelector('[data-view].active').getAttribute('data-view-key');
@@ -572,6 +583,273 @@ window.addEventListener('hashchange', function(){
   showView(location.hash === '#ranking' ? 'ranking' : 'board');
 });
 </script>
+
+<div data-quest-pagination class="fixed bottom-[var(--bottom-nav-h)] left-0 right-0 z-40 flex items-center justify-between border-t border-border bg-background-light px-4 py-2 text-sm text-subtle md:bottom-0 md:left-[280px]">
+  <div class="flex items-center gap-1">
+    <button type="button" aria-label="前のページ" disabled class="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] disabled:opacity-[0.38]">＜</button>
+    <span class="min-w-[5rem] text-center">1 / 1 ページ</span>
+    <button type="button" aria-label="次のページ" disabled class="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] disabled:opacity-[0.38]">＞</button>
+  </div>
+  <select aria-label="1ページあたりの表示件数" class="w-24 shrink-0 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+    <option selected>15 件</option><option>30 件</option><option>100 件</option>
+  </select>
+</div>
+<div class="fixed right-4 z-50 flex flex-col gap-3 md:hidden" style="bottom: calc(var(--bottom-nav-h) + 3.75rem);">
+  <button type="button" onclick="toggleQuestView()" aria-label="ランキング" class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md transition-colors hover:bg-primary-mid">
+    <img data-fab-toggle-icon src="public/icons/crown.svg" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+  </button>
+  <a href="CrewNest My Achievements.html" aria-label="承認状況" class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md transition-colors hover:bg-primary-mid">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+  </a>
+</div>
+
+<div data-slide="quest-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="クエスト詳細">
+  <div class="flex shrink-0 justify-end px-4 pt-3"><button type="button" data-close-slide="quest-detail" aria-label="詳細パネルを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
+  <div class="flex-1 overflow-y-auto px-5 pb-4">
+      <div class="mb-4">
+        <div class="mb-3 flex items-center justify-between">
+          <span data-f="cat" class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
+            <span data-f="catdot" class="h-1.5 w-1.5 rounded-full"></span><span data-f="catname"></span>
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span data-f="pt" class="rounded-full border border-primary bg-primary-lightest px-2.5 py-0.5 text-[11px] font-bold text-primary"></span>
+            <span data-f="xp" class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-[11px] font-bold text-success"></span>
+          </span>
+        </div>
+        <h2 data-f="title" class="mb-2 text-xl font-bold leading-snug text-text"></h2>
+      </div>
+      <div class="mb-4" data-f="gauge-normal">
+        <div class="mb-1 flex items-baseline justify-between gap-2">
+          <span data-f="gaugelabel" class="shrink-0 text-xs font-semibold text-subtle"></span>
+          <span class="text-[11px] text-subtle"><span class="font-bold text-primary">46%</span></span>
+        </div>
+        <div class="h-2 w-full overflow-hidden rounded-full bg-border"><div class="h-full rounded-full bg-accent" style="width:46%;"></div></div>
+        <p class="mt-1 text-[10px] text-subtle">承認済み 18,400pt / 申請中 3,150pt / 上限 40,000pt</p>
+      </div>
+      <div class="mb-4" data-f="gauge-auto" style="display:none;">
+        <div class="mb-1 flex items-baseline justify-between gap-2">
+          <span class="shrink-0 text-xs font-semibold text-subtle">達成状況</span>
+          <span data-f="autopct" class="text-[11px] font-bold text-primary"></span>
+        </div>
+        <div class="h-2 w-full overflow-hidden rounded-full bg-border"><div data-f="autobar" class="h-full rounded-full bg-primary"></div></div>
+        <p data-f="autocaption" class="mt-1 text-[10px] text-subtle"></p>
+      </div>
+      <hr class="border-border">
+      <div class="my-4">
+        <p class="mb-2 text-[10px] font-bold uppercase tracking-widest text-subtle">獲得条件</p>
+        <p data-f="content" class="whitespace-pre-line text-sm leading-relaxed text-text"></p>
+      </div>
+      <div class="mb-4 grid grid-cols-2 gap-2">
+        <div class="rounded-lg bg-background px-3 py-2.5">
+          <p class="mb-1 text-[9px] font-medium text-subtle">頻度</p>
+          <p data-f="freq" class="text-sm font-semibold text-text"></p>
+        </div>
+        <button type="button" class="rounded-lg border border-primary/15 bg-background px-3 py-2.5 text-left">
+          <p class="mb-1 text-[9px] font-medium text-subtle">達成者</p>
+          <p class="flex items-center gap-1 text-sm font-semibold text-primary"><span data-f="achievers"></span>を見る<svg viewBox="0 0 24 24" fill="currentColor" class="h-[13px] w-[13px] text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg></p>
+        </button>
+        <div class="rounded-lg bg-background px-3 py-2.5">
+          <p class="mb-1 text-[9px] font-medium text-subtle">申告期限</p>
+          <p data-f="deadline" class="text-sm font-semibold text-text">7/13</p>
+        </div>
+        <div class="rounded-lg bg-background px-3 py-2.5">
+          <p class="mb-1 text-[9px] font-medium text-subtle">添付</p>
+          <p class="text-sm font-semibold text-text">任意</p>
+        </div>
+      </div>
+      <hr class="border-border">
+      <div class="my-4">
+        <div data-f="state-pending" style="display:none;" class="mb-2 flex items-center gap-3 rounded-lg border border-warning-border bg-warning-surface p-3">
+          <div class="min-w-0 flex-1"><p class="text-xs font-bold text-warning">申告中（承認待ち）</p><p class="text-[11px] text-subtle">6月</p></div>
+          <button type="button" class="shrink-0 rounded-full border border-warning-border bg-background-light px-3 py-1 text-[11px] font-medium text-warning transition-colors hover:bg-warning-surface/70">取り下げる</button>
+        </div>
+        <div data-f="state-returned" style="display:none;" class="mb-4 flex items-center gap-3 rounded-lg border border-border bg-background p-3">
+          <div class="flex-1"><p class="text-xs font-bold text-subtle">差し戻し</p><p class="mt-0.5 text-[11px] text-subtle">証明書類の添付をお願いします</p></div>
+        </div>
+        <div data-f="state-approved" style="display:none;" class="flex items-center gap-3 rounded-lg border border-success-border bg-success-surface p-3">
+          <div><p class="text-xs font-bold text-success">承認済み</p><p class="text-[11px] text-subtle">2026/06/28 達成・承認済み</p></div>
+        </div>
+      </div>
+      <div data-f="form" style="display:none;">
+        <label class="mb-3 flex flex-col gap-1">
+          <span class="text-xs font-semibold text-text">コメント（任意）</span>
+          <textarea rows="3" placeholder="承認者へのコメント" class="resize-none rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        </label>
+        <div class="flex flex-col gap-1">
+          <span class="text-xs font-semibold text-text">添付ファイル（任意）</span>
+          <button type="button" class="flex items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-background px-3 py-3 text-sm text-subtle transition-colors hover:bg-black/[0.04]">
+            <svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>ファイルを選択
+          </button>
+        </div>
+      </div></div>
+  <div class="shrink-0 border-t border-border bg-background-light px-5 py-3">
+        <p data-f="footcaption" class="mb-2 text-center text-[11px] text-subtle">提出後、上長が承認するとポイントが付与されます。</p>
+        <button type="button" data-f="footbtn" class="flex w-full items-center justify-center gap-2 rounded-full border border-warning-border bg-warning-surface py-3.5 text-sm font-medium text-warning transition-colors hover:bg-warning-surface/80 disabled:cursor-not-allowed disabled:opacity-[0.38]">
+          <span data-f="footlabel">申請する</span>
+          <svg data-f="footicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+        </button></div>
+</div>
+<div data-slide="quest-detail" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="クエスト詳細">
+  <div class="sticky top-0 z-10 flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
+    <button type="button" data-close-slide="quest-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background">
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>クエスト
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-4 pb-4 pt-3">
+      <div class="mb-4">
+        <div class="mb-3 flex items-center justify-between">
+          <span data-f="cat" class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
+            <span data-f="catdot" class="h-1.5 w-1.5 rounded-full"></span><span data-f="catname"></span>
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span data-f="pt" class="rounded-full border border-primary bg-primary-lightest px-2.5 py-0.5 text-[11px] font-bold text-primary"></span>
+            <span data-f="xp" class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-[11px] font-bold text-success"></span>
+          </span>
+        </div>
+        <h2 data-f="title" class="mb-2 text-xl font-bold leading-snug text-text"></h2>
+      </div>
+      <div class="mb-4" data-f="gauge-normal">
+        <div class="mb-1 flex items-baseline justify-between gap-2">
+          <span data-f="gaugelabel" class="shrink-0 text-xs font-semibold text-subtle"></span>
+          <span class="text-[11px] text-subtle"><span class="font-bold text-primary">46%</span></span>
+        </div>
+        <div class="h-2 w-full overflow-hidden rounded-full bg-border"><div class="h-full rounded-full bg-accent" style="width:46%;"></div></div>
+        <p class="mt-1 text-[10px] text-subtle">承認済み 18,400pt / 申請中 3,150pt / 上限 40,000pt</p>
+      </div>
+      <div class="mb-4" data-f="gauge-auto" style="display:none;">
+        <div class="mb-1 flex items-baseline justify-between gap-2">
+          <span class="shrink-0 text-xs font-semibold text-subtle">達成状況</span>
+          <span data-f="autopct" class="text-[11px] font-bold text-primary"></span>
+        </div>
+        <div class="h-2 w-full overflow-hidden rounded-full bg-border"><div data-f="autobar" class="h-full rounded-full bg-primary"></div></div>
+        <p data-f="autocaption" class="mt-1 text-[10px] text-subtle"></p>
+      </div>
+      <hr class="border-border">
+      <div class="my-4">
+        <p class="mb-2 text-[10px] font-bold uppercase tracking-widest text-subtle">獲得条件</p>
+        <p data-f="content" class="whitespace-pre-line text-sm leading-relaxed text-text"></p>
+      </div>
+      <div class="mb-4 grid grid-cols-2 gap-2">
+        <div class="rounded-lg bg-background px-3 py-2.5">
+          <p class="mb-1 text-[9px] font-medium text-subtle">頻度</p>
+          <p data-f="freq" class="text-sm font-semibold text-text"></p>
+        </div>
+        <button type="button" class="rounded-lg border border-primary/15 bg-background px-3 py-2.5 text-left">
+          <p class="mb-1 text-[9px] font-medium text-subtle">達成者</p>
+          <p class="flex items-center gap-1 text-sm font-semibold text-primary"><span data-f="achievers"></span>を見る<svg viewBox="0 0 24 24" fill="currentColor" class="h-[13px] w-[13px] text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg></p>
+        </button>
+        <div class="rounded-lg bg-background px-3 py-2.5">
+          <p class="mb-1 text-[9px] font-medium text-subtle">申告期限</p>
+          <p data-f="deadline" class="text-sm font-semibold text-text">7/13</p>
+        </div>
+        <div class="rounded-lg bg-background px-3 py-2.5">
+          <p class="mb-1 text-[9px] font-medium text-subtle">添付</p>
+          <p class="text-sm font-semibold text-text">任意</p>
+        </div>
+      </div>
+      <hr class="border-border">
+      <div class="my-4">
+        <div data-f="state-pending" style="display:none;" class="mb-2 flex items-center gap-3 rounded-lg border border-warning-border bg-warning-surface p-3">
+          <div class="min-w-0 flex-1"><p class="text-xs font-bold text-warning">申告中（承認待ち）</p><p class="text-[11px] text-subtle">6月</p></div>
+          <button type="button" class="shrink-0 rounded-full border border-warning-border bg-background-light px-3 py-1 text-[11px] font-medium text-warning transition-colors hover:bg-warning-surface/70">取り下げる</button>
+        </div>
+        <div data-f="state-returned" style="display:none;" class="mb-4 flex items-center gap-3 rounded-lg border border-border bg-background p-3">
+          <div class="flex-1"><p class="text-xs font-bold text-subtle">差し戻し</p><p class="mt-0.5 text-[11px] text-subtle">証明書類の添付をお願いします</p></div>
+        </div>
+        <div data-f="state-approved" style="display:none;" class="flex items-center gap-3 rounded-lg border border-success-border bg-success-surface p-3">
+          <div><p class="text-xs font-bold text-success">承認済み</p><p class="text-[11px] text-subtle">2026/06/28 達成・承認済み</p></div>
+        </div>
+      </div>
+      <div data-f="form" style="display:none;">
+        <label class="mb-3 flex flex-col gap-1">
+          <span class="text-xs font-semibold text-text">コメント（任意）</span>
+          <textarea rows="3" placeholder="承認者へのコメント" class="resize-none rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        </label>
+        <div class="flex flex-col gap-1">
+          <span class="text-xs font-semibold text-text">添付ファイル（任意）</span>
+          <button type="button" class="flex items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-background px-3 py-3 text-sm text-subtle transition-colors hover:bg-black/[0.04]">
+            <svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>ファイルを選択
+          </button>
+        </div>
+      </div></div>
+  <div class="shrink-0 border-t border-border bg-background-light px-4 pb-3 pt-3">
+        <p data-f="footcaption" class="mb-2 text-center text-[11px] text-subtle">提出後、上長が承認するとポイントが付与されます。</p>
+        <button type="button" data-f="footbtn" class="flex w-full items-center justify-center gap-2 rounded-full border border-warning-border bg-warning-surface py-3.5 text-sm font-medium text-warning transition-colors hover:bg-warning-surface/80 disabled:cursor-not-allowed disabled:opacity-[0.38]">
+          <span data-f="footlabel">申請する</span>
+          <svg data-f="footicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+        </button></div>
+</div>
+<script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
+<script>
+document.addEventListener('slidewillopen', function(ev){
+  if (ev.detail.id !== 'quest-detail') return;
+  var card = ev.detail.trigger;
+  function all(sel){ return document.querySelectorAll('[data-slide="quest-detail"] ' + sel); }
+  var spans = Array.prototype.slice.call(card.querySelectorAll('span'));
+  var catPill = card.querySelector('span[style]');
+  var catColor = catPill ? catPill.style.color : '#5C6B8A';
+  all('[data-f="catname"]').forEach(function(n){ n.textContent = catPill ? catPill.textContent.trim() : ''; });
+  all('[data-f="cat"]').forEach(function(n){ n.style.color = catColor; n.style.backgroundColor = catPill ? catPill.style.backgroundColor : '#F0F1F4'; });
+  all('[data-f="catdot"]').forEach(function(n){ n.style.backgroundColor = catColor; });
+  var titleEl = card.querySelector('h3');
+  all('[data-f="title"]').forEach(function(n){ n.textContent = titleEl ? titleEl.textContent.trim() : ''; });
+  var ptSpan = spans.filter(function(s){ return /pt$/.test(s.textContent.trim()); })[0];
+  var xpSpan = spans.filter(function(s){ return /xp$/.test(s.textContent.trim()); })[0];
+  all('[data-f="pt"]').forEach(function(n){ n.textContent = ptSpan ? ptSpan.textContent.trim() : ''; });
+  all('[data-f="xp"]').forEach(function(n){ n.textContent = xpSpan ? xpSpan.textContent.trim() : ''; n.style.display = xpSpan ? '' : 'none'; });
+  var descEl = card.querySelector('p');
+  all('[data-f="content"]').forEach(function(n){ n.textContent = descEl ? descEl.textContent.trim() : ''; });
+  var freqSpan = spans.filter(function(s){ return /^(1日1回|月1回|年1回|生涯1回|無制限)$/.test(s.textContent.trim()); })[0];
+  all('[data-f="freq"]').forEach(function(n){ n.textContent = freqSpan ? freqSpan.textContent.trim() : '無制限'; });
+  var achMatch = card.textContent.match(/([\d,]+)人達成/);
+  all('[data-f="achievers"]').forEach(function(n){ n.textContent = achMatch ? achMatch[1] + '人' : '0人'; });
+  all('[data-f="gaugelabel"]').forEach(function(n){ n.textContent = (catPill ? catPill.textContent.trim() : '') + ' 達成状況'; });
+
+  var isAuto = card.textContent.indexOf('自動承認') !== -1;
+  var status = card.getAttribute('data-status');
+  var pctMatch = card.textContent.match(/(\d+)%/);
+  var pct = pctMatch ? parseInt(pctMatch[1], 10) : 0;
+
+  all('[data-f="gauge-normal"]').forEach(function(n){ n.style.display = isAuto ? 'none' : ''; });
+  all('[data-f="gauge-auto"]').forEach(function(n){ n.style.display = isAuto ? '' : 'none'; });
+  all('[data-f="autopct"]').forEach(function(n){ n.textContent = pct + '%'; n.className = 'text-[11px] font-bold ' + (pct >= 100 ? 'text-success' : pct > 0 ? 'text-primary' : 'text-subtle'); });
+  all('[data-f="autobar"]').forEach(function(n){ n.style.width = Math.min(100, pct) + '%'; n.className = 'h-full rounded-full ' + (pct >= 100 ? 'bg-success' : 'bg-primary'); });
+  all('[data-f="autocaption"]').forEach(function(n){ n.textContent = pct >= 100 ? '条件を達成しました' : '条件を達成すると受け取れます'; });
+
+  all('[data-f="state-pending"]').forEach(function(n){ n.style.display = status === 'PENDING' ? '' : 'none'; });
+  all('[data-f="state-returned"]').forEach(function(n){ n.style.display = status === 'RETURNED' ? '' : 'none'; });
+  all('[data-f="state-approved"]').forEach(function(n){ n.style.display = status === 'APPROVED' ? '' : 'none'; });
+  all('[data-f="form"]').forEach(function(n){ n.style.display = (!isAuto && (status === 'NONE' || status === 'RETURNED')) ? '' : 'none'; });
+
+  // フッター
+  all('[data-f="footbtn"]').forEach(function(btn){
+    var label = btn.querySelector('[data-f="footlabel"]');
+    var icon = btn.querySelector('[data-f="footicon"]');
+    btn.disabled = false; icon.style.display = '';
+    if (isAuto) {
+      btn.className = 'flex w-full items-center justify-center gap-2 rounded-full border border-success-border bg-success-surface py-3.5 text-sm font-medium text-success transition-colors hover:bg-success-surface/80 disabled:cursor-not-allowed disabled:opacity-[0.38]';
+      label.textContent = '受け取る'; icon.style.display = 'none';
+      btn.disabled = pct < 100;
+    } else if (status === 'PENDING') {
+      btn.className = 'flex w-full items-center justify-center gap-2 rounded-full border border-warning-border bg-warning-surface py-3.5 text-sm font-medium text-warning';
+      label.textContent = '申請中です'; icon.style.display = 'none';
+    } else if (status === 'APPROVED') {
+      btn.className = 'flex w-full items-center justify-center gap-2 rounded-full border border-border bg-border py-3.5 text-sm font-medium text-subtle cursor-not-allowed opacity-[0.38]';
+      label.textContent = '申請する'; icon.style.display = 'none'; btn.disabled = true;
+    } else {
+      btn.className = 'flex w-full items-center justify-center gap-2 rounded-full border border-warning-border bg-warning-surface py-3.5 text-sm font-medium text-warning transition-colors hover:bg-warning-surface/80';
+      label.textContent = status === 'RETURNED' ? '再申請する' : '申請する';
+    }
+  });
+  all('[data-f="footcaption"]').forEach(function(n){
+    n.textContent = isAuto
+      ? (pct >= 100 ? '条件を達成しています。受け取りましょう！' : '条件を達成すると受け取れるようになります。')
+      : status === 'RETURNED' ? 'コメントや添付を修正して再申請できます。'
+      : status === 'PENDING' ? '承認状況から詳細を確認できます'
+      : '提出後、上長が承認するとポイントが付与されます。';
+  });
+});
+</script>
 </body>
 </html>

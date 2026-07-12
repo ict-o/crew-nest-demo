@@ -17,39 +17,6 @@
       '<span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="' + (on ? 'right:2px;' : 'left:2px;') + '"></span></button>';
   }
 
-  function injectDemoStyles() {
-    if (document.getElementById('crew-nest-demo-style')) return;
-    var style = document.createElement('style');
-    style.id = 'crew-nest-demo-style';
-    style.textContent =
-      '.cn-demo-user-band{display:flex;width:100%;align-items:center;justify-content:center;margin-bottom:8px;border:1px solid rgba(232,198,106,.95);border-radius:8px;background:#E8C66A;padding:7px 10px;color:#042154;font-size:13px;font-weight:900;line-height:1;letter-spacing:.16em;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.18);}' +
-      '.cn-demo-notice{position:fixed;left:0;right:0;bottom:var(--bottom-nav-h,3rem);z-index:80;display:flex;align-items:center;justify-content:center;gap:8px;min-height:34px;border-top:1px solid #DDD8CC;background:#FDFCF8;color:#4B3A18;padding:7px 12px;text-align:center;font-size:12px;font-weight:700;line-height:1.35;box-shadow:0 -2px 8px rgba(2,22,64,.08);}' +
-      '.cn-demo-notice__label{display:inline-flex;align-items:center;border-radius:999px;background:#042154;color:#fff;padding:2px 7px;font-size:10px;font-weight:800;letter-spacing:.08em;line-height:1;}' +
-      '@media (min-width:768px){.cn-demo-notice{left:var(--sidebar-w,280px);bottom:0;min-height:32px;}}';
-    document.head.appendChild(style);
-  }
-
-  function injectSidebarDemoBand() {
-    var target = document.querySelector('aside > div.border-t.border-white\\/10.px-3.py-3');
-    if (!target || target.querySelector('.cn-demo-user-band')) return;
-    var band = document.createElement('div');
-    band.className = 'cn-demo-user-band';
-    band.textContent = 'DEMO';
-    target.insertBefore(band, target.firstChild);
-  }
-
-  function injectDemoIndicators() {
-    injectDemoStyles();
-    injectSidebarDemoBand();
-    if (!document.querySelector('.cn-demo-notice')) {
-      var notice = document.createElement('div');
-      notice.className = 'cn-demo-notice';
-      notice.setAttribute('role', 'status');
-      notice.innerHTML = '<span class="cn-demo-notice__label">DEMO</span><span>デモサイトです。表示データはサンプルで、入力内容は保存されません。</span>';
-      document.body.appendChild(notice);
-    }
-  }
-
   /* ============ ドロップダウンメニュー ============ */
   var MENU_ITEMS =
     '<button type="button" data-um-action="profile" class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-text hover:bg-background">' + icon('person', 16) + 'プロフィール</button>' +
@@ -233,7 +200,7 @@
       if (kind === 'settings') openModal(settingsModalHtml());
       else if (kind === 'profile') openModal(profileModalHtml());
       else if (kind === 'release-notes') openModal(releaseNotesModalHtml());
-      // logout はモックのため何もしない
+      else if (kind === 'logout') window.location.href = 'CrewNest Login.html';
       return;
     }
     if (e.target.closest('[data-modal-close]')) { closeModal(); return; }
@@ -321,7 +288,6 @@
 
   /* ============ 初期化: ボタンにメニューを取り付け ============ */
   function init() {
-    injectDemoIndicators();
     // サイドナビ下部のユーザーボタン（名前+メール表示のボタン）
     var sideBtn = document.querySelector('aside .border-t.border-white\\/10 button');
     attachMenu(sideBtn, 'bottom-full left-2 right-2 mb-1 w-auto', false);

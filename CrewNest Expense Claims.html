@@ -48,6 +48,8 @@
   .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
   .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
   .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .tab-btn.is-active > span.rounded-full { background-color: #EEF3FF !important; color: #042154 !important; font-weight: 500; }
+
   .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.375rem; cursor:pointer; border-right:3px solid transparent; }
   .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); font-weight:700; }
 </style>
@@ -156,17 +158,15 @@
   </div>
 </aside>
 <div class="md:ml-[280px]">
-  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+4.5rem)] md:pb-16 pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
 
     <div class="flex min-h-0 flex-col">
       <h1 class="mb-4 hidden text-2xl font-bold text-text md:block">経費精算</h1>
 
-      <div class="rounded-lg border border-primary/20 bg-primary-lightest p-5 mb-4">
-        <p class="text-xs font-medium text-primary/80">未精算合計</p>
-        <div class="mt-1 flex items-end gap-3">
-          <span class="text-3xl font-bold text-primary">¥24,800</span>
-          <span class="text-sm text-subtle mb-1">未精算 3件</span>
-        </div>
+      <div class="mb-4 rounded-lg p-5 text-white shadow-sm" style="background:linear-gradient(135deg, #042154 0%, #0d3b86 100%);">
+        <p class="text-xs font-medium text-white/70">未精算合計</p>
+        <p class="mt-1.5 text-3xl font-bold text-white">¥24,800</p>
+        <p class="mt-1.5 text-sm text-white/70">未精算 3件</p>
       </div>
 
       <div class="flex gap-1 border-b border-border">
@@ -176,7 +176,7 @@
       </div>
 
       <div data-panel="pending" class="active mt-4 flex flex-col gap-3">
-        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-open-slide="exp-detail" role="button" tabindex="0" class="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background">
           <div class="min-w-0">
             <p class="font-bold text-text">交通費</p>
             <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle">
@@ -186,7 +186,7 @@
           </div>
           <span class="shrink-0 text-lg font-bold text-primary">¥1,200</span>
         </div>
-        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-open-slide="exp-detail" role="button" tabindex="0" class="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background">
           <div class="min-w-0">
             <p class="font-bold text-text">会議費</p>
             <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle">
@@ -196,7 +196,7 @@
           </div>
           <span class="shrink-0 text-lg font-bold text-primary">¥3,600</span>
         </div>
-        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-open-slide="exp-detail" role="button" tabindex="0" class="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background">
           <div class="min-w-0">
             <p class="font-bold text-text">消耗品費</p>
             <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle">
@@ -214,24 +214,24 @@
               <p class="font-bold text-primary">¥3,600(1件)</p>
               <p class="mt-0.5 text-xs text-subtle">2026/07/05 精算予定 ・ 依頼元 経理部</p>
             </div>
-            <span class="inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-4 text-sm font-medium text-white">確認する</span>
+            <span data-open-slide="receive-confirm" role="button" class="inline-flex h-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-primary-mid">確認する</span>
           </div>
         </div></div>
       <div data-panel="settled" class="mt-4">
         <div class="flex flex-col gap-3 md:hidden">
-        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-open-slide="exp-detail" role="button" tabindex="0" class="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background">
           <div class="min-w-0"><p class="font-bold text-text">交通費</p>
             <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle"><span>利用日 2026/05/10</span><span>銀行振込</span><span>精算日 2026/05/25</span></div>
           </div>
           <span class="shrink-0 text-lg font-bold text-primary">¥980</span>
         </div>
-        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-open-slide="exp-detail" role="button" tabindex="0" class="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background">
           <div class="min-w-0"><p class="font-bold text-text">会議費</p>
             <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle"><span>利用日 2026/04/22</span><span>銀行振込</span><span>精算日 2026/05/25</span></div>
           </div>
           <span class="shrink-0 text-lg font-bold text-primary">¥5,400</span>
         </div>
-        <div class="flex items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-open-slide="exp-detail" role="button" tabindex="0" class="flex cursor-pointer items-start justify-between gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background">
           <div class="min-w-0"><p class="font-bold text-text">交通費</p>
             <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-subtle"><span>利用日 2026/03/02</span><span>現金</span><span>精算日 2026/03/10</span></div>
           </div>
@@ -243,13 +243,13 @@
               <th class="px-4 py-2.5 text-left font-medium">経費科目</th><th class="px-4 py-2.5 text-left font-medium">利用日</th>
               <th class="px-4 py-2.5 text-left font-medium">精算方法</th><th class="px-4 py-2.5 text-left font-medium">精算日</th>
               <th class="px-4 py-2.5 text-right font-medium">金額</th></tr></thead>
-            <tbody><tr class="border-b border-border last:border-b-0">
+            <tbody><tr data-open-slide="exp-detail" role="button" class="cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-background">
               <td class="px-4 py-2.5 font-medium text-text">交通費</td><td class="px-4 py-2.5 text-subtle">2026/05/10</td>
               <td class="px-4 py-2.5 text-subtle">銀行振込</td><td class="px-4 py-2.5 text-subtle">2026/05/25</td>
-              <td class="px-4 py-2.5 text-right font-bold text-primary">¥980</td></tr><tr class="border-b border-border last:border-b-0">
+              <td class="px-4 py-2.5 text-right font-bold text-primary">¥980</td></tr><tr data-open-slide="exp-detail" role="button" class="cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-background">
               <td class="px-4 py-2.5 font-medium text-text">会議費</td><td class="px-4 py-2.5 text-subtle">2026/04/22</td>
               <td class="px-4 py-2.5 text-subtle">銀行振込</td><td class="px-4 py-2.5 text-subtle">2026/05/25</td>
-              <td class="px-4 py-2.5 text-right font-bold text-primary">¥5,400</td></tr><tr class="border-b border-border last:border-b-0">
+              <td class="px-4 py-2.5 text-right font-bold text-primary">¥5,400</td></tr><tr data-open-slide="exp-detail" role="button" class="cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-background">
               <td class="px-4 py-2.5 font-medium text-text">交通費</td><td class="px-4 py-2.5 text-subtle">2026/03/02</td>
               <td class="px-4 py-2.5 text-subtle">現金</td><td class="px-4 py-2.5 text-subtle">2026/03/10</td>
               <td class="px-4 py-2.5 text-right font-bold text-primary">¥640</td></tr></tbody>
@@ -287,6 +287,11 @@
     <span class="whitespace-nowrap">経費精算</span>
     
   </a>
+
+  <a href="CrewNest Admin.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
+    <img src="public/icons/management.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">管理</span>
+  </a>
 </nav>
 <script>
 document.addEventListener('click', function(e){
@@ -310,6 +315,178 @@ document.addEventListener('click', function(e){
   });
 });
 </script>
+
+<div data-expense-pagination class="fixed bottom-[var(--bottom-nav-h)] left-0 right-0 z-40 flex items-center justify-between border-t border-border bg-background-light px-4 py-2 text-sm text-subtle md:bottom-0 md:left-[280px]">
+  <div class="flex items-center gap-1">
+    <button type="button" aria-label="前のページ" disabled class="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] disabled:opacity-[0.38]">＜</button>
+    <span class="min-w-[5rem] text-center">1 / 1 ページ</span>
+    <button type="button" aria-label="次のページ" disabled class="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] disabled:opacity-[0.38]">＞</button>
+  </div>
+  <select aria-label="1ページあたりの表示件数" class="w-24 shrink-0 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+    <option selected>30 件</option><option>10 件</option><option>100 件</option>
+  </select>
+</div>
+
+<!-- PC: 中央ダイアログ -->
+<div data-modal="exp-detail" class="fixed inset-0 z-[95] hidden items-center justify-center bg-black/50 p-4 md:flex" style="display:none;">
+  <div role="dialog" aria-modal="true" class="flex w-full max-w-md flex-col rounded-2xl bg-background-light shadow-md" style="max-height:calc(100vh - 80px);">
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-3">
+      <span class="text-base font-bold text-text">精算明細の詳細</span>
+      <button type="button" data-close-slide="exp-detail" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-5">
+      <div class="flex flex-col gap-3">
+        <div class="rounded-lg border border-border bg-background-light p-4">
+          <dl class="flex flex-col gap-2 text-sm">
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">申請番号</dt><dd data-f="ext" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">社員</dt><dd data-f="employee" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">経費科目</dt><dd data-f="category" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">利用日</dt><dd data-f="used" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">区分</dt><dd data-f="method" class="text-right font-medium text-text"></dd></div>
+          </dl>
+          <div class="mt-3 flex items-center justify-between border-t border-dashed border-border pt-3">
+            <span class="text-sm text-subtle">金額</span>
+            <span data-f="amount" class="text-xl font-bold text-primary"></span>
+          </div>
+        </div>
+        <button type="button" class="inline-flex h-10 w-full items-center justify-center rounded-full border border-primary bg-background-light text-sm font-medium text-primary transition-colors hover:bg-primary/5">領収書を開く</button>
+      </div></div>
+  </div>
+</div>
+<!-- モバイル: ボトムシート -->
+<div data-overlay="exp-detail" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
+<div data-slide="exp-detail" data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex max-h-[85vh] flex-col rounded-t-2xl bg-background-light pb-6 shadow-md transition-transform duration-300" style="transform:translateY(100%);">
+  <div class="mx-auto mt-2 h-1 w-9 shrink-0 rounded-full bg-border"></div>
+  <p class="shrink-0 px-6 pt-3 text-base font-bold text-text">精算明細の詳細</p>
+  <div class="flex-1 overflow-y-auto px-6 pt-3">
+      <div class="flex flex-col gap-3">
+        <div class="rounded-lg border border-border bg-background-light p-4">
+          <dl class="flex flex-col gap-2 text-sm">
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">申請番号</dt><dd data-f="ext" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">社員</dt><dd data-f="employee" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">経費科目</dt><dd data-f="category" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">利用日</dt><dd data-f="used" class="text-right font-medium text-text"></dd></div>
+            <div class="flex items-center justify-between gap-3"><dt class="shrink-0 text-subtle">区分</dt><dd data-f="method" class="text-right font-medium text-text"></dd></div>
+          </dl>
+          <div class="mt-3 flex items-center justify-between border-t border-dashed border-border pt-3">
+            <span class="text-sm text-subtle">金額</span>
+            <span data-f="amount" class="text-xl font-bold text-primary"></span>
+          </div>
+        </div>
+        <button type="button" class="inline-flex h-10 w-full items-center justify-center rounded-full border border-primary bg-background-light text-sm font-medium text-primary transition-colors hover:bg-primary/5">領収書を開く</button>
+      </div></div>
+</div>
+<div data-modal="receive-confirm" class="fixed inset-0 z-[95] hidden items-center justify-center bg-black/50 p-4 md:flex" style="display:none;">
+  <div role="dialog" aria-modal="true" class="flex w-full max-w-md flex-col rounded-2xl bg-background-light shadow-md" style="max-height:calc(100vh - 80px);">
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-3">
+      <span class="text-base font-bold text-text">受領内容の確認</span>
+      <button type="button" data-close-slide="receive-confirm" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-5">
+      <div class="flex flex-col gap-3">
+        <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <dl class="flex flex-col gap-1.5 text-sm">
+            <div class="flex justify-between gap-3"><dt class="text-subtle">精算予定日</dt><dd class="font-medium text-text">2026/07/05</dd></div>
+            <div class="flex justify-between gap-3"><dt class="text-subtle">依頼元</dt><dd class="font-medium text-text">経理部</dd></div>
+            <div class="flex justify-between gap-3"><dt class="shrink-0 text-subtle">メモ</dt><dd class="text-right font-medium text-text">—</dd></div>
+          </dl>
+        </div>
+        <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <ul class="flex flex-col">
+            <li class="flex items-start justify-between gap-3 py-2 first:pt-0 last:pb-0">
+              <div class="min-w-0">
+                <p class="font-medium text-text">会議費</p>
+                <p class="mt-0.5 text-xs text-subtle">2026/06/20</p>
+                <p class="mt-0.5 text-[11px] text-subtle-light">申請番号 MF-20260620-031</p>
+              </div>
+              <span class="shrink-0 font-bold text-primary">¥3,600</span>
+            </li>
+          </ul>
+          <div class="mt-3 flex items-center justify-between border-t border-dashed border-border pt-3">
+            <span class="text-sm text-subtle">受領合計</span>
+            <span class="text-xl font-bold text-primary">¥3,600</span>
+          </div>
+        </div>
+        <p class="px-1 text-xs leading-relaxed text-subtle">現金を受け取ったことを確認のうえ実行してください。一度実行すると元に戻せません。</p>
+        <button type="button" data-open-dialog="receive-alert" class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary text-sm font-medium text-white transition-colors hover:bg-primary-mid">受領済みにする</button>
+      </div></div>
+  </div>
+</div>
+<div data-overlay="receive-confirm" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
+<div data-slide="receive-confirm" data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex max-h-[85vh] flex-col rounded-t-2xl bg-background-light pb-6 shadow-md transition-transform duration-300" style="transform:translateY(100%);">
+  <div class="mx-auto mt-2 h-1 w-9 shrink-0 rounded-full bg-border"></div>
+  <p class="shrink-0 px-6 pt-3 text-base font-bold text-text">受領内容の確認</p>
+  <div class="flex-1 overflow-y-auto px-6 pt-3">
+      <div class="flex flex-col gap-3">
+        <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <dl class="flex flex-col gap-1.5 text-sm">
+            <div class="flex justify-between gap-3"><dt class="text-subtle">精算予定日</dt><dd class="font-medium text-text">2026/07/05</dd></div>
+            <div class="flex justify-between gap-3"><dt class="text-subtle">依頼元</dt><dd class="font-medium text-text">経理部</dd></div>
+            <div class="flex justify-between gap-3"><dt class="shrink-0 text-subtle">メモ</dt><dd class="text-right font-medium text-text">—</dd></div>
+          </dl>
+        </div>
+        <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <ul class="flex flex-col">
+            <li class="flex items-start justify-between gap-3 py-2 first:pt-0 last:pb-0">
+              <div class="min-w-0">
+                <p class="font-medium text-text">会議費</p>
+                <p class="mt-0.5 text-xs text-subtle">2026/06/20</p>
+                <p class="mt-0.5 text-[11px] text-subtle-light">申請番号 MF-20260620-031</p>
+              </div>
+              <span class="shrink-0 font-bold text-primary">¥3,600</span>
+            </li>
+          </ul>
+          <div class="mt-3 flex items-center justify-between border-t border-dashed border-border pt-3">
+            <span class="text-sm text-subtle">受領合計</span>
+            <span class="text-xl font-bold text-primary">¥3,600</span>
+          </div>
+        </div>
+        <p class="px-1 text-xs leading-relaxed text-subtle">現金を受け取ったことを確認のうえ実行してください。一度実行すると元に戻せません。</p>
+        <button type="button" data-open-dialog="receive-alert" class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary text-sm font-medium text-white transition-colors hover:bg-primary-mid">受領済みにする</button>
+      </div></div>
+</div>
+<!-- 受領 AlertDialog -->
+<div data-dialog="receive-alert" class="fixed inset-0 z-[110] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="alertdialog" aria-modal="true" class="w-full max-w-sm rounded-[20px] bg-background-light p-6 shadow-md">
+    <p class="text-base font-bold text-text">¥3,600 を受領済みにします</p>
+    <p class="mt-2 text-sm text-subtle">現金を受け取ったことを確認のうえ実行してください。一度実行すると元に戻せません。</p>
+    <div class="mt-5 flex justify-end gap-2">
+      <button type="button" data-close-dialog class="inline-flex items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08] h-10">キャンセル</button>
+      <button type="button" data-close-dialog onclick="closeAllSlides()" class="inline-flex items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid h-10">受領する</button>
+    </div>
+  </div>
+</div>
+<script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
+<script>
+document.addEventListener('slidewillopen', function(ev){
+  if (ev.detail.id !== 'exp-detail') return;
+  var card = ev.detail.trigger;
+  function all(sel){ return document.querySelectorAll('[data-slide="exp-detail"] ' + sel + ', [data-modal="exp-detail"] ' + sel); }
+  var category = '', used = '', amount = '', method = '振込';
+  if (card.tagName === 'TR') {
+    var tds = card.querySelectorAll('td');
+    category = tds[0].textContent.trim();
+    used = tds[1].textContent.trim();
+    method = tds[2].textContent.trim();
+    amount = tds[4].textContent.trim();
+  } else {
+    var catEl = card.querySelector('p.font-bold');
+    category = catEl ? catEl.textContent.trim() : '';
+    var m = card.textContent.match(/利用日\s*([\d\/]+)/);
+    used = m ? m[1] : '';
+    var amtEl = card.querySelector('.text-lg.font-bold');
+    amount = amtEl ? amtEl.textContent.trim() : '';
+    var mm = card.textContent.match(/(銀行振込|現金|振込)/);
+    if (mm) method = mm[1];
+  }
+  all('[data-f="ext"]').forEach(function(n){ n.textContent = 'MF-' + used.replace(/\//g, '') + '-012'; });
+  all('[data-f="employee"]').forEach(function(n){ n.textContent = '田中 佑樹'; });
+  all('[data-f="category"]').forEach(function(n){ n.textContent = category; });
+  all('[data-f="used"]').forEach(function(n){ n.textContent = used; });
+  all('[data-f="method"]').forEach(function(n){ n.textContent = method; });
+  all('[data-f="amount"]').forEach(function(n){ n.textContent = amount; });
+});
+</script>
 </body>
 </html>
