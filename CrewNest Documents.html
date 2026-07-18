@@ -92,59 +92,59 @@
   </div>
   <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
     <div class="space-y-1">
-      
+
       <a href="CrewNest Home.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
-        
+
       </a>
       <div>
-        
+
       <a href="CrewNest My Achievements.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
       </a>
         <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[0fr]" style="overflow:hidden;">
           <div class="min-h-0 overflow-hidden">
-            
+
         <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
-          
+
           <a href="CrewNest My Achievements.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
             <span class="truncate">承認状況</span>
             <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
           </a>
           <a href="CrewNest Quests.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
             <span class="truncate">クエストボード</span>
-            
+
           </a>
           <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
             <span class="truncate">ランキング</span>
-            
+
           </a>
         </div>
           </div>
         </div>
       </div>
-      
+
       <a href="CrewNest Proposals.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
-        
+
       </a>
-      
+
       <a href="CrewNest Documents.html" aria-current="page" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
         <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
       </a>
-      
+
       <a href="CrewNest Expense Claims.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
-        
+
       </a>
     </div>
     <div class="mt-2 border-t border-white/10 pt-2">
-      
+
       <a href="CrewNest Admin.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
-        
+
       </a>
     </div>
   </nav>
@@ -165,9 +165,9 @@
     <div class="flex min-h-0 flex-col">
       <div class="hidden items-center justify-between md:mb-4 md:flex">
         <h1 class="flex items-center gap-3 text-2xl font-bold text-text"><img src="public/icons/airplane.png" class="h-7 w-7" alt="">書類提出</h1>
-        <button type="button" class="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid"><span class="text-lg leading-none">+</span>新規提出</button>
+        <button type="button" data-tour="doc-new" data-open-slide="doc-form" class="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid"><span class="text-lg leading-none">+</span>新規提出</button>
       </div>
-      <div class="flex gap-1 border-b border-border overflow-x-auto">
+      <div data-tour="tabs" class="flex gap-1 border-b border-border overflow-x-auto">
         <button type="button" data-tabgroup="primary" data-tabkey="my_submissions" class="tab-btn tab-btn-primary is-active">提出したもの<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
         <button type="button" data-tabgroup="primary" data-tabkey="requests" class="tab-btn tab-btn-primary">提出依頼<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">2</span></button>
         <button type="button" data-tabgroup="primary" data-tabkey="approvals" class="tab-btn tab-btn-primary">承認待ち<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button>
@@ -213,7 +213,7 @@
       <div data-panel="requests" class="mt-2"><div class="mt-4 flex flex-col gap-3">
         <div data-open-slide="doc-detail" data-item data-status="" class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
           <div class="mb-2 flex flex-wrap items-center gap-1.5">
-            
+
             <span class="rounded-full border px-2 py-0.5 text-[10px] font-medium" style="border-color:#5B7FC0;color:#5B7FC0;">健康診断</span>
           </div>
           <p class="mb-1 font-semibold text-text">健康診断結果の提出</p>
@@ -221,7 +221,7 @@
         </div>
         <div data-open-slide="doc-detail" data-item data-status="" class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
           <div class="mb-2 flex flex-wrap items-center gap-1.5">
-            
+
             <span class="rounded-full border px-2 py-0.5 text-[10px] font-medium" style="border-color:#5A9E74;color:#5A9E74;">雇用契約</span>
           </div>
           <p class="mb-1 font-semibold text-text">雇用契約書の提出</p>
@@ -241,11 +241,11 @@
 </div>
 
 <nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
-  
+
   <a href="CrewNest Home.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">ホーム</span>
-    
+
   </a>
   <a href="CrewNest Quests.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
@@ -255,7 +255,7 @@
   <a href="CrewNest Proposals.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">アイデア</span>
-    
+
   </a>
   <a href="CrewNest Documents.html" aria-current="page" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-primary">
     <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;">
@@ -265,7 +265,7 @@
   <a href="CrewNest Expense Claims.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">経費精算</span>
-    
+
   </a>
 
   <a href="CrewNest Admin.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
@@ -296,7 +296,7 @@ document.addEventListener('click', function(e){
 });
 </script>
 
-<button type="button" aria-label="新規提出" class="fixed right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md transition-colors hover:bg-primary-mid md:hidden" style="bottom: calc(var(--bottom-nav-h) + 1rem);"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg></button>
+<button type="button" aria-label="新規提出" data-open-slide="doc-form" class="fixed right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md transition-colors hover:bg-primary-mid md:hidden" style="bottom: calc(var(--bottom-nav-h) + 1rem);"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg></button>
 
 <div data-slide="doc-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="書類詳細">
   <div class="flex shrink-0 justify-end px-4 pt-3"><button type="button" data-close-slide="doc-detail" aria-label="詳細パネルを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
@@ -416,6 +416,158 @@ document.addEventListener('slidewillopen', function(ev){
     }
   });
 });
+</script>
+
+<!-- 新規提出フォーム: デスクトップ -->
+<div data-slide="doc-form" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="書類を提出する">
+  <div class="flex shrink-0 items-center justify-between px-5 pt-4 pb-2">
+    <h2 class="text-base font-bold text-text">書類を提出する</h2>
+    <button type="button" data-close-slide="doc-form" aria-label="パネルを閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-5 pb-4">
+    <div class="py-6">
+      <p class="mb-4 text-[10px] font-bold uppercase tracking-widest text-subtle">新規提出</p>
+      <div class="mb-4">
+        <label class="mb-1.5 block text-sm font-semibold text-text" for="free-doc-title-desktop">タイトル <span class="text-danger">*</span></label>
+        <input id="free-doc-title-desktop" type="text" maxlength="300" placeholder="例：健康診断結果（2025年度）" class="w-full rounded-lg border border-border bg-background-light px-3 py-2.5 text-sm text-text placeholder:text-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+      </div>
+      <div class="mb-4">
+        <label class="mb-1.5 block text-sm font-semibold text-text">添付ファイル<span class="ml-1.5 text-xs font-normal text-subtle">（最大5件・各10MB・PDF/画像/Word）</span></label>
+        <button id="free-doc-file-btn-desktop" type="button" onclick="document.getElementById('free-doc-file-desktop').click()" class="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-background px-4 py-3 text-sm text-subtle transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-[0.38]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"></path></svg>
+          ファイルを選択
+        </button>
+        <input id="free-doc-file-desktop" type="file" multiple accept=".pdf,image/*,.doc,.docx" onchange="docFormAddFiles(this, 'free-doc-files-desktop', 'free-doc-file-btn-desktop')" class="hidden">
+        <ul id="free-doc-files-desktop" class="mt-2 flex flex-col gap-1.5" style="display:none;"></ul>
+      </div>
+      <div class="mb-4">
+        <label class="mb-1.5 block text-sm font-semibold text-text" for="free-submit-comment-desktop">コメント<span class="ml-1.5 text-xs font-normal text-subtle">（任意）</span></label>
+        <textarea id="free-submit-comment-desktop" rows="3" placeholder="提出に関するコメントがあれば入力してください" class="w-full rounded-lg border border-border bg-background-light px-3 py-2.5 text-sm text-text placeholder:text-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+      </div>
+      <div class="mb-2">
+        <label class="mb-1.5 block text-sm font-semibold text-text" for="free-doc-type-select-desktop">書類カテゴリ <span class="text-danger">*</span></label>
+        <select id="free-doc-type-select-desktop" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <option selected>健康診断結果</option><option>住所変更届（承認必要）</option><option>扶養家族異動届（承認必要）</option><option>資格証明書</option><option>その他</option>
+        </select>
+      </div>
+    </div></div>
+  <div class="shrink-0 border-t border-border bg-background-light px-5 py-3"><button id="doc-submit-desktop" type="button" data-close-slide="doc-form" disabled class="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest disabled:opacity-[0.38] disabled:cursor-not-allowed">提出する</button></div>
+</div>
+<!-- 新規提出フォーム: モバイル フルスクリーン（右からスライド・ヘッダー下） -->
+<div data-slide="doc-form" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="書類を提出する">
+  <div class="sticky top-0 z-10 flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
+    <button type="button" data-close-slide="doc-form" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background">
+      <svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true" class="shrink-0"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"></path></svg>
+      書類を提出する
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-4 pb-4 pt-3">
+    <div class="py-6">
+      <p class="mb-4 text-[10px] font-bold uppercase tracking-widest text-subtle">新規提出</p>
+      <div class="mb-4">
+        <label class="mb-1.5 block text-sm font-semibold text-text" for="free-doc-title-mobile">タイトル <span class="text-danger">*</span></label>
+        <input id="free-doc-title-mobile" type="text" maxlength="300" placeholder="例：健康診断結果（2025年度）" class="w-full rounded-lg border border-border bg-background-light px-3 py-2.5 text-sm text-text placeholder:text-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+      </div>
+      <div class="mb-4">
+        <label class="mb-1.5 block text-sm font-semibold text-text">添付ファイル<span class="ml-1.5 text-xs font-normal text-subtle">（最大5件・各10MB・PDF/画像/Word）</span></label>
+        <button id="free-doc-file-btn-mobile" type="button" onclick="document.getElementById('free-doc-file-mobile').click()" class="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-background px-4 py-3 text-sm text-subtle transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-[0.38]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"></path></svg>
+          ファイルを選択
+        </button>
+        <input id="free-doc-file-mobile" type="file" multiple accept=".pdf,image/*,.doc,.docx" onchange="docFormAddFiles(this, 'free-doc-files-mobile', 'free-doc-file-btn-mobile')" class="hidden">
+        <ul id="free-doc-files-mobile" class="mt-2 flex flex-col gap-1.5" style="display:none;"></ul>
+      </div>
+      <div class="mb-4">
+        <label class="mb-1.5 block text-sm font-semibold text-text" for="free-submit-comment-mobile">コメント<span class="ml-1.5 text-xs font-normal text-subtle">（任意）</span></label>
+        <textarea id="free-submit-comment-mobile" rows="3" placeholder="提出に関するコメントがあれば入力してください" class="w-full rounded-lg border border-border bg-background-light px-3 py-2.5 text-sm text-text placeholder:text-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+      </div>
+      <div class="mb-2">
+        <label class="mb-1.5 block text-sm font-semibold text-text" for="free-doc-type-select-mobile">書類カテゴリ <span class="text-danger">*</span></label>
+        <select id="free-doc-type-select-mobile" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <option selected>健康診断結果</option><option>住所変更届（承認必要）</option><option>扶養家族異動届（承認必要）</option><option>資格証明書</option><option>その他</option>
+        </select>
+      </div>
+    </div></div>
+  <div class="shrink-0 border-t border-border bg-background-light px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3"><button id="doc-submit-mobile" type="button" data-close-slide="doc-form" disabled class="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest disabled:opacity-[0.38] disabled:cursor-not-allowed">提出する</button></div>
+</div>
+
+<script>
+// 新規提出フォーム: タイトル未入力の間は「提出する」を無効化（DocumentSubmissionForm の disabled 条件を再現）
+function docFormSyncSubmit(input, btnId) {
+  var btn = document.getElementById(btnId);
+  if (btn) btn.disabled = input.value.trim() === '';
+}
+document.getElementById('free-doc-title-desktop').addEventListener('input', function () { docFormSyncSubmit(this, 'doc-submit-desktop'); });
+document.getElementById('free-doc-title-mobile').addEventListener('input', function () { docFormSyncSubmit(this, 'doc-submit-mobile'); });
+
+// 新規提出フォーム: 添付ファイルの選択・一覧表示・削除（DocumentSubmissionForm の files リストを再現）
+var DOC_MAX_FILES = 5;
+var DOC_MAX_FILE_SIZE = 10 * 1024 * 1024;
+function docFormFileSize(bytes) {
+  if (bytes < 1024) return bytes + 'B';
+  if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + 'KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
+}
+function docFormAddFiles(input, listId, btnId) {
+  var list = document.getElementById(listId);
+  var btn = document.getElementById(btnId);
+  if (!list) return;
+  var selected = Array.prototype.slice.call(input.files);
+  // 件数・サイズ検証（handleFileChange と同じ順序・文言。超過時は選択全体を破棄）
+  if (list.children.length + selected.length > DOC_MAX_FILES) {
+    alert('ファイルは最大' + DOC_MAX_FILES + '件まで添付できます');
+    input.value = '';
+    return;
+  }
+  var oversized = null;
+  selected.forEach(function (f) { if (!oversized && f.size > DOC_MAX_FILE_SIZE) oversized = f; });
+  if (oversized) {
+    alert('ファイルサイズは10MB以下にしてください（' + oversized.name + '）');
+    input.value = '';
+    return;
+  }
+  selected.forEach(function (f) {
+    var li = document.createElement('li');
+    li.className = 'flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2';
+    var name = document.createElement('span');
+    name.className = 'min-w-0 truncate text-xs text-text';
+    name.textContent = f.name;
+    var right = document.createElement('div');
+    right.className = 'ml-2 flex shrink-0 items-center gap-2';
+    var size = document.createElement('span');
+    size.className = 'text-[10px] text-subtle';
+    size.textContent = docFormFileSize(f.size);
+    var del = document.createElement('button');
+    del.type = 'button';
+    del.setAttribute('aria-label', f.name + 'を削除');
+    del.className = 'inline-flex h-8 w-8 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger';
+    del.innerHTML = '<svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg>';
+    del.addEventListener('click', function () {
+      li.remove();
+      if (!list.children.length) list.style.display = 'none';
+      if (btn) btn.disabled = list.children.length >= DOC_MAX_FILES; // 削除で5件を下回れば再活性
+    });
+    right.appendChild(size);
+    right.appendChild(del);
+    li.appendChild(name);
+    li.appendChild(right);
+    list.appendChild(li);
+  });
+  if (list.children.length) list.style.display = '';
+  if (btn) btn.disabled = list.children.length >= DOC_MAX_FILES; // files.length >= MAX_FILES の disabled 条件を再現
+  input.value = '';
+}
+</script>
+
+<script src="tour.js"></script>
+<script>
+function cnTab(k){ return function(){ var b = document.querySelector('[data-tabgroup="primary"][data-tabkey="' + k + '"]'); if (b) b.click(); }; }
+CNTour.define('documents', [
+  { title: '書類提出', body: '健康診断結果や各種届出など、会社への提出書類をここで管理します。' },
+  { target: '[data-tour="tabs"]', title: 'タブの切り替え', body: '「提出したもの」「提出依頼」「承認待ち」を切り替えられます。新しい依頼が届くとバッジが付きます。' },
+  { before: cnTab('requests'), target: '[data-panel="requests"]', title: '提出依頼', body: '会社から依頼された書類はここに届きます。期限までに提出しましょう。' },
+  { before: cnTab('my_submissions'), target: '[data-tour="doc-new"], [aria-label="新規提出"]', title: '新規提出', body: 'このボタンから書類を提出できます。書類の種類を選んでファイルを添付します。' }
+], { onClose: cnTab('my_submissions') });
 </script>
 </body>
 </html>

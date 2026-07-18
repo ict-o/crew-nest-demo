@@ -60,8 +60,8 @@
 
 <header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
   <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
-    <img src="public/icons/quest.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
-    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">クエストボード</span>
+    <img data-mobiletitle-icon src="public/icons/quest.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span data-mobiletitle-text aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">クエストボード</span>
   </button>
   <div class="flex shrink-0 items-center gap-0.5">
     <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
@@ -112,11 +112,11 @@
             <span class="truncate">承認状況</span>
             <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
           </a>
-          <a href="CrewNest Quests.html" aria-current="page" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium bg-white/20 text-white">
+          <a href="CrewNest Quests.html#board" data-subnav-key="board" aria-current="page" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium bg-white/20 text-white">
             <span class="truncate">クエストボード</span>
             
           </a>
-          <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+          <a href="CrewNest Quests.html#ranking" data-subnav-key="ranking" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
             <span class="truncate">ランキング</span>
             
           </a>
@@ -172,17 +172,17 @@
           <button type="button" onclick="toggleQuestView()" class="inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary-lightest px-4 py-2 text-sm font-medium text-primary hover:bg-black/[0.08]">
             <span data-toggle-label>ランキング</span>
           </button>
-          <a href="CrewNest My Achievements.html" class="inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary-lightest px-4 py-2 text-sm font-medium text-primary hover:bg-black/[0.08]">
+          <a href="CrewNest My Achievements.html" data-tour="quest-achievements" class="inline-flex items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary-lightest px-4 py-2 text-sm font-medium text-primary hover:bg-black/[0.08]">
             <img src="public/icons/apply.png" alt="" class="h-4 w-4"> 承認状況
           </a>
         </div>
       </div>
       <div data-view data-view-key="board" class="active">
-        <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end border-b border-border pb-1">
-          <div class="flex-1 flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="qcat" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">8</span></button><button type="button" data-tabgroup="qcat" data-tabkey="work" class="tab-btn tab-btn-secondary ">日々の業務<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="event" class="tab-btn tab-btn-secondary ">会社行事<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button><button type="button" data-tabgroup="qcat" data-tabkey="growth" class="tab-btn tab-btn-secondary ">自己啓発<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button></div>
+        <div data-tour="quest-filters" class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end border-b border-border pb-1">
+          <div data-tour="quest-cats" class="flex-1 flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="qcat" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">8</span></button><button type="button" data-tabgroup="qcat" data-tabkey="work" class="tab-btn tab-btn-secondary ">日々の業務<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="event" class="tab-btn tab-btn-secondary ">会社行事<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button><button type="button" data-tabgroup="qcat" data-tabkey="growth" class="tab-btn tab-btn-secondary ">自己啓発<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button></div>
           <div class="flex shrink-0 items-center gap-2">
-            <div class="relative w-36"><svg viewBox="0 -960 960 960" width="13" height="13" fill="#8A99B8" aria-hidden="true" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"></path></svg><input type="search" placeholder="検索" class="w-full rounded-lg border border-border bg-background-light py-1.5 pl-7 pr-3 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50"></div>
-            <div class="flex gap-1"><button type="button" data-tabgroup="qstatus" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-tabgroup="qstatus" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中</button><button type="button" data-tabgroup="qstatus" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">達成済み</button></div>
+            <div data-tour="quest-search" class="relative w-36"><svg viewBox="0 -960 960 960" width="13" height="13" fill="#8A99B8" aria-hidden="true" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"></path></svg><input type="search" placeholder="検索" class="w-full rounded-lg border border-border bg-background-light py-1.5 pl-7 pr-3 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50"></div>
+            <div data-tour="quest-status" class="flex gap-1"><button type="button" data-tabgroup="qstatus" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-tabgroup="qstatus" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中</button><button type="button" data-tabgroup="qstatus" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">達成済み</button></div>
           </div>
         </div>
         <div class="mt-4 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
@@ -568,6 +568,19 @@ function showView(key){
   if (pg) pg.style.display = key==='ranking' ? 'none' : '';
   var fi = document.querySelector('[data-fab-toggle-icon]');
   if (fi) fi.src = key==='ranking' ? 'public/icons/quest.png' : 'public/icons/crown.svg';
+  var mt = document.querySelector('[data-mobiletitle-text]');
+  if (mt) mt.textContent = key==='ranking' ? 'ランキング' : 'クエストボード';
+  var mi = document.querySelector('[data-mobiletitle-icon]');
+  if (mi) mi.src = key==='ranking' ? 'public/icons/crown.svg' : 'public/icons/quest.png';
+  document.querySelectorAll('[data-subnav-key]').forEach(function(a){
+    var active = a.getAttribute('data-subnav-key') === key;
+    a.classList.toggle('bg-white/20', active);
+    a.classList.toggle('text-white', active);
+    a.classList.toggle('text-white/70', !active);
+    a.classList.toggle('hover:bg-white/10', !active);
+    a.classList.toggle('hover:text-white', !active);
+    if (active) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+  });
 }
 function toggleQuestView(){
   var current = document.querySelector('[data-view].active').getAttribute('data-view-key');
@@ -605,7 +618,7 @@ window.addEventListener('hashchange', function(){
 
 <div data-slide="quest-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="クエスト詳細">
   <div class="flex shrink-0 justify-end px-4 pt-3"><button type="button" data-close-slide="quest-detail" aria-label="詳細パネルを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
-  <div class="flex-1 overflow-y-auto px-5 pb-4">
+  <div data-tour="quest-detail-body" class="flex-1 overflow-y-auto px-5 pb-4">
       <div class="mb-4">
         <div class="mb-3 flex items-center justify-between">
           <span data-f="cat" class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
@@ -695,7 +708,7 @@ window.addEventListener('hashchange', function(){
       <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>クエスト
     </button>
   </div>
-  <div class="flex-1 overflow-y-auto px-4 pb-4 pt-3">
+  <div data-tour="quest-detail-body" class="flex-1 overflow-y-auto px-4 pb-4 pt-3">
       <div class="mb-4">
         <div class="mb-3 flex items-center justify-between">
           <span data-f="cat" class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
@@ -850,6 +863,50 @@ document.addEventListener('slidewillopen', function(ev){
       : '提出後、上長が承認するとポイントが付与されます。';
   });
 });
+</script>
+<script src="tour.js"></script>
+<script>
+function cnQuestDetailOpen(){
+  var view = document.querySelector('[data-view].active');
+  if (view && view.getAttribute('data-view-key') === 'ranking') toggleQuestView();
+  var card = null, items = document.querySelectorAll('[data-item]');
+  for (var i = 0; i < items.length; i++) { if (items[i].offsetParent !== null) { card = items[i]; break; } }
+  if (!card && items.length) card = items[0];
+  if (card) document.dispatchEvent(new CustomEvent('slidewillopen', { detail: { id: 'quest-detail', trigger: card } }));
+  var panels = document.querySelectorAll('[data-slide="quest-detail"]');
+  panels.forEach(function(p){ p.style.transition = 'none'; });
+  openSlide('quest-detail');
+  panels.forEach(function(p){ void p.offsetWidth; p.style.transition = ''; });
+}
+function cnQuestDetailClose(){
+  if (!document.querySelector('[data-slide="quest-detail"][data-open]')) return;
+  var panels = document.querySelectorAll('[data-slide="quest-detail"]');
+  panels.forEach(function(p){ p.style.transition = 'none'; });
+  closeSlide('quest-detail');
+  panels.forEach(function(p){ void p.offsetWidth; p.style.transition = ''; });
+}
+var cnQuestTourInitialView = null;
+function cnQuestTourCaptureView(){
+  if (cnQuestTourInitialView !== null) return;
+  var v = document.querySelector('[data-view].active');
+  cnQuestTourInitialView = v ? v.getAttribute('data-view-key') : 'board';
+  if (cnQuestTourInitialView === 'ranking') toggleQuestView();
+}
+CNTour.define('quests', [
+  { before: cnQuestTourCaptureView, title: 'クエストボード', body: '業務や社内活動が「クエスト」として掲示されます。達成するとポイントとXPを獲得できます。' },
+  { target: '[data-tour="quest-filters"]', title: '絞り込み', body: 'カテゴリタブ・キーワード検索・ステータスで、目的のクエストを探せます。' },
+  { before: cnQuestDetailClose, target: '[data-item]', title: 'クエストカード', body: '獲得ポイント・頻度・達成人数が表示されます。タップすると詳細が開き、達成の申告ができます。' },
+  { before: cnQuestDetailOpen, target: '[data-tour="quest-detail-body"]', title: 'クエストの詳細', body: '獲得条件やポイント・申告期限を確認できます。画面下の「申請する」から達成を申告すると、上長の承認後にポイントが付与されます。' },
+  { before: cnQuestDetailClose, target: '[onclick="toggleQuestView()"]', title: 'ランキング', body: 'みんなの獲得ポイントランキング表示に切り替えられます。' },
+  { target: '[data-tour="quest-achievements"], [aria-label="承認状況"]', title: '承認状況（マイ実績）', body: '自分が申告したクエストの承認状況を確認できます。' }
+], { onClose: function(){
+  cnQuestDetailClose();
+  if (cnQuestTourInitialView === 'ranking') {
+    var v = document.querySelector('[data-view].active');
+    if (v && v.getAttribute('data-view-key') !== 'ranking') toggleQuestView();
+  }
+  cnQuestTourInitialView = null;
+} });
 </script>
 </body>
 </html>

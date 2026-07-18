@@ -135,27 +135,47 @@
       '</div></div>';
   }
 
-  /* ============ プロフィールモーダル (簡易) ============ */
+  /* ============ プロフィールモーダル ============ */
   function profileModalHtml() {
     return '' +
-      '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-center justify-center bg-black/45 p-4">' +
-      '<div role="dialog" aria-modal="true" tabindex="-1" class="flex w-full max-w-sm flex-col rounded-[20px] bg-background-light shadow-md outline-none">' +
-      '<div class="flex flex-shrink-0 items-center gap-2 border-b border-border px-5 py-4">' +
-      '<h2 class="flex-1 text-base font-bold text-text">プロフィール</h2>' +
-      '<button type="button" data-modal-close aria-label="閉じる" class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]">' + icon('close', 16) + '</button>' +
+      '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-end justify-center bg-black/45 md:items-center md:p-4">' +
+      '<div role="dialog" aria-modal="true" aria-label="プロフィール" tabindex="-1" class="flex w-full flex-col rounded-t-2xl bg-background-light shadow-md outline-none h-[calc(100dvh-3.5rem)] md:h-auto md:max-h-[min(80vh,560px)] md:max-w-sm md:rounded-2xl">' +
+      /* ドラッグハンドル（モバイルのみ） */
+      '<div class="flex flex-shrink-0 justify-center py-2 md:hidden"><span class="h-1 w-9 rounded-full bg-border"></span></div>' +
+      /* ヒーローヘッダー（ネイビーグラデーション） */
+      '<div class="relative flex-shrink-0 rounded-t-2xl py-6 text-center" style="background:linear-gradient(160deg, #042154 0%, #0d3b86 100%);">' +
+      '<button type="button" data-modal-close aria-label="閉じる" class="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white">' + icon('close', 16) + '</button>' +
+      '<p class="text-xs font-semibold tracking-wide text-white/70">プロフィール</p>' +
+      '<div class="mx-auto mt-3 flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-white/25 text-2xl font-bold text-primary" style="background:linear-gradient(135deg, #C6A75E, #7A6030);">田</div>' +
+      '<a href="https://myprofile.microsoft.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-[11px] text-white/50 underline underline-offset-2 hover:text-white/80">M365で変更' +
+      '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>' +
       '</div>' +
-      '<div class="flex flex-col items-center px-6 py-6">' +
-      '<span class="flex h-20 w-20 items-center justify-center rounded-full bg-accent text-2xl font-bold text-primary">田</span>' +
-      '<p class="mt-3 text-lg font-bold text-text">田中 佑樹</p>' +
-      '<p class="text-sm text-subtle">tanaka@ict-o.com</p>' +
-      '<div class="mt-4 flex items-center gap-3 rounded-lg px-4 py-3" style="background:linear-gradient(135deg, #2E8B6F28 0%, #2E8B6F12 100%);">' +
-      '<img src="public/icons/ranks/rank3.png" alt="ランク3" width="40" height="40" class="shrink-0">' +
-      '<div><p class="text-sm font-bold text-primary">フィールドリーダー</p><p class="text-xs text-subtle">Lv.13 ・ 次のレベルまで あと 1,840 xp</p></div>' +
+      /* フィールド群 */
+      '<div class="flex-1 overflow-y-auto px-5 py-4">' +
+      '<div class="space-y-4">' +
+      '<div>' +
+      '<p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-subtle-light">名前</p>' +
+      '<div class="flex items-center justify-between border-b border-border py-2">' +
+      '<span class="text-sm text-subtle">田中 佑樹</span>' +
+      '<span class="text-[10px] text-subtle-light">Entra IDで管理</span>' +
+      '</div></div>' +
+      '<div>' +
+      '<p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-subtle-light">メールアドレス</p>' +
+      '<div class="flex items-center justify-between border-b border-border py-2">' +
+      '<span class="text-sm text-subtle">tanaka@ict-o.com</span>' +
+      '<span class="text-[10px] text-subtle-light">Entra IDで管理</span>' +
+      '</div></div>' +
+      '<div>' +
+      '<p aria-hidden="true" class="mb-1 text-[10px] font-bold uppercase tracking-wider text-subtle-light">自己紹介</p>' +
+      '<textarea data-profile-bio rows="3" aria-label="自己紹介（500字以内）" placeholder="自己紹介を入力してください（500字以内）" class="w-full resize-none border-b-2 border-border bg-transparent py-2 text-sm text-text outline-none placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>' +
+      '<p data-profile-bio-count class="mt-1 text-right text-[10px] text-subtle-light">0 / 500</p>' +
       '</div>' +
-      '<div class="mt-4 grid w-full grid-cols-2 gap-2">' +
-      '<div class="rounded-lg bg-background px-3 py-2.5 text-center"><p class="text-lg font-bold leading-none text-primary">4,250<span class="ml-0.5 text-xs font-medium text-accent">pt</span></p><p class="mt-1 text-xs text-subtle">2026年 獲得</p></div>' +
-      '<div class="rounded-lg bg-background px-3 py-2.5 text-center"><p class="text-lg font-bold leading-none text-success">31<span class="ml-0.5 text-xs font-medium text-subtle-light">件</span></p><p class="mt-1 text-xs text-subtle">承認済み</p></div>' +
       '</div>' +
+      '</div>' +
+      /* フッター（変更時のみ表示） */
+      '<div data-profile-footer class="hidden flex-shrink-0 justify-end gap-2 border-t border-border px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">' +
+      '<button type="button" data-modal-close class="inline-flex min-h-10 items-center rounded-full border border-border bg-background-light px-4 py-1.5 text-sm font-medium text-text transition-colors hover:bg-black/[0.08]">キャンセル</button>' +
+      '<button type="button" data-profile-save data-modal-close class="inline-flex min-h-10 items-center rounded-full bg-primary px-5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid disabled:opacity-[0.38] disabled:cursor-not-allowed">保存する</button>' +
       '</div>' +
       '</div></div>';
   }
@@ -279,6 +299,30 @@
     if (e.target.closest('[data-settings-panel="user"]')) {
       var footer = document.querySelector('[data-settings-footer]');
       if (footer) { footer.classList.remove('hidden'); footer.classList.add('flex'); }
+    }
+  });
+
+  // プロフィール: 自己紹介の文字数カウンタ + 変更時のみフッター表示（ProfileModal の hasChanges / overLimit を再現）
+  document.addEventListener('input', function (e) {
+    var bio = e.target.closest('[data-profile-bio]');
+    if (!bio) return;
+    var over = bio.value.length > 500;
+    var count = document.querySelector('[data-profile-bio-count]');
+    if (count) {
+      count.textContent = bio.value.length + ' / 500';
+      count.classList.toggle('text-danger', over);
+      count.classList.toggle('text-subtle-light', !over);
+    }
+    bio.classList.toggle('border-danger', over);
+    bio.classList.toggle('border-border', !over);
+    bio.setAttribute('aria-invalid', String(over));
+    var save = document.querySelector('[data-profile-save]');
+    if (save) save.disabled = over;
+    var footer = document.querySelector('[data-profile-footer]');
+    if (footer) {
+      var changed = bio.value !== bio.defaultValue; // 現在値と保存済み値の比較（hasChanges 相当）
+      footer.classList.toggle('hidden', !changed);
+      footer.classList.toggle('flex', changed);
     }
   });
 

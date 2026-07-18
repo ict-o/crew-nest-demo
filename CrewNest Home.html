@@ -121,7 +121,7 @@
 
   <!-- ユーザー -->
   <div class="border-t border-white/10 px-3 py-3">
-    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+    <button type="button" data-tour="user-menu" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
       <span class="min-w-0 flex-1">
         <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
@@ -138,7 +138,7 @@
     <div class="flex flex-col gap-4">
 
       <!-- ============ 安否確認バナー（該当者のみ表示） ============ -->
-      <button type="button" class="flex w-full items-center justify-between rounded-xl border-2 px-4 py-3.5 text-left transition-colors hover:bg-black/[0.04]" style="border-color:#C0392B;">
+      <button type="button" data-tour="home-safety" data-open-dialog="safety-response" class="flex w-full items-center justify-between rounded-xl border-2 px-4 py-3.5 text-left transition-colors hover:bg-black/[0.04]" style="border-color:#C0392B;">
         <div class="min-w-0 flex-1">
           <p class="text-xs font-medium" style="color:#C0392B;">安否確認 — 回答が必要です</p>
           <p class="mt-0.5 truncate text-sm font-bold text-text">関東地方 震度5強の地震について</p>
@@ -173,7 +173,7 @@
         <div class="flex min-w-0 flex-col gap-4">
 
           <!-- クエストサマリー -->
-          <div class="w-full rounded-lg shadow-sm">
+          <div data-tour="home-quest-summary" class="w-full rounded-lg shadow-sm">
             <div class="flex flex-col">
               <div class="flex items-center gap-4 rounded-t-lg px-5 py-4" style="background: linear-gradient(135deg, #2E8B6F28 0%, #2E8B6F12 100%);">
                 <img src="public/icons/ranks/rank3.png" alt="ランク3" width="56" height="56" class="shrink-0">
@@ -200,7 +200,7 @@
               <div class="flex flex-col gap-3 rounded-b-lg bg-background-light px-5 py-4">
                 <div class="flex items-center justify-between">
                   <p class="text-xs font-medium text-subtle">2026年 獲得ポイント</p>
-                  <button type="button" class="inline-flex h-10 items-center gap-1 rounded-full px-3 text-sm font-medium text-subtle transition-colors hover:bg-background hover:text-primary">
+                  <button type="button" data-open-dialog="point-history" class="inline-flex h-10 items-center gap-1 rounded-full px-3 text-sm font-medium text-subtle transition-colors hover:bg-background hover:text-primary">
                     獲得履歴 <span aria-hidden="true" class="text-xs opacity-70">›</span>
                   </button>
                 </div>
@@ -242,7 +242,7 @@
           </div>
 
           <!-- カレンダー -->
-          <div class="rounded-lg border border-border bg-background-light shadow-sm">
+          <div data-tour="home-calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
             <div class="flex items-center gap-3 px-4 pb-2 pt-3.5">
               <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-lightest">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#042154"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"></path></svg>
@@ -294,7 +294,7 @@
         <div class="flex min-w-0 flex-col gap-4">
 
           <!-- 通知（重要お知らせ＋通常フィード統合） -->
-          <div class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div data-tour="home-notifications" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <div class="mb-4 flex min-w-0 items-center justify-between gap-3">
               <div class="flex min-w-0 items-center gap-2">
                 <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">通知</h2>
@@ -353,7 +353,7 @@
           </div>
 
           <!-- 受け取れるボーナス -->
-          <div class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div data-tour="home-bonus" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <div class="mb-4 flex items-center justify-between">
               <div class="flex min-w-0 items-center gap-2">
                 <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">受け取れるボーナス</h2>
@@ -397,7 +397,7 @@
           </div>
 
           <!-- 経費未精算サマリ -->
-          <a href="CrewNest Expense Claims.html" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
+          <a href="CrewNest Expense Claims.html" data-tour="home-expense" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <img src="public/icons/apply.png" alt="" style="width:20px;height:20px;object-fit:contain;">
             </span>
@@ -410,7 +410,7 @@
           </a>
 
           <!-- クイックリンク -->
-          <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div data-tour="home-quicklinks" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
             <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
               <a href="#" class="group flex flex-col items-center gap-1.5">
@@ -447,7 +447,7 @@
       <div class="flex flex-col gap-4 md:hidden">
 
         <!-- クエストサマリー -->
-        <div class="w-full rounded-lg shadow-sm">
+        <div data-tour="home-quest-summary" class="w-full rounded-lg shadow-sm">
           <div class="flex flex-col">
             <div class="flex items-center gap-4 rounded-t-lg px-5 py-4" style="background: linear-gradient(135deg, #2E8B6F28 0%, #2E8B6F12 100%);">
               <img src="public/icons/ranks/rank3.png" alt="ランク3" width="56" height="56" class="shrink-0">
@@ -474,7 +474,7 @@
             <div class="flex flex-col gap-3 rounded-b-lg bg-background-light px-5 py-4">
               <div class="flex items-center justify-between">
                 <p class="text-xs font-medium text-subtle">2026年 獲得ポイント</p>
-                <button type="button" class="inline-flex h-10 items-center gap-1 rounded-full px-3 text-sm font-medium text-subtle transition-colors hover:bg-background hover:text-primary">
+                <button type="button" data-open-dialog="point-history" class="inline-flex h-10 items-center gap-1 rounded-full px-3 text-sm font-medium text-subtle transition-colors hover:bg-background hover:text-primary">
                   獲得履歴 <span aria-hidden="true" class="text-xs opacity-70">›</span>
                 </button>
               </div>
@@ -516,7 +516,7 @@
         </div>
 
         <!-- 通知（FeedNotificationsCard: 未読のみ） -->
-        <div class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-tour="home-notifications" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
           <div class="mb-3 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">通知</h2>
@@ -551,7 +551,7 @@
         </div>
 
         <!-- 受け取れるボーナス -->
-        <div class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-tour="home-bonus" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
           <div class="mb-4 flex items-center justify-between">
             <div class="flex min-w-0 items-center gap-2">
               <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">受け取れるボーナス</h2>
@@ -595,7 +595,7 @@
         </div>
 
         <!-- 経費未精算サマリ -->
-        <a href="CrewNest Expense Claims.html" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
+        <a href="CrewNest Expense Claims.html" data-tour="home-expense" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
           <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
             <img src="public/icons/apply.png" alt="" style="width:20px;height:20px;object-fit:contain;">
           </span>
@@ -608,7 +608,7 @@
         </a>
 
         <!-- カレンダー -->
-        <div class="rounded-lg border border-border bg-background-light shadow-sm">
+        <div data-tour="home-calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
           <div class="flex items-center gap-3 px-4 pb-2 pt-3.5">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-lightest">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="#042154"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"></path></svg>
@@ -656,7 +656,7 @@
         </div>
 
         <!-- クイックリンク -->
-        <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-tour="home-quicklinks" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
           <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
           <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
             <a href="#" class="group flex flex-col items-center gap-1.5">
@@ -690,7 +690,7 @@
 
       <!-- ホーム画面カスタマイズ -->
       <div class="mb-4 mt-1 flex items-center justify-end gap-2">
-        <button type="button" class="rounded-full border border-border bg-background-light px-4 py-1.5 text-xs font-medium text-text hover:bg-black/[0.08]">
+        <button type="button" data-tour="home-customize" class="rounded-full border border-border bg-background-light px-4 py-1.5 text-xs font-medium text-text hover:bg-black/[0.08]">
           ホーム画面をカスタマイズ
         </button>
       </div>
@@ -732,5 +732,287 @@
 
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
+
+<!-- 安否確認 回答ダイアログ -->
+<div data-dialog="safety-response" class="fixed inset-0 z-[110] items-end justify-center bg-black/45 md:items-center md:p-4" style="display:none;">
+  <div role="dialog" aria-modal="true" aria-labelledby="safety-modal-title" class="flex h-[85dvh] w-full flex-col rounded-t-2xl bg-background-light shadow-md md:h-auto md:max-h-[calc(100vh-80px)] md:max-w-lg md:rounded-2xl">
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-4 py-3 md:px-5">
+      <span id="safety-modal-title" class="text-sm font-semibold text-text">安否確認</span>
+      <button type="button" data-close-dialog aria-label="閉じる" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+    </div>
+    <div class="flex-1 overflow-y-auto">
+      <div class="flex flex-col gap-4 px-5 py-4">
+        <!-- 災害情報カード -->
+        <div class="rounded-2xl border border-border bg-background-light px-4 py-4">
+          <p class="mb-1 text-xs font-medium text-subtle">地震</p>
+          <h2 class="text-lg font-bold text-text">関東地方 震度5強の地震について</h2>
+          <p class="mt-1 text-xs text-subtle">発生日時: 2026/07/14 06:32</p>
+        </div>
+        <!-- 未回答: 状況の選択 -->
+        <div id="safety-state-question" class="rounded-2xl border border-border bg-background-light px-4 py-5">
+          <p class="mb-4 text-center text-sm font-medium text-text">現在の状況を教えてください</p>
+          <div id="safety-state-choice" class="flex flex-col gap-3">
+            <button type="button" onclick="safetyAnswer('SAFE')" class="w-full rounded-full border-2 border-success bg-success-surface py-4 text-base font-bold text-success transition-colors hover:bg-success-surface/80">無事です</button>
+            <button type="button" onclick="safetyShowDamagedForm()" class="w-full rounded-full border-2 border-danger bg-danger-surface py-4 text-base font-bold text-danger transition-colors hover:bg-danger-surface/80">被害あり</button>
+          </div>
+          <div id="safety-state-damaged" class="flex-col gap-3" style="display:none;">
+            <div class="rounded-lg bg-danger-surface px-3 py-2 text-center text-sm font-medium text-danger">被害があります</div>
+            <textarea placeholder="状況をコメントで教えてください（任意）" class="min-h-[80px] w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+            <div class="flex gap-2">
+              <button type="button" onclick="safetyBackToChoice()" class="flex-1 rounded-full border border-border bg-background py-2.5 text-sm font-medium text-text transition-colors hover:bg-black/[0.08]">戻る</button>
+              <button type="button" onclick="safetyAnswer('DAMAGED')" class="flex-1 rounded-full bg-red-600 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red-700">送信する</button>
+            </div>
+          </div>
+        </div>
+        <!-- 回答済み表示 -->
+        <div id="safety-state-answered" class="rounded-2xl border border-border bg-background-light px-4 py-4" style="display:none;">
+          <p class="mb-1 text-xs font-medium text-subtle">回答済み</p>
+          <div id="safety-answered-pill" class="inline-block rounded-full bg-success-surface px-3 py-1 text-sm font-medium text-success">無事です</div>
+          <p class="mt-2 text-xs text-subtle">回答日時: 2026/07/14 10:05</p>
+        </div>
+        <!-- 安否確認タイムライン -->
+        <div class="rounded-2xl border border-border bg-background-light px-4 py-4">
+          <div class="my-4">
+            <p class="mb-2 text-[10px] font-bold uppercase tracking-widest text-subtle">タイムライン</p>
+            <div class="relative">
+              <div class="relative flex gap-3 pb-4">
+                <div class="absolute bottom-0 left-[17px] top-[34px] w-px bg-border"></div>
+                <div class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-muted-surface text-muted"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd"></path></svg></div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="rounded-full bg-background px-1.5 py-0.5 text-[10px] font-semibold text-subtle">通知送信</span>
+                    <span class="text-[10px] text-subtle">7月14日 06:35</span>
+                  </div>
+                </div>
+              </div>
+              <div class="relative flex gap-3 pb-4">
+                <div class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-muted-surface text-muted"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd"></path></svg></div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="rounded-full bg-warning-surface px-1.5 py-0.5 text-[10px] font-semibold text-warning">リマインド</span>
+                    <span class="text-[10px] text-subtle">7月14日 08:35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 獲得履歴ダイアログ -->
+<div data-dialog="point-history" class="fixed inset-0 z-[110] items-end justify-center bg-black/45 md:items-center md:p-4" style="display:none;">
+  <div role="dialog" aria-modal="true" aria-labelledby="achievement-history-title" class="flex max-h-[85vh] w-full flex-col rounded-t-2xl bg-background-light shadow-md md:max-h-[min(80vh,640px)] md:max-w-lg md:rounded-2xl">
+    <div aria-hidden="true" class="mx-auto mb-1 mt-3 h-1.5 w-12 flex-shrink-0 rounded-full bg-border md:hidden"></div>
+    <div class="flex flex-shrink-0 items-start justify-between border-b border-border px-5 py-4">
+      <div>
+        <h2 id="achievement-history-title" class="text-base font-bold text-text">獲得履歴</h2>
+        <p class="mt-1 text-xs text-subtle">承認済みの履歴（新しい順）</p>
+      </div>
+      <button type="button" data-close-dialog aria-label="閉じる" class="ml-3 hidden h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] md:flex"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+    </div>
+    <div class="flex-shrink-0 border-b border-border px-4 pt-3" role="tablist" aria-label="履歴タブ">
+      <div class="flex">
+        <button id="history-tab-points" type="button" role="tab" aria-selected="true" aria-controls="history-panel-points" onclick="historySelectTab('points')" class="relative inline-flex flex-1 shrink-0 items-center justify-center gap-2 whitespace-nowrap border-b-2 border-primary px-4 py-3 text-sm font-medium text-primary transition-colors">ポイント 6件</button>
+        <button id="history-tab-xp" type="button" role="tab" aria-selected="false" aria-controls="history-panel-xp" onclick="historySelectTab('xp')" class="relative inline-flex flex-1 shrink-0 items-center justify-center gap-2 whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-subtle transition-colors hover:border-border hover:text-text">経験値 3件</button>
+      </div>
+    </div>
+    <div id="history-panel-points" role="tabpanel" aria-labelledby="history-tab-points" class="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/28</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5B7FC0;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">クエスト「月次レポート提出」</p>
+              <p class="mt-0.5 text-xs text-subtle">クエスト達成</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-primary">+150 pt</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/25</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5A9E74;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">毎日ログイン</p>
+              <p class="mt-0.5 text-xs text-subtle">デイリーボーナス</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-primary">+10 pt</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/20</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #B89B52;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">アイデア採用「備品管理のQRコード化」</p>
+              <p class="mt-0.5 text-xs text-subtle">アイデア採用</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-primary">+300 pt</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/15</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5B7FC0;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">クエスト「社内勉強会に登壇」</p>
+              <p class="mt-0.5 text-xs text-subtle">クエスト達成</p>
+            </div>
+            <div class="flex-shrink-0 text-right">
+              <span class="text-sm font-bold text-primary">+200 pt</span>
+              <span class="ml-1 rounded-full border border-accent bg-accent-light px-2 py-0.5 text-xs font-medium text-accent-dark">+100 pt</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/10</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5B7FC0;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">クエスト「日報を提出する」</p>
+              <p class="mt-0.5 text-xs text-subtle">クエスト達成</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-primary">+10 pt</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/01</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #C07B8A;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">四半期MVPボーナス</p>
+              <p class="mt-0.5 text-xs text-subtle">特別ボーナス</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-primary">+500 pt</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="history-panel-xp" role="tabpanel" aria-labelledby="history-tab-xp" class="min-h-0 flex-1 overflow-y-auto px-4 pb-4" style="display:none;">
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/28</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5B7FC0;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">クエスト「月次レポート提出」</p>
+              <p class="mt-0.5 text-xs text-subtle">クエスト達成</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-success">+120 xp</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/15</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5B7FC0;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">クエスト「社内勉強会に登壇」</p>
+              <p class="mt-0.5 text-xs text-subtle">クエスト達成</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-success">+180 xp</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <p class="mb-2 text-xs font-medium text-subtle">2026/06/10</p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-center gap-3 rounded-lg border border-border bg-background-light pr-4" style="border-left:4px solid #5B7FC0;">
+            <div class="min-w-0 flex-1 py-3 pl-3">
+              <p class="truncate text-sm font-medium text-text">クエスト「日報を提出する」</p>
+              <p class="mt-0.5 text-xs text-subtle">クエスト達成</p>
+            </div>
+            <div class="flex-shrink-0 text-right"><span class="text-sm font-bold text-success">+20 xp</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function markSafetyAnswered() {
+  var b = document.querySelector('[data-tour="home-safety"]');
+  if (!b) return;
+  b.style.borderColor = '#3D7A56';
+  var label = b.querySelector('p');
+  if (label) { label.textContent = '安否確認 — 回答済み'; label.style.color = '#3D7A56'; }
+  var pill = b.querySelector('span.ml-4');
+  if (pill) { pill.textContent = '回答済み'; pill.style.backgroundColor = '#3D7A56'; }
+}
+// 安否回答パネル: 「無事です」は押した瞬間に回答確定、「被害あり」はコメントフォームへ
+function safetyAnswer(type) {
+  var q = document.getElementById('safety-state-question');
+  var a = document.getElementById('safety-state-answered');
+  var pill = document.getElementById('safety-answered-pill');
+  if (q) q.style.display = 'none';
+  if (a) a.style.display = 'block';
+  if (pill) {
+    pill.textContent = type === 'SAFE' ? '無事です' : '被害があります';
+    pill.className = 'inline-block rounded-full px-3 py-1 text-sm font-medium ' +
+      (type === 'SAFE' ? 'bg-success-surface text-success' : 'bg-danger-surface text-danger');
+  }
+  markSafetyAnswered();
+}
+function safetyShowDamagedForm() {
+  var c = document.getElementById('safety-state-choice');
+  var f = document.getElementById('safety-state-damaged');
+  if (c) c.style.display = 'none';
+  if (f) f.style.display = 'flex';
+}
+function safetyBackToChoice() {
+  var c = document.getElementById('safety-state-choice');
+  var f = document.getElementById('safety-state-damaged');
+  var t = f ? f.querySelector('textarea') : null;
+  if (t) t.value = ''; // SafetyRespondPanel の「戻る」（setComment("") 相当）を再現
+  if (f) f.style.display = 'none';
+  if (c) c.style.display = 'flex';
+}
+// 獲得履歴ダイアログ: ポイント / 経験値 タブ切替
+function historySelectTab(tab) {
+  var points = tab === 'points';
+  var panelP = document.getElementById('history-panel-points');
+  var panelX = document.getElementById('history-panel-xp');
+  var tabP = document.getElementById('history-tab-points');
+  var tabX = document.getElementById('history-tab-xp');
+  if (panelP) panelP.style.display = points ? '' : 'none';
+  if (panelX) panelX.style.display = points ? 'none' : '';
+  var active = points ? tabP : tabX;
+  var inactive = points ? tabX : tabP;
+  if (active) {
+    active.setAttribute('aria-selected', 'true');
+    active.classList.add('border-primary', 'text-primary');
+    active.classList.remove('border-transparent', 'text-subtle', 'hover:border-border', 'hover:text-text');
+  }
+  if (inactive) {
+    inactive.setAttribute('aria-selected', 'false');
+    inactive.classList.remove('border-primary', 'text-primary');
+    inactive.classList.add('border-transparent', 'text-subtle', 'hover:border-border', 'hover:text-text');
+  }
+}
+</script>
+
+<script src="tour.js"></script>
+<script>
+CNTour.define('home', [
+  { title: 'CREW NEST へようこそ！', body: 'はじめての方向けに、この画面の使い方をご案内します。' },
+  { target: 'nav[aria-label="メインナビゲーション"]', title: 'メニュー', body: 'クエスト・アイデア・書類提出・経費精算など、各機能へはここから移動します。' },
+  { target: '[data-tour="home-safety"]', title: '安否確認', body: '災害時に安否確認が届くと、ここに回答バナーが表示されます。「回答する」から状況を報告してください。' },
+  { target: '[data-tour="home-quest-summary"]', title: 'あなたのランクとポイント', body: '現在のランク・レベル・今年の獲得ポイントを確認できます。' },
+  { target: '[data-tour="home-calendar"]', title: 'カレンダー', body: '会議や社内イベントなど、今日以降の予定を確認できます。' },
+  { target: '[data-tour="home-notifications"]', title: '通知', body: '承認結果や提出依頼などのお知らせが届きます。重要なお知らせもここに表示されます。' },
+  { target: '[data-tour="home-bonus"]', title: '受け取れるボーナス', body: '達成済みのボーナスはここから受け取れます。' },
+  { target: '[data-tour="home-expense"]', title: '経費 未精算', body: '未精算の経費の件数と合計金額です。タップすると経費精算ページへ移動します。' },
+  { target: '[data-tour="home-quicklinks"]', title: 'クイックリンク', body: '給与明細や勤怠など、よく使う社内システムへのショートカットです。' },
+  { target: '[data-tour="home-customize"]', title: 'ホーム画面をカスタマイズ', body: 'このボタンから、カードの並び替えや表示・非表示を変更できます。自分の使いやすいホーム画面に整えてみてください。' }
+]);
+</script>
 </body>
 </html>

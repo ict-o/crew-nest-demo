@@ -90,59 +90,59 @@
   </div>
   <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
     <div class="space-y-1">
-      
+
       <a href="CrewNest Home.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
-        
+
       </a>
       <div>
-        
+
       <a href="CrewNest My Achievements.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
         <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
       </a>
         <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[1fr]" style="overflow:hidden;">
           <div class="min-h-0 overflow-hidden">
-            
+
         <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
-          
+
           <a href="CrewNest My Achievements.html" aria-current="page" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium bg-white/20 text-white">
             <span class="truncate">承認状況</span>
             <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
           </a>
           <a href="CrewNest Quests.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
             <span class="truncate">クエストボード</span>
-            
+
           </a>
           <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
             <span class="truncate">ランキング</span>
-            
+
           </a>
         </div>
           </div>
         </div>
       </div>
-      
+
       <a href="CrewNest Proposals.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
-        
+
       </a>
-      
+
       <a href="CrewNest Documents.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
       </a>
-      
+
       <a href="CrewNest Expense Claims.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
-        
+
       </a>
     </div>
     <div class="mt-2 border-t border-white/10 pt-2">
-      
+
       <a href="CrewNest Admin.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
-        
+
       </a>
     </div>
   </nav>
@@ -169,14 +169,14 @@
         </div>
       </div>
 
-      <div class="flex gap-1 border-b border-border">
+      <div data-tour="ach-tabs" class="flex gap-1 border-b border-border">
         <button type="button" data-tabgroup="primary" data-tabkey="my_requests" class="tab-btn tab-btn-primary is-active">申請したもの</button>
         <button type="button" data-tabgroup="primary" data-tabkey="incoming" class="tab-btn tab-btn-primary">承認依頼<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">2</span></button>
       </div>
 
       <div data-panel="my_requests" class="active mt-2">
-        <div class="flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="sec_my" data-tabkey="ALL" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">6</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="RETURNED" class="tab-btn tab-btn-secondary ">差し戻し<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">承認済み<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="REJECTED" class="tab-btn tab-btn-secondary ">却下<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button></div>
-        <div class="mt-4 flex flex-col gap-3">
+        <div data-tour="ach-status-tabs" class="flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="sec_my" data-tabkey="ALL" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">6</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="RETURNED" class="tab-btn tab-btn-secondary ">差し戻し<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">承認済み<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="REJECTED" class="tab-btn tab-btn-secondary ">却下<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button></div>
+        <div data-tour="ach-list" class="mt-4 flex flex-col gap-3">
         <div data-open-slide="ach-detail" data-item data-status="APPROVED" class="w-full cursor-pointer overflow-hidden rounded-xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
           <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
             <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-success-surface text-success border border-success-border">承認済み</span>
@@ -276,11 +276,11 @@
 </div>
 
 <nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
-  
+
   <a href="CrewNest Home.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">ホーム</span>
-    
+
   </a>
   <a href="CrewNest Quests.html" aria-current="page" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-primary">
     <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;">
@@ -290,7 +290,7 @@
   <a href="CrewNest Proposals.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">アイデア</span>
-    
+
   </a>
   <a href="CrewNest Documents.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
@@ -300,7 +300,7 @@
   <a href="CrewNest Expense Claims.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
     <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
     <span class="whitespace-nowrap">経費精算</span>
-    
+
   </a>
 
   <a href="CrewNest Admin.html"  class="relative flex flex-1 flex-col items-center gap-1 py-1 text-xs text-subtle">
@@ -447,6 +447,22 @@ document.addEventListener('slidewillopen', function(ev){
   all('[data-f="foot-approval"]').forEach(function(n){ n.style.display = status === 'APPROVAL' ? '' : 'none'; });
   all('[data-f="footer"]').forEach(function(n){ n.style.display = (status === 'PENDING' || status === 'APPROVAL') ? '' : 'none'; });
 });
+</script>
+<script src="tour.js"></script>
+<script>
+function cnAchTab(key){
+  return function(){
+    var btn = document.querySelector('[data-tabgroup="primary"][data-tabkey="' + key + '"]');
+    if (btn && !btn.classList.contains('is-active')) btn.click();
+  };
+}
+CNTour.define('achievements', [
+  { title: '承認状況', body: 'クエストの達成申請がいまどの状態か（申請中・承認済みなど）を確認できるページです。' },
+  { target: '[data-tour="ach-tabs"]', title: 'タブの切り替え', body: '「申請したもの」と「承認依頼」を切り替えられます。対応が必要な申請があるとバッジが付きます。' },
+  { before: cnAchTab('my_requests'), target: '[data-tour="ach-status-tabs"]', title: '状態で絞り込み', body: '申請中・差し戻し・承認済み・却下の状態ごとに申請を絞り込めます。' },
+  { before: cnAchTab('my_requests'), target: '[data-tour="ach-list"]', title: '申請の一覧', body: '申請したクエストが状態バッジ付きで並びます。タップすると詳細を確認でき、差し戻された申請は修正して再申請できます。' },
+  { before: cnAchTab('incoming'), target: '[data-panel="incoming"]', title: '承認依頼', body: '自分が承認者になっている申請はここに届きます。「対応待ち」から内容を確認して対応しましょう。' }
+], { onClose: cnAchTab('my_requests') });
 </script>
 </body>
 </html>

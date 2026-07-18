@@ -166,7 +166,7 @@
         <h1 class="flex items-center gap-3 text-2xl font-bold text-text"><img src="public/icons/proposal.png" class="h-7 w-7" alt="">アイデア</h1>
         <button type="button" data-open-slide="proposal-form" class="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">提案する</button>
       </div>
-      <div class="flex gap-1 border-b border-border">
+      <div data-tour="tabs" class="flex gap-1 border-b border-border">
         <button type="button" data-tabgroup="primary" data-tabkey="mine" class="tab-btn tab-btn-primary is-active">自分の提案<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button>
         <button type="button" data-tabgroup="primary" data-tabkey="all" class="tab-btn tab-btn-primary">みんなの提案<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button>
         <button type="button" data-tabgroup="primary" data-tabkey="adopted" class="tab-btn tab-btn-primary">採用済み<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button>
@@ -556,6 +556,16 @@ document.addEventListener('slidewillopen', function(ev){
   var isMine = proposer.indexOf('田中') !== -1;
   all('[data-f="footer"]').forEach(function(n){ n.style.display = (status === 'PENDING' && isMine) ? '' : 'none'; });
 });
+</script>
+<script src="tour.js"></script>
+<script>
+function cnTab(k){ return function(){ var b = document.querySelector('[data-tabgroup="primary"][data-tabkey="' + k + '"]'); if (b) b.click(); }; }
+CNTour.define('proposals', [
+  { title: 'アイデア', body: '業務改善のアイデアを投稿できます。採用されるとポイントを獲得できます。' },
+  { target: '[data-tour="tabs"]', title: 'タブの切り替え', body: '「自分の提案」「みんなの提案」「採用済み」を切り替えて閲覧できます。' },
+  { before: cnTab('mine'), target: '[data-panel="mine"] [data-item]', title: '提案カード', body: 'タップすると詳細が開き、審査状況やコメントを確認できます。' },
+  { before: cnTab('mine'), target: '[data-open-slide="proposal-form"], [aria-label="提案する"]', title: 'アイデアを提案', body: 'このボタンから新しいアイデアを投稿できます。' }
+], { onClose: cnTab('mine') });
 </script>
 </body>
 </html>
