@@ -1,0 +1,11 @@
+/* DEMO 環境であることを示す全画面の薄い斜め透かし */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='200' viewBox='0 0 260 200'%3E%3Ctext x='130' y='100' font-family='Arial, Helvetica, sans-serif' font-size='40' font-weight='700' fill='%23042154' fill-opacity='0.05' text-anchor='middle' dominant-baseline='central' transform='rotate(-45 130 100)'%3EDEMO%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 260px 200px;
+}
