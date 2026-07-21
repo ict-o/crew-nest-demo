@@ -240,7 +240,7 @@
               <button type="button" data-qtab="achievements" class="ptab ptab-primary">申請一覧</button>
               <button type="button" data-qtab="quests" class="ptab ptab-primary">クエスト一覧</button>
               <button type="button" data-qtab="levels" class="ptab ptab-primary">レベル定義</button>
-              <button type="button" data-qtab="budget" class="ptab ptab-primary">予算</button>
+              <button type="button" data-qtab="budget" class="ptab ptab-primary">予算・精算</button>
               <button type="button" data-qtab="settings" class="ptab ptab-primary">設定</button>
             </div>
           </nav>
@@ -336,11 +336,11 @@
                     <div class="mb-2 flex items-center justify-between">
                       <p class="text-[12px] font-semibold text-subtle">月次獲得pt推移</p>
                       <div class="flex gap-3 text-[11px] text-subtle">
-                        <span class="inline-flex items-center gap-1"><span class="inline-block h-0.5 w-4 bg-primary"></span>2026年</span>
-                        <span class="inline-flex items-center gap-1"><span class="inline-block h-0.5 w-4 border-t border-dashed border-subtle-light"></span>2025年</span>
+                        <span class="inline-flex items-center gap-1"><span class="inline-block h-0.5 w-4 bg-primary"></span>2026年度</span>
+                        <span class="inline-flex items-center gap-1"><span class="inline-block h-0.5 w-4 border-t border-dashed border-subtle-light"></span>2025年度</span>
                       </div>
                     </div>
-                    <svg viewBox="0 0 480 180" class="h-[190px] w-full" role="img" aria-label="月次獲得pt推移グラフ">
+                    <svg viewBox="0 0 480 180" class="h-[190px] w-full" role="img" aria-label="年度トレンド">
                       <line x1="30" y1="150" x2="470" y2="150" stroke="#E3E6ED" stroke-width="1"></line>
                       <line x1="30" y1="100" x2="470" y2="100" stroke="#E3E6ED" stroke-width="1"></line>
                       <line x1="30" y1="50" x2="470" y2="50" stroke="#E3E6ED" stroke-width="1"></line>
@@ -350,12 +350,12 @@
                       <polyline points="50,95 120,102 190,88 260,72 330,80 400,64" fill="none" stroke="#8A99B8" stroke-width="1.5" stroke-dasharray="4 3"></polyline>
                       <polyline points="50,90 120,85 190,70 260,60 330,75 400,64" fill="none" stroke="#042154" stroke-width="2"></polyline>
                       <circle cx="50" cy="90" r="3" fill="#042154"></circle><circle cx="120" cy="85" r="3" fill="#042154"></circle><circle cx="190" cy="70" r="3" fill="#042154"></circle><circle cx="260" cy="60" r="3" fill="#042154"></circle><circle cx="330" cy="75" r="3" fill="#042154"></circle><circle cx="400" cy="64" r="3" fill="#C6A75E" stroke="#042154" stroke-width="1.5"></circle>
-                      <text x="50" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">1月</text>
-                      <text x="120" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">2月</text>
-                      <text x="190" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">3月</text>
-                      <text x="260" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">4月</text>
-                      <text x="330" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">5月</text>
-                      <text x="400" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">6月</text>
+                      <text x="50" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">7月</text>
+                      <text x="120" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">8月</text>
+                      <text x="190" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">9月</text>
+                      <text x="260" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">10月</text>
+                      <text x="330" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">11月</text>
+                      <text x="400" y="168" text-anchor="middle" font-size="9" fill="#8A99B8">12月</text>
                     </svg>
                   </article>
 
@@ -1330,13 +1330,60 @@
           <div data-qpanel="budget">
             <div class="md:rounded-lg md:border md:border-border md:bg-background-light md:shadow-sm">
               <div class="hidden items-center gap-3 rounded-t-lg border-b border-border bg-muted-surface px-4 py-3 md:flex">
-                <div class="flex items-center overflow-hidden rounded-lg border border-border bg-background-light" role="group" aria-label="年を選択">
-                  <button type="button" aria-label="前の年" class="flex h-[34px] w-8 items-center justify-center text-lg text-subtle transition-colors hover:bg-muted-surface hover:text-primary">‹</button>
-                  <span class="flex h-[34px] items-center whitespace-nowrap border-x border-border px-4 text-[13px] font-bold text-text">2026年</span>
-                  <button type="button" aria-label="次の年" class="flex h-[34px] w-8 items-center justify-center text-lg text-subtle transition-colors hover:bg-muted-surface hover:text-primary">›</button>
+                <div class="flex items-center overflow-hidden rounded-lg border border-border bg-background-light" role="group" aria-label="年度を選択">
+                  <button type="button" aria-label="前の年度" class="flex h-[34px] w-8 items-center justify-center text-lg text-subtle transition-colors hover:bg-muted-surface hover:text-primary">‹</button>
+                  <span class="flex h-[34px] items-center whitespace-nowrap border-x border-border px-4 text-[13px] font-bold text-text">2026年度</span>
+                  <button type="button" aria-label="次の年度" class="flex h-[34px] w-8 items-center justify-center text-lg text-subtle transition-colors hover:bg-muted-surface hover:text-primary">›</button>
+                </div>
+                <div data-fy class="flex min-w-0 flex-col gap-0.5">
+                  <p class="text-xs text-subtle-light" data-fy-prevhint style="display:none">前年度（2025年度）: 2025/7/1 〜 2026/6/30（12ヶ月）</p>
+                  <div class="flex flex-wrap items-center gap-1">
+                    <span class="text-[13px] font-semibold text-text" data-fy-view>2026/7/1 〜 2027/6/30</span>
+                    <button type="button" aria-label="年度期間を編集" data-fy-edit-btn class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 min-h-12 min-w-12 text-subtle">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg>
+                    </button>
+                    <span class="inline-flex items-center gap-1 rounded-full border border-info-border bg-info-surface px-2.5 py-1 text-[11px] font-medium text-info" data-fy-chip style="display:none">
+                      <span data-fy-chip-label>2027年度から4月始まり</span>
+                      <button type="button" data-fy-cancel-open class="rounded-full px-1.5 py-1 underline transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">取消</button>
+                    </span>
+                    <span class="items-center gap-1" data-fy-editrow style="display:none">
+                      <span class="text-[13px] font-semibold text-text">2026/7/1 〜</span>
+                      <select data-fy-end-select aria-label="今期の終了月" class="h-8 w-[150px] rounded-lg border border-border bg-background-light px-2.5 text-[12px] text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></select>
+                      <button type="button" aria-label="変更を確定" data-fy-apply class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg></span>
+                      </button>
+                      <button type="button" aria-label="編集をキャンセル" data-fy-close class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full border border-border text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12]"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span>
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="flex flex-col gap-3 md:p-4">
+                <!-- モバイル: 年度期間のインライン表示 -->
+                <div data-fy class="md:hidden flex min-w-0 flex-col gap-0.5">
+                  <p class="text-xs text-subtle-light" data-fy-prevhint style="display:none">前年度（2025年度）: 2025/7/1 〜 2026/6/30（12ヶ月）</p>
+                  <div class="flex flex-wrap items-center gap-1">
+                    <span class="text-[13px] font-semibold text-text" data-fy-view>2026/7/1 〜 2027/6/30</span>
+                    <button type="button" aria-label="年度期間を編集" data-fy-edit-btn class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 min-h-12 min-w-12 text-subtle">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg>
+                    </button>
+                    <span class="inline-flex items-center gap-1 rounded-full border border-info-border bg-info-surface px-2.5 py-1 text-[11px] font-medium text-info" data-fy-chip style="display:none">
+                      <span data-fy-chip-label>2027年度から4月始まり</span>
+                      <button type="button" data-fy-cancel-open class="rounded-full px-1.5 py-1 underline transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">取消</button>
+                    </span>
+                    <span class="items-center gap-1" data-fy-editrow style="display:none">
+                      <span class="text-[13px] font-semibold text-text">2026/7/1 〜</span>
+                      <select data-fy-end-select aria-label="今期の終了月" class="h-8 w-[150px] rounded-lg border border-border bg-background-light px-2.5 text-[12px] text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></select>
+                      <button type="button" aria-label="変更を確定" data-fy-apply class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg></span>
+                      </button>
+                      <button type="button" aria-label="編集をキャンセル" data-fy-close class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full border border-border text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12]"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
                 <!-- 精算カード -->
                 <div class="rounded-lg border border-accent-border bg-accent-lightest">
                   <div class="hidden min-h-[56px] items-center gap-2 border-b border-accent-border px-4 py-2 md:flex">
@@ -1466,6 +1513,53 @@
               </div>
             </div>
           </div>
+
+<div data-dialog="fy-confirm" class="fixed inset-0 z-[110] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="alertdialog" aria-modal="true" class="w-full max-w-sm rounded-[20px] bg-background-light p-6 shadow-md">
+    <p class="text-base font-bold text-text">年度期間を変更しますか？</p>
+    <p class="mt-3 rounded-lg border border-warning-border bg-warning-surface p-3 text-xs leading-relaxed text-warning" data-fy-dlg-impact></p>
+    <div class="mt-3 overflow-x-auto">
+      <table class="w-full text-xs">
+        <tbody>
+          <tr class="border-b border-border">
+            <td class="py-1.5 pr-2 whitespace-nowrap text-subtle">2025年度</td>
+            <td class="py-1.5 pr-2 text-text">2025/7/1 〜 2026/6/30</td>
+            <td class="py-1.5 text-right text-subtle-light">変更なし</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="py-1.5 pr-2 whitespace-nowrap font-medium text-text">2026年度</td>
+            <td class="py-1.5 pr-2 text-text" data-fy-dlg-newperiod>2026/7/1 〜 2027/6/30</td>
+            <td class="py-1.5 text-right">
+              <span class="inline-flex whitespace-nowrap rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning" data-fy-dlg-monthcount>移行年度 12ヶ月</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-1.5 pr-2 whitespace-nowrap text-subtle" data-fy-dlg-newyear>2027年度〜</td>
+            <td class="py-1.5 pr-2 text-text" data-fy-dlg-newrule>7月始まり（12ヶ月）</td>
+            <td class="py-1.5 text-right">
+              <span class="inline-flex whitespace-nowrap rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[10px] font-medium text-info">新ルール</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-5 flex flex-col-reverse gap-2 md:flex-row md:justify-end">
+      <button type="button" data-close-dialog class="inline-flex min-h-12 items-center justify-center rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>
+      <button type="button" data-fy-confirm class="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">変更する</button>
+    </div>
+  </div>
+</div>
+
+<div data-dialog="fy-cancel" class="fixed inset-0 z-[110] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="alertdialog" aria-modal="true" class="w-full max-w-sm rounded-[20px] bg-background-light p-6 shadow-md">
+    <p class="text-base font-bold text-text">予約を取り消しますか？</p>
+    <p class="mt-2 text-sm text-subtle" data-fy-dlg-cancel-desc>「2027年度から4月始まり」の予約を取り消し、現在のルール（7月始まり）を継続します。</p>
+    <div class="mt-5 flex flex-col-reverse gap-2 md:flex-row md:justify-end">
+      <button type="button" data-close-dialog class="inline-flex min-h-12 items-center justify-center rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>
+      <button type="button" data-fy-cancel-confirm class="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-medium text-white transition-colors hover:bg-red-700 active:bg-red-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">取り消す</button>
+    </div>
+  </div>
+</div>
 
           <div data-qpanel="settings">
             <div class="flex-1 overflow-y-auto px-2 py-4 md:px-0 md:py-0">
@@ -3807,6 +3901,147 @@ document.addEventListener('click', function(e){
   </div></div>
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
+<script>
+// 予算・精算タブ: 年度期間のインライン編集（デスクトップ/モバイルの [data-fy] を独立に管理する）
+(function(){
+  var CUR_START = 7;   // 現行の開始月
+  var CUR_FY = 2026;   // 現在年度
+  var NEXT_FY = 2027;  // 適用開始年度（現在年度+1固定）
+
+  // newStartMonth(1-12) を新しい開始月とした場合の、今期の終了日（NEXT_FY の newStartMonth 1日の前日）
+  function endInfoFor(newStartMonth){
+    var d = new Date(NEXT_FY, newStartMonth - 1, 0);
+    return { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() };
+  }
+  function monthCountFor(newStartMonth){
+    return (NEXT_FY - CUR_FY) * 12 + (newStartMonth - CUR_START);
+  }
+  function fmtEnd(info){ return info.y + '/' + info.m + '/' + info.d; }
+
+  var DEFAULT_END = endInfoFor(CUR_START);
+  var DEFAULT_VIEW_TEXT = CUR_FY + '/' + CUR_START + '/1 〜 ' + fmtEnd(DEFAULT_END);
+
+  function buildOptionsHtml(){
+    var html = '';
+    for (var m = 1; m <= 12; m++){
+      var info = endInfoFor(m);
+      var isCurrent = m === CUR_START;
+      var value = isCurrent ? 'current' : String(m);
+      html += '<option value="' + value + '"' +
+        ' data-newstart="' + (isCurrent ? '' : m) + '"' +
+        ' data-monthcount="' + monthCountFor(m) + '"' +
+        ' data-endy="' + info.y + '" data-endm="' + info.m + '" data-endd="' + info.d + '"' +
+        (isCurrent ? ' selected' : '') + '>' +
+        info.y + '年' + info.m + '月末</option>';
+    }
+    return html;
+  }
+
+  document.querySelectorAll('[data-fy]').forEach(function(root){
+    root.querySelector('[data-fy-end-select]').innerHTML = buildOptionsHtml();
+  });
+
+  function computeSelected(root){
+    var sel = root.querySelector('[data-fy-end-select]');
+    var opt = sel.options[sel.selectedIndex];
+    var ns = opt.getAttribute('data-newstart');
+    return {
+      value: opt.value,
+      newStartMonth: ns ? parseInt(ns, 10) : null,
+      monthCount: parseInt(opt.getAttribute('data-monthcount'), 10),
+      endY: parseInt(opt.getAttribute('data-endy'), 10),
+      endM: parseInt(opt.getAttribute('data-endm'), 10),
+      endD: parseInt(opt.getAttribute('data-endd'), 10)
+    };
+  }
+
+  function setEditing(root, on){
+    var view = root.querySelector('[data-fy-view]');
+    var editrow = root.querySelector('[data-fy-editrow]');
+    var chip = root.querySelector('[data-fy-chip]');
+    var prev = root.querySelector('[data-fy-prevhint]');
+    var editBtn = root.querySelector('[data-fy-edit-btn]');
+    var scheduled = root.getAttribute('data-fy-scheduled') === '1';
+    view.style.display = on ? 'none' : (scheduled ? 'none' : '');
+    chip.style.display = on ? 'none' : (scheduled ? 'inline-flex' : 'none');
+    editrow.style.display = on ? 'inline-flex' : 'none';
+    prev.style.display = on ? '' : 'none';
+    editBtn.style.display = (on || scheduled) ? 'none' : '';
+    if (on) root.querySelector('[data-fy-end-select]').value = 'current';
+  }
+
+  var fyActiveRoot = null; // 確認/取消ダイアログの対象 root
+
+  function openConfirmDialog(root){
+    var sel = computeSelected(root);
+    fyActiveRoot = root;
+    var word = sel.monthCount < 12 ? '短縮' : (sel.monthCount > 12 ? '延長' : '変更');
+    var newPeriodText = CUR_FY + '/' + CUR_START + '/1 〜 ' + sel.endY + '/' + sel.endM + '/' + sel.endD;
+    document.querySelector('[data-fy-dlg-impact]').textContent =
+      '今期（' + CUR_FY + '年度）は ' + newPeriodText + '（' + sel.monthCount + 'ヶ月）に' + word + 'されます。年度単位の集計（ランキング・予算・報奨金・年度1回クエスト）の区切りが変わります。';
+    document.querySelector('[data-fy-dlg-newperiod]').textContent = newPeriodText;
+    document.querySelector('[data-fy-dlg-monthcount]').textContent = '移行年度 ' + sel.monthCount + 'ヶ月';
+    document.querySelector('[data-fy-dlg-newyear]').textContent = (CUR_FY + 1) + '年度〜';
+    document.querySelector('[data-fy-dlg-newrule]').textContent = sel.newStartMonth + '月始まり（12ヶ月）';
+    document.querySelector('[data-dialog="fy-confirm"]').style.display = 'flex';
+  }
+
+  function applyScheduled(root, sel){
+    root.setAttribute('data-fy-scheduled', '1');
+    root.setAttribute('data-fy-new-start', String(sel.newStartMonth));
+    root.querySelector('[data-fy-view]').textContent = CUR_FY + '/' + CUR_START + '/1 〜 ' + sel.endY + '/' + sel.endM + '/' + sel.endD;
+    root.querySelector('[data-fy-chip-label]').textContent = (CUR_FY + 1) + '年度から' + sel.newStartMonth + '月始まり';
+    setEditing(root, false);
+  }
+
+  document.addEventListener('click', function(e){
+    var editBtn = e.target.closest('[data-fy-edit-btn]');
+    if (editBtn) { setEditing(editBtn.closest('[data-fy]'), true); return; }
+
+    var closeBtn = e.target.closest('[data-fy-close]');
+    if (closeBtn) { setEditing(closeBtn.closest('[data-fy]'), false); return; }
+
+    var applyBtn = e.target.closest('[data-fy-apply]');
+    if (applyBtn) {
+      var root = applyBtn.closest('[data-fy]');
+      var sel = computeSelected(root);
+      if (sel.value === 'current') { setEditing(root, false); return; }
+      openConfirmDialog(root);
+      return;
+    }
+
+    var cancelOpenBtn = e.target.closest('[data-fy-cancel-open]');
+    if (cancelOpenBtn) {
+      var croot = cancelOpenBtn.closest('[data-fy]');
+      fyActiveRoot = croot;
+      var newStart = croot.getAttribute('data-fy-new-start');
+      document.querySelector('[data-fy-dlg-cancel-desc]').textContent =
+        '「' + (CUR_FY + 1) + '年度から' + newStart + '月始まり」の予約を取り消し、現在のルール（' + CUR_START + '月始まり）を継続します。';
+      document.querySelector('[data-dialog="fy-cancel"]').style.display = 'flex';
+      return;
+    }
+
+    var confirmBtn = e.target.closest('[data-fy-confirm]');
+    if (confirmBtn) {
+      if (!fyActiveRoot) return;
+      applyScheduled(fyActiveRoot, computeSelected(fyActiveRoot));
+      document.querySelector('[data-dialog="fy-confirm"]').style.display = 'none';
+      return;
+    }
+
+    var cancelConfirmBtn = e.target.closest('[data-fy-cancel-confirm]');
+    if (cancelConfirmBtn) {
+      if (!fyActiveRoot) return;
+      fyActiveRoot.removeAttribute('data-fy-scheduled');
+      fyActiveRoot.removeAttribute('data-fy-new-start');
+      fyActiveRoot.querySelector('[data-fy-view]').textContent = DEFAULT_VIEW_TEXT;
+      setEditing(fyActiveRoot, false);
+      document.querySelector('[data-dialog="fy-cancel"]').style.display = 'none';
+      return;
+    }
+  });
+})();
+</script>
 <script>
 var SAFETY_EVENTS = {"kanto":{"title":"関東地方 震度5強の地震","meta":"2026/6/30 14:22 · 東京都新宿区・港区・神奈川県横浜市 他12市区町村","drill":false,"checks":[{"n":"佐藤 恵子","c":"#5B7FC0","resp":"SAFE","st":"CLOSED","respondedAt":"6/30 14:31"},{"n":"鈴木 一郎","c":"#5A9E74","resp":"SAFE","st":"CLOSED","respondedAt":"6/30 14:28"},{"n":"伊藤 健太","c":"#C07B8A","resp":"DAMAGED","st":"OPEN","respondedAt":"6/30 15:02","comment":"自宅の棚が倒れました。怪我はありません。"},{"n":"田中 佑樹","c":"#C6A75E","resp":"SAFE","st":"CLOSED","respondedAt":"6/30 14:40"},{"n":"渡辺 さゆり","c":"#7A6030","resp":null,"st":"OPEN","respondedAt":null},{"n":"高橋 美咲","c":"#B89B52","resp":null,"st":"OPEN","respondedAt":null}]},"osaka":{"title":"大阪北部 震度4の地震","meta":"2026/3/12 8:45 · 大阪府大阪市・豊中市","drill":false,"checks":[{"n":"小林 直人","c":"#5C6B8A","resp":"SAFE","st":"CLOSED","respondedAt":"3/12 8:52"},{"n":"中村 花子","c":"#8A6FA8","resp":"SAFE","st":"CLOSED","respondedAt":"3/12 9:10"}]},"drill2026":{"title":"2026年秋季避難訓練","meta":"予定: 2026/10/15 10:00","drill":true,"checks":[]},"drill2025":{"title":"2025年秋季避難訓練","meta":"2025/10/15 10:00","drill":true,"checks":[{"n":"佐藤 恵子","c":"#5B7FC0","resp":"SAFE","st":"CLOSED","respondedAt":"10/15 10:05"},{"n":"鈴木 一郎","c":"#5A9E74","resp":"SAFE","st":"CLOSED","respondedAt":"10/15 10:03"},{"n":"田中 佑樹","c":"#C6A75E","resp":"SAFE","st":"CLOSED","respondedAt":"10/15 10:12"},{"n":"渡辺 さゆり","c":"#7A6030","resp":null,"st":"OPEN","respondedAt":null}]}};
 var SAFETY_CURRENT = null;

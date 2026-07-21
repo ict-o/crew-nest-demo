@@ -181,7 +181,7 @@
       </div>
       <div data-view data-view-key="board" class="active">
         <div data-tour="quest-filters" class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end border-b border-border pb-1">
-          <div data-tour="quest-cats" class="flex-1 flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="qcat" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">8</span></button><button type="button" data-tabgroup="qcat" data-tabkey="work" class="tab-btn tab-btn-secondary ">日々の業務<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="event" class="tab-btn tab-btn-secondary ">会社行事<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button><button type="button" data-tabgroup="qcat" data-tabkey="growth" class="tab-btn tab-btn-secondary ">自己啓発<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button></div>
+          <div data-tour="quest-cats" class="flex-1 flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="qcat" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">9</span></button><button type="button" data-tabgroup="qcat" data-tabkey="work" class="tab-btn tab-btn-secondary ">日々の業務<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="event" class="tab-btn tab-btn-secondary ">会社行事<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="qcat" data-tabkey="growth" class="tab-btn tab-btn-secondary ">自己啓発<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button></div>
           <div class="flex shrink-0 items-center gap-2">
             <div data-tour="quest-search" class="relative w-36"><svg viewBox="0 -960 960 960" width="13" height="13" fill="#8A99B8" aria-hidden="true" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"></path></svg><input type="search" placeholder="検索" class="w-full rounded-lg border border-border bg-background-light py-1.5 pl-7 pr-3 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50"></div>
             <div data-tour="quest-status" class="flex gap-1"><button type="button" data-tabgroup="qstatus" data-tabkey="all" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-tabgroup="qstatus" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中</button><button type="button" data-tabgroup="qstatus" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">達成済み</button></div>
@@ -246,7 +246,22 @@
         <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">年1回</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span></span>
         <span class="text-[11px] font-bold text-primary">120人達成</span></div>
-      
+
+    </div>
+    <div data-open-slide="quest-detail" data-item data-cat="event" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#B89B52;">
+      <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
+        <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#B89B52;color:#B89B52;background-color:#B89B5218;">会社行事</span>
+        <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">年度末 成果発表</h3>
+        <span class="flex shrink-0 items-center gap-1"><span class="whitespace-nowrap rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">150 pt</span></span>
+      </div>
+      <div class="px-4 py-1.5"><p class="line-clamp-1 text-[12px] leading-relaxed text-subtle">年度末の成果発表会で発表する</p></div>
+      <div class="flex items-center gap-1.5 px-4 pb-3">
+
+
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">年度1回</span>
+        <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 234deg, var(--color-border) 0deg);" title="65%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 234deg, var(--color-border) 0deg);" title="65%"></span></span>
+        <span class="text-[11px] font-bold text-primary">95人達成</span></div>
+
     </div>
     <div data-open-slide="quest-detail" data-item data-cat="growth" data-status="NONE" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5A9E74;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
@@ -408,7 +423,7 @@
       </div>
     </div>
       </div>
-      <div class="mb-2.5 flex items-center gap-2"><span class="text-[11px] font-medium tracking-wider text-subtle">年間</span><div class="h-px flex-1 bg-accent-border"></div></div>
+      <div class="mb-2.5 flex items-center gap-2"><span class="text-[11px] font-medium tracking-wider text-subtle">年度</span><div class="h-px flex-1 bg-accent-border"></div></div>
       <div class="grid gap-3 md:grid-cols-3">
         
     <div class="rounded-lg border shadow-sm overflow-hidden border-accent-border bg-accent-lightest">
@@ -815,7 +830,7 @@ document.addEventListener('slidewillopen', function(ev){
   all('[data-f="xp"]').forEach(function(n){ n.textContent = xpSpan ? xpSpan.textContent.trim() : ''; n.style.display = xpSpan ? '' : 'none'; });
   var descEl = card.querySelector('p');
   all('[data-f="content"]').forEach(function(n){ n.textContent = descEl ? descEl.textContent.trim() : ''; });
-  var freqSpan = spans.filter(function(s){ return /^(1日1回|月1回|年1回|生涯1回|無制限)$/.test(s.textContent.trim()); })[0];
+  var freqSpan = spans.filter(function(s){ return /^(1日1回|月1回|年1回|年度1回|生涯1回|無制限)$/.test(s.textContent.trim()); })[0];
   all('[data-f="freq"]').forEach(function(n){ n.textContent = freqSpan ? freqSpan.textContent.trim() : '無制限'; });
   var achMatch = card.textContent.match(/([\d,]+)人達成/);
   all('[data-f="achievers"]').forEach(function(n){ n.textContent = achMatch ? achMatch[1] + '人' : '0人'; });
