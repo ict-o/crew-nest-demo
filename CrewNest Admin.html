@@ -1328,6 +1328,30 @@
           </div>
 
           <div data-qpanel="budget">
+            <!-- モバイル: 年度期間のインライン表示（カード外＝qpanel直下に配置し、確実に可視なコンテナにする） -->
+            <div data-fy class="md:hidden mb-3 flex min-w-0 flex-col gap-0.5">
+              <p class="text-xs text-subtle-light" data-fy-prevhint style="display:none">前年度（2025年度）: 2025/7/1 〜 2026/6/30（12ヶ月）</p>
+              <div class="flex flex-wrap items-center gap-1">
+                <span class="text-[13px] font-semibold text-text" data-fy-view>2026/7/1 〜 2027/6/30</span>
+                <button type="button" aria-label="年度期間を編集" data-fy-edit-btn class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 min-h-12 min-w-12 text-subtle">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg>
+                </button>
+                <span class="inline-flex items-center gap-1 rounded-full border border-info-border bg-info-surface px-2.5 py-1 text-[11px] font-medium text-info" data-fy-chip style="display:none">
+                  <span data-fy-chip-label>2027年度から4月始まり</span>
+                  <button type="button" data-fy-cancel-open class="rounded-full px-1.5 py-1 underline transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">取消</button>
+                </span>
+                <span class="items-center gap-1" data-fy-editrow style="display:none">
+                  <span class="text-[13px] font-semibold text-text">2026/7/1 〜</span>
+                  <select data-fy-end-select aria-label="今期の終了月" class="h-8 w-[150px] rounded-lg border border-border bg-background-light px-2.5 text-[12px] text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></select>
+                  <button type="button" aria-label="変更を確定" data-fy-apply class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg></span>
+                  </button>
+                  <button type="button" aria-label="編集をキャンセル" data-fy-close class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full border border-border text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12]"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span>
+                  </button>
+                </span>
+              </div>
+            </div>
             <div class="md:rounded-lg md:border md:border-border md:bg-background-light md:shadow-sm">
               <div class="hidden items-center gap-3 rounded-t-lg border-b border-border bg-muted-surface px-4 py-3 md:flex">
                 <div class="flex items-center overflow-hidden rounded-lg border border-border bg-background-light" role="group" aria-label="年度を選択">
@@ -1360,30 +1384,6 @@
                 </div>
               </div>
               <div class="flex flex-col gap-3 md:p-4">
-                <!-- モバイル: 年度期間のインライン表示 -->
-                <div data-fy class="md:hidden flex min-w-0 flex-col gap-0.5">
-                  <p class="text-xs text-subtle-light" data-fy-prevhint style="display:none">前年度（2025年度）: 2025/7/1 〜 2026/6/30（12ヶ月）</p>
-                  <div class="flex flex-wrap items-center gap-1">
-                    <span class="text-[13px] font-semibold text-text" data-fy-view>2026/7/1 〜 2027/6/30</span>
-                    <button type="button" aria-label="年度期間を編集" data-fy-edit-btn class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 min-h-12 min-w-12 text-subtle">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg>
-                    </button>
-                    <span class="inline-flex items-center gap-1 rounded-full border border-info-border bg-info-surface px-2.5 py-1 text-[11px] font-medium text-info" data-fy-chip style="display:none">
-                      <span data-fy-chip-label>2027年度から4月始まり</span>
-                      <button type="button" data-fy-cancel-open class="rounded-full px-1.5 py-1 underline transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">取消</button>
-                    </span>
-                    <span class="items-center gap-1" data-fy-editrow style="display:none">
-                      <span class="text-[13px] font-semibold text-text">2026/7/1 〜</span>
-                      <select data-fy-end-select aria-label="今期の終了月" class="h-8 w-[150px] rounded-lg border border-border bg-background-light px-2.5 text-[12px] text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></select>
-                      <button type="button" aria-label="変更を確定" data-fy-apply class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
-                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg></span>
-                      </button>
-                      <button type="button" aria-label="編集をキャンセル" data-fy-close class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
-                        <span class="flex h-8 w-8 items-center justify-center rounded-full border border-border text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12]"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></span>
-                      </button>
-                    </span>
-                  </div>
-                </div>
                 <!-- 精算カード -->
                 <div class="rounded-lg border border-accent-border bg-accent-lightest">
                   <div class="hidden min-h-[56px] items-center gap-2 border-b border-accent-border px-4 py-2 md:flex">
@@ -1542,6 +1542,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="mt-2 rounded-lg border border-warning-border bg-warning-surface p-3 text-xs text-warning">既存の予算額・報奨金レート・申請期間は自動調整されません。</p>
     </div>
     <div class="mt-5 flex flex-col-reverse gap-2 md:flex-row md:justify-end">
       <button type="button" data-close-dialog class="inline-flex min-h-12 items-center justify-center rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>
@@ -3962,7 +3963,8 @@ document.addEventListener('click', function(e){
     var prev = root.querySelector('[data-fy-prevhint]');
     var editBtn = root.querySelector('[data-fy-edit-btn]');
     var scheduled = root.getAttribute('data-fy-scheduled') === '1';
-    view.style.display = on ? 'none' : (scheduled ? 'none' : '');
+    // 期間テキスト（view）は編集中以外は常に表示する。予約済み（scheduled）でも短縮後の期間テキスト＋予約チップを併記する
+    view.style.display = on ? 'none' : '';
     chip.style.display = on ? 'none' : (scheduled ? 'inline-flex' : 'none');
     editrow.style.display = on ? 'inline-flex' : 'none';
     prev.style.display = on ? '' : 'none';
