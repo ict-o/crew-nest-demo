@@ -3250,6 +3250,25 @@ document.addEventListener('click', function(e){
       <select data-qe-freq class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
         <option value="DAILY">毎日</option><option value="MONTHLY">月次</option><option value="YEARLY">年次</option><option value="ONCE">1回限り</option><option value="UNLIMITED">無制限</option>
       </select></label>
+    <div>
+      <div class="mb-1.5 flex items-center justify-between">
+        <span class="text-xs font-semibold text-subtle">公開期間</span>
+        <button type="button" role="switch" aria-checked="false" data-switch data-watch="qe-publish" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+      </div>
+      <div data-watch-target="qe-publish-off" class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-subtle-light">即時公開・無期限（ずっと表示）</div>
+      <div data-watch-target="qe-publish-on" class="flex flex-col gap-3" style="display:none;">
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">公開開始</span>
+          <input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は即時公開されます</span></label>
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">公開終了</span>
+          <input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は無期限で表示されます</span></label>
+        <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
+          <span class="text-sm font-medium text-text">毎年繰り返す</span>
+          <button type="button" role="switch" aria-checked="false" data-switch class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+        </div>
+      </div>
+    </div>
     <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
       <span class="text-sm font-medium text-text">有効</span>
       <button type="button" role="switch" aria-checked="true" data-switch data-qe-active class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
@@ -3283,6 +3302,25 @@ document.addEventListener('click', function(e){
       <select data-qe-freq class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
         <option value="DAILY">毎日</option><option value="MONTHLY">月次</option><option value="YEARLY">年次</option><option value="ONCE">1回限り</option><option value="UNLIMITED">無制限</option>
       </select></label>
+    <div>
+      <div class="mb-1.5 flex items-center justify-between">
+        <span class="text-xs font-semibold text-subtle">公開期間</span>
+        <button type="button" role="switch" aria-checked="false" data-switch data-watch="qe-publish" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+      </div>
+      <div data-watch-target="qe-publish-off" class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-subtle-light">即時公開・無期限（ずっと表示）</div>
+      <div data-watch-target="qe-publish-on" class="flex flex-col gap-3" style="display:none;">
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">公開開始</span>
+          <input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は即時公開されます</span></label>
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">公開終了</span>
+          <input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は無期限で表示されます</span></label>
+        <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
+          <span class="text-sm font-medium text-text">毎年繰り返す</span>
+          <button type="button" role="switch" aria-checked="false" data-switch class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+        </div>
+      </div>
+    </div>
     <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
       <span class="text-sm font-medium text-text">有効</span>
       <button type="button" role="switch" aria-checked="true" data-switch data-qe-active class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
