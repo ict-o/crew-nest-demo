@@ -3269,6 +3269,25 @@ document.addEventListener('click', function(e){
         </div>
       </div>
     </div>
+    <div>
+      <div class="mb-1.5 flex items-center justify-between">
+        <span class="text-xs font-semibold text-subtle">申請期間</span>
+        <button type="button" role="switch" aria-checked="false" data-switch data-watch="qe-apply" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+      </div>
+      <div data-watch-target="qe-apply-off" class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-subtle-light">制限なし（いつでも申請可）</div>
+      <div data-watch-target="qe-apply-on" class="flex flex-col gap-3" style="display:none;">
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">申請開始</span>
+          <input data-qe-apply-input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は開始の制限なしになります</span></label>
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">申請終了</span>
+          <input data-qe-apply-input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は無期限で申請できます</span></label>
+        <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
+          <span class="text-sm font-medium text-text">毎年繰り返す</span>
+          <button type="button" role="switch" aria-checked="false" data-switch data-qe-apply-annual class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+        </div>
+      </div>
+    </div>
     <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
       <span class="text-sm font-medium text-text">有効</span>
       <button type="button" role="switch" aria-checked="true" data-switch data-qe-active class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
@@ -3318,6 +3337,25 @@ document.addEventListener('click', function(e){
         <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
           <span class="text-sm font-medium text-text">毎年繰り返す</span>
           <button type="button" role="switch" aria-checked="false" data-switch data-qe-publish-annual class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="mb-1.5 flex items-center justify-between">
+        <span class="text-xs font-semibold text-subtle">申請期間</span>
+        <button type="button" role="switch" aria-checked="false" data-switch data-watch="qe-apply" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+      </div>
+      <div data-watch-target="qe-apply-off" class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-subtle-light">制限なし（いつでも申請可）</div>
+      <div data-watch-target="qe-apply-on" class="flex flex-col gap-3" style="display:none;">
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">申請開始</span>
+          <input data-qe-apply-input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は開始の制限なしになります</span></label>
+        <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">申請終了</span>
+          <input data-qe-apply-input type="datetime-local" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-xs text-subtle-light">空欄の場合は無期限で申請できます</span></label>
+        <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
+          <span class="text-sm font-medium text-text">毎年繰り返す</span>
+          <button type="button" role="switch" aria-checked="false" data-switch data-qe-apply-annual class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
         </div>
       </div>
     </div>
@@ -4460,16 +4498,18 @@ document.addEventListener('slidewillopen', function(ev){
       sw.classList.toggle('bg-primary', act); sw.classList.toggle('bg-border', !act);
       var k = sw.querySelector('span'); k.style.left = act ? '' : '2px'; k.style.right = act ? '2px' : '';
     });
-    // 公開期間: クエストごとの保存データがないため、開くたびに未設定（OFF）へリセットする
+    // 公開期間・申請期間: クエストごとの保存データがないため、開くたびに未設定（OFF）へリセットする
     // （他クエストの入力が残留して見えるのを防ぐ。仕様確定 2026-07-24 の初期表示に相当）
-    all('[data-switch][data-watch="qe-publish"], [data-qe-publish-annual]').forEach(function(sw){
-      sw.setAttribute('aria-checked', 'false');
-      sw.classList.add('bg-border'); sw.classList.remove('bg-primary');
-      var k = sw.querySelector('span'); if (k) { k.style.left = '2px'; k.style.right = ''; }
+    ['qe-publish', 'qe-apply'].forEach(function(key){
+      all('[data-switch][data-watch="' + key + '"], [data-' + key + '-annual]').forEach(function(sw){
+        sw.setAttribute('aria-checked', 'false');
+        sw.classList.add('bg-border'); sw.classList.remove('bg-primary');
+        var k = sw.querySelector('span'); if (k) { k.style.left = '2px'; k.style.right = ''; }
+      });
+      all('[data-watch-target="' + key + '-on"]').forEach(function(n){ n.style.display = 'none'; });
+      all('[data-watch-target="' + key + '-off"]').forEach(function(n){ n.style.display = ''; });
+      all('[data-' + key + '-input]').forEach(function(n){ n.value = ''; });
     });
-    all('[data-watch-target="qe-publish-on"]').forEach(function(n){ n.style.display = 'none'; });
-    all('[data-watch-target="qe-publish-off"]').forEach(function(n){ n.style.display = ''; });
-    all('[data-qe-publish-input]').forEach(function(n){ n.value = ''; });
     return;
   }
   if (ev.detail.id === 'adm-ach-detail') {
