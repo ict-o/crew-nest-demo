@@ -229,6 +229,7 @@
         
         
         <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">生涯1回</span>
+        <span data-apply-deadline="2026/12/25 23:59" class="whitespace-nowrap rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning">12/25まで</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 252deg, var(--color-border) 0deg);" title="70%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 252deg, var(--color-border) 0deg);" title="70%"></span></span>
         <span class="text-[11px] font-bold text-primary">89人達成</span></div>
       
@@ -244,6 +245,7 @@
         
         
         <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">年1回</span>
+        <span class="whitespace-nowrap rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">1/15から受付</span>
         <span class="ml-auto flex items-center gap-1.5"><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 0deg, var(--color-border) 0deg);" title="0%"></span><span class="ring-gauge" style="width:16px;height:16px;background:conic-gradient(#B89B52 180deg, var(--color-border) 0deg);" title="50%"></span></span>
         <span class="text-[11px] font-bold text-primary">120人達成</span></div>
 
@@ -717,7 +719,9 @@ window.addEventListener('hashchange', function(){
         <button type="button" data-f="footbtn" class="flex w-full items-center justify-center gap-2 rounded-full border border-warning-border bg-warning-surface py-3.5 text-sm font-medium text-warning transition-colors hover:bg-warning-surface/80 disabled:cursor-not-allowed disabled:opacity-[0.38]">
           <span data-f="footlabel">申請する</span>
           <svg data-f="footicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
-        </button></div>
+        </button>
+        <p data-f="deadlinenote" class="mt-1.5 text-center text-[11px] text-subtle" style="display:none;"></p>
+      </div>
 </div>
 <div data-slide="quest-detail" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="クエスト詳細">
   <div class="sticky top-0 z-10 flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
@@ -807,7 +811,9 @@ window.addEventListener('hashchange', function(){
         <button type="button" data-f="footbtn" class="flex w-full items-center justify-center gap-2 rounded-full border border-warning-border bg-warning-surface py-3.5 text-sm font-medium text-warning transition-colors hover:bg-warning-surface/80 disabled:cursor-not-allowed disabled:opacity-[0.38]">
           <span data-f="footlabel">申請する</span>
           <svg data-f="footicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
-        </button></div>
+        </button>
+        <p data-f="deadlinenote" class="mt-1.5 text-center text-[11px] text-subtle" style="display:none;"></p>
+      </div>
 </div>
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
@@ -878,6 +884,14 @@ document.addEventListener('slidewillopen', function(ev){
       : status === 'RETURNED' ? 'コメントや添付を修正して再申請できます。'
       : status === 'PENDING' ? '承認状況から詳細を確認できます'
       : '提出後、上長が承認するとポイントが付与されます。';
+  });
+
+  // 受付期限（申請ボタンが有効な間のみ、カードに data-apply-deadline があれば表示）
+  var deadlineEl = card.querySelector('[data-apply-deadline]');
+  var showDeadline = !isAuto && (status === 'NONE' || status === 'RETURNED') && !!deadlineEl;
+  all('[data-f="deadlinenote"]').forEach(function(n){
+    n.style.display = showDeadline ? '' : 'none';
+    n.textContent = showDeadline ? ('受付期限: ' + deadlineEl.getAttribute('data-apply-deadline') + ' まで') : '';
   });
 });
 </script>
