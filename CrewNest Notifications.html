@@ -176,8 +176,8 @@
       <div class="mt-4 rounded-lg border border-border bg-background-light shadow-sm">
         <ul class="divide-y divide-border" id="notif-list">
           <li data-item data-group="announcement">
-        
-          <button type="button" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
+
+          <button type="button" data-open-dialog="notif-detail-sample" class="flex w-full items-start gap-3 px-5 py-4 text-left hover:bg-background">
             <span class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style="background:#dc26261a;">
               <img src="public/icons/megaphone.png" alt="" style="width:20px;height:20px;object-fit:contain;">
               <span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-urgent ring-2 ring-background-light"></span>
@@ -343,6 +343,40 @@
     <span class="whitespace-nowrap">管理</span>
   </a>
 </nav>
+
+<!-- お知らせ詳細サンプル（本文はマークダウン記法を描画した見た目） -->
+<div data-dialog="notif-detail-sample" class="fixed inset-0 z-[110] items-center justify-center bg-black/50 p-4" style="display:none;">
+  <div role="dialog" aria-modal="true" class="flex max-h-[calc(100dvh-2rem)] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-background-light shadow-md">
+    <div class="flex min-h-0 flex-1 flex-col overflow-y-auto">
+      <div class="flex items-start gap-3.5 px-5 pt-5 pb-1">
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-danger-border bg-danger-surface">
+          <img src="public/icons/megaphone.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+        </div>
+        <div class="min-w-0 flex-1">
+          <span class="mb-1 inline-flex items-center gap-1 rounded-full border border-danger-border bg-danger-surface px-2 py-0.5 text-[10px] font-bold text-danger">
+            <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-danger"></span>重要
+          </span>
+          <p class="text-[11px] font-medium uppercase tracking-wider text-subtle">Announcement</p>
+          <p class="mt-0.5 break-words text-[15px] font-bold leading-snug text-text">年末年始の休業期間について</p>
+          <p class="mt-1 text-xs text-subtle">2時間前</p>
+        </div>
+      </div>
+      <div class="mx-5 my-4 h-px bg-border"></div>
+      <div class="px-5 pb-4 text-sm leading-[1.75] text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 [&_a]:text-primary-mid [&_a]:underline">
+        <p>今年度も大変お世話になりました。下記の期間を<strong>年末年始休業</strong>とさせていただきます。</p>
+        <ul>
+          <li>休業期間: 12/29（火）〜1/4（月）</li>
+          <li>緊急時のご連絡は総務部までお願いします</li>
+        </ul>
+        <p><a href="#">緊急連絡先の一覧はこちら</a></p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2 border-t border-border bg-background-light px-5 py-4">
+      <a href="#" class="inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid">詳細はこちら</a>
+      <button type="button" data-close-dialog class="inline-flex h-10 items-center justify-center rounded-full px-4 text-sm font-medium text-subtle transition-colors hover:bg-background hover:text-text">閉じる</button>
+    </div>
+  </div>
+</div>
 <script>
 document.addEventListener('click', function(e){
   var b = e.target.closest('[data-tabgroup="nf"]');
