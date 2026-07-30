@@ -203,7 +203,7 @@
         <span class="text-[11px] font-bold text-primary">234人達成</span></div>
       
     </div>
-    <div data-open-slide="quest-detail" data-item data-cat="work" data-status="PENDING" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
+    <div data-open-slide="quest-detail" data-item data-cat="work" data-status="PENDING" data-content-html="<p>月間の個人目標を達成し、以下を報告してください。</p><ul><li><strong>実績データ</strong>のスクリーンショット</li><li>達成できた要因の振り返り</li></ul>" class="flex flex-col overflow-hidden rounded-2xl border-l-4 bg-background-light shadow-md transition-all hover:-translate-y-1 hover:shadow-lg " style="border-left-color:#5B7FC0;">
       <div class="flex items-center gap-1.5 px-4 pt-3 min-w-0">
         <span class="shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-semibold" style="border-color:#5B7FC0;color:#5B7FC0;background-color:#5B7FC018;">日々の業務</span>
         <h3 class="min-w-0 flex-1 truncate text-[14px] font-bold text-text">月次目標を達成する</h3>
@@ -669,7 +669,7 @@ window.addEventListener('hashchange', function(){
       <hr class="border-border">
       <div class="my-4">
         <p class="mb-2 text-[10px] font-bold uppercase tracking-widest text-subtle">獲得条件</p>
-        <p data-f="content" class="whitespace-pre-line text-sm leading-relaxed text-text"></p>
+        <div data-f="content" class="whitespace-pre-line text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5"></div>
       </div>
       <div class="mb-4 grid grid-cols-2 gap-2">
         <div class="rounded-lg bg-background px-3 py-2.5">
@@ -761,7 +761,7 @@ window.addEventListener('hashchange', function(){
       <hr class="border-border">
       <div class="my-4">
         <p class="mb-2 text-[10px] font-bold uppercase tracking-widest text-subtle">獲得条件</p>
-        <p data-f="content" class="whitespace-pre-line text-sm leading-relaxed text-text"></p>
+        <div data-f="content" class="whitespace-pre-line text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5"></div>
       </div>
       <div class="mb-4 grid grid-cols-2 gap-2">
         <div class="rounded-lg bg-background px-3 py-2.5">
@@ -835,7 +835,11 @@ document.addEventListener('slidewillopen', function(ev){
   all('[data-f="pt"]').forEach(function(n){ n.textContent = ptSpan ? ptSpan.textContent.trim() : ''; });
   all('[data-f="xp"]').forEach(function(n){ n.textContent = xpSpan ? xpSpan.textContent.trim() : ''; n.style.display = xpSpan ? '' : 'none'; });
   var descEl = card.querySelector('p');
-  all('[data-f="content"]').forEach(function(n){ n.textContent = descEl ? descEl.textContent.trim() : ''; });
+  var contentHtml = card.getAttribute('data-content-html');
+  all('[data-f="content"]').forEach(function(n){
+    if (contentHtml) { n.innerHTML = contentHtml; }
+    else { n.textContent = descEl ? descEl.textContent.trim() : ''; }
+  });
   var freqSpan = spans.filter(function(s){ return /^(1日1回|月1回|年1回|年度1回|生涯1回|無制限)$/.test(s.textContent.trim()); })[0];
   all('[data-f="freq"]').forEach(function(n){ n.textContent = freqSpan ? freqSpan.textContent.trim() : '無制限'; });
   var achMatch = card.textContent.match(/([\d,]+)人達成/);
