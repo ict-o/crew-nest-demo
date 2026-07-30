@@ -103,7 +103,7 @@
       <a href="CrewNest Home.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
       </a>
-      <a href="CrewNest My Achievements.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+      <a href="CrewNest Quests.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
       </a>
@@ -1593,7 +1593,16 @@
                           <button type="button" data-teams-tab="write" class="border-b-2 border-primary px-4 py-2 text-xs font-semibold text-primary">書く</button>
                           <button type="button" data-teams-tab="preview" class="border-b-2 border-transparent px-4 py-2 text-xs text-subtle transition-colors hover:text-text">プレビュー</button>
                         </div>
-                        <textarea data-teams-body rows="7" placeholder="本文を入力... @ でメンション（改行対応）" class="block w-full resize-y bg-background-light px-3 py-2.5 text-sm leading-relaxed text-text focus:outline-none">@{{承認者}}
+                        <div data-teams-toolbar class="flex flex-nowrap items-center gap-0.5 overflow-x-auto border-b border-border bg-background px-2 py-1">
+                          <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+                          <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+                          <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                          <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+                          <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+                          <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                          <button type="button" aria-label="コード" title="コード" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z"></path></svg></button>
+                        </div>
+                        <textarea data-teams-body rows="7" placeholder="本文を入力... @ でメンション（改行対応）" class="block w-full resize-none overflow-y-auto [field-sizing:content] max-h-[40vh] bg-background-light px-3 py-2.5 text-sm leading-relaxed text-text focus:outline-none">@{{承認者}}
 {{申請者}} さんから「{{クエスト名}}」の申請が届きました。
 カテゴリ: {{カテゴリ}} / {{pt}}pt / {{xp}}xp
 コメント: {{コメント}}</textarea>
@@ -2915,6 +2924,23 @@ document.addEventListener('click', function(e){
     if (ed) ed.style.display = !on ? '' : 'none';
     return;
   }
+  // マークダウンエディタ共通: Write/Preview タブ（お知らせ本文・クエスト説明などで再利用）
+  var mdt = e.target.closest('[data-mdtab]');
+  if (mdt) {
+    var mdkey = mdt.getAttribute('data-mdtab');
+    var mdgroup = mdt.closest('[data-mdgroup]');
+    if (mdgroup) {
+      mdgroup.querySelectorAll('[data-mdtab]').forEach(function(b){
+        var act = b.getAttribute('data-mdtab') === mdkey;
+        b.classList.toggle('border-primary', act); b.classList.toggle('font-semibold', act); b.classList.toggle('text-primary', act);
+        b.classList.toggle('border-transparent', !act); b.classList.toggle('text-subtle', !act);
+      });
+      mdgroup.querySelectorAll('[data-mdpanel]').forEach(function(p){
+        p.classList.toggle('hidden', p.getAttribute('data-mdpanel') !== mdkey);
+      });
+    }
+    return;
+  }
   // 設定: 書く/プレビュー タブ
   var ttab = e.target.closest('[data-teams-tab]');
   if (ttab) {
@@ -2924,6 +2950,7 @@ document.addEventListener('click', function(e){
       b.classList.toggle('border-primary', act); b.classList.toggle('font-semibold', act); b.classList.toggle('text-primary', act);
       b.classList.toggle('border-transparent', !act); b.classList.toggle('text-subtle', !act);
     });
+    document.querySelector('[data-teams-toolbar]').classList.toggle('hidden', key !== 'write');
     document.querySelector('[data-teams-body]').classList.toggle('hidden', key !== 'write');
     document.querySelector('[data-teams-preview]').classList.toggle('hidden', key !== 'preview');
     document.querySelector('[data-teams-hint]').classList.toggle('hidden', key !== 'write');
@@ -2971,12 +2998,18 @@ document.addEventListener('click', function(e){
   <div class="flex flex-1 flex-col gap-4 overflow-y-auto px-5 py-4">
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">タイトル *</span>
       <input class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none" placeholder="お知らせタイトル"></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">本文</span>
-      <textarea class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none resize-none" rows="3" placeholder="詳細な説明（任意）"></textarea></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">リンクURL</span>
-      <input class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none" placeholder="https://..."></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">リンクラベル</span>
-      <input class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none" placeholder="詳細を見る"></label>
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-subtle">本文</span>
+        <button type="button" data-open-slide="ann-body-editor" class="inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] font-medium text-subtle transition-colors hover:bg-background hover:text-text">
+          <svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor"><path d="M120-120v-320h80v184l504-504H520v-80h320v320h-80v-184L256-200h184v80H120Z"></path></svg>
+          広げて編集/プレビュー
+        </button>
+      </div>
+      <textarea data-ann-body class="w-full min-w-0 max-w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none resize-none overflow-y-auto [field-sizing:content] min-h-[7rem] max-h-[40vh]" rows="4" placeholder="詳細な説明（任意）"></textarea>
+      <p class="text-right text-[11px] text-subtle-light">0 / 2000</p>
+    </div>
+    <button type="button" class="w-full rounded-lg border border-dashed border-border px-3 py-2 text-xs font-medium text-subtle transition-colors hover:bg-background hover:text-text">＋ リンクを追加</button>
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">公開開始日時 *</span>
       <input type="datetime-local" value="2026-07-06T09:00" class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none"></label>
     <div class="flex flex-col gap-1">
@@ -3011,12 +3044,40 @@ document.addEventListener('click', function(e){
   <div class="flex flex-1 flex-col gap-4 overflow-y-auto px-5 py-4">
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">タイトル *</span>
       <input class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none" placeholder="お知らせタイトル"></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">本文</span>
-      <textarea class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none resize-none" rows="3" placeholder="詳細な説明（任意）"></textarea></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">リンクURL</span>
-      <input class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none" placeholder="https://..."></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">リンクラベル</span>
-      <input class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none" placeholder="詳細を見る"></label>
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-semibold text-subtle">本文</span>
+      <div data-mdgroup="ann-body-m" class="flex flex-col">
+        <div class="flex items-center justify-between">
+          <div class="flex gap-1" role="tablist">
+            <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+            <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+          </div>
+          <p class="text-[11px] text-subtle-light">0 / 2000</p>
+        </div>
+        <div data-mdpanel="write" class="mt-1">
+          <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+            <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+            <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+            <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+            <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+            <button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+          </div>
+          <textarea data-ann-body-m class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] max-h-[50dvh]" style="min-height:5.25rem;" rows="4" placeholder="詳細な説明（任意）"></textarea>
+        </div>
+        <div data-mdpanel="preview" class="mt-1 hidden max-h-[50dvh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 [&_a]:text-primary-mid [&_a]:underline" style="min-height:5.25rem;">
+          <p><strong>重要:</strong> 下記の内容をご確認ください。</p>
+          <ul><li>対象: 全社員</li><li>期限: 7/31（金）</li></ul>
+          <p><a href="#">詳細はこちら</a></p>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="w-full rounded-lg border border-dashed border-border px-3 py-2 text-xs font-medium text-subtle transition-colors hover:bg-background hover:text-text">＋ リンクを追加</button>
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">公開開始日時 *</span>
       <input type="datetime-local" value="2026-07-06T09:00" class="rounded-lg border border-border bg-background px-3 py-2 text-sm text-text focus:border-primary focus:outline-none"></label>
     <div class="flex flex-col gap-1">
@@ -3043,6 +3104,50 @@ document.addEventListener('click', function(e){
     <button type="button" data-close-slide="ann-form" class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-border text-subtle hover:bg-black/[0.08] h-10 px-5 text-sm">キャンセル</button>
     <button type="button" data-close-slide="ann-form" class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors bg-primary text-white hover:bg-primary-mid h-10 px-5 text-sm">投稿する</button>
   </div></div>
+<!-- PC専用: 本文を「広げて編集/プレビュー」する中央モーダル -->
+<div data-modal="ann-body-editor" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/50 p-4 md:flex" style="display:none;">
+  <div role="dialog" aria-modal="true" class="flex h-[min(85vh,640px)] w-full max-w-3xl flex-col rounded-2xl bg-background-light shadow-md">
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-3">
+      <h2 class="text-sm font-bold text-text">本文を編集</h2>
+      <button type="button" data-close-slide="ann-body-editor" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-10 min-w-10 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+    </div>
+    <div class="flex min-h-0 flex-1 flex-col px-5 py-3">
+      <div data-mdgroup="ann-body-editor" class="flex min-h-0 flex-1 flex-col">
+        <div class="flex items-center justify-between">
+          <div class="flex gap-1" role="tablist">
+            <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+            <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+          </div>
+          <p class="text-[11px] text-subtle-light">0 / 2000</p>
+        </div>
+        <div data-mdpanel="write" class="mt-2 flex min-h-0 flex-1 flex-col">
+          <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+            <button type="button" aria-label="太字" title="太字" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+            <button type="button" aria-label="斜体" title="斜体" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+            <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="見出し" title="見出し" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+            <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="引用" title="引用" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+            <button type="button" aria-label="リンク" title="リンク" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+          </div>
+          <textarea class="min-h-0 w-full flex-1 resize-none rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="詳細な説明（任意）"></textarea>
+        </div>
+        <div data-mdpanel="preview" class="mt-2 hidden min-h-0 flex-1 overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 [&_a]:text-primary-mid [&_a]:underline">
+          <p><strong>重要:</strong> 下記の内容をご確認ください。</p>
+          <ul><li>対象: 全社員</li><li>期限: 7/31（金）</li></ul>
+          <p><a href="#">詳細はこちら</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="flex shrink-0 justify-end border-t border-border px-5 py-3">
+      <button type="button" data-close-slide="ann-body-editor" class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid">完了</button>
+    </div>
+  </div>
+</div>
 <div data-slide="ann-reads" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[380px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
   <div class="flex flex-shrink-0 items-center justify-between border-b border-border px-4 py-3">
     <div class="min-w-0"><p class="text-sm font-bold text-text">既読状況</p><p class="truncate text-xs text-subtle" data-reads-title>年末年始の休業期間について</p></div>
@@ -3238,8 +3343,17 @@ document.addEventListener('click', function(e){
       <input data-qe-title class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="クエスト名"></label>
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">カテゴリ *</span>
       <select data-qe-cat class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option>日々の業務</option><option>会社行事</option><option>自己啓発</option></select></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">獲得条件</span>
-      <textarea rows="3" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" placeholder="達成条件の説明"></textarea></label>
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-subtle">獲得条件</span>
+        <button type="button" data-open-slide="qe-body-editor" class="inline-flex items-center gap-1 rounded px-2 py-1 text-[11px] font-medium text-subtle transition-colors hover:bg-background hover:text-text">
+          <svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor"><path d="M120-120v-320h80v184l504-504H520v-80h320v320h-80v-184L256-200h184v80H120Z"></path></svg>
+          広げて編集/プレビュー
+        </button>
+      </div>
+      <textarea class="w-full min-w-0 max-w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none overflow-y-auto [field-sizing:content] min-h-[5.25rem] max-h-[40vh]" rows="3" placeholder="達成条件の説明"></textarea>
+      <p class="text-right text-[11px] text-subtle-light">0 / 2000</p>
+    </div>
     <div class="grid grid-cols-2 gap-3">
       <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">ポイント (pt)</span>
         <input data-qe-pt type="text" inputmode="numeric" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 text-right font-bold text-primary"></label>
@@ -3309,8 +3423,38 @@ document.addEventListener('click', function(e){
       <input data-qe-title class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="クエスト名"></label>
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">カテゴリ *</span>
       <select data-qe-cat class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option>日々の業務</option><option>会社行事</option><option>自己啓発</option></select></label>
-    <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">獲得条件</span>
-      <textarea rows="3" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" placeholder="達成条件の説明"></textarea></label>
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-semibold text-subtle">獲得条件</span>
+      <div data-mdgroup="qe-body-m" class="flex flex-col">
+        <div class="flex items-center justify-between">
+          <div class="flex gap-1" role="tablist">
+            <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+            <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+          </div>
+          <p class="text-[11px] text-subtle-light">0 / 2000</p>
+        </div>
+        <div data-mdpanel="write" class="mt-1">
+          <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+            <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+            <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+            <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+            <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+            <button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+          </div>
+          <textarea class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] max-h-[40vh]" style="min-height:5.25rem;" rows="3" placeholder="達成条件の説明"></textarea>
+        </div>
+        <div data-mdpanel="preview" class="mt-1 hidden max-h-[40vh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5" style="min-height:5.25rem;">
+          <p>月間の個人目標を達成し、以下を報告してください。</p>
+          <ul><li><strong>実績データ</strong>のスクリーンショット</li><li>達成できた要因の振り返り</li></ul>
+        </div>
+      </div>
+    </div>
     <div class="grid grid-cols-2 gap-3">
       <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">ポイント (pt)</span>
         <input data-qe-pt type="text" inputmode="numeric" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 text-right font-bold text-primary"></label>
@@ -3368,6 +3512,49 @@ document.addEventListener('click', function(e){
     <button type="button" data-close-slide="quest-edit" class="inline-flex h-10 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
     <button type="button" data-close-slide="quest-edit" class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button>
   </div></div>
+<!-- PC専用: 獲得条件を「広げて編集/プレビュー」する中央モーダル -->
+<div data-modal="qe-body-editor" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/50 p-4 md:flex" style="display:none;">
+  <div role="dialog" aria-modal="true" class="flex h-[min(85vh,640px)] w-full max-w-3xl flex-col rounded-2xl bg-background-light shadow-md">
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-3">
+      <h2 class="text-sm font-bold text-text">獲得条件を編集</h2>
+      <button type="button" data-close-slide="qe-body-editor" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-10 min-w-10 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+    </div>
+    <div class="flex min-h-0 flex-1 flex-col px-5 py-3">
+      <div data-mdgroup="qe-body-editor" class="flex min-h-0 flex-1 flex-col">
+        <div class="flex items-center justify-between">
+          <div class="flex gap-1" role="tablist">
+            <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+            <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+          </div>
+          <p class="text-[11px] text-subtle-light">0 / 2000</p>
+        </div>
+        <div data-mdpanel="write" class="mt-2 flex min-h-0 flex-1 flex-col">
+          <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+            <button type="button" aria-label="太字" title="太字" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+            <button type="button" aria-label="斜体" title="斜体" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+            <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="見出し" title="見出し" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+            <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+            <button type="button" aria-label="引用" title="引用" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+            <button type="button" aria-label="リンク" title="リンク" class="flex h-8 min-w-8 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+          </div>
+          <textarea class="min-h-0 w-full flex-1 resize-none rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="達成条件の説明"></textarea>
+        </div>
+        <div data-mdpanel="preview" class="mt-2 hidden min-h-0 flex-1 overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5">
+          <p>月間の個人目標を達成し、以下を報告してください。</p>
+          <ul><li><strong>実績データ</strong>のスクリーンショット</li><li>達成できた要因の振り返り</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="flex shrink-0 justify-end border-t border-border px-5 py-3">
+      <button type="button" data-close-slide="qe-body-editor" class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid">完了</button>
+    </div>
+  </div>
+</div>
 <div data-slide="adm-ach-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
   <div class="flex shrink-0 justify-end px-4 pt-3"><button type="button" data-close-slide="adm-ach-detail" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
   <div class="flex-1 overflow-y-auto px-5 pb-4">

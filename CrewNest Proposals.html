@@ -100,7 +100,7 @@
       </a>
       <div>
         
-      <a href="CrewNest My Achievements.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+      <a href="CrewNest Quests.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
         <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
       </a>
@@ -479,8 +479,35 @@ document.addEventListener('click', function(e){
       </div>
       <div>
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">提案内容・理由</p>
-        <textarea maxlength="2000" rows="8" placeholder="提案する理由や背景を入力してください" class="w-full resize-none rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></textarea>
-        <p class="mt-0.5 text-right text-xs text-subtle">0/2000</p>
+        <div data-mdgroup="proposal-body" class="flex flex-col">
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1" role="tablist">
+              <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+              <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+            </div>
+            <p class="text-[11px] text-subtle-light">0/2000</p>
+          </div>
+          <div data-mdpanel="write" class="mt-1">
+            <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+              <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+              <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+              <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+              <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+              <button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+            </div>
+            <textarea maxlength="2000" rows="8" placeholder="提案する理由や背景を入力してください" class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] min-h-[14rem] max-h-[40vh]"></textarea>
+          </div>
+          <div data-mdpanel="preview" class="mt-1 hidden min-h-[14rem] max-h-[40vh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5">
+            <p>リモートワークが定着してきたため、在宅勤務にかかる<strong>光熱費・通信費の補助</strong>として月額の手当を新設したいです。</p>
+            <ul><li>近隣他社でも同様の制度の導入が増えている</li><li>採用面でも有効</li></ul>
+          </div>
+        </div>
       </div>
     </div></div>
   <div class="shrink-0 border-t border-border bg-background-light px-5 py-3"><button type="button" data-close-slide="proposal-form" class="w-full rounded-full bg-primary py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid disabled:opacity-[0.38]">提案する</button></div>
@@ -506,8 +533,35 @@ document.addEventListener('click', function(e){
       </div>
       <div>
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">提案内容・理由</p>
-        <textarea maxlength="2000" rows="8" placeholder="提案する理由や背景を入力してください" class="w-full resize-none rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></textarea>
-        <p class="mt-0.5 text-right text-xs text-subtle">0/2000</p>
+        <div data-mdgroup="proposal-body-m" class="flex flex-col">
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1" role="tablist">
+              <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+              <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+            </div>
+            <p class="text-[11px] text-subtle-light">0/2000</p>
+          </div>
+          <div data-mdpanel="write" class="mt-1">
+            <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+              <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+              <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+              <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+              <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+              <button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+            </div>
+            <textarea maxlength="2000" rows="8" placeholder="提案する理由や背景を入力してください" class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] min-h-[14rem] max-h-[40vh]"></textarea>
+          </div>
+          <div data-mdpanel="preview" class="mt-1 hidden min-h-[14rem] max-h-[40vh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5">
+            <p>リモートワークが定着してきたため、在宅勤務にかかる<strong>光熱費・通信費の補助</strong>として月額の手当を新設したいです。</p>
+            <ul><li>近隣他社でも同様の制度の導入が増えている</li><li>採用面でも有効</li></ul>
+          </div>
+        </div>
       </div>
     </div></div>
   <div class="shrink-0 border-t border-border bg-background-light px-5 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]"><button type="button" data-close-slide="proposal-form" class="w-full rounded-full bg-primary py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid disabled:opacity-[0.38]">提案する</button></div>
@@ -516,6 +570,24 @@ document.addEventListener('click', function(e){
 <button type="button" data-open-slide="proposal-form" aria-label="提案する" class="fixed bottom-[calc(var(--bottom-nav-h)+1rem)] right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md md:hidden"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg></button>
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
+<script>
+// マークダウンエディタ共通: Write/Preview タブ（提案内容欄）
+document.addEventListener('click', function(e){
+  var mdt = e.target.closest('[data-mdtab]');
+  if (!mdt) return;
+  var mdkey = mdt.getAttribute('data-mdtab');
+  var mdgroup = mdt.closest('[data-mdgroup]');
+  if (!mdgroup) return;
+  mdgroup.querySelectorAll('[data-mdtab]').forEach(function(b){
+    var act = b.getAttribute('data-mdtab') === mdkey;
+    b.classList.toggle('border-primary', act); b.classList.toggle('font-semibold', act); b.classList.toggle('text-primary', act);
+    b.classList.toggle('border-transparent', !act); b.classList.toggle('text-subtle', !act);
+  });
+  mdgroup.querySelectorAll('[data-mdpanel]').forEach(function(p){
+    p.classList.toggle('hidden', p.getAttribute('data-mdpanel') !== mdkey);
+  });
+});
+</script>
 <script>
 var PROPOSAL_BODIES = {
   'リモートワーク手当の新設': 'リモートワークが定着してきたため、在宅勤務にかかる光熱費・通信費の補助として月額の手当を新設したいです。\n\n近隣他社でも同様の制度の導入が増えており、採用面でも有効だと考えます。',
