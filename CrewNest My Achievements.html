@@ -177,7 +177,7 @@
       </div>
 
       <div data-panel="my_requests" class="active mt-2">
-        <div data-tour="ach-status-tabs" class="flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="sec_my" data-tabkey="ALL" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">6</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="RETURNED" class="tab-btn tab-btn-secondary ">差し戻し<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">承認済み<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="REJECTED" class="tab-btn tab-btn-secondary ">却下<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button></div>
+        <div data-tour="ach-status-tabs" class="flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="sec_my" data-tabkey="ALL" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">7</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="PENDING" class="tab-btn tab-btn-secondary ">申請中<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="RETURNED" class="tab-btn tab-btn-secondary ">差し戻し<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">承認済み<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="REJECTED" class="tab-btn tab-btn-secondary ">却下<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button><button type="button" data-tabgroup="sec_my" data-tabkey="REVOKED" class="tab-btn tab-btn-secondary ">取消<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">1</span></button></div>
         <div data-tour="ach-list" class="mt-4 flex flex-col gap-3">
         <div data-open-slide="ach-detail" data-item data-status="APPROVED" class="w-full cursor-pointer overflow-hidden rounded-xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
           <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
@@ -242,6 +242,17 @@
           <p class="mb-2 font-semibold text-text">月次レポート提出 4月分<span class="ml-1.5 text-xs font-normal text-subtle">4月</span></p>
           <div class="flex flex-wrap items-center gap-3 text-sm text-subtle">
             <span>2026/04/01 09:00</span>
+            <span>承認者: 鈴木一郎</span>
+          </div>
+        </div>
+        <div data-open-slide="ach-detail" data-item data-status="REVOKED" class="w-full cursor-pointer overflow-hidden rounded-xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+            <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-muted-surface text-muted border border-muted-border">取消</span>
+            <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">100 pt</span>
+          </div>
+          <p class="mb-2 font-semibold text-text">社内アンケートに回答する</p>
+          <div class="flex flex-wrap items-center gap-3 text-sm text-subtle">
+            <span>2026/03/10 12:00</span>
             <span>承認者: 鈴木一郎</span>
           </div>
         </div></div>
@@ -444,7 +455,13 @@ document.addEventListener('slidewillopen', function(ev){
   var meta = card.querySelectorAll('.text-sm.text-subtle span');
   all('[data-f="date"]').forEach(function(n){ n.textContent = meta.length ? meta[0].textContent.trim() : ''; });
   all('[data-f="person"]').forEach(function(n){ n.textContent = meta.length > 1 ? meta[1].textContent.trim() : ''; });
-  all('[data-f="approver-comment"]').forEach(function(n){ n.style.display = status === 'RETURNED' ? '' : 'none'; });
+  all('[data-f="approver-comment"]').forEach(function(n){
+    n.style.display = (status === 'RETURNED' || status === 'REVOKED') ? '' : 'none';
+    var label = n.querySelector('p:first-child');
+    var body = n.querySelector('p:last-child');
+    if (label) label.textContent = status === 'REVOKED' ? '取消理由' : '承認者コメント';
+    if (body) body.textContent = status === 'REVOKED' ? '誤って複数回申告されていたため取消しました。' : '証明書類の添付をお願いします。';
+  });
   all('[data-f="foot-my"]').forEach(function(n){ n.style.display = status === 'PENDING' ? '' : 'none'; });
   all('[data-f="foot-approval"]').forEach(function(n){ n.style.display = status === 'APPROVAL' ? '' : 'none'; });
   all('[data-f="footer"]').forEach(function(n){ n.style.display = (status === 'PENDING' || status === 'APPROVAL') ? '' : 'none'; });
@@ -461,7 +478,7 @@ function cnAchTab(key){
 CNTour.define('achievements', [
   { title: '承認状況', body: 'クエストの達成申請がいまどの状態か（申請中・承認済みなど）を確認できるページです。' },
   { target: '[data-tour="ach-tabs"]', title: 'タブの切り替え', body: '「申請したもの」と「承認依頼」を切り替えられます。対応が必要な申請があるとバッジが付きます。' },
-  { before: cnAchTab('my_requests'), target: '[data-tour="ach-status-tabs"]', title: '状態で絞り込み', body: '申請中・差し戻し・承認済み・却下の状態ごとに申請を絞り込めます。' },
+  { before: cnAchTab('my_requests'), target: '[data-tour="ach-status-tabs"]', title: '状態で絞り込み', body: '申請中・差し戻し・承認済み・却下・取消の状態ごとに申請を絞り込めます。' },
   { before: cnAchTab('my_requests'), target: '[data-tour="ach-list"]', title: '申請の一覧', body: '申請したクエストが状態バッジ付きで並びます。タップすると詳細を確認でき、差し戻された申請は修正して再申請できます。' },
   { before: cnAchTab('incoming'), target: '[data-panel="incoming"]', title: '承認依頼', body: '自分が承認者になっている申請はここに届きます。「対応待ち」から内容を確認して対応しましょう。' }
 ], { onClose: cnAchTab('my_requests') });

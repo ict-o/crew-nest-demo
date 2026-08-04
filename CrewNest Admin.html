@@ -470,6 +470,16 @@
               <div class="mb-2"><p class="min-w-0 font-semibold text-text">社内勉強会に参加する</p></div>
               <div class="flex flex-wrap items-center gap-3 text-sm text-subtle"><span>2026/03/15 13:22</span><span>伊藤 健太</span></div>
             </button>
+            <button type="button" data-arow data-status="REVOKED" data-open-slide="adm-ach-detail" style="border-left-color:#5B7FC0;" class="w-full rounded-lg border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+              <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-muted-surface text-muted border border-muted-border">取消</span>
+                <span class="shrink-0 rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">100 pt</span>
+
+
+              </div>
+              <div class="mb-2"><p class="min-w-0 font-semibold text-text">社内アンケートに回答する</p></div>
+              <div class="flex flex-wrap items-center gap-3 text-sm text-subtle"><span>2026/03/10 12:00</span><span>田中 佑樹</span></div>
+            </button>
                   <div data-ach-empty class="hidden flex-col items-center justify-center py-16 text-subtle">
                     <p class="text-sm font-medium">申請がありません</p>
                     <p class="mt-1 text-xs text-subtle-light">絞り込み条件を変更すると表示される場合があります</p>
@@ -487,7 +497,7 @@
           <div class="flex-1 overflow-y-auto overflow-x-hidden">
             <div class="bg-background px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-subtle-light">ステータス</div>
             <div class="flex flex-wrap gap-2 border-b border-border px-4 py-3">
-              <button type="button" data-astatus="" aria-pressed="true" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-primary bg-primary-lightest text-primary">すべて</button><button type="button" data-astatus="PENDING" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">申請中</button><button type="button" data-astatus="APPROVED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">承認済み</button><button type="button" data-astatus="RETURNED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">差し戻し</button><button type="button" data-astatus="REJECTED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">却下</button><button type="button" data-astatus="WITHDRAWN" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">取り下げ</button>
+              <button type="button" data-astatus="" aria-pressed="true" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-primary bg-primary-lightest text-primary">すべて</button><button type="button" data-astatus="PENDING" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">申請中</button><button type="button" data-astatus="APPROVED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">承認済み</button><button type="button" data-astatus="RETURNED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">差し戻し</button><button type="button" data-astatus="REJECTED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">却下</button><button type="button" data-astatus="WITHDRAWN" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">取り下げ</button><button type="button" data-astatus="REVOKED" aria-pressed="false" class="rounded-full border px-3 py-1 text-xs font-semibold transition-colors border-border bg-background-light text-subtle hover:bg-background">取消</button>
             </div>
             <div class="bg-background px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-subtle-light">対象</div>
             <div class="flex flex-col gap-1 border-b border-border px-4 py-3">
@@ -3585,6 +3595,9 @@ document.addEventListener('click', function(e){
       <button type="button" data-close-slide="adm-ach-detail" class="flex-1 rounded-full border border-border bg-background-light py-2.5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">差し戻し</button>
       <button type="button" data-close-slide="adm-ach-detail" class="flex-1 rounded-full border border-danger-border bg-danger-surface py-2.5 text-sm font-medium text-danger">却下</button>
     </div>
+  </div>
+  <div data-aad="revoke-footer" class="shrink-0 border-t border-border bg-background-light px-5 py-3" style="display:none;">
+    <button type="button" data-open-dialog="ach-revoke-confirm" class="w-full rounded-full border border-danger-border bg-danger-surface py-2.5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">達成を取消</button>
   </div></div>
 <div data-overlay="adm-ach-detail" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
 <div data-slide="adm-ach-detail" data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex h-[85dvh] flex-col rounded-t-2xl bg-background-light pb-[env(safe-area-inset-bottom)] shadow-md transition-transform duration-300 ease-in-out" style="transform:translateY(100%);">
@@ -3618,7 +3631,25 @@ document.addEventListener('click', function(e){
       <button type="button" data-close-slide="adm-ach-detail" class="flex-1 rounded-full border border-border bg-background-light py-2.5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">差し戻し</button>
       <button type="button" data-close-slide="adm-ach-detail" class="flex-1 rounded-full border border-danger-border bg-danger-surface py-2.5 text-sm font-medium text-danger">却下</button>
     </div>
+  </div>
+  <div data-aad="revoke-footer" class="shrink-0 border-t border-border bg-background-light px-5 py-3" style="display:none;">
+    <button type="button" data-open-dialog="ach-revoke-confirm" class="w-full rounded-full border border-danger-border bg-danger-surface py-2.5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">達成を取消</button>
   </div></div>
+
+<div data-dialog="ach-revoke-confirm" class="fixed inset-0 z-[110] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="alertdialog" aria-modal="true" class="w-full max-w-sm rounded-[20px] bg-background-light p-6 shadow-md">
+    <p class="text-base font-bold text-text">この達成を取消しますか</p>
+    <p class="mt-2 text-sm text-subtle"><span data-arc="user"></span>さんの <span data-arc="pt"></span> pt / <span data-arc="xp"></span> xp を取り消します。この操作は元に戻せません。</p>
+    <div class="mt-4">
+      <label for="ach-revoke-reason" class="mb-1 block text-[11px] text-subtle">取消理由</label>
+      <textarea id="ach-revoke-reason" rows="3" placeholder="取消理由を入力してください" class="w-full resize-none rounded-lg border border-border bg-background-light p-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+    </div>
+    <div class="mt-5 flex flex-col-reverse gap-2 md:flex-row md:justify-end">
+      <button type="button" data-close-dialog class="inline-flex min-h-12 items-center justify-center rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>
+      <button type="button" data-close-dialog class="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-medium text-white transition-colors hover:bg-red-700 active:bg-red-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">取消する</button>
+    </div>
+  </div>
+</div>
 
 <div data-slide="adm-proposal-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
   <div class="flex shrink-0 justify-end px-4 pt-3"><button type="button" data-close-slide="adm-proposal-detail" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
@@ -4718,8 +4749,22 @@ document.addEventListener('slidewillopen', function(ev){
     var actionable = st === 'PENDING' || st === 'RETURNED';
     all2('[data-aad="footer"]').forEach(function(n){ n.style.display = actionable ? '' : 'none'; });
     all2('[data-aad="approver-form"]').forEach(function(n){ n.style.display = actionable ? '' : 'none'; });
+    all2('[data-aad="revoke-footer"]').forEach(function(n){ n.style.display = st === 'APPROVED' ? '' : 'none'; });
     return;
   }
+});
+document.addEventListener('click', function (e) {
+  var revokeBtn = e.target.closest('[data-open-dialog="ach-revoke-confirm"]');
+  if (!revokeBtn) return;
+  var panel = revokeBtn.closest('[data-slide="adm-ach-detail"]');
+  var userEl = panel ? panel.querySelector('[data-aad="user"]') : null;
+  var ptEl = panel ? panel.querySelector('[data-aad="pt"]') : null;
+  var xpEl = panel ? panel.querySelector('[data-aad="xp"]') : null;
+  var pt = ptEl ? ptEl.textContent.trim().replace(/\s*pt$/, '') : '';
+  var xp = (xpEl && xpEl.textContent.trim()) ? xpEl.textContent.trim().replace(/\s*xp$/, '') : '0';
+  document.querySelectorAll('[data-arc="user"]').forEach(function (n) { n.textContent = userEl ? userEl.textContent.trim() : ''; });
+  document.querySelectorAll('[data-arc="pt"]').forEach(function (n) { n.textContent = pt; });
+  document.querySelectorAll('[data-arc="xp"]').forEach(function (n) { n.textContent = xp; });
 });
 </script>
 <script>
