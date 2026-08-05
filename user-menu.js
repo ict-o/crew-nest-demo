@@ -12,6 +12,35 @@
   function icon(name, size, cls) {
     return '<svg viewBox="0 -960 960 960" width="' + size + '" height="' + size + '" fill="currentColor" aria-hidden="true" class="' + (cls || 'shrink-0') + '"><path d="' + ICONS[name] + '"></path></svg>';
   }
+
+  // Microsoft Loop ロゴ（public/icons/links/loop.svg は別用途で使用中のため、ここではインライン化する）
+  var LOOP_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+    '<defs>' +
+    '<radialGradient id="loopA" cx="0" cy="0" gradientTransform="matrix(13.40004 -2.3 6.04701 35.2304 .3 8.2)" gradientUnits="userSpaceOnUse" r="1"><stop offset="0" stop-color="#6d05e8"></stop><stop offset="1" stop-color="#6d05e8" stop-opacity="0"></stop></radialGradient>' +
+    '<linearGradient id="loopB" gradientUnits="userSpaceOnUse" x1="14.2" x2="10.9" y1="9.1" y2="22.6"><stop offset="0" stop-color="#9237e3"></stop><stop offset="1" stop-color="#48e6f3"></stop></linearGradient>' +
+    '<linearGradient id="loopC" gradientUnits="userSpaceOnUse" x1="8.5" x2="17.3" y1="20.5" y2="18.5"><stop offset="0" stop-color="#51e6ff"></stop><stop offset="1" stop-color="#71d4ff" stop-opacity="0"></stop></linearGradient>' +
+    '<linearGradient id="loopD" gradientUnits="userSpaceOnUse" x1="6.1" x2="11.2" y1="12.7" y2="5.5"><stop offset="0" stop-color="#6e06e9"></stop><stop offset="1" stop-color="#ab5add" stop-opacity="0"></stop></linearGradient>' +
+    '</defs>' +
+    '<path d="m12 2a10 10 0 0 0 -10 10v10h10a10 10 0 0 0 0-20zm0 6.5a3.5 3.5 0 1 1 0 7h-3.5v-3.5a3.5 3.5 0 0 1 3.5-3.5z" fill="url(#loopB)"></path>' +
+    '<path d="m22 12a10 10 0 0 1 -10 10h-10a6.5 6.5 0 0 1 6.5-6.5h3.5a3.5 3.5 0 0 0 3.5-3.5z" fill="url(#loopC)"></path>' +
+    '<path d="m12 2a10 10 0 0 0 -10 10v10a6.5 6.5 0 0 0 6.5-6.48l.02-.02h-.02v-3.5a3.5 3.5 0 0 1 6-2.46l4.6-4.58a9.97 9.97 0 0 0 -7.1-2.96z" fill="url(#loopD)"></path>' +
+    '<path d="m12 2a10 10 0 0 0 -10 10v10a6.5 6.5 0 0 0 6.5-6.48l.02-.02h-.02v-3.5a3.5 3.5 0 0 1 6-2.46l4.6-4.58a9.97 9.97 0 0 0 -7.1-2.96z" fill="url(#loopA)"></path>' +
+    '</svg>';
+
+  // マークダウンエディタ共通ツールバー（CrewNest Admin.html の ann-body-m と同一の見た目・アイコン）
+  var MD_TOOLBAR_HTML = '<div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">' +
+    '<button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>' +
+    '<button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>' +
+    '<button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>' +
+    '<span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>' +
+    '<button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>' +
+    '<span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>' +
+    '<button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>' +
+    '<button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>' +
+    '<span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>' +
+    '<button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>' +
+    '<button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>' +
+    '</div>';
   function switchHtml(on, disabled) {
     return '<button type="button" role="switch" aria-checked="' + on + '" data-switch ' + (disabled ? 'disabled' : '') + ' class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ' + (on ? 'bg-primary' : 'bg-border') + (disabled ? ' opacity-50' : '') + '">' +
       '<span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="' + (on ? 'right:2px;' : 'left:2px;') + '"></span></button>';
@@ -149,6 +178,7 @@
       '<div class="mx-auto mt-3 flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-white/25 text-2xl font-bold text-primary" style="background:linear-gradient(135deg, #C6A75E, #7A6030);">田</div>' +
       '<a href="https://myprofile.microsoft.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-[11px] text-white/50 underline underline-offset-2 hover:text-white/80">M365で変更' +
       '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>' +
+      '<a href="https://loop.cloud.microsoft/" target="_blank" rel="noopener noreferrer" aria-label="Loop 自己紹介ページを開く" title="Loop 自己紹介ページ（管理者が設定）" class="absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm transition-colors hover:bg-white/90">' + LOOP_ICON_SVG + '</a>' +
       '</div>' +
       /* フィールド群 */
       '<div class="flex-1 overflow-y-auto px-5 py-4">' +
@@ -167,8 +197,22 @@
       '</div></div>' +
       '<div>' +
       '<p aria-hidden="true" class="mb-1 text-[10px] font-bold uppercase tracking-wider text-subtle-light">自己紹介</p>' +
-      '<textarea data-profile-bio rows="3" aria-label="自己紹介（500字以内）" placeholder="自己紹介を入力してください（500字以内）" class="w-full resize-none border-b-2 border-border bg-transparent py-2 text-sm text-text outline-none placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>' +
-      '<p data-profile-bio-count class="mt-1 text-right text-[10px] text-subtle-light">0 / 500</p>' +
+      '<div data-mdgroup="profile-bio" class="flex flex-col">' +
+      '<div class="flex items-center justify-between">' +
+      '<div class="flex gap-1" role="tablist">' +
+      '<button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>' +
+      '<button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>' +
+      '</div>' +
+      '<p data-profile-bio-count class="text-[11px] text-subtle-light">0 / 500</p>' +
+      '</div>' +
+      '<div data-mdpanel="write" class="mt-1">' +
+      MD_TOOLBAR_HTML +
+      '<textarea data-profile-bio rows="3" aria-label="自己紹介（500字以内）" placeholder="自己紹介を入力してください（500字以内）" class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm text-text outline-none placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] max-h-[40vh]" style="min-height:5.25rem;"></textarea>' +
+      '</div>' +
+      '<div data-mdpanel="preview" class="mt-1 hidden max-h-[40vh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5" style="min-height:5.25rem;">' +
+      '<p><strong>営業部所属です。</strong>気軽に話しかけてください。</p><ul><li>出身: 神奈川県</li><li>趣味: キャンプ・カメラ</li></ul>' +
+      '</div>' +
+      '</div>' +
       '</div>' +
       '</div>' +
       '</div>' +
@@ -257,6 +301,23 @@
         content2.classList.add('hidden');
         e.target.closest('[data-settings-back]').style.display = 'none';
         host2.querySelector('[data-settings-mobile-title]').textContent = '設定';
+      }
+      return;
+    }
+    // マークダウンエディタ共通: Write/Preview タブ（プロフィールの自己紹介で使用。CrewNest Admin.html と同じ挙動）
+    var mdt = e.target.closest('[data-mdtab]');
+    if (mdt) {
+      var mdkey = mdt.getAttribute('data-mdtab');
+      var mdgroup = mdt.closest('[data-mdgroup]');
+      if (mdgroup) {
+        mdgroup.querySelectorAll('[data-mdtab]').forEach(function (b) {
+          var act = b.getAttribute('data-mdtab') === mdkey;
+          b.classList.toggle('border-primary', act); b.classList.toggle('font-semibold', act); b.classList.toggle('text-primary', act);
+          b.classList.toggle('border-transparent', !act); b.classList.toggle('text-subtle', !act);
+        });
+        mdgroup.querySelectorAll('[data-mdpanel]').forEach(function (p) {
+          p.classList.toggle('hidden', p.getAttribute('data-mdpanel') !== mdkey);
+        });
       }
       return;
     }
