@@ -178,7 +178,7 @@
       '<div class="mx-auto mt-3 flex h-[72px] w-[72px] items-center justify-center rounded-full border-[3px] border-white/25 text-2xl font-bold text-primary" style="background:linear-gradient(135deg, #C6A75E, #7A6030);">田</div>' +
       '<a href="https://myprofile.microsoft.com/" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-[11px] text-white/50 underline underline-offset-2 hover:text-white/80">M365で変更' +
       '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>' +
-      '<a href="https://loop.cloud.microsoft/" target="_blank" rel="noopener noreferrer" aria-label="Loop 自己紹介ページを開く" title="Loop 自己紹介ページ（管理者が設定）" class="absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm transition-colors hover:bg-white/90">' + LOOP_ICON_SVG + '</a>' +
+      '<a href="https://loop.cloud.microsoft/" target="_blank" rel="noopener noreferrer" aria-label="Loopの自己紹介ページを見る" title="Loopの自己紹介ページを見る" class="absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm transition-colors hover:bg-white/90">' + LOOP_ICON_SVG + '</a>' +
       '</div>' +
       /* フィールド群 */
       '<div class="flex-1 overflow-y-auto px-5 py-4">' +
