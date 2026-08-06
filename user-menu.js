@@ -13,6 +13,17 @@
     return '<svg viewBox="0 -960 960 960" width="' + size + '" height="' + size + '" fill="currentColor" aria-hidden="true" class="' + (cls || 'shrink-0') + '"><path d="' + ICONS[name] + '"></path></svg>';
   }
 
+  // public/icons/ui/*.svg（24x24 の Material Icons）と同一パス。ui/Icon の mask 方式を静的モックではインライン SVG で再現する
+  var ICONS24 = {
+    calendar_today: 'M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z',
+    chevron_right: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z',
+    refresh: 'M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z',
+    add: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'
+  };
+  function icon24(name, size, cls) {
+    return '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="currentColor" aria-hidden="true" class="' + (cls || 'shrink-0') + '"><path d="' + ICONS24[name] + '"></path></svg>';
+  }
+
   // Microsoft Loop ロゴ（public/icons/links/loop.svg は別用途で使用中のため、ここではインライン化する）
   var LOOP_ICON_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
     '<defs>' +
@@ -41,8 +52,8 @@
     '<button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>' +
     '<button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>' +
     '</div>';
-  function switchHtml(on, disabled) {
-    return '<button type="button" role="switch" aria-checked="' + on + '" data-switch ' + (disabled ? 'disabled' : '') + ' class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ' + (on ? 'bg-primary' : 'bg-border') + (disabled ? ' opacity-50' : '') + '">' +
+  function switchHtml(on, disabled, label) {
+    return '<button type="button" role="switch" aria-checked="' + on + '"' + (label ? ' aria-label="' + label + '"' : '') + ' data-switch ' + (disabled ? 'disabled' : '') + ' class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ' + (on ? 'bg-primary' : 'bg-border') + (disabled ? ' opacity-50' : '') + '">' +
       '<span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="' + (on ? 'right:2px;' : 'left:2px;') + '"></span></button>';
   }
 
@@ -82,6 +93,7 @@
 
   /* ============ 設定モーダル (UserSettingsModal) ============ */
   var PREFS = ['お知らせ', 'クエスト', 'アイデア', '書類提出', '経費精算', '安否確認'];
+  var SETTINGS_TAB_LABEL = { user: 'ユーザー設定', notification: '通知', calendar: 'カレンダー' };
 
   function prefListHtml(channel) {
     return '<div class="mt-3 overflow-hidden rounded-lg">' + PREFS.map(function (label, i) {
@@ -127,6 +139,124 @@
     '<button type="button" class="whitespace-nowrap rounded-full border border-border bg-background-light px-3 py-1 text-xs text-text transition-colors hover:bg-background">テスト配信</button>' +
     switchHtml(false, false) + '</div></div></div>';
 
+  /* ---- カレンダータブ (CalendarSettingsTab.tsx / CalendarSourceDetail.tsx) ---- */
+  // 色プリセットは src/lib/calendar/constants.ts の CALENDAR_COLOR_PRESETS と同じ並び
+  var CAL_COLORS = ['#2D5BBA', '#5A9E74', '#C46A6A', '#D89B4A', '#8A6FC0', '#4AA3A3', '#C77BA3', '#8A99B8'];
+  var CAL_COLOR_NAMES = ['ネイビー', 'グリーン', 'レッド', 'オレンジ', 'パープル', 'ティール', 'ピンク', 'グレー'];
+  var CAL_INPUT = 'w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-[0.38] disabled:cursor-not-allowed';
+  // サンプルデータ。色は CrewNest Home.html のカレンダーウィジェットの予定ドットと対応させている
+  var CAL_SOURCES = [
+    { id: 'ms', provider: 'microsoft', name: 'Outlook 予定表', color: '#2D5BBA', sub: 'サインインアカウントに連動' },
+    { id: 'gcal', provider: 'ics', name: '個人の予定', color: '#5A9E74', sub: '最終取得: 12分前', host: 'calendar.google.com' },
+    { id: 'gomi', provider: 'ics', name: 'ゴミ収集の日', color: '#C46A6A', sub: '最終取得: 1時間前', host: 'www.example-city.lg.jp' }
+  ];
+
+  function calSwatchesHtml(selected) {
+    return '<div data-cal-swatches class="flex flex-wrap gap-2">' + CAL_COLORS.map(function (c, i) {
+      var on = c === selected;
+      return '<button type="button" data-cal-swatch="' + c + '" aria-label="色を' + CAL_COLOR_NAMES[i] + 'に設定" aria-pressed="' + on + '" ' +
+        'class="h-6 w-6 rounded-full border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ' +
+        (on ? 'border-text shadow-[0_0_0_1px_#333333]' : 'border-transparent') + '" style="background-color:' + c + ';"></button>';
+    }).join('') + '</div>';
+  }
+
+  function calRowHtml(s, i) {
+    var isIcs = s.provider === 'ics';
+    var badgeBase = 'shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium';
+    var badge = isIcs
+      ? '<span class="' + badgeBase + ' border border-info-border bg-info-surface text-info">ICS</span>'
+      : '<span class="' + badgeBase + ' bg-primary-lightest text-primary">Microsoft</span>';
+    return '<div data-cal-row="' + s.id + '" class="' + (i > 0 ? 'border-t border-border ' : '') + 'px-3 py-2.5">' +
+      '<div class="flex items-center gap-2">' +
+      '<button type="button" data-cal-open="' + s.id + '" title="個別設定を開く" class="group flex min-w-0 flex-1 flex-col items-start gap-0.5 rounded-lg py-0.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' +
+      // min-w-0 max-w-full は名前の truncate を効かせるために必要（アプリ側は付いておらず、長い名前が更新ボタン・スイッチに重なる）
+      '<span class="flex min-w-0 max-w-full items-center gap-1.5 text-sm font-semibold text-text">' +
+      '<span aria-hidden="true" class="h-2.5 w-2.5 shrink-0 rounded-full" style="background-color:' + s.color + ';"></span>' +
+      '<span class="truncate group-hover:underline">' + s.name + '</span>' + badge + '</span>' +
+      '<span data-cal-sub="' + s.id + '" class="truncate text-xs text-subtle-light">' + s.sub + '</span>' +
+      '</button>' +
+      (isIcs
+        ? '<button type="button" data-cal-refresh="' + s.id + '" aria-label="' + s.name + 'を今すぐ更新" title="今すぐ更新" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] disabled:opacity-[0.38] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' + icon24('refresh', 16) + '</button>'
+        : '') +
+      switchHtml(true, false, s.name + 'を表示') +
+      '<button type="button" data-cal-open="' + s.id + '" aria-label="' + s.name + 'の設定" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' + icon24('chevron_right', 16) + '</button>' +
+      '</div></div>';
+  }
+
+  function calDetailHtml(s) {
+    var isIcs = s.provider === 'ics';
+    return '<div data-cal-detail="' + s.id + '" style="display:none;">' +
+      '<button type="button" data-cal-back class="mb-3.5 inline-flex items-center gap-0.5 rounded text-xs text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' + icon24('chevron_right', 14, 'shrink-0 rotate-180') + 'カレンダー</button>' +
+      '<div class="mb-1 flex items-center gap-2">' +
+      '<span data-cal-dot aria-hidden="true" class="h-3 w-3 shrink-0 rounded-full" style="background-color:' + s.color + ';"></span>' +
+      '<h4 class="text-sm font-bold text-text">' + s.name + '</h4></div>' +
+      '<p class="mb-4 text-xs text-subtle-light">' + s.sub + '</p>' +
+      (isIcs
+        ? '<div class="mb-3"><label class="mb-1 block text-xs text-subtle" for="cal-name-' + s.id + '">表示名</label>' +
+          '<input id="cal-name-' + s.id + '" value="' + s.name + '" class="' + CAL_INPUT + '"></div>'
+        : '') +
+      '<p class="mb-1 text-xs text-subtle">色</p>' + calSwatchesHtml(s.color) +
+      (isIcs
+        ? '<div class="mt-3"><label class="mb-1 block text-xs text-subtle" for="cal-url-' + s.id + '">iCal 形式の URL（ICS）</label>' +
+          '<input id="cal-url-' + s.id + '" value="' + s.host + '" readonly class="' + CAL_INPUT + ' bg-background text-subtle">' +
+          '<p class="mt-1.5 text-xs text-subtle-light">URL を変更する場合は、このカレンダーを削除してから追加し直してください。</p></div>'
+        : '<p class="mt-3 text-xs leading-relaxed text-subtle-light">Outlook 予定表はサインインアカウントに連動しているため、削除や名前の変更はできません。表示したくない場合は一覧の表示スイッチをオフにしてください。</p>') +
+      '<div class="mt-4 flex justify-end gap-2">' +
+      '<button type="button" data-cal-back class="rounded-full border border-border bg-background-light px-4 py-1.5 text-xs font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>' +
+      '<button type="button" data-cal-back class="rounded-full bg-primary px-5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">保存する</button>' +
+      '</div>' +
+      (isIcs
+        ? '<div class="mt-4 border-t border-border pt-4">' +
+          '<p class="text-xs font-semibold text-subtle">このカレンダーを削除</p>' +
+          '<p class="mt-1 text-xs text-subtle-light">ウィジェットにこのカレンダーの予定が表示されなくなります。</p>' +
+          '<button type="button" data-cal-delete="' + s.id + '" class="mt-2 rounded-full border border-danger-border bg-danger-surface px-4 py-1.5 text-xs font-semibold text-danger transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">削除</button></div>'
+        : '') +
+      '</div>';
+  }
+
+  // 追加フォーム（既定色は既存ソースで未使用の最初の色 = firstUnusedColor 相当）
+  function calAddFormHtml() {
+    var used = CAL_SOURCES.map(function (s) { return s.color; });
+    var defaultColor = CAL_COLORS.filter(function (c) { return used.indexOf(c) === -1; })[0] || CAL_COLORS[0];
+    return '<div data-cal-add-form class="mt-3 rounded-lg border border-border bg-background p-3.5" style="display:none;">' +
+      '<label class="mb-1 block text-xs text-subtle" for="cal-add-name">表示名</label>' +
+      '<input id="cal-add-name" data-cal-add-input placeholder="例: Google 個人カレンダー" class="' + CAL_INPUT + '">' +
+      '<label class="mb-1 mt-3 block text-xs text-subtle" for="cal-add-url">iCal 形式の URL（ICS）</label>' +
+      '<input id="cal-add-url" data-cal-add-input placeholder="https://calendar.google.com/calendar/ical/…/basic.ics" class="' + CAL_INPUT + '">' +
+      '<p class="mb-1 mt-3 text-xs text-subtle">色</p>' + calSwatchesHtml(defaultColor) +
+      '<div class="mt-3.5 flex justify-end gap-2">' +
+      '<button type="button" data-cal-add-close class="rounded-full border border-border bg-background-light px-4 py-1.5 text-xs font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>' +
+      '<button type="button" data-cal-add-close data-cal-add-submit disabled class="rounded-full bg-primary px-5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest disabled:opacity-[0.38] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">追加する</button>' +
+      '</div>' +
+      '<p class="mt-3 text-xs leading-relaxed text-subtle-light"><b class="font-semibold text-subtle">Google カレンダーの URL の取得方法:</b> ' +
+      'Google カレンダーの設定 → 対象のカレンダー → 「カレンダーの統合」→「iCal 形式の非公開 URL」をコピーして貼り付けてください。</p>' +
+      '</div>';
+  }
+
+  var CAL_TAB_HTML =
+    '<p class="mb-5 hidden text-sm font-bold text-text md:block">カレンダー</p>' +
+    '<div data-cal-list>' +
+    '<div class="rounded-lg border border-border">' + CAL_SOURCES.map(calRowHtml).join('') + '</div>' +
+    calAddFormHtml() +
+    '<div data-cal-add-actions>' +
+    '<button type="button" data-cal-add-open class="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-background-light px-3.5 py-1.5 text-xs text-text transition-colors hover:bg-background">' + icon24('add', 14) + 'カレンダーを追加</button>' +
+    '</div>' +
+    '<p class="mt-3 text-xs leading-relaxed text-subtle-light">購読カレンダーは表示専用です。予定の反映には最大15分ほどかかります（更新ボタンですぐに再取得できます）。追加できるのは最大5件です。</p>' +
+    '</div>' +
+    CAL_SOURCES.map(calDetailHtml).join('');
+
+  // 削除確認（AlertDialog nested 相当。設定モーダル z-[120] の上に出すため z-[130]）
+  function calDeleteDialogHtml() {
+    return '<div data-cal-dialog class="fixed inset-0 z-[130] items-center justify-center bg-black/50 p-4" style="display:none;">' +
+      '<div role="alertdialog" aria-modal="true" aria-labelledby="cal-delete-title" class="w-full max-w-sm rounded-2xl bg-background-light p-6 shadow-md">' +
+      '<p id="cal-delete-title" class="text-base font-bold text-text">カレンダーを削除しますか？</p>' +
+      '<p data-cal-dialog-desc class="mt-2 text-sm text-subtle"></p>' +
+      '<div class="mt-5 flex flex-col-reverse gap-2 md:flex-row md:justify-end">' +
+      '<button type="button" data-cal-dialog-close class="inline-flex min-h-12 items-center justify-center rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">キャンセル</button>' +
+      '<button type="button" data-cal-dialog-close data-cal-dialog-confirm class="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">削除する</button>' +
+      '</div></div></div>';
+  }
+
   function settingsModalHtml() {
     return '' +
       '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-center justify-center bg-black/45 p-4">' +
@@ -143,17 +273,20 @@
       '<div data-settings-mobile-list class="flex flex-1 flex-col overflow-y-auto md:hidden">' +
       '<button type="button" data-settings-tab-btn="user" class="flex items-center justify-between border-b border-border px-6 py-4 text-sm text-subtle transition-colors hover:bg-background"><span class="flex items-center gap-2.5 text-text">' + icon('person', 16) + 'ユーザー設定</span><span aria-hidden="true">&gt;</span></button>' +
       '<button type="button" data-settings-tab-btn="notification" class="flex items-center justify-between border-b border-border px-6 py-4 text-sm text-subtle transition-colors hover:bg-background"><span class="flex items-center gap-2.5 text-text">' + icon('notifications', 16) + '通知</span><span aria-hidden="true">&gt;</span></button>' +
+      '<button type="button" data-settings-tab-btn="calendar" class="flex items-center justify-between border-b border-border px-6 py-4 text-sm text-subtle transition-colors hover:bg-background"><span class="flex items-center gap-2.5 text-text">' + icon24('calendar_today', 16) + 'カレンダー</span><span aria-hidden="true">&gt;</span></button>' +
       '</div>' +
       /* デスクトップ: 左タブレール */
       '<div role="tablist" aria-label="設定タブ" aria-orientation="vertical" class="hidden md:flex md:w-44 md:flex-shrink-0 md:flex-col gap-1 rounded-bl-[20px] border-r border-border bg-background p-3">' +
       '<button type="button" role="tab" data-settings-tab="user" aria-selected="true" class="flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-2 text-left text-sm font-semibold text-primary transition-colors">' + icon('person', 15) + 'ユーザー設定</button>' +
       '<button type="button" role="tab" data-settings-tab="notification" aria-selected="false" class="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-subtle transition-colors hover:bg-background-light">' + icon('notifications', 15) + '通知</button>' +
+      '<button type="button" role="tab" data-settings-tab="calendar" aria-selected="false" class="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-subtle transition-colors hover:bg-background-light">' + icon24('calendar_today', 15) + 'カレンダー</button>' +
       '</div>' +
       /* コンテンツ */
       '<div data-settings-content class="hidden flex-1 flex-col overflow-hidden md:flex">' +
       '<div role="tabpanel" class="flex-1 overflow-y-auto px-6 py-5">' +
       '<div data-settings-panel="user">' + USER_TAB_HTML + '</div>' +
       '<div data-settings-panel="notification" style="display:none;">' + NOTIF_TAB_HTML + '</div>' +
+      '<div data-settings-panel="calendar" style="display:none;">' + CAL_TAB_HTML + '</div>' +
       '</div></div>' +
       '</div>' +
       /* フッター（変更時のみ） */
@@ -161,7 +294,8 @@
       '<button type="button" data-modal-close class="rounded-lg border border-border bg-background-light px-4 py-1.5 text-sm text-text transition-colors hover:bg-background">キャンセル</button>' +
       '<button type="button" data-modal-close class="rounded-lg bg-primary px-5 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-85">保存する</button>' +
       '</div>' +
-      '</div></div>';
+      '</div></div>' +
+      calDeleteDialogHtml();
   }
 
   /* ============ プロフィールモーダル ============ */
@@ -304,6 +438,52 @@
       }
       return;
     }
+    // 設定モーダル（カレンダータブ）: 一覧 ⇄ 個別設定
+    var calOpen = e.target.closest('[data-cal-open]');
+    if (calOpen) { calShowDetail(calOpen.getAttribute('data-cal-open')); return; }
+    if (e.target.closest('[data-cal-back]')) { calShowList(); return; }
+    // 設定モーダル（カレンダータブ）: 追加フォームの開閉
+    if (e.target.closest('[data-cal-add-open]')) { calToggleAddForm(true); return; }
+    if (e.target.closest('[data-cal-add-close]')) { calToggleAddForm(false); return; }
+    // 設定モーダル（カレンダータブ）: 色の選択
+    var calSwatch = e.target.closest('[data-cal-swatch]');
+    if (calSwatch) {
+      var swGroup = calSwatch.closest('[data-cal-swatches]');
+      swGroup.querySelectorAll('[data-cal-swatch]').forEach(function (b) {
+        var on = b === calSwatch;
+        b.setAttribute('aria-pressed', String(on));
+        b.classList.toggle('border-text', on);
+        b.classList.toggle('shadow-[0_0_0_1px_#333333]', on);
+        b.classList.toggle('border-transparent', !on);
+      });
+      var detail = calSwatch.closest('[data-cal-detail]');
+      var dot = detail && detail.querySelector('[data-cal-dot]');
+      if (dot) dot.style.backgroundColor = calSwatch.getAttribute('data-cal-swatch');
+      return;
+    }
+    // 設定モーダル（カレンダータブ）: 今すぐ更新
+    var calRefresh = e.target.closest('[data-cal-refresh]');
+    if (calRefresh && !calRefresh.disabled) {
+      var refreshIcon = calRefresh.querySelector('svg');
+      var refreshId = calRefresh.getAttribute('data-cal-refresh');
+      calRefresh.disabled = true;
+      if (refreshIcon) refreshIcon.classList.add('animate-spin');
+      setTimeout(function () {
+        calRefresh.disabled = false;
+        if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+        var sub = document.querySelector('[data-cal-sub="' + refreshId + '"]');
+        if (sub) sub.textContent = '最終取得: たった今';
+      }, 900);
+      return;
+    }
+    // 設定モーダル（カレンダータブ）: 削除確認ダイアログ
+    var calDelete = e.target.closest('[data-cal-delete]');
+    if (calDelete) { calOpenDeleteDialog(calDelete.getAttribute('data-cal-delete')); return; }
+    var calDialogClose = e.target.closest('[data-cal-dialog-close]');
+    if (calDialogClose) {
+      calCloseDeleteDialog(calDialogClose.hasAttribute('data-cal-dialog-confirm'));
+      return;
+    }
     // マークダウンエディタ共通: Write/Preview タブ（プロフィールの自己紹介で使用。CrewNest Admin.html と同じ挙動）
     var mdt = e.target.closest('[data-mdtab]');
     if (mdt) {
@@ -352,7 +532,64 @@
       p.style.display = p.getAttribute('data-settings-panel') === key ? '' : 'none';
     });
     var mt = host.querySelector('[data-settings-mobile-title]');
-    if (mt) mt.textContent = key === 'user' ? 'ユーザー設定' : '通知';
+    if (mt) mt.textContent = SETTINGS_TAB_LABEL[key] || '設定';
+    if (key === 'calendar') { calShowList(); calToggleAddForm(false); }
+  }
+
+  /* ---- カレンダータブのビュー切替 ---- */
+  function calShowList() {
+    var host = document.querySelector('[data-modal-host]');
+    if (!host) return;
+    var list = host.querySelector('[data-cal-list]');
+    if (list) list.style.display = '';
+    host.querySelectorAll('[data-cal-detail]').forEach(function (d) { d.style.display = 'none'; });
+  }
+  function calShowDetail(id) {
+    var host = document.querySelector('[data-modal-host]');
+    if (!host) return;
+    var list = host.querySelector('[data-cal-list]');
+    if (list) list.style.display = 'none';
+    host.querySelectorAll('[data-cal-detail]').forEach(function (d) {
+      d.style.display = d.getAttribute('data-cal-detail') === id ? '' : 'none';
+    });
+  }
+  function calToggleAddForm(open) {
+    var host = document.querySelector('[data-modal-host]');
+    if (!host) return;
+    var form = host.querySelector('[data-cal-add-form]');
+    var actions = host.querySelector('[data-cal-add-actions]');
+    if (form) form.style.display = open ? '' : 'none';
+    if (actions) actions.style.display = open ? 'none' : '';
+  }
+  function calOpenDeleteDialog(id) {
+    var dialog = document.querySelector('[data-cal-dialog]');
+    if (!dialog) return;
+    var source = CAL_SOURCES.filter(function (s) { return s.id === id; })[0];
+    var desc = dialog.querySelector('[data-cal-dialog-desc]');
+    if (desc) desc.textContent = '「' + (source ? source.name : '') + '」の購読を解除します。ウィジェットにこのカレンダーの予定が表示されなくなります。';
+    dialog.setAttribute('data-cal-dialog-target', id);
+    dialog.style.display = 'flex';
+  }
+  function calCloseDeleteDialog(confirmed) {
+    var dialog = document.querySelector('[data-cal-dialog]');
+    if (!dialog) return;
+    var id = dialog.getAttribute('data-cal-dialog-target');
+    dialog.style.display = 'none';
+    dialog.removeAttribute('data-cal-dialog-target');
+    if (!confirmed) return;
+    var host = document.querySelector('[data-modal-host]');
+    if (host) {
+      var row = host.querySelector('[data-cal-row="' + id + '"]');
+      if (row) row.remove();
+      var detail = host.querySelector('[data-cal-detail="' + id + '"]');
+      if (detail) detail.remove();
+      // 先頭行に区切り線が残らないよう付け直す
+      host.querySelectorAll('[data-cal-row]').forEach(function (r, i) {
+        r.classList.toggle('border-t', i > 0);
+        r.classList.toggle('border-border', i > 0);
+      });
+    }
+    calShowList();
   }
 
   // ユーザー設定変更でフッター表示（保存フローの再現）
@@ -387,8 +624,24 @@
     }
   });
 
+  // カレンダー追加フォーム: 表示名と URL の両方が入るまで「追加する」を押せない（AddForm の disabled 条件を再現）
+  document.addEventListener('input', function (e) {
+    var calInput = e.target.closest('[data-cal-add-input]');
+    if (!calInput) return;
+    var form = calInput.closest('[data-cal-add-form]');
+    var filled = Array.prototype.every.call(form.querySelectorAll('[data-cal-add-input]'), function (i) {
+      return i.value.trim().length > 0;
+    });
+    var submit = form.querySelector('[data-cal-add-submit]');
+    if (submit) submit.disabled = !filled;
+  });
+
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closeModal(); closeMenus(); }
+    if (e.key !== 'Escape') return;
+    // 削除確認ダイアログが開いているときは、まずダイアログだけ閉じる
+    var calDialog = document.querySelector('[data-cal-dialog]');
+    if (calDialog && calDialog.style.display === 'flex') { calCloseDeleteDialog(false); return; }
+    closeModal(); closeMenus();
   });
 
   /* ============ 初期化: ボタンにメニューを取り付け ============ */
