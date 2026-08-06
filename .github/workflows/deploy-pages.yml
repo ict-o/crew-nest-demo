@@ -1,0 +1,49 @@
+name: Deploy static site to Pages
+
+# 手書きの静的モックをそのまま Pages へ配信する。
+# 以前は GitHub 管理の Jekyll ワークフロー（build_type: legacy）で公開していたが、
+# 2026-08-06 に配信が詰まって復旧できなくなったため独自ワークフローへ移行した。
+# このサイトは Jekyll の機能を一切使っていないので、Jekyll の層は挟まない。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# デプロイ同士がキャンセルし合わないように、進行中があれば待たせる
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 配信用ディレクトリを作る
+        # .git / .github を配信物に含めない（公開不要かつ artifact が膨らむ）
+        run: |
+          mkdir -p _site
+          rsync -a --exclude='.git/' --exclude='.github/' --exclude='_site/' ./ _site/
+          touch _site/.nojekyll
+          echo "配信ファイル数: $(find _site -type f | wc -l)"
+          du -sh _site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Pages へデプロイ
+        id: deployment
+        uses: actions/deploy-pages@v4
