@@ -1957,8 +1957,9 @@
     <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">Teamsテスト投稿</p></div>
     <button type="button"  class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button></div>
                 <div class="flex items-center gap-4 py-4">
-    <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">クイックリンク</p><p class="mt-0.5 text-xs text-subtle">4件</p></div>
-    <button type="button"  class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button></div>
+    <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">クイックリンク</p><p data-ql-count class="mt-0.5 text-xs text-subtle">4件</p></div>
+    <button type="button" data-open-slide="quick-links" class="hidden md:inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
+    <button type="button" data-open-slide="quick-links-m" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] md:hidden">編集</button></div>
                 <div class="flex items-center gap-4 py-4">
     <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">定期実行</p></div>
     <button type="button"  class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button></div>
@@ -3372,8 +3373,9 @@ document.addEventListener('click', function(e){
     </div>
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">頻度</span>
       <select data-qe-freq class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
-        <option value="DAILY">毎日</option><option value="MONTHLY">月次</option><option value="YEARLY">年次</option><option value="ONCE">1回限り</option><option value="UNLIMITED">無制限</option>
-      </select></label>
+        <option value="DAILY">毎日</option><option value="MONTHLY">月次</option><option value="YEARLY">年1回</option><option value="FISCAL_YEARLY">年度1回</option><option value="ONCE">1回限り</option><option value="UNLIMITED">無制限</option>
+      </select>
+      <span class="text-xs text-subtle-light">年1回: 1月〜12月で1回 ／ 年度1回: 7月1日〜翌6月30日で1回</span></label>
     <div>
       <div class="mb-1.5 flex items-center justify-between">
         <span class="text-xs font-semibold text-subtle">公開期間</span>
@@ -3409,6 +3411,48 @@ document.addEventListener('click', function(e){
         <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
           <span class="text-sm font-medium text-text">毎年繰り返す</span>
           <button type="button" role="switch" aria-checked="false" data-switch data-qe-apply-annual class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-border"></div>
+    <div>
+      <span class="mb-1.5 block text-xs font-semibold text-subtle">自動承認</span>
+      <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2">
+        <span class="text-sm font-semibold text-text"><span data-watch-target="qe-auto-on">ON（承認不要）</span><span data-watch-target="qe-auto-off" style="display:none;">OFF（通常承認）</span></span>
+        <button type="button" role="switch" aria-checked="true" data-switch data-watch="qe-auto" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
+      </div>
+      <div data-watch-target="qe-auto-on" class="mt-3 flex flex-col gap-3">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs font-semibold text-subtle">トリガー種別</span>
+          <div class="flex gap-2" data-seg-single><button type="button" data-form-seg class="flex-1 rounded-full border px-3 py-2 text-sm font-medium transition-colors border-primary bg-primary-lightest text-primary">ホーム画面で受け取る</button><button type="button" data-form-seg class="flex-1 rounded-full border px-3 py-2 text-sm font-medium transition-colors border-border text-subtle hover:bg-black/[0.08]">操作時に自動付与</button></div>
+        </div>
+        <div class="flex flex-col gap-1" data-qe-cond-section>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-subtle">付与条件（任意）</span>
+            <button type="button" data-qe-cond-add class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium text-primary transition-colors hover:bg-black/[0.08]">＋ 追加</button>
+          </div>
+          <p class="text-[11px] text-subtle-light">回数を数える条件は、頻度が毎日・毎月・毎年・年度のときその期間内でカウントされます（一回きり・無制限は全期間）。</p>
+          <div data-qe-cond-list class="mt-0.5 flex flex-col gap-1.5 rounded-lg border border-border bg-background p-2">
+            <div data-qe-cond class="flex items-center gap-1.5">
+              <select data-qe-cond-type aria-label="付与条件の種類" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option value="APPROVAL_COUNT">クエスト承認</option><option value="ACHIEVEMENT_COUNT">クエスト達成数</option><option value="LOGIN_DAYS_CUMULATIVE">累計ログイン日数</option><option value="LOGIN_DAYS_CONSECUTIVE">連続ログイン日数</option><option value="LEVEL">レベル</option><option value="RANK">称号(ランク)</option><option value="USER_PROFILE">ユーザー情報登録</option><option value="PREREQUISITE_QUEST">前提クエスト達成</option><option value="PROPOSAL_APPROVAL_COUNT">アイデア承認数</option><option value="PROPOSAL_VOTE_GIVEN_COUNT" selected>いいねしているアイデア数</option><option value="PROPOSAL_VOTE_RECEIVED_COUNT">獲得しているいいね数</option></select>
+              <span class="flex min-w-0 flex-1 items-center gap-1">
+                <input data-qe-cond-num type="text" inputmode="numeric" value="3" aria-label="件数" class="w-20 shrink-0 rounded-lg border border-border bg-background-light px-2 py-1 text-center text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <select data-qe-cond-opt aria-label="条件の値" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" style="display:none;"></select>
+                <span data-qe-cond-suffix class="shrink-0 text-[11px] text-subtle">件以上</span>
+              </span>
+              <button type="button" data-qe-cond-del aria-label="条件を削除" class="inline-flex min-h-8 min-w-8 shrink-0 items-center justify-center rounded-full border border-border text-subtle-light transition-colors hover:border-danger-border hover:text-danger"><svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+            </div>
+            <div data-qe-cond class="flex items-center gap-1.5">
+              <select data-qe-cond-type aria-label="付与条件の種類" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option value="APPROVAL_COUNT">クエスト承認</option><option value="ACHIEVEMENT_COUNT">クエスト達成数</option><option value="LOGIN_DAYS_CUMULATIVE">累計ログイン日数</option><option value="LOGIN_DAYS_CONSECUTIVE">連続ログイン日数</option><option value="LEVEL">レベル</option><option value="RANK">称号(ランク)</option><option value="USER_PROFILE">ユーザー情報登録</option><option value="PREREQUISITE_QUEST">前提クエスト達成</option><option value="PROPOSAL_APPROVAL_COUNT">アイデア承認数</option><option value="PROPOSAL_VOTE_GIVEN_COUNT">いいねしているアイデア数</option><option value="PROPOSAL_VOTE_RECEIVED_COUNT" selected>獲得しているいいね数</option></select>
+              <span class="flex min-w-0 flex-1 items-center gap-1">
+                <input data-qe-cond-num type="text" inputmode="numeric" value="5" aria-label="件数" class="w-20 shrink-0 rounded-lg border border-border bg-background-light px-2 py-1 text-center text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <select data-qe-cond-opt aria-label="条件の値" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" style="display:none;"></select>
+                <span data-qe-cond-suffix class="shrink-0 text-[11px] text-subtle">件以上</span>
+              </span>
+              <button type="button" data-qe-cond-del aria-label="条件を削除" class="inline-flex min-h-8 min-w-8 shrink-0 items-center justify-center rounded-full border border-border text-subtle-light transition-colors hover:border-danger-border hover:text-danger"><svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+            </div>
+          </div>
+          <p data-qe-cond-empty class="text-[11px] text-subtle-light" style="display:none;">条件なし — 頻度のみで制御されます</p>
         </div>
       </div>
     </div>
@@ -3473,8 +3517,9 @@ document.addEventListener('click', function(e){
     </div>
     <label class="flex flex-col gap-1"><span class="text-xs font-semibold text-subtle">頻度</span>
       <select data-qe-freq class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
-        <option value="DAILY">毎日</option><option value="MONTHLY">月次</option><option value="YEARLY">年次</option><option value="ONCE">1回限り</option><option value="UNLIMITED">無制限</option>
-      </select></label>
+        <option value="DAILY">毎日</option><option value="MONTHLY">月次</option><option value="YEARLY">年1回</option><option value="FISCAL_YEARLY">年度1回</option><option value="ONCE">1回限り</option><option value="UNLIMITED">無制限</option>
+      </select>
+      <span class="text-xs text-subtle-light">年1回: 1月〜12月で1回 ／ 年度1回: 7月1日〜翌6月30日で1回</span></label>
     <div>
       <div class="mb-1.5 flex items-center justify-between">
         <span class="text-xs font-semibold text-subtle">公開期間</span>
@@ -3510,6 +3555,48 @@ document.addEventListener('click', function(e){
         <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5">
           <span class="text-sm font-medium text-text">毎年繰り返す</span>
           <button type="button" role="switch" aria-checked="false" data-switch data-qe-apply-annual class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-border"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-border"></div>
+    <div>
+      <span class="mb-1.5 block text-xs font-semibold text-subtle">自動承認</span>
+      <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2">
+        <span class="text-sm font-semibold text-text"><span data-watch-target="qe-auto-on">ON（承認不要）</span><span data-watch-target="qe-auto-off" style="display:none;">OFF（通常承認）</span></span>
+        <button type="button" role="switch" aria-checked="true" data-switch data-watch="qe-auto" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
+      </div>
+      <div data-watch-target="qe-auto-on" class="mt-3 flex flex-col gap-3">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs font-semibold text-subtle">トリガー種別</span>
+          <div class="flex gap-2" data-seg-single><button type="button" data-form-seg class="flex-1 rounded-full border px-3 py-2 text-sm font-medium transition-colors border-primary bg-primary-lightest text-primary">ホーム画面で受け取る</button><button type="button" data-form-seg class="flex-1 rounded-full border px-3 py-2 text-sm font-medium transition-colors border-border text-subtle hover:bg-black/[0.08]">操作時に自動付与</button></div>
+        </div>
+        <div class="flex flex-col gap-1" data-qe-cond-section>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-subtle">付与条件（任意）</span>
+            <button type="button" data-qe-cond-add class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium text-primary transition-colors hover:bg-black/[0.08]">＋ 追加</button>
+          </div>
+          <p class="text-[11px] text-subtle-light">回数を数える条件は、頻度が毎日・毎月・毎年・年度のときその期間内でカウントされます（一回きり・無制限は全期間）。</p>
+          <div data-qe-cond-list class="mt-0.5 flex flex-col gap-1.5 rounded-lg border border-border bg-background p-2">
+            <div data-qe-cond class="flex items-center gap-1.5">
+              <select data-qe-cond-type aria-label="付与条件の種類" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option value="APPROVAL_COUNT">クエスト承認</option><option value="ACHIEVEMENT_COUNT">クエスト達成数</option><option value="LOGIN_DAYS_CUMULATIVE">累計ログイン日数</option><option value="LOGIN_DAYS_CONSECUTIVE">連続ログイン日数</option><option value="LEVEL">レベル</option><option value="RANK">称号(ランク)</option><option value="USER_PROFILE">ユーザー情報登録</option><option value="PREREQUISITE_QUEST">前提クエスト達成</option><option value="PROPOSAL_APPROVAL_COUNT">アイデア承認数</option><option value="PROPOSAL_VOTE_GIVEN_COUNT" selected>いいねしているアイデア数</option><option value="PROPOSAL_VOTE_RECEIVED_COUNT">獲得しているいいね数</option></select>
+              <span class="flex min-w-0 flex-1 items-center gap-1">
+                <input data-qe-cond-num type="text" inputmode="numeric" value="3" aria-label="件数" class="w-20 shrink-0 rounded-lg border border-border bg-background-light px-2 py-1 text-center text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <select data-qe-cond-opt aria-label="条件の値" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" style="display:none;"></select>
+                <span data-qe-cond-suffix class="shrink-0 text-[11px] text-subtle">件以上</span>
+              </span>
+              <button type="button" data-qe-cond-del aria-label="条件を削除" class="inline-flex min-h-8 min-w-8 shrink-0 items-center justify-center rounded-full border border-border text-subtle-light transition-colors hover:border-danger-border hover:text-danger"><svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+            </div>
+            <div data-qe-cond class="flex items-center gap-1.5">
+              <select data-qe-cond-type aria-label="付与条件の種類" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option value="APPROVAL_COUNT">クエスト承認</option><option value="ACHIEVEMENT_COUNT">クエスト達成数</option><option value="LOGIN_DAYS_CUMULATIVE">累計ログイン日数</option><option value="LOGIN_DAYS_CONSECUTIVE">連続ログイン日数</option><option value="LEVEL">レベル</option><option value="RANK">称号(ランク)</option><option value="USER_PROFILE">ユーザー情報登録</option><option value="PREREQUISITE_QUEST">前提クエスト達成</option><option value="PROPOSAL_APPROVAL_COUNT">アイデア承認数</option><option value="PROPOSAL_VOTE_GIVEN_COUNT">いいねしているアイデア数</option><option value="PROPOSAL_VOTE_RECEIVED_COUNT" selected>獲得しているいいね数</option></select>
+              <span class="flex min-w-0 flex-1 items-center gap-1">
+                <input data-qe-cond-num type="text" inputmode="numeric" value="5" aria-label="件数" class="w-20 shrink-0 rounded-lg border border-border bg-background-light px-2 py-1 text-center text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <select data-qe-cond-opt aria-label="条件の値" class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-xs text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" style="display:none;"></select>
+                <span data-qe-cond-suffix class="shrink-0 text-[11px] text-subtle">件以上</span>
+              </span>
+              <button type="button" data-qe-cond-del aria-label="条件を削除" class="inline-flex min-h-8 min-w-8 shrink-0 items-center justify-center rounded-full border border-border text-subtle-light transition-colors hover:border-danger-border hover:text-danger"><svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+            </div>
+          </div>
+          <p data-qe-cond-empty class="text-[11px] text-subtle-light" style="display:none;">条件なし — 頻度のみで制御されます</p>
         </div>
       </div>
     </div>
@@ -4196,6 +4283,170 @@ document.addEventListener('click', function(e){
   <div data-sfc="footer" class="shrink-0 border-t border-border bg-background-light px-4 py-3">
     <button type="button" data-close-slide="safety-check" class="w-full rounded-full bg-primary py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">完了にする</button>
   </div></div>
+<!-- クイックリンク管理（PC: センターモーダル） -->
+<div data-modal="quick-links" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/50 p-4 md:flex" style="display:none;">
+  <div data-ql-root role="dialog" aria-modal="true" aria-labelledby="ql-title-d" class="flex max-h-[80vh] w-[440px] max-w-full flex-col rounded-2xl bg-background-light shadow-md">
+    <div data-qlview="list" class="flex min-h-0 flex-1 flex-col">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <h2 id="ql-title-d" class="min-w-0 flex-1 text-[15px] font-bold text-text">クイックリンク</h2>
+        <button type="button" data-ql-new class="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-primary px-3.5 text-xs font-medium text-white transition-colors hover:bg-primary-mid">＋ 追加</button>
+        <button type="button" data-close-slide="quick-links" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto px-4 py-3">
+        <div data-ql-list class="rounded-xl border border-border bg-background">
+          <div data-ql-row data-ql-index="0" data-ql-label="経費精算" data-ql-url="https://keihi.example.co.jp/" data-ql-icon="public/icons/links/keihi.svg" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="経費精算を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light"><img src="public/icons/links/keihi.svg" alt="" width="20" height="20"></span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">経費精算</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+          <div data-ql-row data-ql-index="1" data-ql-label="給与明細" data-ql-url="https://kyuyo.example.co.jp/" data-ql-icon="public/icons/links/kyuyo.svg" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="給与明細を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light"><img src="public/icons/links/kyuyo.svg" alt="" width="20" height="20"></span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">給与明細</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+          <div data-ql-row data-ql-index="2" data-ql-label="勤怠管理" data-ql-url="https://kintai.example.co.jp/" data-ql-icon="" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="勤怠管理を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light text-[10px] font-bold text-subtle">勤怠</span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">勤怠管理</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+          <div data-ql-row data-ql-index="3" data-ql-label="有給申請" data-ql-url="https://yukyu.example.co.jp/" data-ql-icon="public/icons/links/yukyu.svg" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="有給申請を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light"><img src="public/icons/links/yukyu.svg" alt="" width="20" height="20"></span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">有給申請</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+        </div>
+        <p data-ql-empty class="py-8 text-center text-sm text-subtle" style="display:none;">リンクがありません</p>
+        <p class="mt-3 text-xs text-subtle">行の左に表示されるハンドルをドラッグすると並び替えできます。行をクリックすると編集・削除ができます。</p>
+      </div>
+    </div>
+    <div data-qlview="form" class="flex min-h-0 flex-1 flex-col" style="display:none;">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <button type="button" data-ql-back aria-label="一覧に戻る" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
+        <h2 data-ql-heading class="min-w-0 flex-1 text-[15px] font-bold text-text">リンクを編集</h2>
+        <button type="button" data-close-slide="quick-links" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+        <label class="mb-4 flex flex-col gap-1"><span class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">URL</span>
+          <input data-ql-url-input type="url" placeholder="https://" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-[11px] text-subtle">入力後に「URLからアイコンを取得」でファビコンを自動設定できます</span></label>
+        <label class="mb-4 flex flex-col gap-1"><span class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ラベル</span>
+          <input data-ql-label-input type="text" placeholder="例: SharePoint" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+        <div class="mb-4">
+          <span class="mb-1 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">アイコン</span>
+          <div class="flex items-center gap-3">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-background-light">
+              <img data-ql-preview src="public/icons/links/keihi.svg" alt="" width="32" height="32">
+              <span data-ql-preview-empty class="text-[10px] font-bold text-subtle" style="display:none;">未設定</span>
+            </span>
+            <div class="flex min-w-0 flex-1 flex-col gap-2">
+              <button type="button" class="rounded-full border border-primary bg-background px-4 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/5">URLからアイコンを取得</button>
+              <button type="button" class="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium text-text transition-colors hover:bg-black/[0.08]">画像をアップロード</button>
+            </div>
+          </div>
+        </div>
+        <div data-ql-delete-row class="mt-2 border-t border-border pt-4">
+          <button type="button" data-open-dialog="ql-delete" class="inline-flex h-10 w-full items-center justify-center rounded-full border border-danger-border bg-danger-surface px-5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">このリンクを削除</button>
+        </div>
+      </div>
+      <div class="flex shrink-0 justify-end gap-2 rounded-b-2xl border-t border-border px-5 py-3">
+        <button type="button" data-ql-back class="inline-flex h-10 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
+        <button type="button" data-ql-save class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- クイックリンク管理（モバイル: ボトムシート） -->
+<div data-overlay="quick-links-m" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
+<div data-slide="quick-links-m" data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex max-h-[85vh] flex-col rounded-t-2xl bg-background-light pb-[env(safe-area-inset-bottom)] shadow-md transition-transform duration-300" style="transform:translateY(100%);">
+  <div aria-hidden="true" class="mx-auto mb-1 mt-3 h-1.5 w-12 shrink-0 rounded-full bg-border"></div>
+  <div data-ql-root class="flex min-h-0 flex-1 flex-col">
+    <div data-qlview="list" class="flex min-h-0 flex-1 flex-col">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <h2 class="min-w-0 flex-1 text-[15px] font-bold text-text">クイックリンク</h2>
+        <button type="button" data-ql-new class="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-primary px-3.5 text-xs font-medium text-white transition-colors hover:bg-primary-mid">＋ 追加</button>
+        <button type="button" data-close-slide="quick-links-m" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto px-4 py-3">
+        <div data-ql-list class="rounded-xl border border-border bg-background">
+          <div data-ql-row data-ql-index="0" data-ql-label="経費精算" data-ql-url="https://keihi.example.co.jp/" data-ql-icon="public/icons/links/keihi.svg" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="経費精算を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light"><img src="public/icons/links/keihi.svg" alt="" width="20" height="20"></span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">経費精算</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+          <div data-ql-row data-ql-index="1" data-ql-label="給与明細" data-ql-url="https://kyuyo.example.co.jp/" data-ql-icon="public/icons/links/kyuyo.svg" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="給与明細を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light"><img src="public/icons/links/kyuyo.svg" alt="" width="20" height="20"></span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">給与明細</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+          <div data-ql-row data-ql-index="2" data-ql-label="勤怠管理" data-ql-url="https://kintai.example.co.jp/" data-ql-icon="" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="勤怠管理を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light text-[10px] font-bold text-subtle">勤怠</span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">勤怠管理</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+          <div data-ql-row data-ql-index="3" data-ql-label="有給申請" data-ql-url="https://yukyu.example.co.jp/" data-ql-icon="public/icons/links/yukyu.svg" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">
+            <button type="button" aria-label="有給申請を並び替え" class="shrink-0 cursor-grab p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg></button>
+            <span data-ql-row-icon class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light"><img src="public/icons/links/yukyu.svg" alt="" width="20" height="20"></span>
+            <span data-ql-row-label class="min-w-0 flex-1 truncate text-sm font-medium text-text">有給申請</span>
+            <span aria-hidden="true" class="shrink-0 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg></span>
+          </div>
+        </div>
+        <p data-ql-empty class="py-8 text-center text-sm text-subtle" style="display:none;">リンクがありません</p>
+        <p class="mt-3 text-xs text-subtle">ハンドルを長押しすると並び替えできます。行をタップすると編集・削除ができます。</p>
+      </div>
+    </div>
+    <div data-qlview="form" class="flex min-h-0 flex-1 flex-col" style="display:none;">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <button type="button" data-ql-back aria-label="一覧に戻る" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
+        <h2 data-ql-heading class="min-w-0 flex-1 text-[15px] font-bold text-text">リンクを編集</h2>
+        <button type="button" data-close-slide="quick-links-m" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+        <label class="mb-4 flex flex-col gap-1"><span class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">URL</span>
+          <input data-ql-url-input type="url" placeholder="https://" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <span class="text-[11px] text-subtle">入力後に「URLからアイコンを取得」でファビコンを自動設定できます</span></label>
+        <label class="mb-4 flex flex-col gap-1"><span class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ラベル</span>
+          <input data-ql-label-input type="text" placeholder="例: SharePoint" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+        <div class="mb-4">
+          <span class="mb-1 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">アイコン</span>
+          <div class="flex items-center gap-3">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-background-light">
+              <img data-ql-preview src="public/icons/links/keihi.svg" alt="" width="32" height="32">
+              <span data-ql-preview-empty class="text-[10px] font-bold text-subtle" style="display:none;">未設定</span>
+            </span>
+            <div class="flex min-w-0 flex-1 flex-col gap-2">
+              <button type="button" class="rounded-full border border-primary bg-background px-4 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/5">URLからアイコンを取得</button>
+              <button type="button" class="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium text-text transition-colors hover:bg-black/[0.08]">画像をアップロード</button>
+            </div>
+          </div>
+        </div>
+        <div data-ql-delete-row class="mt-2 border-t border-border pt-4">
+          <button type="button" data-open-dialog="ql-delete" class="inline-flex h-12 w-full items-center justify-center rounded-full border border-danger-border bg-danger-surface px-5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">このリンクを削除</button>
+        </div>
+      </div>
+      <div class="flex shrink-0 flex-col gap-2 border-t border-border px-5 py-3">
+        <button type="button" data-ql-save class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button>
+        <button type="button" data-ql-back class="inline-flex h-12 w-full items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div data-dialog="ql-delete" class="fixed inset-0 z-[110] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="alertdialog" aria-modal="true" class="w-full max-w-sm rounded-[20px] bg-background-light p-6 shadow-md">
+    <p class="text-base font-bold text-text">このリンクを削除しますか？</p>
+    <p class="mt-2 text-sm text-subtle">この操作は取り消せません。</p>
+    <div class="mt-5 flex justify-end gap-2">
+      <button type="button" data-close-dialog class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-border text-subtle hover:bg-black/[0.08] h-10 px-5 text-sm">キャンセル</button>
+      <button type="button" data-close-dialog data-ql-delete-confirm class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-danger-border bg-danger-surface text-danger h-10 px-5 text-sm">削除</button>
+    </div>
+  </div>
+</div>
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
 <script>
@@ -4854,6 +5105,227 @@ function showSaveFeedback(){
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(function(){ el.style.display = 'none'; }, 2000);
 }
+</script>
+<script>
+// クエスト編集: 付与条件エディタ（種類に応じた入力欄の切替・行の追加/削除）
+(function(){
+  var RANKS = ['ルーキー','クルー','フィールドリーダー','ユニットリーダー','マネージャー','シニアマネージャー','ディレクター','エグゼクティブ','マイスター','レジェンド'];
+  var QUESTS = ['── クエストを選択 ──','顧客訪問レポートを提出する','日報を提出する','月次目標を達成する','毎日ログインする','忘年会に参加する','社内表彰式に参加する','社内勉強会に参加する','資格試験に合格する','ISO研修を受講する'];
+  var COND = {
+    APPROVAL_COUNT:               { kind: 'number', suffix: '件以上' },
+    ACHIEVEMENT_COUNT:            { kind: 'number', suffix: '件以上' },
+    LOGIN_DAYS_CUMULATIVE:        { kind: 'number', suffix: '日以上' },
+    LOGIN_DAYS_CONSECUTIVE:       { kind: 'number', suffix: '日以上連続' },
+    LEVEL:                        { kind: 'number', suffix: '以上' },
+    RANK:                         { kind: 'select', suffix: '以上', options: RANKS.map(function(t, i){ return 'ランク' + (i + 1) + '（' + t + '）'; }) },
+    USER_PROFILE:                 { kind: 'select', suffix: '', options: ['自宅住所','勤務先住所','プロフィール画像'] },
+    PREREQUISITE_QUEST:           { kind: 'select', suffix: '', options: QUESTS },
+    PROPOSAL_APPROVAL_COUNT:      { kind: 'number', suffix: '件以上' },
+    PROPOSAL_VOTE_GIVEN_COUNT:    { kind: 'number', suffix: '件以上' },
+    PROPOSAL_VOTE_RECEIVED_COUNT: { kind: 'number', suffix: '件以上' }
+  };
+
+  var firstRow = document.querySelector('[data-qe-cond]');
+  var TEMPLATE = firstRow ? firstRow.outerHTML : null;
+  var firstList = document.querySelector('[data-qe-cond-list]');
+  var LIST_SNAPSHOT = firstList ? firstList.innerHTML : null;
+
+  function applyType(row){
+    var typeSel = row.querySelector('[data-qe-cond-type]');
+    var def = COND[typeSel.value] || COND.APPROVAL_COUNT;
+    var num = row.querySelector('[data-qe-cond-num]');
+    var opt = row.querySelector('[data-qe-cond-opt]');
+    var sfx = row.querySelector('[data-qe-cond-suffix]');
+    if (def.kind === 'number') {
+      num.style.display = '';
+      opt.style.display = 'none';
+      opt.innerHTML = '';
+    } else {
+      num.style.display = 'none';
+      opt.style.display = '';
+      opt.innerHTML = def.options.map(function(o){ return '<option>' + o + '</option>'; }).join('');
+    }
+    sfx.textContent = def.suffix;
+    sfx.style.display = def.suffix ? '' : 'none';
+  }
+
+  function syncEmpty(section){
+    var list = section.querySelector('[data-qe-cond-list]');
+    var empty = section.querySelector('[data-qe-cond-empty]');
+    var has = !!list.querySelector('[data-qe-cond]');
+    list.style.display = has ? '' : 'none';
+    if (empty) empty.style.display = has ? 'none' : '';
+  }
+
+  document.addEventListener('change', function(e){
+    var sel = e.target.closest('[data-qe-cond-type]');
+    if (sel) applyType(sel.closest('[data-qe-cond]'));
+  });
+
+  // クエストごとの保存データがないため、開くたびにサンプルの条件（2件）と自動承認 ON へ戻す
+  document.addEventListener('slidewillopen', function(ev){
+    if (ev.detail.id !== 'quest-edit' || LIST_SNAPSHOT === null) return;
+    document.querySelectorAll('[data-slide="quest-edit"] [data-qe-cond-section]').forEach(function(section){
+      section.querySelector('[data-qe-cond-list]').innerHTML = LIST_SNAPSHOT;
+      section.querySelectorAll('[data-qe-cond]').forEach(applyType);
+      syncEmpty(section);
+    });
+    document.querySelectorAll('[data-slide="quest-edit"] [data-switch][data-watch="qe-auto"]').forEach(function(sw){
+      sw.setAttribute('aria-checked', 'true');
+      sw.classList.add('bg-primary'); sw.classList.remove('bg-border');
+      var knob = sw.querySelector('span');
+      if (knob) { knob.style.right = '2px'; knob.style.left = ''; }
+    });
+    document.querySelectorAll('[data-watch-target="qe-auto-on"]').forEach(function(el){ el.style.display = ''; });
+    document.querySelectorAll('[data-watch-target="qe-auto-off"]').forEach(function(el){ el.style.display = 'none'; });
+  });
+
+  document.addEventListener('click', function(e){
+    var del = e.target.closest('[data-qe-cond-del]');
+    if (del) {
+      var section = del.closest('[data-qe-cond-section]');
+      del.closest('[data-qe-cond]').remove();
+      syncEmpty(section);
+      return;
+    }
+    var add = e.target.closest('[data-qe-cond-add]');
+    if (add && TEMPLATE) {
+      var section2 = add.closest('[data-qe-cond-section]');
+      var list = section2.querySelector('[data-qe-cond-list]');
+      list.insertAdjacentHTML('beforeend', TEMPLATE);
+      var row = list.lastElementChild;
+      row.querySelector('[data-qe-cond-type]').value = 'APPROVAL_COUNT';
+      row.querySelector('[data-qe-cond-num]').value = '1';
+      applyType(row);
+      syncEmpty(section2);
+    }
+  });
+})();
+</script>
+<script>
+// システム設定: クイックリンクの一覧／追加・編集フォーム（PCモーダルとモバイルシートを同じ状態で動かす）
+(function(){
+  var ROW_TPL = null;
+  var first = document.querySelector('[data-ql-row]');
+  if (first) ROW_TPL = first.cloneNode(true);
+  var editingIndex = null; // 編集中の行 index（null は追加）
+  var nextIndex = 100;
+
+  function roots(){ return document.querySelectorAll('[data-ql-root]'); }
+
+  function showView(name){
+    roots().forEach(function(root){
+      root.querySelectorAll('[data-qlview]').forEach(function(v){
+        v.style.display = v.getAttribute('data-qlview') === name ? '' : 'none';
+      });
+    });
+  }
+
+  function syncList(){
+    var n = 0;
+    roots().forEach(function(root){
+      var list = root.querySelector('[data-ql-list]');
+      var empty = root.querySelector('[data-ql-empty]');
+      var rows = list.querySelectorAll('[data-ql-row]');
+      n = rows.length;
+      list.style.display = rows.length ? '' : 'none';
+      if (empty) empty.style.display = rows.length ? 'none' : '';
+    });
+    var count = document.querySelector('[data-ql-count]');
+    if (count) count.textContent = n + '件';
+  }
+
+  function fillForm(label, url, icon){
+    roots().forEach(function(root){
+      root.querySelector('[data-ql-heading]').textContent = editingIndex === null ? 'リンクを追加' : 'リンクを編集';
+      root.querySelector('[data-ql-label-input]').value = label;
+      root.querySelector('[data-ql-url-input]').value = url;
+      var img = root.querySelector('[data-ql-preview]');
+      var ph = root.querySelector('[data-ql-preview-empty]');
+      if (icon) { img.setAttribute('src', icon); img.style.display = ''; ph.style.display = 'none'; }
+      else { img.style.display = 'none'; ph.style.display = ''; }
+      root.querySelector('[data-ql-delete-row]').style.display = editingIndex === null ? 'none' : '';
+    });
+  }
+
+  function setRowText(row, label){
+    row.setAttribute('data-ql-label', label);
+    row.querySelector('[data-ql-row-label]').textContent = label;
+    var handle = row.querySelector('button[aria-label]');
+    if (handle) handle.setAttribute('aria-label', label + 'を並び替え');
+  }
+
+  function addRow(label, url){
+    if (!ROW_TPL) return;
+    var idx = nextIndex++;
+    roots().forEach(function(root){
+      var node = ROW_TPL.cloneNode(true);
+      node.setAttribute('data-ql-index', String(idx));
+      node.setAttribute('data-ql-url', url);
+      node.setAttribute('data-ql-icon', '');
+      var box = node.querySelector('[data-ql-row-icon]');
+      if (box) {
+        box.textContent = label.slice(0, 2);
+        box.classList.add('text-[10px]', 'font-bold', 'text-subtle');
+      }
+      setRowText(node, label);
+      root.querySelector('[data-ql-list]').appendChild(node);
+    });
+  }
+
+  document.addEventListener('slidewillopen', function(ev){
+    if (ev.detail.id === 'quick-links' || ev.detail.id === 'quick-links-m') showView('list');
+  });
+
+  document.addEventListener('click', function(e){
+    var add = e.target.closest('[data-ql-new]');
+    if (add) { editingIndex = null; fillForm('', '', null); showView('form'); return; }
+
+    var back = e.target.closest('[data-ql-back]');
+    if (back) { showView('list'); return; }
+
+    var save = e.target.closest('[data-ql-save]');
+    if (save) {
+      var root = save.closest('[data-ql-root]');
+      var label = root.querySelector('[data-ql-label-input]').value.trim();
+      var url = root.querySelector('[data-ql-url-input]').value.trim();
+      if (label) {
+        if (editingIndex === null) {
+          addRow(label, url);
+        } else {
+          document.querySelectorAll('[data-ql-row][data-ql-index="' + editingIndex + '"]').forEach(function(row){
+            row.setAttribute('data-ql-url', url);
+            setRowText(row, label);
+          });
+        }
+      }
+      showView('list');
+      syncList();
+      return;
+    }
+
+    var del = e.target.closest('[data-ql-delete-confirm]');
+    if (del) {
+      if (editingIndex !== null) {
+        document.querySelectorAll('[data-ql-row][data-ql-index="' + editingIndex + '"]').forEach(function(row){ row.remove(); });
+      }
+      showView('list');
+      syncList();
+      return;
+    }
+
+    var row2 = e.target.closest('[data-ql-row]');
+    if (row2 && !e.target.closest('[data-ql-row] button')) {
+      editingIndex = row2.getAttribute('data-ql-index');
+      fillForm(
+        row2.getAttribute('data-ql-label') || '',
+        row2.getAttribute('data-ql-url') || '',
+        row2.getAttribute('data-ql-icon') || null
+      );
+      showView('form');
+    }
+  });
+})();
 </script>
 </body>
 </html>
