@@ -648,8 +648,17 @@ document.addEventListener('slidewillopen', function(ev){
 // ハートの長押しで「応援した人」を表示する（アプリと同じ操作）。
 // 長押し後の合成 click は止める。止めないとカードの click に伝わって詳細が開く
 (function () {
-  var NAMES = ['佐藤 花子', '鈴木 一郎', '高橋 美咲', '田中 健太', '渡辺 陽菜', '伊藤 大輔',
-               '山本 さくら', '中村 翔', '小林 結衣', '加藤 蓮', '吉田 芽依', '山田 太郎'];
+  // 姓×名の組み合わせで一意な名前を作る（144人まで重複しない）。
+  // 12件の固定配列を剰余で回すと13人目から同じ人が並んでしまう
+  var SURNAMES = ['佐藤', '鈴木', '高橋', '田中', '渡辺', '伊藤',
+                  '山本', '中村', '小林', '加藤', '吉田', '山田'];
+  var GIVENS = ['花子', '一郎', '美咲', '健太', '陽菜', '大輔',
+                'さくら', '翔', '結衣', '蓮', '芽依', '太郎'];
+  function likeName(i) {
+    var s = i % SURNAMES.length;
+    var k = Math.floor(i / SURNAMES.length);
+    return SURNAMES[s] + ' ' + GIVENS[(s + k) % GIVENS.length];
+  }
 
   function row(name) {
     return '<div class="flex items-center gap-2.5 rounded-lg px-2 py-2">'
@@ -664,7 +673,7 @@ document.addEventListener('slidewillopen', function(ev){
     document.querySelectorAll('[data-likes-count]').forEach(function (n) { n.textContent = count + '人'; });
     document.querySelectorAll('[data-likes-list]').forEach(function (n) {
       var html = '';
-      for (var i = 0; i < count; i++) html += row(NAMES[i % NAMES.length]);
+      for (var i = 0; i < count; i++) html += row(likeName(i));
       n.innerHTML = html;
     });
     window.openSlide('proposal-likes');
@@ -754,7 +763,7 @@ document.addEventListener('slidewillopen', function(ev){
     if (count === 0) return;
     var shown = Math.min(count, POP_MAX);
     var html = '';
-    for (var i = 0; i < shown; i++) html += popRow(NAMES[i % NAMES.length]);
+    for (var i = 0; i < shown; i++) html += popRow(likeName(i));
     if (count > POP_MAX) {
       html += '<span class="flex items-center border-t border-border px-3 py-2 text-xs text-subtle">他' + (count - POP_MAX) + '名</span>';
     }
