@@ -1616,10 +1616,26 @@
 {{申請者}} さんから「{{クエスト名}}」の申請が届きました。
 カテゴリ: {{カテゴリ}} / {{pt}}pt / {{xp}}xp
 コメント: {{コメント}}</textarea>
-                        <div data-teams-preview class="hidden px-3 py-2.5 text-sm leading-relaxed text-text"><span class="font-semibold text-primary">@山田 一郎</span><br>田中 太郎 さんから「営業目標達成クエスト」の申請が届きました。<br>カテゴリ: 営業 / 100pt / 50xp<br>コメント: 先月の目標を達成しました。</div>
+                        <div data-teams-preview class="hidden bg-background-light p-3">
+                          <div class="rounded-lg border p-3" style="background:#f5f5f5;border-color:#e1dfdd;">
+                            <div class="flex items-center gap-2">
+                              <span aria-hidden="true" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold" style="background:#042154;color:#ffffff;">AI</span>
+                              <span class="text-sm font-bold" style="color:#242424;">ICT-O AI</span>
+                            </div>
+                            <div class="ml-10 mt-1 rounded-lg border px-4 py-3" style="background:#ffffff;border-color:#e1dfdd;">
+                              <div class="text-sm leading-relaxed [&_p]:my-0.5" style="color:#242424;">
+                                <p><span style="color:#6264a7;font-weight:600;">@山田 一郎</span></p>
+                                <p>田中 太郎 さんから「営業目標達成クエスト」の申請が届きました。</p>
+                                <p>カテゴリ: 営業 / 100pt / 50xp</p>
+                                <p>コメント: 先月の目標を達成しました。</p>
+                              </div>
+                              <div class="mt-3"><span class="inline-block rounded border px-3 py-1 text-sm font-bold" style="border-color:#d1d1d1;color:#242424;background:#ffffff;">クエストを確認</span></div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <p data-teams-hint class="mt-1 text-xs text-subtle-light">@ の後に名前でユーザー候補が表示されます。<strong>@{{申請者}}</strong> や <strong>@{{承認者}}</strong> は申請時に本物の @メンションになります。</p>
-                      <p data-teams-preview-hint class="mt-1 hidden text-xs text-subtle-light">サンプル値で展開したプレビューです。</p>
+                      <p data-teams-preview-hint class="mt-1 hidden text-xs text-subtle-light">実際に Teams に届くカードのイメージです。変数はサンプル値で表示しています。</p>
                       <div class="mt-2 flex flex-wrap gap-1.5">
                         <button type="button" data-teams-var="{{クエスト名}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{クエスト名}}</button><button type="button" data-teams-var="{{申請者}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{申請者}}</button><button type="button" data-teams-var="{{承認者}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{承認者}}</button><button type="button" data-teams-var="{{カテゴリ}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{カテゴリ}}</button><button type="button" data-teams-var="{{サブカテゴリ}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{サブカテゴリ}}</button><button type="button" data-teams-var="{{達成人数}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{達成人数}}</button><button type="button" data-teams-var="{{pt}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{pt}}</button><button type="button" data-teams-var="{{xp}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{xp}}</button><button type="button" data-teams-var="{{申請日時}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{申請日時}}</button><button type="button" data-teams-var="{{コメント}}" class="rounded-full border border-border bg-background px-2.5 py-1 font-mono text-[11px] text-subtle transition-colors hover:bg-background-light hover:text-primary">{{コメント}}</button>
                       </div>
@@ -2607,6 +2623,176 @@
                   <button type="button" data-seg="5" class="flex flex-1 items-center justify-center border-r border-border py-2 text-sm font-medium transition-colors last:border-r-0 text-subtle" style=""><span data-seg-label>Lv5</span></button>
                 </div>
                   <p class="mt-2 text-[11px] text-subtle">洪水注意報=Lv2 / 洪水警報=Lv3 / 大雨特別警報（土砂）=Lv4 / 大雨特別警報（浸水）=Lv5</p>
+                </div>
+              </div>
+
+              <!-- Teams 通知文言 -->
+              <div class="flex items-center justify-between">
+                <p class="text-[11px] font-bold uppercase tracking-widest text-subtle">Teams 通知文言</p>
+                <span class="text-[11px]"><span data-stm-saved class="text-success" style="display:none;">保存しました</span></span>
+              </div>
+
+              <!-- カード（変数ドロップダウンがあるため overflow-hidden は付けない） -->
+              <div class="rounded-lg border border-border bg-background">
+                <div class="flex items-center gap-4 px-5 py-4">
+                  <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-lightest" aria-hidden="true"><span class="text-base font-bold text-primary">@</span></div>
+                  <div class="min-w-0 flex-1">
+                    <p class="text-sm font-bold text-text">エスカレーション先チャンネルへの投稿文</p>
+                    <p class="mt-0.5 text-[11px] text-subtle">投稿先はユーザーごとの「Teams 通知投稿先」チャンネル。メンションで本人・上司のアクティビティフィードに通知が飛びます</p>
+                  </div>
+                </div>
+                <div class="space-y-6 border-t border-border bg-background-light px-5 py-4">
+
+                  <!-- 未回答エスカレーション -->
+                  <div data-stm-block="esc">
+                    <p class="text-xs font-bold text-text">未回答エスカレーション</p>
+                    <p class="mt-0.5 text-[11px] text-subtle">発令から6時間後、未回答のメンバーごとに投稿</p>
+                    <div class="mt-2">
+                      <label for="stm-esc-title" class="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">タイトル</label>
+                      <input id="stm-esc-title" data-stm-title type="text" value="安否未回答 エスカレーション" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    </div>
+                    <div class="mt-3">
+                      <span class="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">本文</span>
+                      <div data-mdgroup="stm-esc">
+                        <div class="flex gap-1" role="tablist" aria-label="本文の編集モード">
+                          <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+                          <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+                        </div>
+                        <div data-mdpanel="write" class="mt-1">
+                          <div class="flex flex-nowrap items-center gap-0.5 rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+                            <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+                            <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+                            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                            <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+                            <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+                            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                            <button type="button" aria-label="コード" title="コード" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z"></path></svg></button>
+                            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                            <div class="relative">
+                              <button type="button" data-stm-varbtn aria-label="変数を挿入" title="変数を挿入" class="flex h-7 items-center rounded px-2 font-mono text-xs text-subtle transition-colors hover:bg-border hover:text-text">{{変数}}</button>
+                              <div data-stm-varmenu class="absolute left-0 top-full z-50 mt-1 hidden max-h-72 w-72 overflow-y-auto rounded-lg border border-border bg-background-light shadow-md">
+                                <div class="border-b border-border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-subtle-light">変数を挿入</div>
+                                <button type="button" data-stm-insert="@{{本人}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">@{{本人}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">本人へのメンション</span><span class="block text-[10px] text-subtle-light">@鈴木 花子</span></span></button>
+                                <button type="button" data-stm-insert="@{{上司}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">@{{上司}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">上司へのメンション</span><span class="block text-[10px] text-subtle-light">@佐藤 部長</span></span></button>
+                                <button type="button" data-stm-insert="{{本人}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{本人}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">本人の名前</span><span class="block text-[10px] text-subtle-light">鈴木 花子</span></span></button>
+                                <button type="button" data-stm-insert="{{上司}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{上司}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">上司の名前</span><span class="block text-[10px] text-subtle-light">佐藤 部長</span></span></button>
+                                <button type="button" data-stm-insert="{{災害名}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{災害名}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">災害の名称</span><span class="block text-[10px] text-subtle-light">地震（震度5強）</span></span></button>
+                                <button type="button" data-stm-insert="{{経過時間}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{経過時間}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">発生からの経過時間（時間）</span><span class="block text-[10px] text-subtle-light">6</span></span></button>
+                                <button type="button" data-stm-insert="{{リマインド回数}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{リマインド回数}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">リマインドを送った回数</span><span class="block text-[10px] text-subtle-light">3</span></span></button>
+                              </div>
+                            </div>
+                          </div>
+                          <textarea rows="6" style="min-height:10.5rem;" placeholder="本文を入力..." class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] max-h-[40vh]">@{{本人}} さん、安否確認への回答をお願いします。
+@{{上司}} さん、状況の確認をお願いします。
+
+**災害**: {{災害名}}
+**経過時間**: 約{{経過時間}}時間
+**リマインド回数**: {{リマインド回数}}回</textarea>
+                        </div>
+                        <div data-mdpanel="preview" class="mt-1 hidden">
+                          <div class="w-full rounded-b-lg border border-border bg-background-light p-3">
+                            <div class="rounded-lg border p-3" style="background:#f5f5f5;border-color:#e1dfdd;">
+                              <div class="flex items-center gap-2">
+                                <span aria-hidden="true" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold" style="background:#042154;color:#ffffff;">AI</span>
+                                <span class="text-sm font-bold" style="color:#242424;">ICT-O AI</span>
+                              </div>
+                              <div class="ml-10 mt-1 rounded-lg border px-4 py-3" style="background:#ffffff;border-color:#e1dfdd;">
+                                <p class="mb-1 text-[15px] font-bold" style="color:#242424;">安否未回答 エスカレーション</p>
+                                <div class="text-sm leading-relaxed [&_p]:my-0.5" style="color:#242424;">
+                                  <p><span style="color:#6264a7;font-weight:600;">@鈴木 花子</span> さん、安否確認への回答をお願いします。</p>
+                                  <p><span style="color:#6264a7;font-weight:600;">@佐藤 部長</span> さん、状況の確認をお願いします。</p>
+                                  <br>
+                                  <p><strong>災害</strong>: 地震（震度5強）</p>
+                                  <p><strong>経過時間</strong>: 約6時間</p>
+                                  <p><strong>リマインド回数</strong>: 3回</p>
+                                </div>
+                                <div class="mt-3"><span class="inline-block rounded border px-3 py-1 text-sm font-bold" style="border-color:#d1d1d1;color:#242424;background:#ffffff;">Crew Nest で確認</span></div>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="mt-1 text-xs text-subtle-light">サンプル値で表示しています。空になる変数（上司が未設定の @{{上司}} など）を含む行は、実際の投稿では行ごと表示されません</p>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" data-stm-reset class="mt-2 text-xs text-subtle underline transition-colors hover:text-text">デフォルトの文言に戻す</button>
+                  </div>
+
+                  <!-- 被害あり報告 -->
+                  <div data-stm-block="dmg">
+                    <p class="text-xs font-bold text-text">被害あり報告</p>
+                    <p class="mt-0.5 text-[11px] text-subtle">メンバーが「被害あり」と回答したとき即時投稿</p>
+                    <div class="mt-2">
+                      <label for="stm-dmg-title" class="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">タイトル</label>
+                      <input id="stm-dmg-title" data-stm-title type="text" value="被害あり報告" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    </div>
+                    <div class="mt-3">
+                      <span class="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">本文</span>
+                      <div data-mdgroup="stm-dmg">
+                        <div class="flex gap-1" role="tablist" aria-label="本文の編集モード">
+                          <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+                          <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+                        </div>
+                        <div data-mdpanel="write" class="mt-1">
+                          <div class="flex flex-nowrap items-center gap-0.5 rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+                            <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+                            <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+                            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                            <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+                            <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+                            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                            <button type="button" aria-label="コード" title="コード" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z"></path></svg></button>
+                            <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+                            <div class="relative">
+                              <button type="button" data-stm-varbtn aria-label="変数を挿入" title="変数を挿入" class="flex h-7 items-center rounded px-2 font-mono text-xs text-subtle transition-colors hover:bg-border hover:text-text">{{変数}}</button>
+                              <div data-stm-varmenu class="absolute left-0 top-full z-50 mt-1 hidden max-h-72 w-72 overflow-y-auto rounded-lg border border-border bg-background-light shadow-md">
+                                <div class="border-b border-border px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-subtle-light">変数を挿入</div>
+                                <button type="button" data-stm-insert="@{{本人}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">@{{本人}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">本人へのメンション</span><span class="block text-[10px] text-subtle-light">@鈴木 花子</span></span></button>
+                                <button type="button" data-stm-insert="@{{上司}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">@{{上司}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">上司へのメンション</span><span class="block text-[10px] text-subtle-light">@佐藤 部長</span></span></button>
+                                <button type="button" data-stm-insert="{{本人}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{本人}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">本人の名前</span><span class="block text-[10px] text-subtle-light">鈴木 花子</span></span></button>
+                                <button type="button" data-stm-insert="{{上司}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{上司}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">上司の名前</span><span class="block text-[10px] text-subtle-light">佐藤 部長</span></span></button>
+                                <button type="button" data-stm-insert="{{災害名}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{災害名}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">災害の名称</span><span class="block text-[10px] text-subtle-light">地震（震度5強）</span></span></button>
+                                <button type="button" data-stm-insert="{{回答日時}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{回答日時}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">被害あり回答の日時</span><span class="block text-[10px] text-subtle-light">2026/8/15 9:30</span></span></button>
+                                <button type="button" data-stm-insert="{{コメント}}" class="flex w-full items-start gap-2.5 px-3 py-2 text-left transition-colors hover:bg-background"><span class="shrink-0 pt-px font-mono text-[11px] font-bold text-primary">{{コメント}}</span><span class="min-w-0 flex-1"><span class="block text-[11px] text-text">被害あり回答のコメント</span><span class="block text-[10px] text-subtle-light">自宅の窓ガラスが割れました</span></span></button>
+                              </div>
+                            </div>
+                          </div>
+                          <textarea rows="6" style="min-height:10.5rem;" placeholder="本文を入力..." class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] max-h-[40vh]">@{{上司}} 被害報告あり
+@{{本人}} さんから被害ありの報告がありました。
+
+**災害**: {{災害名}}
+**回答日時**: {{回答日時}}
+**コメント**: {{コメント}}</textarea>
+                        </div>
+                        <div data-mdpanel="preview" class="mt-1 hidden">
+                          <div class="w-full rounded-b-lg border border-border bg-background-light p-3">
+                            <div class="rounded-lg border p-3" style="background:#f5f5f5;border-color:#e1dfdd;">
+                              <div class="flex items-center gap-2">
+                                <span aria-hidden="true" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold" style="background:#042154;color:#ffffff;">AI</span>
+                                <span class="text-sm font-bold" style="color:#242424;">ICT-O AI</span>
+                              </div>
+                              <div class="ml-10 mt-1 rounded-lg border px-4 py-3" style="background:#ffffff;border-color:#e1dfdd;">
+                                <p class="mb-1 text-[15px] font-bold" style="color:#242424;">被害あり報告</p>
+                                <div class="text-sm leading-relaxed [&_p]:my-0.5" style="color:#242424;">
+                                  <p><span style="color:#6264a7;font-weight:600;">@佐藤 部長</span> 被害報告あり</p>
+                                  <p><span style="color:#6264a7;font-weight:600;">@鈴木 花子</span> さんから被害ありの報告がありました。</p>
+                                  <br>
+                                  <p><strong>災害</strong>: 地震（震度5強）</p>
+                                  <p><strong>回答日時</strong>: 2026/8/15 9:30</p>
+                                  <p><strong>コメント</strong>: 自宅の窓ガラスが割れました</p>
+                                </div>
+                                <div class="mt-3"><span class="inline-block rounded border px-3 py-1 text-sm font-bold" style="border-color:#d1d1d1;color:#242424;background:#ffffff;">Crew Nest で確認</span></div>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="mt-1 text-xs text-subtle-light">サンプル値で表示しています。空になる変数（上司が未設定の @{{上司}} など）を含む行は、実際の投稿では行ごと表示されません</p>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" data-stm-reset class="mt-2 text-xs text-subtle underline transition-colors hover:text-text">デフォルトの文言に戻す</button>
+                  </div>
+                </div>
+                <div class="flex items-center justify-end rounded-b-lg border-t border-border bg-background-light px-5 py-3">
+                  <button type="button" data-stm-save class="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid md:w-auto">保存する</button>
                 </div>
               </div>
             </div>
@@ -5105,6 +5291,38 @@ function showSaveFeedback(){
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(function(){ el.style.display = 'none'; }, 2000);
 }
+// 設定: Teams 通知文言（変数挿入ドロップダウン・デフォルトに戻す・保存）
+var STM_DEFAULTS = {
+  esc: { title: '安否未回答 エスカレーション', body: '@{{本人}} さん、安否確認への回答をお願いします。\n@{{上司}} さん、状況の確認をお願いします。\n\n**災害**: {{災害名}}\n**経過時間**: 約{{経過時間}}時間\n**リマインド回数**: {{リマインド回数}}回' },
+  dmg: { title: '被害あり報告', body: '@{{上司}} 被害報告あり\n@{{本人}} さんから被害ありの報告がありました。\n\n**災害**: {{災害名}}\n**回答日時**: {{回答日時}}\n**コメント**: {{コメント}}' }
+};
+document.addEventListener('click', function(e){
+  var vbtn = e.target.closest('[data-stm-varbtn]');
+  var menu = vbtn ? vbtn.parentElement.querySelector('[data-stm-varmenu]') : null;
+  var ins = e.target.closest('[data-stm-insert]');
+  // 開いているメニューを閉じる（今回トグルするメニューは除く）
+  document.querySelectorAll('[data-stm-varmenu]').forEach(function(m){ if (m !== menu) m.classList.add('hidden'); });
+  if (vbtn) { menu.classList.toggle('hidden'); return; }
+  if (ins) {
+    var ta = ins.closest('[data-stm-block]').querySelector('textarea');
+    var pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+    ta.value = ta.value.slice(0, pos) + ins.getAttribute('data-stm-insert') + ta.value.slice(pos);
+    ta.focus();
+    return;
+  }
+  var rst = e.target.closest('[data-stm-reset]');
+  if (rst) {
+    var blk = rst.closest('[data-stm-block]');
+    var def = STM_DEFAULTS[blk.getAttribute('data-stm-block')];
+    blk.querySelector('[data-stm-title]').value = def.title;
+    blk.querySelector('textarea').value = def.body;
+    return;
+  }
+  if (e.target.closest('[data-stm-save]')) {
+    var f = document.querySelector('[data-stm-saved]');
+    if (f) { f.style.display = ''; setTimeout(function(){ f.style.display = 'none'; }, 2000); }
+  }
+});
 </script>
 <script>
 // クエスト編集: 付与条件エディタ（種類に応じた入力欄の切替・行の追加/削除）
