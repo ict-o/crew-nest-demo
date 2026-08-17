@@ -372,7 +372,7 @@ document.addEventListener('click', function(e){
 </script>
 
 <div data-slide="proposal-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="提案詳細">
-  <div class="flex shrink-0 justify-end px-4 pt-3"><button type="button" data-close-slide="proposal-detail" aria-label="詳細パネルを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
+  <div class="flex shrink-0 items-center justify-end gap-1 px-4 pt-3"><span data-f="sharemsg" class="text-xs text-subtle"></span><button type="button" data-demo-share aria-label="このアイデアを共有" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z"></path></svg></button><button type="button" data-close-slide="proposal-detail" aria-label="詳細パネルを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
   <div class="flex-1 overflow-y-auto px-5 pb-4">
       <div class="mb-4">
         <div class="mb-2 flex flex-wrap items-center gap-1.5">
@@ -418,6 +418,10 @@ document.addEventListener('click', function(e){
     <button type="button" data-close-slide="proposal-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background">
       <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>提案一覧
     </button>
+    <span class="ml-auto flex items-center gap-1">
+      <span data-f="sharemsg" class="text-xs text-subtle"></span>
+      <button type="button" data-demo-share aria-label="このアイデアを共有" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z"></path></svg></button>
+    </span>
   </div>
   <div class="flex-1 overflow-y-auto px-4 pb-4 pt-3">
       <div class="mb-4">
@@ -642,6 +646,18 @@ document.addEventListener('slidewillopen', function(ev){
   all('[data-f="log-adopted"]').forEach(function(n){ n.style.display = status === 'ADOPTED' ? '' : 'none'; });
   var isMine = proposer.indexOf('田中') !== -1;
   all('[data-f="footer"]').forEach(function(n){ n.style.display = (status === 'PENDING' && isMine) ? '' : 'none'; });
+});
+
+// 共有ボタン（実アプリはスマートフォンで端末の共有機能が開き、非対応環境ではリンクをコピーする）
+document.addEventListener('click', function(ev){
+  var btn = ev.target.closest && ev.target.closest('[data-demo-share]');
+  if (!btn) return;
+  var msgs = document.querySelectorAll('[data-slide="proposal-detail"] [data-f="sharemsg"]');
+  Array.prototype.forEach.call(msgs, function(n){ n.textContent = 'コピーしました'; });
+  clearTimeout(window.cnShareTimer);
+  window.cnShareTimer = setTimeout(function(){
+    Array.prototype.forEach.call(msgs, function(n){ n.textContent = ''; });
+  }, 1800);
 });
 </script>
 <script>
