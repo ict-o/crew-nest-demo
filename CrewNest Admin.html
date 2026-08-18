@@ -3607,6 +3607,13 @@ document.addEventListener('click', function(e){
         <span class="text-sm font-semibold text-text"><span data-watch-target="qe-auto-on">ON（承認不要）</span><span data-watch-target="qe-auto-off" style="display:none;">OFF（通常承認）</span></span>
         <button type="button" role="switch" aria-checked="true" data-switch data-watch="qe-auto" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
       </div>
+      <div class="mt-3 flex flex-col gap-1">
+        <span class="text-xs font-semibold text-subtle">承認者</span>
+        <input data-watch-target="qe-auto-on" disabled class="cursor-not-allowed rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text opacity-[0.38]" placeholder="名前またはメールで検索">
+        <input data-watch-target="qe-auto-off" style="display:none;" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="名前またはメールで検索">
+        <span data-watch-target="qe-auto-on" class="text-[11px] text-subtle-light">自動承認が有効な間は使用されません（設定は保持されます）</span>
+        <span data-watch-target="qe-auto-off" style="display:none;" class="text-[11px] text-subtle-light">未設定の場合は申告者の上司（上司がいない場合はデフォルト承認者）が承認します</span>
+      </div>
       <div data-watch-target="qe-auto-on" class="mt-3 flex flex-col gap-3">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs font-semibold text-subtle">トリガー種別</span>
@@ -3750,6 +3757,13 @@ document.addEventListener('click', function(e){
       <div class="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2">
         <span class="text-sm font-semibold text-text"><span data-watch-target="qe-auto-on">ON（承認不要）</span><span data-watch-target="qe-auto-off" style="display:none;">OFF（通常承認）</span></span>
         <button type="button" role="switch" aria-checked="true" data-switch data-watch="qe-auto" class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-primary transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="right:2px;"></span></button>
+      </div>
+      <div class="mt-3 flex flex-col gap-1">
+        <span class="text-xs font-semibold text-subtle">承認者</span>
+        <input data-watch-target="qe-auto-on" disabled class="cursor-not-allowed rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text opacity-[0.38]" placeholder="名前またはメールで検索">
+        <input data-watch-target="qe-auto-off" style="display:none;" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="名前またはメールで検索">
+        <span data-watch-target="qe-auto-on" class="text-[11px] text-subtle-light">自動承認が有効な間は使用されません（設定は保持されます）</span>
+        <span data-watch-target="qe-auto-off" style="display:none;" class="text-[11px] text-subtle-light">未設定の場合は申告者の上司（上司がいない場合はデフォルト承認者）が承認します</span>
       </div>
       <div data-watch-target="qe-auto-on" class="mt-3 flex flex-col gap-3">
         <div class="flex flex-col gap-1.5">
