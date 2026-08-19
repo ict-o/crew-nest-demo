@@ -2173,9 +2173,19 @@
             <h2 class="text-base font-bold text-text">投稿済み一覧</h2>
             <button type="button" data-open-slide="ann-form" class="hidden md:inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors bg-primary text-white hover:bg-primary-mid active:bg-primary-darkest px-4 py-2 text-sm">お知らせを作成</button>
           </div>
+          <div class="mb-3 flex gap-1 overflow-x-auto overscroll-x-contain border-b border-border" role="group" aria-label="お知らせの絞り込み">
+            <button type="button" data-anntab="active" aria-pressed="true" class="relative inline-flex shrink-0 items-center gap-2 border-b-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/50 overflow-visible px-3 py-2.5 text-xs font-medium border-primary text-primary">
+              アクティブ
+              <span data-anncount class="rounded-full px-2 py-0.5 text-xs bg-primary-lightest text-primary">3</span>
+            </button>
+            <button type="button" data-anntab="past" aria-pressed="false" class="relative inline-flex shrink-0 items-center gap-2 border-b-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/50 overflow-visible px-3 py-2.5 text-xs font-medium border-transparent text-subtle hover:border-border hover:text-text">
+              過去
+              <span data-anncount class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span>
+            </button>
+          </div>
           <ul class="flex flex-col gap-2">
-            
-            <li data-open-slide="ann-detail" data-ann="0" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
+
+            <li data-open-slide="ann-detail" data-ann="0" data-annstatus="active" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2">
@@ -2197,7 +2207,7 @@
               </div>
             </li>
             
-            <li data-open-slide="ann-detail" data-ann="1" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
+            <li data-open-slide="ann-detail" data-ann="1" data-annstatus="active" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2">
@@ -2205,8 +2215,9 @@
                     <p class="truncate text-sm font-bold text-text">オフィスWiFi更新のお知らせ</p>
                   </div>
                   <div class="mt-0.5 flex flex-col gap-y-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
-                    <p class="text-xs text-subtle">公開: 2026/6/30 10:00</p>
+                    <p class="text-xs text-subtle">公開: 2026/6/30 10:00 ～ 2026/8/25 10:00</p>
                     <span class="w-fit shrink-0 rounded bg-info-surface px-1.5 py-0.5 text-[11px] font-bold text-info">毎週 火曜 10:00</span>
+                    <p class="text-xs text-subtle">次回: 2026/09/01（火）09:00</p>
                   </div>
                 </div>
               </div>
@@ -2219,12 +2230,13 @@
               </div>
             </li>
             
-            <li data-open-slide="ann-detail" data-ann="2" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
+            <li data-open-slide="ann-detail" data-ann="2" data-annstatus="active" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2">
 
                     <p class="truncate text-sm font-bold text-text">健康診断のご案内（秋季）</p>
+                    <span class="shrink-0 rounded-full bg-warning-surface px-2 py-0.5 text-xs font-medium text-warning">公開予約</span>
                   </div>
                   <div class="mt-0.5 flex flex-col gap-y-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
                     <p class="text-xs text-subtle">公開: 2026/9/1 9:00 ～ 2026/10/31 18:00</p>
@@ -2237,6 +2249,50 @@
                   <div class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:0%;"></div>
                 </div>
                 <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-danger">全員未読 (42人)</span></span>
+                <span class="shrink-0 text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span>
+              </div>
+            </li>
+
+            <li data-open-slide="ann-detail" data-ann="3" data-annstatus="past" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40" style="display:none;">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-2">
+
+                    <p class="truncate text-sm font-bold text-text">エレベーター点検のお知らせ</p>
+                  </div>
+                  <div class="mt-0.5 flex flex-col gap-y-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
+                    <p class="text-xs text-subtle">公開: 2026/5/10 9:00 ～ 2026/5/12 18:00</p>
+
+                  </div>
+                </div>
+              </div>
+              <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="-mx-2 -mb-1 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-black/[0.08]">
+                <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+                  <div class="absolute inset-y-0 left-0 rounded-full bg-success-strong" style="width:100%;"></div>
+                </div>
+                <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">全員既読 (42人)</span></span>
+                <span class="shrink-0 text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span>
+              </div>
+            </li>
+
+            <li data-open-slide="ann-detail" data-ann="4" data-annstatus="past" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40" style="display:none;">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-2">
+
+                    <p class="truncate text-sm font-bold text-text">健康診断のご案内（春季）</p>
+                  </div>
+                  <div class="mt-0.5 flex flex-col gap-y-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
+                    <p class="text-xs text-subtle">公開: 2026/4/1 9:00 ～ 2026/4/30 18:00</p>
+
+                  </div>
+                </div>
+              </div>
+              <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="-mx-2 -mb-1 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-black/[0.08]">
+                <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+                  <div class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:90%;"></div>
+                </div>
+                <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">既読38</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読4</span></span>
                 <span class="shrink-0 text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span>
               </div>
             </li>
@@ -3003,6 +3059,20 @@ document.addEventListener('click', function(e){
     document.querySelectorAll('[data-dpanel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-dpanel') === dk); });
     return;
   }
+  // お知らせ管理: アクティブ/過去の絞り込みタブ
+  var atBtn = e.target.closest('[data-anntab]');
+  if (atBtn) {
+    var ak = atBtn.getAttribute('data-anntab');
+    document.querySelectorAll('[data-anntab]').forEach(function(x){
+      var on = x.getAttribute('data-anntab') === ak;
+      x.setAttribute('aria-pressed', String(on));
+      x.className = 'relative inline-flex shrink-0 items-center gap-2 border-b-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/50 overflow-visible px-3 py-2.5 text-xs font-medium ' + (on ? 'border-primary text-primary' : 'border-transparent text-subtle hover:border-border hover:text-text');
+      var badge = x.querySelector('[data-anncount]');
+      if (badge) badge.className = 'rounded-full px-2 py-0.5 text-xs ' + (on ? 'bg-primary-lightest text-primary' : 'bg-background text-subtle');
+    });
+    document.querySelectorAll('[data-annstatus]').forEach(function(li){ li.style.display = li.getAttribute('data-annstatus') === ak ? '' : 'none'; });
+    return;
+  }
   // 経費精算管理サブタブ
   var eBtn = e.target.closest('[data-etab]');
   if (eBtn) {
@@ -3255,7 +3325,7 @@ document.addEventListener('click', function(e){
     {
       badges: '<span class="rounded bg-info-surface px-1.5 py-0.5 text-[11px] font-bold text-info">毎週 火曜 10:00</span>',
       title: 'オフィスWiFi更新のお知らせ',
-      period: '公開期間: 2026/6/30 10:00 ～（終了なし）',
+      period: '公開期間: 2026/6/30 10:00 ～ 2026/8/25 10:00',
       banner: null,
       push: '通知を送る: ON',
       body: '<p>オフィスWiFiの機器更新を行います。作業中は数分間接続が切れる場合があります。</p><ul><li>SSID・パスワードは変わりません</li><li>接続できない場合は WiFi を一度オフにして再接続してください</li></ul>',
@@ -3273,6 +3343,28 @@ document.addEventListener('click', function(e){
       link: null,
       pct: 0, full: false,
       count: '<span class="font-medium text-danger">全員未読 (42人)</span>'
+    },
+    {
+      badges: '',
+      title: 'エレベーター点検のお知らせ',
+      period: '公開期間: 2026/5/10 9:00 ～ 2026/5/12 18:00',
+      banner: null,
+      push: '通知を送る: ON',
+      body: '<p>本社ビルのエレベーター定期点検を実施します。点検中は階段をご利用ください。</p><ul><li>点検日: 2026/5/11（月）9:00～17:00</li><li>対象: 本社ビル 全エレベーター</li></ul>',
+      link: null,
+      pct: 100, full: true,
+      count: '<span class="font-medium text-success">全員既読 (42人)</span>'
+    },
+    {
+      badges: '',
+      title: '健康診断のご案内（春季）',
+      period: '公開期間: 2026/4/1 9:00 ～ 2026/4/30 18:00',
+      banner: null,
+      push: '通知を送る: OFF',
+      body: '<p>春季健康診断を実施しました。受診結果は順次お送りしています。</p>',
+      link: null,
+      pct: 90, full: false,
+      count: '<span class="font-medium text-success">既読38</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読4</span>'
     }
   ];
   document.addEventListener('slidewillopen', function(ev){
