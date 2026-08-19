@@ -2175,7 +2175,7 @@
           </div>
           <ul class="flex flex-col gap-2">
             
-            <li data-open-slide="ann-reads" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
+            <li data-open-slide="ann-detail" data-ann="0" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2">
@@ -2187,26 +2187,21 @@
                     <p class="text-xs text-danger">バナー: ～ 2027/1/5 9:00</p>
                   </div>
                 </div>
-                <div class="flex shrink-0 gap-2">
-                  <button type="button" data-open-slide="ann-form" data-stop class="rounded-full border border-border px-2 py-1 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
-                  <button type="button" data-open-dialog="ann-delete" data-stop class="rounded-full border border-danger-border px-2 py-1 text-xs font-medium text-danger transition-colors hover:bg-danger-surface">削除</button>
-                </div>
               </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
-                    <div class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:62%;"></div>
-                  </div>
-                  <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">既読26</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読16</span></span>
+              <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="-mx-2 -mb-1 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-black/[0.08]">
+                <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+                  <div class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:62%;"></div>
                 </div>
+                <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">既読26</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読16</span></span>
+                <span class="shrink-0 text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span>
               </div>
             </li>
             
-            <li data-open-slide="ann-reads" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
+            <li data-open-slide="ann-detail" data-ann="1" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2">
-                    
+
                     <p class="truncate text-sm font-bold text-text">オフィスWiFi更新のお知らせ</p>
                   </div>
                   <div class="mt-0.5 flex flex-col gap-y-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
@@ -2214,45 +2209,35 @@
                     <span class="w-fit shrink-0 rounded bg-info-surface px-1.5 py-0.5 text-[11px] font-bold text-info">毎週 火曜 10:00</span>
                   </div>
                 </div>
-                <div class="flex shrink-0 gap-2">
-                  <button type="button" data-open-slide="ann-form" data-stop class="rounded-full border border-border px-2 py-1 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
-                  <button type="button" data-open-dialog="ann-delete" data-stop class="rounded-full border border-danger-border px-2 py-1 text-xs font-medium text-danger transition-colors hover:bg-danger-surface">削除</button>
-                </div>
               </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
-                    <div class="absolute inset-y-0 left-0 rounded-full bg-success-strong" style="width:100%;"></div>
-                  </div>
-                  <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">全員既読 (42人)</span></span>
+              <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="-mx-2 -mb-1 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-black/[0.08]">
+                <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+                  <div class="absolute inset-y-0 left-0 rounded-full bg-success-strong" style="width:100%;"></div>
                 </div>
+                <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">全員既読 (42人)</span></span>
+                <span class="shrink-0 text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span>
               </div>
             </li>
             
-            <li data-open-slide="ann-reads" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
+            <li data-open-slide="ann-detail" data-ann="2" class="flex cursor-pointer flex-col gap-2 rounded-lg border border-border bg-background-light px-4 py-3 transition-colors hover:border-primary/40">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-2">
-                    
+
                     <p class="truncate text-sm font-bold text-text">健康診断のご案内（秋季）</p>
                   </div>
                   <div class="mt-0.5 flex flex-col gap-y-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
                     <p class="text-xs text-subtle">公開: 2026/9/1 9:00 ～ 2026/10/31 18:00</p>
-                    
+
                   </div>
-                </div>
-                <div class="flex shrink-0 gap-2">
-                  <button type="button" data-open-slide="ann-form" data-stop class="rounded-full border border-border px-2 py-1 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
-                  <button type="button" data-open-dialog="ann-delete" data-stop class="rounded-full border border-danger-border px-2 py-1 text-xs font-medium text-danger transition-colors hover:bg-danger-surface">削除</button>
                 </div>
               </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
-                    <div class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:0%;"></div>
-                  </div>
-                  <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-danger">全員未読 (42人)</span></span>
+              <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="-mx-2 -mb-1 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-black/[0.08]">
+                <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+                  <div class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:0%;"></div>
                 </div>
+                <span class="whitespace-nowrap text-[11px]"><span class="font-medium text-danger">全員未読 (42人)</span></span>
+                <span class="shrink-0 text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span>
               </div>
             </li>
           </ul>
@@ -3186,6 +3171,137 @@ document.addEventListener('click', function(e){
 </script>
 
 
+<div data-slide="ann-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[380px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
+  <div class="flex flex-shrink-0 items-center justify-between border-b border-border px-4 py-3">
+    <div class="min-w-0"><p class="text-sm font-bold text-text">お知らせ詳細</p></div>
+    <button type="button" data-close-slide="ann-detail" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle shrink-0"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+  </div>
+  <div class="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+    <div data-ad="badges" class="flex flex-wrap gap-1.5">
+      <span class="rounded bg-danger-surface px-1.5 py-0.5 text-[11px] font-bold text-danger">重要</span>
+    </div>
+    <p data-ad="title" class="text-[15px] font-bold leading-normal text-text [overflow-wrap:anywhere]">年末年始の休業期間について</p>
+    <div class="flex flex-col gap-0.5">
+      <p data-ad="period" class="text-xs text-subtle">公開期間: 2026/6/29 9:00 ～ 2027/1/5 9:00</p>
+      <p data-ad="banner" class="text-xs text-subtle">バナー表示: ～ 2027/1/5 9:00</p>
+      <p data-ad="push" class="text-xs text-subtle">通知を送る: ON</p>
+    </div>
+    <hr class="border-t border-border">
+    <div data-ad="body" class="text-sm leading-relaxed text-text [overflow-wrap:anywhere] [&_p]:my-2 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0 [&_h4]:mb-1 [&_h4]:mt-3 [&_h4]:text-sm [&_h4]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 [&_a]:text-primary-mid [&_a]:underline"></div>
+    <a data-ad="link" href="#" class="flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid" style="display:none;">リンクを開く</a>
+    <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="flex cursor-pointer flex-col gap-1.5 rounded-lg border border-border bg-background px-3 py-2.5 transition-colors hover:bg-black/[0.08]">
+      <div class="flex items-center justify-between"><span class="text-xs font-semibold text-subtle">既読状況</span><span class="text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span></div>
+      <div class="flex items-center gap-2">
+        <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+          <div data-ad="bar" class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:62%;"></div>
+        </div>
+        <span data-ad="count" class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">既読26</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読16</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="flex shrink-0 justify-end gap-2 border-t border-border bg-background-light px-4 py-3">
+    <button type="button" data-open-dialog="ann-delete" class="mr-auto inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-danger-border bg-danger-surface text-danger h-10 px-5 text-sm">削除</button>
+    <button type="button" data-open-slide="ann-form" class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-border text-subtle hover:bg-black/[0.08] h-10 px-5 text-sm">コピーして作成</button>
+    <button type="button" data-open-slide="ann-form" class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors bg-primary text-white hover:bg-primary-mid h-10 px-5 text-sm">編集</button>
+  </div></div>
+<div data-slide="ann-detail" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
+  <div class="flex flex-shrink-0 items-center justify-between border-b border-border px-4 py-3">
+    <div class="min-w-0"><p class="text-sm font-bold text-text">お知らせ詳細</p></div>
+    <button type="button" data-close-slide="ann-detail" aria-label="閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle shrink-0"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+  </div>
+  <div class="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+    <div data-ad="badges" class="flex flex-wrap gap-1.5">
+      <span class="rounded bg-danger-surface px-1.5 py-0.5 text-[11px] font-bold text-danger">重要</span>
+    </div>
+    <p data-ad="title" class="text-[15px] font-bold leading-normal text-text [overflow-wrap:anywhere]">年末年始の休業期間について</p>
+    <div class="flex flex-col gap-0.5">
+      <p data-ad="period" class="text-xs text-subtle">公開期間: 2026/6/29 9:00 ～ 2027/1/5 9:00</p>
+      <p data-ad="banner" class="text-xs text-subtle">バナー表示: ～ 2027/1/5 9:00</p>
+      <p data-ad="push" class="text-xs text-subtle">通知を送る: ON</p>
+    </div>
+    <hr class="border-t border-border">
+    <div data-ad="body" class="text-sm leading-relaxed text-text [overflow-wrap:anywhere] [&_p]:my-2 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0 [&_h4]:mb-1 [&_h4]:mt-3 [&_h4]:text-sm [&_h4]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 [&_a]:text-primary-mid [&_a]:underline"></div>
+    <a data-ad="link" href="#" class="flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid" style="display:none;">リンクを開く</a>
+    <div data-open-slide="ann-reads" role="button" tabindex="0" aria-label="既読状況を見る" class="flex cursor-pointer flex-col gap-1.5 rounded-lg border border-border bg-background px-3 py-2.5 transition-colors hover:bg-black/[0.08]">
+      <div class="flex items-center justify-between"><span class="text-xs font-semibold text-subtle">既読状況</span><span class="text-subtle-light"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg></span></div>
+      <div class="flex items-center gap-2">
+        <div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-border">
+          <div data-ad="bar" class="absolute inset-y-0 left-0 rounded-full bg-success" style="width:62%;"></div>
+        </div>
+        <span data-ad="count" class="whitespace-nowrap text-[11px]"><span class="font-medium text-success">既読26</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読16</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="flex shrink-0 justify-end gap-2 border-t border-border bg-background-light px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+    <button type="button" data-open-dialog="ann-delete" class="mr-auto inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-danger-border bg-danger-surface text-danger h-12 px-5 text-sm">削除</button>
+    <button type="button" data-open-slide="ann-form" class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors border border-border text-subtle hover:bg-black/[0.08] h-12 px-5 text-sm">コピーして作成</button>
+    <button type="button" data-open-slide="ann-form" class="inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors bg-primary text-white hover:bg-primary-mid h-12 px-5 text-sm">編集</button>
+  </div></div>
+<script>
+// お知らせ詳細パネル: 一覧行（data-ann）に応じて内容を差し替え
+(function(){
+  var ANN_DETAILS = [
+    {
+      badges: '<span class="rounded bg-danger-surface px-1.5 py-0.5 text-[11px] font-bold text-danger">重要</span>',
+      title: '年末年始の休業期間について',
+      period: '公開期間: 2026/6/29 9:00 ～ 2027/1/5 9:00',
+      banner: 'バナー表示: ～ 2027/1/5 9:00',
+      push: '通知を送る: ON',
+      body: '<p>年末年始の休業期間をお知らせします。</p><h4>休業期間</h4><ul><li>2026/12/29（火）～ 2027/1/4（月）</li><li>1/5（火）9:00 から通常営業</li></ul><p>期間中の緊急のご用件は各部署の緊急連絡網をご利用ください。</p>',
+      link: null,
+      pct: 62, full: false,
+      count: '<span class="font-medium text-success">既読26</span><span class="text-subtle"> / </span><span class="font-medium text-danger">未読16</span>'
+    },
+    {
+      badges: '<span class="rounded bg-info-surface px-1.5 py-0.5 text-[11px] font-bold text-info">毎週 火曜 10:00</span>',
+      title: 'オフィスWiFi更新のお知らせ',
+      period: '公開期間: 2026/6/30 10:00 ～（終了なし）',
+      banner: null,
+      push: '通知を送る: ON',
+      body: '<p>オフィスWiFiの機器更新を行います。作業中は数分間接続が切れる場合があります。</p><ul><li>SSID・パスワードは変わりません</li><li>接続できない場合は WiFi を一度オフにして再接続してください</li></ul>',
+      link: '接続手順を見る',
+      pct: 100, full: true,
+      count: '<span class="font-medium text-success">全員既読 (42人)</span>'
+    },
+    {
+      badges: '',
+      title: '健康診断のご案内（秋季）',
+      period: '公開期間: 2026/9/1 9:00 ～ 2026/10/31 18:00',
+      banner: null,
+      push: '通知を送る: OFF',
+      body: '<p>秋季健康診断を実施します。受診日は予約サイトから選択してください。対象は全社員です。</p>',
+      link: null,
+      pct: 0, full: false,
+      count: '<span class="font-medium text-danger">全員未読 (42人)</span>'
+    }
+  ];
+  document.addEventListener('slidewillopen', function(ev){
+    if (ev.detail.id !== 'ann-detail') return;
+    var d = ANN_DETAILS[parseInt(ev.detail.trigger.getAttribute('data-ann'), 10)];
+    if (!d) return;
+    document.querySelectorAll('[data-slide="ann-detail"]').forEach(function(p){
+      var badges = p.querySelector('[data-ad="badges"]');
+      badges.innerHTML = d.badges;
+      badges.style.display = d.badges ? '' : 'none';
+      p.querySelector('[data-ad="title"]').textContent = d.title;
+      p.querySelector('[data-ad="period"]').textContent = d.period;
+      var banner = p.querySelector('[data-ad="banner"]');
+      banner.textContent = d.banner || '';
+      banner.style.display = d.banner ? '' : 'none';
+      p.querySelector('[data-ad="push"]').textContent = d.push;
+      p.querySelector('[data-ad="body"]').innerHTML = d.body;
+      var link = p.querySelector('[data-ad="link"]');
+      link.textContent = d.link || '';
+      link.style.display = d.link ? '' : 'none';
+      var bar = p.querySelector('[data-ad="bar"]');
+      bar.style.width = d.pct + '%';
+      bar.classList.toggle('bg-success-strong', d.full);
+      bar.classList.toggle('bg-success', !d.full);
+      p.querySelector('[data-ad="count"]').innerHTML = d.count;
+    });
+  });
+})();
+</script>
 <div data-overlay="ann-form" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
 <div data-slide="ann-form" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[380px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
   <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-4">
