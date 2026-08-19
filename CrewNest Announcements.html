@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — お知らせ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --sidebar-w: 280px; --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  .mask { display:block; background-color: currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+  [data-panel]:not(.active) { display: none !important; }
+  .tab-btn { position:relative; display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; border-bottom:2px solid transparent; color: var(--color-subtle); transition: color .15s, border-color .15s; cursor:pointer; background:none; }
+  .tab-btn:hover { border-color: var(--color-border); color:#333; }
+  .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
+  .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .tab-btn.is-active > span.rounded-full { background-color: #EEF3FF !important; color: #042154 !important; font-weight: 500; }
+
+  .ring-gauge { border-radius:9999px; display:inline-block; }
+  .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.5rem; cursor:pointer; border-right:3px solid transparent; }
+  .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); }
+</style>
+<link rel="stylesheet" href="demo-watermark.css">
+<script src="demo-banner.js"></script>
+</head>
+<body>
+
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/icons/megaphone.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">お知らせ</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </button>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <button type="button" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </button>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      
+      <a href="CrewNest Home.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+        
+      </a>
+      <div>
+        
+      <a href="CrewNest Quests.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+        <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[0fr]" style="overflow:hidden;">
+          <div class="min-h-0 overflow-hidden">
+            
+        <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
+          
+          <a href="CrewNest My Achievements.html" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">承認状況</span>
+            <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+          </a>
+          <a href="CrewNest Quests.html" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">クエストボード</span>
+            
+          </a>
+          <a href="CrewNest Quests.html#ranking" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">ランキング</span>
+            
+          </a>
+        </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="CrewNest Proposals.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+        
+      </a>
+      
+      <a href="CrewNest Announcements.html" aria-current="page" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
+        <img src="public/icons/megaphone.png" alt="" class="nav-ico"><span class="truncate">お知らせ</span>
+      </a>
+      <a href="CrewNest Documents.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      
+      <a href="CrewNest Expense Claims.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+        
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+      
+      <a href="CrewNest Admin.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+        
+      </a>
+    </div>
+  </nav>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+
+    <div class="flex min-h-0 flex-col">
+      <div class="hidden items-center justify-between md:mb-4 md:flex">
+        <h1 class="flex items-center gap-3 text-2xl font-bold text-text"><img src="public/icons/megaphone.png" class="h-7 w-7" alt="">お知らせ</h1>
+        <button type="button" data-open-slide="announcement-form" class="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">投稿する</button>
+      </div>
+      <div data-tour="tabs" class="flex gap-1 border-b border-border">
+        <button type="button" data-tabgroup="primary" data-tabkey="list" class="tab-btn tab-btn-primary is-active">お知らせ</button>
+        <button type="button" data-tabgroup="primary" data-tabkey="mine" class="tab-btn tab-btn-primary">自分の投稿<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button>
+      </div>
+      <div data-panel="list" class="active mt-2">
+        <div class="mx-auto mt-2 flex max-w-2xl flex-col gap-3">
+          <div class="rounded-lg border border-warning-border bg-background-light p-4 shadow-sm">
+            <div class="mb-1.5"><span class="rounded-full bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">重要</span></div>
+            <p class="mb-1 text-base font-semibold text-text">台風接近に伴う明日の出社について</p>
+            <p class="mb-2 whitespace-pre-wrap text-sm leading-relaxed text-text">台風12号の接近に伴い、明日 8/20（木）は原則在宅勤務とします。やむを得ず出社する場合は、事前に上長へ連絡してください。</p>
+            <p class="text-xs text-subtle">3時間前</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+            <p class="mb-1 text-base font-semibold text-text">社内勉強会「生成AI活用術」開催のお知らせ</p>
+            <p class="mb-2 whitespace-pre-wrap text-sm leading-relaxed text-text">9月5日（金）17:00 より会議室Aにて社内勉強会を開催します。オンライン参加も可能です。</p>
+            <a href="#" class="mb-2 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">参加登録フォーム</a>
+            <p class="text-xs text-subtle">昨日</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-4 opacity-60 shadow-sm">
+            <p class="mb-1 text-base font-semibold text-text">駐車場利用ルールの変更</p>
+            <p class="mb-2 whitespace-pre-wrap text-sm leading-relaxed text-text">9月より来客用スペースが第2駐車場へ移動します。社用車の駐車位置に変更はありません。</p>
+            <div class="flex items-center justify-between"><p class="text-xs text-subtle">3日前</p><span class="text-xs text-subtle">既読</span></div>
+          </div>
+        </div>
+      </div>
+      <div data-panel="mine" class="mt-2"><div class="flex items-center gap-1 overflow-x-auto"><button type="button" data-secstatus="ALL" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-secstatus="ACTIVE" class="tab-btn tab-btn-secondary">公開中</button><button type="button" data-secstatus="SCHEDULED" class="tab-btn tab-btn-secondary">公開予定</button><button type="button" data-secstatus="ENDED" class="tab-btn tab-btn-secondary">掲載終了</button></div><div class="mt-3 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
+        <div data-open-slide="announcement-detail" data-item data-status="ACTIVE" role="button" tabindex="0"
+             data-a-title="社内勉強会「生成AI活用術」開催のお知らせ" data-a-status="公開中" data-a-badge="active" data-a-important=""
+             data-a-period="2026/08/18 09:00 〜 無期限" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="12" data-a-unread="6"
+             data-a-body="9月5日（金）17:00 より会議室Aにて社内勉強会を開催します。オンライン参加も可能です。&#10;&#10;参加登録は添付のフォームからお願いします。"
+             class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">公開中</span></div>
+          <div class="mb-2"><p class="min-w-0 text-base font-semibold text-text">社内勉強会「生成AI活用術」開催のお知らせ</p></div>
+          <p class="mb-2 text-sm text-subtle">2026/08/18 09:00 〜 無期限</p>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-surface"><div class="h-full rounded-full bg-success-strong" style="width:67%"></div></div>
+            <span class="shrink-0 text-xs text-subtle">既読 12 / 未読 6</span>
+          </div>
+        </div>
+        <div data-open-slide="announcement-detail" data-item data-status="SCHEDULED" role="button" tabindex="0"
+             data-a-title="9月の防災訓練の実施について" data-a-status="公開予定" data-a-badge="scheduled" data-a-important="1"
+             data-a-period="2026/09/01 09:00 〜 2026/09/12 18:00" data-a-notify="通知: 公開時に送信" data-a-read="" data-a-unread=""
+             data-a-body="9月の防災訓練を 9/10（木）14:00 から実施します。当日は避難経路の確認と安否確認アプリの応答訓練を行います。"
+             class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-info-border bg-info-surface px-2.5 py-0.5 text-xs font-semibold text-info">公開予定</span><span class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">重要</span></div>
+          <div class="mb-2"><p class="min-w-0 text-base font-semibold text-text">9月の防災訓練の実施について</p></div>
+          <p class="mb-2 text-sm text-subtle">2026/09/01 09:00 〜 2026/09/12 18:00</p>
+          <p class="text-xs text-subtle">公開前のため既読情報はありません</p>
+        </div>
+        <div data-open-slide="announcement-detail" data-item data-status="ENDED" role="button" tabindex="0"
+             data-a-title="夏季休暇の申請期限について" data-a-status="掲載終了" data-a-badge="ended" data-a-important=""
+             data-a-period="2026/07/01 09:00 〜 2026/07/31 18:00" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="18" data-a-unread="0"
+             data-a-body="夏季休暇の申請は 7月31日までに人事システムから行ってください。期限を過ぎた場合は上長へ相談してください。"
+             class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-neutral-border bg-neutral-surface px-2.5 py-0.5 text-xs font-semibold text-subtle">掲載終了</span></div>
+          <div class="mb-2"><p class="min-w-0 text-base font-semibold text-text">夏季休暇の申請期限について</p></div>
+          <p class="mb-2 text-sm text-subtle">2026/07/01 09:00 〜 2026/07/31 18:00</p>
+          <div class="flex items-center gap-2">
+            <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-surface"><div class="h-full rounded-full bg-success-strong" style="width:100%"></div></div>
+            <span class="shrink-0 text-xs text-subtle">既読 18 / 未読 0</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </main>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  
+  <a href="CrewNest Home.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+    
+  </a>
+  <a href="CrewNest Quests.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-subtle">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+    
+  </a>
+  <a href="CrewNest Announcements.html" aria-current="page" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-primary">
+    <img src="public/icons/megaphone.png" alt="" style="width:24px;height:24px;object-fit:contain;">
+    <span class="whitespace-nowrap">お知らせ</span>
+  </a>
+  <a href="CrewNest Documents.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-subtle">
+    <img src="public/icons/airplane.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">書類提出</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </a>
+  <a href="CrewNest Expense Claims.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-subtle">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">経費精算</span>
+    
+  </a>
+
+  <a href="CrewNest Admin.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] text-subtle">
+    <img src="public/icons/management.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">管理</span>
+  </a>
+</nav>
+<script>
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-tabgroup]');
+  if (!b) return;
+  var group = b.getAttribute('data-tabgroup');
+  if (group === 'primary') {
+    document.querySelectorAll('[data-tabgroup="primary"]').forEach(function(x){ x.classList.remove('is-active'); });
+    b.classList.add('is-active');
+    var key = b.getAttribute('data-tabkey');
+    document.querySelectorAll('[data-panel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-panel') === key); });
+    return;
+  }
+  var panel = b.closest('[data-panel]') || document;
+  panel.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(x){ x.classList.remove('is-active'); });
+  b.classList.add('is-active');
+  var skey = b.getAttribute('data-tabkey');
+  panel.querySelectorAll('[data-item]').forEach(function(item){
+    var st = item.getAttribute('data-status');
+    item.style.display = (skey === 'ALL' || st === skey) ? '' : 'none';
+  });
+});
+</script>
+<script>
+document.addEventListener('click', function(e){
+  var sBtn = e.target.closest('[data-secstatus]');
+  if (sBtn) {
+    var panel = sBtn.closest('[data-panel]');
+    panel.querySelectorAll('[data-secstatus]').forEach(function(x){ x.classList.remove('is-active'); });
+    sBtn.classList.add('is-active');
+    var k = sBtn.getAttribute('data-secstatus');
+    panel.querySelectorAll('[data-item]').forEach(function(it){
+      it.style.display = (k === 'ALL' || it.getAttribute('data-status') === k) ? '' : 'none';
+    });
+    return;
+  }
+  var cBtn = e.target.closest('[data-seccat]');
+  if (cBtn) {
+    var panel2 = cBtn.closest('[data-panel]');
+    panel2.querySelectorAll('[data-seccat]').forEach(function(x){ x.classList.remove('is-active'); });
+    cBtn.classList.add('is-active');
+    var hex = cBtn.getAttribute('data-seccat');
+    panel2.querySelectorAll('[data-item]').forEach(function(it){
+      it.style.display = (!hex || (it.getAttribute('style') || '').indexOf(hex) !== -1) ? '' : 'none';
+    });
+    return;
+  }
+  var sortBtn = e.target.closest('[data-sort-btn]');
+  if (sortBtn) {
+    var menu = sortBtn.parentElement.querySelector('[data-sort-menu]');
+    var open = menu.style.display !== 'none';
+    document.querySelectorAll('[data-sort-menu]').forEach(function(m){ m.style.display = 'none'; });
+    menu.style.display = open ? 'none' : '';
+    return;
+  }
+  if (!e.target.closest('[data-sort-wrap]')) {
+    document.querySelectorAll('[data-sort-menu]').forEach(function(m){ m.style.display = 'none'; });
+  }
+});
+</script>
+<div data-slide="announcement-detail" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="お知らせ詳細">
+  <div class="flex shrink-0 items-center justify-end gap-1 px-4 pt-3"><button type="button" data-close-slide="announcement-detail" aria-label="詳細パネルを閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button></div>
+  <div class="flex-1 overflow-y-auto px-5 pb-4 pt-3">
+      <div class="mb-4">
+        <div class="mb-2 flex flex-wrap items-center gap-1.5">
+          <span data-f="a-status" class="rounded-full px-2.5 py-0.5 text-xs font-semibold"></span>
+          <span data-f="a-important" style="display:none;" class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">重要</span>
+        </div>
+        <h2 data-f="a-title" class="mb-1 text-xl font-bold leading-snug text-text"></h2>
+        <div class="flex flex-col gap-0.5 text-sm text-subtle">
+          <span>公開期間: <span data-f="a-period"></span></span>
+          <span data-f="a-notify"></span>
+        </div>
+      </div>
+      <hr class="border-border mb-4">
+      <div class="mb-4">
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
+        <div data-f="a-body" class="whitespace-pre-wrap rounded-lg bg-background px-3 py-2.5 text-sm leading-relaxed text-text"></div>
+      </div>
+      <div class="mb-4" data-f="a-readswrap">
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">既読状況</p>
+        <button type="button" data-open-slide="announcement-reads" class="w-full rounded-lg border border-border bg-background-light p-3 text-left transition-colors hover:bg-background">
+          <div class="mb-1.5 flex items-center justify-between text-sm"><span class="text-text" data-f="a-reads"></span><span class="text-xs font-medium text-primary">一覧を見る</span></div>
+          <div class="h-1.5 overflow-hidden rounded-full bg-neutral-surface"><div data-f="a-readsbar" class="h-full rounded-full bg-success-strong" style="width:0%"></div></div>
+        </button>
+      </div></div>
+  <div class="flex shrink-0 gap-3 border-t border-border bg-background-light px-5 py-3">
+    <button type="button" class="h-12 flex-1 rounded-full bg-danger-surface text-sm font-medium text-danger transition-opacity hover:opacity-80 md:h-10">削除</button>
+    <button type="button" data-open-slide="announcement-form" class="h-12 flex-1 rounded-full bg-primary text-sm font-medium text-white transition-colors hover:bg-primary-mid md:h-10">編集</button>
+  </div>
+</div>
+<div data-slide="announcement-detail" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="お知らせ詳細">
+  <div class="flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
+    <button type="button" data-close-slide="announcement-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>自分の投稿</button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-5 pb-4 pt-3">
+      <div class="mb-4">
+        <div class="mb-2 flex flex-wrap items-center gap-1.5">
+          <span data-f="a-status" class="rounded-full px-2.5 py-0.5 text-xs font-semibold"></span>
+          <span data-f="a-important" style="display:none;" class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">重要</span>
+        </div>
+        <h2 data-f="a-title" class="mb-1 text-xl font-bold leading-snug text-text"></h2>
+        <div class="flex flex-col gap-0.5 text-sm text-subtle">
+          <span>公開期間: <span data-f="a-period"></span></span>
+          <span data-f="a-notify"></span>
+        </div>
+      </div>
+      <hr class="border-border mb-4">
+      <div class="mb-4">
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
+        <div data-f="a-body" class="whitespace-pre-wrap rounded-lg bg-background px-3 py-2.5 text-sm leading-relaxed text-text"></div>
+      </div>
+      <div class="mb-4" data-f="a-readswrap">
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">既読状況</p>
+        <button type="button" data-open-slide="announcement-reads" class="w-full rounded-lg border border-border bg-background-light p-3 text-left transition-colors hover:bg-background">
+          <div class="mb-1.5 flex items-center justify-between text-sm"><span class="text-text" data-f="a-reads"></span><span class="text-xs font-medium text-primary">一覧を見る</span></div>
+          <div class="h-1.5 overflow-hidden rounded-full bg-neutral-surface"><div data-f="a-readsbar" class="h-full rounded-full bg-success-strong" style="width:0%"></div></div>
+        </button>
+      </div></div>
+  <div class="flex shrink-0 gap-3 border-t border-border bg-background-light px-5 py-3">
+    <button type="button" class="h-12 flex-1 rounded-full bg-danger-surface text-sm font-medium text-danger transition-opacity hover:opacity-80 md:h-10">削除</button>
+    <button type="button" data-open-slide="announcement-form" class="h-12 flex-1 rounded-full bg-primary text-sm font-medium text-white transition-colors hover:bg-primary-mid md:h-10">編集</button>
+  </div>
+</div>
+<div data-slide="announcement-reads" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[96] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="既読状況">
+  <div class="flex shrink-0 items-center justify-between px-4 pb-1 pt-3">
+    <h2 class="text-base font-bold text-text">既読状況</h2>
+    <button type="button" data-close-slide="announcement-reads" aria-label="既読状況を閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+  </div>
+  <div class="flex shrink-0 gap-1 border-b border-border px-4">
+    <button type="button" data-readstab="read" class="tab-btn tab-btn-secondary is-active">既読 <span data-f="a-readcount"></span></button>
+    <button type="button" data-readstab="unread" class="tab-btn tab-btn-secondary">未読 <span data-f="a-unreadcount"></span></button>
+  </div>
+  <div class="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+    <div data-readslist="read">
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">佐</div><span class="min-w-0 flex-1 truncate text-sm text-text">佐藤 花子</span><span class="shrink-0 text-xs text-subtle">8/18 09:12</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">鈴</div><span class="min-w-0 flex-1 truncate text-sm text-text">鈴木 一郎</span><span class="shrink-0 text-xs text-subtle">8/18 09:30</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">高</div><span class="min-w-0 flex-1 truncate text-sm text-text">高橋 美咲</span><span class="shrink-0 text-xs text-subtle">8/18 10:02</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">伊</div><span class="min-w-0 flex-1 truncate text-sm text-text">伊藤 健太</span><span class="shrink-0 text-xs text-subtle">8/18 12:44</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">渡</div><span class="min-w-0 flex-1 truncate text-sm text-text">渡辺 さゆり</span><span class="shrink-0 text-xs text-subtle">8/19 08:15</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山本 大輔</span><span class="shrink-0 text-xs text-subtle">8/19 11:03</span></div>
+    </div>
+    <div data-readslist="unread" style="display:none;">
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">中</div><span class="min-w-0 flex-1 truncate text-sm text-text">中村 陽菜</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">小</div><span class="min-w-0 flex-1 truncate text-sm text-text">小林 翔</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">加</div><span class="min-w-0 flex-1 truncate text-sm text-text">加藤 結衣</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">吉</div><span class="min-w-0 flex-1 truncate text-sm text-text">吉田 蓮</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山田 芽依</span></div>
+    </div>
+  </div>
+</div>
+<div data-slide="announcement-reads" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[96] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="既読状況">
+  <div class="flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
+    <button type="button" data-close-slide="announcement-reads" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>詳細に戻る</button>
+  </div>
+  <div class="flex shrink-0 gap-1 border-b border-border px-4">
+    <button type="button" data-readstab="read" class="tab-btn tab-btn-secondary is-active">既読 <span data-f="a-readcount"></span></button>
+    <button type="button" data-readstab="unread" class="tab-btn tab-btn-secondary">未読 <span data-f="a-unreadcount"></span></button>
+  </div>
+  <div class="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+    <div data-readslist="read">
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">佐</div><span class="min-w-0 flex-1 truncate text-sm text-text">佐藤 花子</span><span class="shrink-0 text-xs text-subtle">8/18 09:12</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">鈴</div><span class="min-w-0 flex-1 truncate text-sm text-text">鈴木 一郎</span><span class="shrink-0 text-xs text-subtle">8/18 09:30</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">高</div><span class="min-w-0 flex-1 truncate text-sm text-text">高橋 美咲</span><span class="shrink-0 text-xs text-subtle">8/18 10:02</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">伊</div><span class="min-w-0 flex-1 truncate text-sm text-text">伊藤 健太</span><span class="shrink-0 text-xs text-subtle">8/18 12:44</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">渡</div><span class="min-w-0 flex-1 truncate text-sm text-text">渡辺 さゆり</span><span class="shrink-0 text-xs text-subtle">8/19 08:15</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山本 大輔</span><span class="shrink-0 text-xs text-subtle">8/19 11:03</span></div>
+    </div>
+    <div data-readslist="unread" style="display:none;">
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">中</div><span class="min-w-0 flex-1 truncate text-sm text-text">中村 陽菜</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">小</div><span class="min-w-0 flex-1 truncate text-sm text-text">小林 翔</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">加</div><span class="min-w-0 flex-1 truncate text-sm text-text">加藤 結衣</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">吉</div><span class="min-w-0 flex-1 truncate text-sm text-text">吉田 蓮</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山田 芽依</span></div>
+    </div>
+  </div>
+</div>
+<div data-slide="announcement-form" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="お知らせ投稿フォーム">
+  <div class="flex shrink-0 items-center justify-between border-b border-border px-4 pb-2 pt-3">
+    <h2 class="text-base font-bold text-text">お知らせを投稿する</h2>
+    <button type="button" data-close-slide="announcement-form" aria-label="フォームを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-5 py-4">
+    <div class="flex flex-col gap-4">
+      <div>
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">タイトル</p>
+        <input type="text" maxlength="100" placeholder="お知らせのタイトル" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+      </div>
+      <div>
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
+        <div data-mdgroup="proposal-body" class="flex flex-col">
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1" role="tablist">
+              <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+              <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+            </div>
+            <p class="text-[11px] text-subtle-light">0/9999</p>
+          </div>
+          <div data-mdpanel="write" class="mt-1">
+            <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+              <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+              <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+              <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+              <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+              <button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+            </div>
+            <textarea maxlength="9999" rows="8" placeholder="本文を入力してください（マークダウン対応）" class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] min-h-[14rem] max-h-[40vh]"></textarea>
+          </div>
+          <div data-mdpanel="preview" class="mt-1 hidden min-h-[14rem] max-h-[40vh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5">
+            <p>9月5日（金）17:00 より会議室Aにて<strong>社内勉強会</strong>を開催します。</p>
+            <ul><li>テーマ: 生成AI活用術</li><li>オンライン参加も可能です</li></ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button type="button" class="text-xs font-medium text-primary hover:underline">＋ リンクを追加</button>
+      </div>
+      <div>
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">公開開始日時</p>
+        <input type="text" value="2026/08/19 17:00" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <p class="text-sm text-text">公開終了日時を設定</p>
+        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">繰り返し再掲載</p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
+        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">重要（バナー表示）</p><p class="text-xs text-subtle">ホームのバナーに表示します</p></div>
+        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">通知を送る</p><p class="text-xs text-subtle">Push・メール通知を送信します</p></div>
+        <button type="button" data-switch aria-checked="true" class="relative h-6 w-10 shrink-0 rounded-full bg-primary transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform" style="transform:translateX(16px);"></span></button>
+      </div>
+    </div></div>
+  <div class="shrink-0 border-t border-border bg-background-light px-5 py-3"><button type="button" data-close-slide="announcement-form" class="w-full rounded-full bg-primary py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid disabled:opacity-[0.38]">投稿する</button></div>
+</div>
+<div data-overlay="announcement-form" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
+<div data-slide="announcement-form" data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex max-h-[85vh] flex-col rounded-t-2xl bg-background-light shadow-md transition-transform duration-300" style="transform:translateY(100%);">
+  <div aria-hidden="true" class="mx-auto mb-1 mt-3 h-1.5 w-12 shrink-0 rounded-full bg-border"></div>
+  <div class="flex shrink-0 items-center justify-between border-b border-border px-4 pb-2 pt-3">
+    <h2 class="text-base font-bold text-text">お知らせを投稿する</h2>
+    <button type="button" data-close-slide="announcement-form" aria-label="フォームを閉じる" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-5 py-4">
+    <div class="flex flex-col gap-4">
+      <div>
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">タイトル</p>
+        <input type="text" maxlength="100" placeholder="お知らせのタイトル" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+      </div>
+      <div>
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
+        <div data-mdgroup="proposal-body-m" class="flex flex-col">
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1" role="tablist">
+              <button type="button" data-mdtab="write" class="border-b-2 border-primary px-3 py-2 text-xs font-semibold text-primary">Write</button>
+              <button type="button" data-mdtab="preview" class="border-b-2 border-transparent px-3 py-2 text-xs text-subtle transition-colors hover:border-border hover:text-text">Preview</button>
+            </div>
+            <p class="text-[11px] text-subtle-light">0/9999</p>
+          </div>
+          <div data-mdpanel="write" class="mt-1">
+            <div class="flex flex-nowrap items-center gap-0.5 overflow-x-auto rounded-t-lg border border-b-0 border-border bg-background px-2 py-1">
+              <button type="button" aria-label="太字" title="太字" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M272-200v-560h221q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H272Zm121-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z"></path></svg></button>
+              <button type="button" aria-label="斜体" title="斜体" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M200-200v-100h160l120-360H320v-100h400v100H580L460-300h140v100H200Z"></path></svg></button>
+              <button type="button" aria-label="取り消し線" title="取り消し線" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="見出し" title="見出し" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-280v-400h80v160h160v-160h80v400h-80v-160H200v160h-80Zm400 0v-160q0-33 23.5-56.5T600-520h160v-80H520v-80h240q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h240v80H520Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="箇条書き" title="箇条書き" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"></path></svg></button>
+              <button type="button" aria-label="番号付きリスト" title="番号付きリスト" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M120-80v-60h100v-30h-60v-60h60v-30H120v-60h120q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80H120Zm0-280v-110q0-17 11.5-28.5T160-510h60v-30H120v-60h120q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h100v60H120Zm60-280v-180h-60v-60h120v240h-60Zm180 440v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360Z"></path></svg></button>
+              <span aria-hidden="true" class="mx-1 h-4 w-px bg-border"></span>
+              <button type="button" aria-label="引用" title="引用" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m228-240 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L320-240h-92Zm360 0 92-160q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L680-240h-92ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z"></path></svg></button>
+              <button type="button" aria-label="リンク" title="リンク" class="flex h-7 min-w-7 items-center justify-center rounded px-1 text-subtle transition-colors hover:bg-border hover:text-text"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M680-160v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm560-40h-80q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480Z"></path></svg></button>
+            </div>
+            <textarea maxlength="9999" rows="8" placeholder="本文を入力してください（マークダウン対応）" class="w-full min-w-0 max-w-full resize-none overflow-y-auto rounded-b-lg border border-border bg-background-light px-3 py-2 text-sm leading-relaxed text-text focus:outline-none focus:ring-2 focus:ring-primary/50 [field-sizing:content] min-h-[14rem] max-h-[40vh]"></textarea>
+          </div>
+          <div data-mdpanel="preview" class="mt-1 hidden min-h-[14rem] max-h-[40vh] overflow-y-auto rounded-lg border border-border px-3.5 py-2.5 text-sm leading-relaxed text-text [&_p]:my-2 [&_strong]:font-bold [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5">
+            <p>9月5日（金）17:00 より会議室Aにて<strong>社内勉強会</strong>を開催します。</p>
+            <ul><li>テーマ: 生成AI活用術</li><li>オンライン参加も可能です</li></ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button type="button" class="text-xs font-medium text-primary hover:underline">＋ リンクを追加</button>
+      </div>
+      <div>
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">公開開始日時</p>
+        <input type="text" value="2026/08/19 17:00" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <p class="text-sm text-text">公開終了日時を設定</p>
+        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">繰り返し再掲載</p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
+        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">重要（バナー表示）</p><p class="text-xs text-subtle">ホームのバナーに表示します</p></div>
+        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">通知を送る</p><p class="text-xs text-subtle">Push・メール通知を送信します</p></div>
+        <button type="button" data-switch aria-checked="true" class="relative h-6 w-10 shrink-0 rounded-full bg-primary transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform" style="transform:translateX(16px);"></span></button>
+      </div>
+    </div></div>
+  <div class="shrink-0 border-t border-border bg-background-light px-5 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]"><button type="button" data-close-slide="announcement-form" class="w-full rounded-full bg-primary py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid disabled:opacity-[0.38]">投稿する</button></div>
+</div>
+<!-- モバイル FAB -->
+<button type="button" data-open-slide="announcement-form" aria-label="投稿する" class="fixed bottom-[calc(var(--bottom-nav-h)+1rem)] right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md md:hidden"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg></button>
+<script src="slide-panels.js"></script>
+<script src="confirm-dialog.js"></script>
+<script src="user-menu.js"></script>
+<script>
+// マークダウンエディタ共通: Write/Preview タブ（提案内容欄）
+document.addEventListener('click', function(e){
+  var mdt = e.target.closest('[data-mdtab]');
+  if (!mdt) return;
+  var mdkey = mdt.getAttribute('data-mdtab');
+  var mdgroup = mdt.closest('[data-mdgroup]');
+  if (!mdgroup) return;
+  mdgroup.querySelectorAll('[data-mdtab]').forEach(function(b){
+    var act = b.getAttribute('data-mdtab') === mdkey;
+    b.classList.toggle('border-primary', act); b.classList.toggle('font-semibold', act); b.classList.toggle('text-primary', act);
+    b.classList.toggle('border-transparent', !act); b.classList.toggle('text-subtle', !act);
+  });
+  mdgroup.querySelectorAll('[data-mdpanel]').forEach(function(p){
+    p.classList.toggle('hidden', p.getAttribute('data-mdpanel') !== mdkey);
+  });
+});
+</script>
+<script>
+var A_BADGE = {
+  active: 'rounded-full px-2.5 py-0.5 text-xs font-semibold border border-success-border bg-success-surface text-success',
+  scheduled: 'rounded-full px-2.5 py-0.5 text-xs font-semibold border border-info-border bg-info-surface text-info',
+  ended: 'rounded-full px-2.5 py-0.5 text-xs font-semibold border border-neutral-border bg-neutral-surface text-subtle'
+};
+document.addEventListener('slidewillopen', function(ev){
+  if (ev.detail.id !== 'announcement-detail') return;
+  var c = ev.detail.trigger;
+  if (!c.hasAttribute('data-a-title')) return;
+  function all(sel){ return document.querySelectorAll('[data-slide="announcement-detail"] ' + sel); }
+  function g(a){ return c.getAttribute(a) || ''; }
+  all('[data-f="a-status"]').forEach(function(n){ n.textContent = g('data-a-status'); n.className = A_BADGE[g('data-a-badge')] || A_BADGE.active; });
+  all('[data-f="a-important"]').forEach(function(n){ n.style.display = g('data-a-important') ? '' : 'none'; });
+  all('[data-f="a-title"]').forEach(function(n){ n.textContent = g('data-a-title'); });
+  all('[data-f="a-period"]').forEach(function(n){ n.textContent = g('data-a-period'); });
+  all('[data-f="a-notify"]').forEach(function(n){ n.textContent = g('data-a-notify'); });
+  all('[data-f="a-body"]').forEach(function(n){ n.textContent = g('data-a-body'); });
+  var r = parseInt(g('data-a-read'), 10), u = parseInt(g('data-a-unread'), 10);
+  var has = !isNaN(r) && !isNaN(u);
+  all('[data-f="a-readswrap"]').forEach(function(n){ n.style.display = has ? '' : 'none'; });
+  if (has) {
+    var pct = (r + u) > 0 ? Math.round(r / (r + u) * 100) : 0;
+    all('[data-f="a-reads"]').forEach(function(n){ n.textContent = '既読 ' + r + ' / 未読 ' + u; });
+    all('[data-f="a-readsbar"]').forEach(function(n){ n.style.width = pct + '%'; });
+    document.querySelectorAll('[data-f="a-readcount"]').forEach(function(n){ n.textContent = r; });
+    document.querySelectorAll('[data-f="a-unreadcount"]').forEach(function(n){ n.textContent = u; });
+  }
+});
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-readstab]');
+  if (t) {
+    var k = t.getAttribute('data-readstab');
+    document.querySelectorAll('[data-readstab]').forEach(function(x){ x.classList.toggle('is-active', x.getAttribute('data-readstab') === k); });
+    document.querySelectorAll('[data-readslist]').forEach(function(l){ l.style.display = l.getAttribute('data-readslist') === k ? '' : 'none'; });
+    return;
+  }
+  var s = e.target.closest('[data-switch]');
+  if (s) {
+    var on = s.getAttribute('aria-checked') === 'true';
+    s.setAttribute('aria-checked', on ? 'false' : 'true');
+    s.classList.toggle('bg-primary', !on);
+    s.classList.toggle('bg-border', on);
+    var knob = s.firstElementChild;
+    if (knob) knob.style.transform = on ? '' : 'translateX(16px)';
+  }
+});
+</script>
+<script src="tour.js"></script>
+<script>
+function cnTab(k){ return function(){ var b = document.querySelector('[data-tabgroup="primary"][data-tabkey="' + k + '"]'); if (b) b.click(); }; }
+CNTour.define('announcements', [
+  { title: 'お知らせ', body: '全社に共有されたお知らせを確認できます。誰でも投稿できます。' },
+  { target: '[data-tour="tabs"]', title: 'タブの切り替え', body: '「お知らせ」「自分の投稿」を切り替えて閲覧できます。' },
+  { before: cnTab('list'), target: '[data-open-slide="announcement-form"], [aria-label="投稿する"]', title: 'お知らせを投稿', body: 'このボタンから新しいお知らせを投稿できます。' },
+  { before: cnTab('mine'), target: '[data-panel="mine"] [data-item]', title: '自分の投稿', body: 'タップすると詳細が開き、編集・削除や既読状況を確認できます。' }
+], { onClose: cnTab('list') });
+</script>
+</body>
+</html>
