@@ -270,10 +270,13 @@
       /* ボディ */
       '<div class="flex flex-1 overflow-hidden">' +
       /* モバイル: メニューリスト */
-      '<div data-settings-mobile-list class="flex flex-1 flex-col overflow-y-auto md:hidden">' +
-      '<button type="button" data-settings-tab-btn="user" class="flex items-center justify-between border-b border-border px-6 py-4 text-sm text-subtle transition-colors hover:bg-background"><span class="flex items-center gap-2.5 text-text">' + icon('person', 16) + 'ユーザー設定</span><span aria-hidden="true">&gt;</span></button>' +
-      '<button type="button" data-settings-tab-btn="notification" class="flex items-center justify-between border-b border-border px-6 py-4 text-sm text-subtle transition-colors hover:bg-background"><span class="flex items-center gap-2.5 text-text">' + icon('notifications', 16) + '通知</span><span aria-hidden="true">&gt;</span></button>' +
-      '<button type="button" data-settings-tab-btn="calendar" class="flex items-center justify-between border-b border-border px-6 py-4 text-sm text-subtle transition-colors hover:bg-background"><span class="flex items-center gap-2.5 text-text">' + icon24('calendar_today', 16) + 'カレンダー</span><span aria-hidden="true">&gt;</span></button>' +
+      '<div data-settings-mobile-list class="flex flex-1 flex-col overflow-y-auto bg-background px-4 pt-2 md:hidden">' +
+      '<span class="mb-1.5 mt-2 block text-[10.5px] font-semibold tracking-wide text-subtle">一般</span>' +
+      '<div class="divide-y divide-border rounded-lg border border-border bg-background-light shadow-sm">' +
+      '<button type="button" data-settings-tab-btn="user" class="flex w-full items-center gap-3 rounded-t-lg px-4 py-3.5 text-left transition-colors hover:bg-background"><span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">' + icon('person', 20, 'text-primary') + '</span><span class="min-w-0 flex-1 text-sm font-semibold text-text">ユーザー設定</span>' + icon24('chevron_right', 16, 'shrink-0 text-subtle-light') + '</button>' +
+      '<button type="button" data-settings-tab-btn="notification" class="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-background"><span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">' + icon('notifications', 20, 'text-primary') + '</span><span class="min-w-0 flex-1 text-sm font-semibold text-text">通知</span>' + icon24('chevron_right', 16, 'shrink-0 text-subtle-light') + '</button>' +
+      '<button type="button" data-settings-tab-btn="calendar" class="flex w-full items-center gap-3 rounded-b-lg px-4 py-3.5 text-left transition-colors hover:bg-background"><span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">' + icon24('calendar_today', 20, 'text-primary') + '</span><span class="min-w-0 flex-1 text-sm font-semibold text-text">カレンダー</span>' + icon24('chevron_right', 16, 'shrink-0 text-subtle-light') + '</button>' +
+      '</div>' +
       '</div>' +
       /* デスクトップ: 左タブレール */
       '<div role="tablist" aria-label="設定タブ" aria-orientation="vertical" class="hidden md:flex md:w-44 md:flex-shrink-0 md:flex-col gap-1 rounded-bl-[20px] border-r border-border bg-background p-3">' +

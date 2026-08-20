@@ -157,80 +157,78 @@
       </nav>
 
       <!-- モバイル: 管理トップ（セクション一覧メニュー / admin・page.tsx 準拠） -->
-      <div data-admin-mobile-menu class="w-full px-4 pb-14 md:hidden">
+      <div data-admin-mobile-menu class="w-full px-4 pb-14 pt-1 md:hidden">
         <h1 class="sr-only">管理</h1>
-        <a href="#quests" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">クエスト</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#ideas" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">アイデア</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#users" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">ユーザー</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#announcements" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">お知らせ</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#documents" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">書類</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#safety" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">安否確認</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#expenses" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">経費精算</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
-        <a href="#system" class="block">
-          <div class="relative mb-2 rounded-lg border border-border bg-background-light px-3 py-3 pl-4">
-            <div class="absolute bottom-2.5 left-0 top-2.5 w-[3px] rounded-full bg-border"></div>
-            <div class="flex items-center justify-between">
-              <p class="text-[13px] font-bold text-primary">システム設定</p>
-              <span class="text-[13px] font-semibold text-border">›</span>
-            </div>
-          </div>
-        </a>
+
+        <span class="mb-1.5 mt-2 block text-[10.5px] font-semibold tracking-wide text-subtle">コンテンツ管理</span>
+        <div class="divide-y divide-border rounded-lg border border-border bg-background-light shadow-sm">
+          <a href="#quests" class="flex items-center gap-3 rounded-t-lg px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <span style="display:block;width:20px;height:20px;background-color:var(--color-primary);-webkit-mask-image:url('public/icons/quest.png');mask-image:url('public/icons/quest.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center;"></span>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">クエスト</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+          <a href="#ideas" class="flex items-center gap-3 px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <span style="display:block;width:20px;height:20px;background-color:var(--color-primary);-webkit-mask-image:url('public/icons/proposal.png');mask-image:url('public/icons/proposal.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center;"></span>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">アイデア</span>
+            <span class="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-primary">3</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+          <a href="#announcements" class="flex items-center gap-3 px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <span style="display:block;width:20px;height:20px;background-color:var(--color-primary);-webkit-mask-image:url('public/icons/megaphone.png');mask-image:url('public/icons/megaphone.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center;"></span>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">お知らせ</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+          <a href="#documents" class="flex items-center gap-3 rounded-b-lg px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <span style="display:block;width:20px;height:20px;background-color:var(--color-primary);-webkit-mask-image:url('public/icons/airplane.png');mask-image:url('public/icons/airplane.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center;"></span>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">書類</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+        </div>
+
+        <span class="mb-1.5 mt-5 block text-[10.5px] font-semibold tracking-wide text-subtle">メンバー</span>
+        <div class="divide-y divide-border rounded-lg border border-border bg-background-light shadow-sm">
+          <a href="#users" class="flex items-center gap-3 rounded-t-lg px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <svg width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" class="text-primary"><path d="M0-240v-63q0-43 44-70t116-27q13 0 25 .5t23 2.5q-14 21-21 44t-7 48v65H0Zm240 0v-65q0-32 17.5-58.5T307-410q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780Zm-455-80h311q-10-20-55.5-35T480-370q-55 0-100.5 15T325-320ZM160-440q-33 0-56.5-23.5T80-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-440Zm640 0q-33 0-56.5-23.5T720-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-440Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-80q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm0 240Zm0-280Z"></path></svg>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">ユーザー</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+          <a href="#safety" class="flex items-center gap-3 rounded-b-lg px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-primary"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></svg>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">安否確認</span>
+            <span class="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-primary">1</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+        </div>
+
+        <span class="mb-1.5 mt-5 block text-[10.5px] font-semibold tracking-wide text-subtle">システム</span>
+        <div class="divide-y divide-border rounded-lg border border-border bg-background-light shadow-sm">
+          <a href="#expenses" class="flex items-center gap-3 rounded-t-lg px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-primary"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"></path></svg>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">経費精算</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+          <a href="#system" class="flex items-center gap-3 rounded-b-lg px-4 py-3.5 transition-colors hover:bg-background">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-primary"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.22-.07.47.12.61l2.03 1.58C4.84 11.36 4.8 11.69 4.8 12s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"></path></svg>
+            </span>
+            <span class="min-w-0 flex-1 text-sm font-semibold text-text">システム設定</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </a>
+        </div>
       </div>
       <div data-admin-content class="min-w-0 flex-1 px-4 pt-3 pb-4 md:px-6 md:pt-4">
         <h1 class="hidden md:block mb-4 text-xl font-bold text-text" data-admin-section-title>クエスト管理</h1>
