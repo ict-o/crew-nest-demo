@@ -168,10 +168,10 @@
         <button type="button" data-open-slide="announcement-form" class="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-mid">投稿する</button>
       </div>
       <div data-tour="tabs" class="flex gap-1 border-b border-border">
-        <button type="button" data-tabgroup="primary" data-tabkey="list" class="tab-btn tab-btn-primary is-active">お知らせ</button>
-        <button type="button" data-tabgroup="primary" data-tabkey="mine" class="tab-btn tab-btn-primary">自分の投稿<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">3</span></button>
+        <button type="button" data-tabgroup="primary" data-tabkey="mine" class="tab-btn tab-btn-primary is-active">自分の投稿<span class="rounded-full px-2 py-0.5 text-xs bg-primary-lightest text-primary">3</span></button>
+        <button type="button" data-tabgroup="primary" data-tabkey="list" class="tab-btn tab-btn-primary">すべてのお知らせ</button>
       </div>
-      <div data-panel="list" class="active mt-2">
+      <div data-panel="list" class="mt-2">
         <div class="mt-3 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
           <div data-open-slide="announcement-detail" role="button" tabindex="0"
                data-a-title="台風接近に伴う明日の出社について" data-a-status="公開中" data-a-badge="active" data-a-important="1"
@@ -200,7 +200,7 @@
           </div>
         </div>
       </div>
-      <div data-panel="mine" class="mt-2"><div class="flex items-center gap-1 overflow-x-auto"><button type="button" data-secstatus="ALL" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-secstatus="ACTIVE" class="tab-btn tab-btn-secondary">公開中</button><button type="button" data-secstatus="SCHEDULED" class="tab-btn tab-btn-secondary">公開予定</button><button type="button" data-secstatus="ENDED" class="tab-btn tab-btn-secondary">掲載終了</button></div><div class="mt-3 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
+      <div data-panel="mine" class="active mt-2"><div class="flex items-center gap-1 overflow-x-auto"><button type="button" data-secstatus="ALL" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-secstatus="ACTIVE" class="tab-btn tab-btn-secondary">公開中</button><button type="button" data-secstatus="SCHEDULED" class="tab-btn tab-btn-secondary">公開予定</button><button type="button" data-secstatus="ENDED" class="tab-btn tab-btn-secondary">掲載終了</button></div><div class="mt-3 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
         <div data-open-slide="announcement-detail" data-item data-status="ACTIVE" role="button" tabindex="0"
              data-a-title="社内勉強会「生成AI活用術」開催のお知らせ" data-a-status="公開中" data-a-badge="active" data-a-important="" data-a-manage="1"
              data-a-period="2026/08/18 09:00 〜 無期限" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="12" data-a-unread="6"
@@ -363,7 +363,7 @@ document.addEventListener('click', function(e){
 </div>
 <div data-slide="announcement-detail" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="お知らせ詳細">
   <div class="flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
-    <button type="button" data-close-slide="announcement-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>自分の投稿</button>
+    <button type="button" data-close-slide="announcement-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>お知らせ一覧</button>
     <span class="ml-auto flex items-center gap-1"><span data-f="sharemsg" class="text-xs text-subtle"></span><button type="button" data-demo-share aria-label="このお知らせを共有" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z"></path></svg></button></span>
   </div>
   <div class="flex-1 overflow-y-auto px-5 pb-4 pt-3">
@@ -679,10 +679,10 @@ document.addEventListener('click', function(ev){
 function cnTab(k){ return function(){ var b = document.querySelector('[data-tabgroup="primary"][data-tabkey="' + k + '"]'); if (b) b.click(); }; }
 CNTour.define('announcements', [
   { title: 'お知らせ', body: '全社に共有されたお知らせを確認できます。誰でも投稿できます。' },
-  { target: '[data-tour="tabs"]', title: 'タブの切り替え', body: '「お知らせ」「自分の投稿」を切り替えて閲覧できます。' },
+  { target: '[data-tour="tabs"]', title: 'タブの切り替え', body: '「自分の投稿」と「すべてのお知らせ」を切り替えられます。' },
   { before: cnTab('list'), target: '[data-open-slide="announcement-form"], [aria-label="投稿する"]', title: 'お知らせを投稿', body: 'このボタンから新しいお知らせを投稿できます。' },
   { before: cnTab('mine'), target: '[data-panel="mine"] [data-item]', title: '自分の投稿', body: 'タップすると詳細が開き、編集・削除や既読状況を確認できます。' }
-], { onClose: cnTab('list') });
+], { onClose: cnTab('mine') });
 </script>
 </body>
 </html>
