@@ -363,7 +363,7 @@ document.addEventListener('click', function(e){
 </div>
 <div data-slide="announcement-detail" data-hidden-transform="translateX(100%)" class="md:hidden fixed inset-x-0 bottom-0 top-14 z-[95] flex flex-col bg-background-light transition-transform duration-300 ease-in-out" style="transform:translateX(100%);" role="complementary" aria-label="お知らせ詳細">
   <div class="flex shrink-0 items-center border-b border-border bg-background-light px-3 py-2.5">
-    <button type="button" data-close-slide="announcement-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>お知らせ一覧</button>
+    <button type="button" data-close-slide="announcement-detail" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg><span data-f="a-backlabel">すべてのお知らせ</span></button>
     <span class="ml-auto flex items-center gap-1"><span data-f="sharemsg" class="text-xs text-subtle"></span><button type="button" data-demo-share aria-label="このお知らせを共有" class="inline-flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.08] min-h-12 min-w-12 text-subtle"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z"></path></svg></button></span>
   </div>
   <div class="flex-1 overflow-y-auto px-5 pb-4 pt-3">
@@ -627,6 +627,7 @@ document.addEventListener('slidewillopen', function(ev){
   all('[data-f="a-status"]').forEach(function(n){ n.textContent = g('data-a-status'); n.className = A_BADGE[g('data-a-badge')] || A_BADGE.active; });
   all('[data-f="a-important"]').forEach(function(n){ n.style.display = g('data-a-important') ? '' : 'none'; });
   all('[data-f="a-footer"]').forEach(function(n){ n.style.display = g('data-a-manage') ? '' : 'none'; });
+  all('[data-f="a-backlabel"]').forEach(function(n){ n.textContent = g('data-a-manage') ? '自分の投稿' : 'すべてのお知らせ'; });
   all('[data-f="a-title"]').forEach(function(n){ n.textContent = g('data-a-title'); });
   all('[data-f="a-period"]').forEach(function(n){ n.textContent = g('data-a-period'); });
   all('[data-f="a-notify"]').forEach(function(n){ n.textContent = g('data-a-notify'); });
