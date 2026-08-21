@@ -259,8 +259,10 @@
 
   function settingsModalHtml() {
     return '' +
-      '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-center justify-center bg-black/45 p-4">' +
-      '<div role="dialog" aria-modal="true" aria-labelledby="user-settings-title" tabindex="-1" class="flex w-full max-w-xl flex-col rounded-[20px] bg-background-light shadow-md outline-none" style="height:min(80vh,560px);">' +
+      '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-center justify-center bg-primary/30 p-4 md:bg-black/45">' +
+      '<div role="dialog" aria-modal="true" aria-labelledby="user-settings-title" tabindex="-1" class="fixed inset-x-0 bottom-0 flex h-[85dvh] max-h-[85vh] w-full flex-col rounded-t-2xl bg-background-light shadow-md outline-none md:static md:h-auto md:max-h-[min(80vh,560px)] md:max-w-xl md:rounded-[20px]">' +
+      /* ドラッグハンドル（モバイルのみ） */
+      '<div class="flex flex-shrink-0 justify-center py-2 md:hidden"><span class="h-1 w-9 rounded-full bg-border"></span></div>' +
       /* ヘッダー */
       '<div class="flex flex-shrink-0 items-center gap-2 border-b border-border px-5 py-4">' +
       '<button type="button" data-settings-back aria-label="戻る" class="hidden shrink-0 items-center text-sm text-primary md:!hidden">&lt;</button>' +
@@ -304,8 +306,8 @@
   /* ============ プロフィールモーダル ============ */
   function profileModalHtml() {
     return '' +
-      '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-end justify-center bg-black/45 md:items-center md:p-4">' +
-      '<div role="dialog" aria-modal="true" aria-label="プロフィール" tabindex="-1" class="flex w-full flex-col rounded-t-2xl bg-background-light shadow-md outline-none h-[calc(100dvh-3.5rem)] md:h-auto md:max-h-[min(80vh,560px)] md:max-w-sm md:rounded-2xl">' +
+      '<div data-modal-overlay class="fixed inset-0 z-[120] flex items-center justify-center bg-primary/30 p-4 md:bg-black/45">' +
+      '<div role="dialog" aria-modal="true" aria-label="プロフィール" tabindex="-1" class="fixed inset-x-0 bottom-0 flex h-[85dvh] max-h-[85vh] w-full flex-col rounded-t-2xl bg-background-light shadow-md outline-none md:static md:h-auto md:max-h-[min(80vh,560px)] md:max-w-sm md:rounded-2xl">' +
       /* ドラッグハンドル（モバイルのみ） */
       '<div class="flex flex-shrink-0 justify-center py-2 md:hidden"><span class="h-1 w-9 rounded-full bg-border"></span></div>' +
       /* ヒーローヘッダー（ネイビーグラデーション） */
