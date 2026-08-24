@@ -187,6 +187,7 @@
                data-a-period="2026/08/18 09:00 〜 無期限" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="" data-a-unread=""
                data-a-body="9月5日（金）17:00 より会議室Aにて社内勉強会を開催します。オンライン参加も可能です。&#10;&#10;参加登録は添付のフォームからお願いします。"
                class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+            <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-warning-border bg-warning-surface px-2.5 py-0.5 text-xs font-semibold text-warning">アンケート未回答</span></div>
             <div class="mb-2"><p class="min-w-0 text-base font-semibold text-text">社内勉強会「生成AI活用術」開催のお知らせ</p></div>
             <p class="text-sm text-subtle">田中 佑樹 ・ 昨日</p>
           </div>
@@ -203,15 +204,15 @@
       <div data-panel="mine" class="active mt-2"><div class="flex items-center gap-1 overflow-x-auto"><button type="button" data-secstatus="ALL" class="tab-btn tab-btn-secondary is-active">すべて</button><button type="button" data-secstatus="ACTIVE" class="tab-btn tab-btn-secondary">公開中</button><button type="button" data-secstatus="SCHEDULED" class="tab-btn tab-btn-secondary">公開予定</button><button type="button" data-secstatus="ENDED" class="tab-btn tab-btn-secondary">掲載終了</button></div><div class="mt-3 grid gap-4 min-[1200px]:grid-cols-2 min-[1600px]:grid-cols-3">
         <div data-open-slide="announcement-detail" data-item data-status="ACTIVE" role="button" tabindex="0"
              data-a-title="社内勉強会「生成AI活用術」開催のお知らせ" data-a-status="公開中" data-a-badge="active" data-a-important="" data-a-manage="1"
-             data-a-period="2026/08/18 09:00 〜 無期限" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="12" data-a-unread="6"
+             data-a-period="2026/08/18 09:00 〜 無期限" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="19" data-a-unread="5"
              data-a-body="9月5日（金）17:00 より会議室Aにて社内勉強会を開催します。オンライン参加も可能です。&#10;&#10;参加登録は添付のフォームからお願いします。"
              class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">公開中</span></div>
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">公開中</span><span class="rounded-full border border-neutral-border bg-neutral-surface px-2.5 py-0.5 text-xs font-semibold text-subtle">アンケート</span></div>
           <div class="mb-2"><p class="min-w-0 text-base font-semibold text-text">社内勉強会「生成AI活用術」開催のお知らせ</p></div>
           <p class="mb-2 text-sm text-subtle">2026/08/18 09:00 〜 無期限</p>
           <div class="flex items-center gap-2">
-            <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-surface"><div class="h-full rounded-full bg-success-strong" style="width:67%"></div></div>
-            <span class="shrink-0 text-xs text-subtle">既読 12 / 未読 6</span>
+            <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-surface"><div class="h-full rounded-full bg-success-strong" style="width:79%"></div></div>
+            <span class="shrink-0 text-xs text-subtle">回答 19 / 未回答 5</span>
           </div>
         </div>
         <div data-open-slide="announcement-detail" data-item data-status="SCHEDULED" role="button" tabindex="0"
@@ -349,6 +350,44 @@ document.addEventListener('click', function(e){
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
         <div data-f="a-body" class="whitespace-pre-wrap rounded-lg bg-background px-3 py-2.5 text-sm leading-relaxed text-text"></div>
       </div>
+      <div class="mb-4">
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">アンケート</p>
+        <div class="rounded-lg border border-border bg-background-light p-3.5">
+          <p class="text-sm font-bold text-text">社内勉強会はどの形で参加しますか？</p>
+          <p class="mt-1.5 flex items-center gap-1 text-xs font-semibold text-success"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" class="shrink-0"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path></svg>回答しました（既読になりました）</p>
+          <div class="mt-3 flex flex-col gap-2.5">
+            <div>
+              <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+                <span class="min-w-0 flex-1 text-text">会場で参加する<span class="ml-1 shrink-0 rounded-full border border-primary/30 bg-primary-lightest px-1.5 py-0.5 text-[10px] font-semibold text-primary">あなたの回答</span></span>
+                <span class="shrink-0 text-subtle">11人 ・ 58%</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-border">
+                <div class="h-1.5 rounded-full bg-primary transition-all" style="width:58%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+                <span class="min-w-0 flex-1 text-text">オンラインで参加する</span>
+                <span class="shrink-0 text-subtle">6人 ・ 32%</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-border">
+                <div class="h-1.5 rounded-full bg-primary transition-all" style="width:32%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+                <span class="min-w-0 flex-1 text-text">欠席する</span>
+                <span class="shrink-0 text-subtle">2人 ・ 11%</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-border">
+                <div class="h-1.5 rounded-full bg-primary transition-all" style="width:11%"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-subtle">回答 19人 / 対象 24人</p>
+          <button type="button" class="mt-2 text-xs font-medium text-primary hover:underline">回答を変更する</button>
+        </div>
+      </div>
       <div class="mb-4" data-f="a-readswrap">
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">既読状況</p>
         <button type="button" data-open-slide="announcement-reads" class="w-full rounded-lg border border-border bg-background-light p-3 text-left transition-colors hover:bg-background">
@@ -383,6 +422,44 @@ document.addEventListener('click', function(e){
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
         <div data-f="a-body" class="whitespace-pre-wrap rounded-lg bg-background px-3 py-2.5 text-sm leading-relaxed text-text"></div>
       </div>
+      <div class="mb-4">
+        <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">アンケート</p>
+        <div class="rounded-lg border border-border bg-background-light p-3.5">
+          <p class="text-sm font-bold text-text">社内勉強会はどの形で参加しますか？</p>
+          <p class="mt-1.5 flex items-center gap-1 text-xs font-semibold text-success"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" class="shrink-0"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path></svg>回答しました（既読になりました）</p>
+          <div class="mt-3 flex flex-col gap-2.5">
+            <div>
+              <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+                <span class="min-w-0 flex-1 text-text">会場で参加する<span class="ml-1 shrink-0 rounded-full border border-primary/30 bg-primary-lightest px-1.5 py-0.5 text-[10px] font-semibold text-primary">あなたの回答</span></span>
+                <span class="shrink-0 text-subtle">11人 ・ 58%</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-border">
+                <div class="h-1.5 rounded-full bg-primary transition-all" style="width:58%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+                <span class="min-w-0 flex-1 text-text">オンラインで参加する</span>
+                <span class="shrink-0 text-subtle">6人 ・ 32%</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-border">
+                <div class="h-1.5 rounded-full bg-primary transition-all" style="width:32%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+                <span class="min-w-0 flex-1 text-text">欠席する</span>
+                <span class="shrink-0 text-subtle">2人 ・ 11%</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-border">
+                <div class="h-1.5 rounded-full bg-primary transition-all" style="width:11%"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-subtle">回答 19人 / 対象 24人</p>
+          <button type="button" class="mt-2 text-xs font-medium text-primary hover:underline">回答を変更する</button>
+        </div>
+      </div>
       <div class="mb-4" data-f="a-readswrap">
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">既読状況</p>
         <button type="button" data-open-slide="announcement-reads" class="w-full rounded-lg border border-border bg-background-light p-3 text-left transition-colors hover:bg-background">
@@ -401,24 +478,65 @@ document.addEventListener('click', function(e){
     <button type="button" data-close-slide="announcement-reads" aria-label="既読状況を閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
   </div>
   <div class="flex shrink-0 gap-1 border-b border-border px-4">
-    <button type="button" data-readstab="read" class="tab-btn tab-btn-secondary is-active">既読 <span data-f="a-readcount"></span></button>
-    <button type="button" data-readstab="unread" class="tab-btn tab-btn-secondary">未読 <span data-f="a-unreadcount"></span></button>
+    <button type="button" data-readstab="read" class="tab-btn tab-btn-secondary is-active">回答済み <span data-f="a-readcount"></span></button>
+    <button type="button" data-readstab="unread" class="tab-btn tab-btn-secondary">未回答 <span data-f="a-unreadcount"></span></button>
+    <button type="button" data-readstab="tally" class="tab-btn tab-btn-secondary">集計</button>
   </div>
   <div class="min-h-0 flex-1 overflow-y-auto px-3 py-2">
     <div data-readslist="read">
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">佐</div><span class="min-w-0 flex-1 truncate text-sm text-text">佐藤 花子</span><span class="shrink-0 text-xs text-subtle">8/18 09:12</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">鈴</div><span class="min-w-0 flex-1 truncate text-sm text-text">鈴木 一郎</span><span class="shrink-0 text-xs text-subtle">8/18 09:30</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">高</div><span class="min-w-0 flex-1 truncate text-sm text-text">高橋 美咲</span><span class="shrink-0 text-xs text-subtle">8/18 10:02</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">伊</div><span class="min-w-0 flex-1 truncate text-sm text-text">伊藤 健太</span><span class="shrink-0 text-xs text-subtle">8/18 12:44</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">渡</div><span class="min-w-0 flex-1 truncate text-sm text-text">渡辺 さゆり</span><span class="shrink-0 text-xs text-subtle">8/19 08:15</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山本 大輔</span><span class="shrink-0 text-xs text-subtle">8/19 11:03</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">佐</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">佐藤 花子</p><p class="truncate text-xs text-primary">会場で参加する</p></div><span class="shrink-0 text-xs text-subtle">8/18 09:12</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">鈴</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">鈴木 一郎</p><p class="truncate text-xs text-primary">オンラインで参加する</p></div><span class="shrink-0 text-xs text-subtle">8/18 09:30</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">高</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">高橋 美咲</p><p class="truncate text-xs text-primary">会場で参加する</p></div><span class="shrink-0 text-xs text-subtle">8/18 10:02</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">伊</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">伊藤 健太</p><p class="truncate text-xs text-primary">欠席する</p></div><span class="shrink-0 text-xs text-subtle">8/18 12:44</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">渡</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">渡辺 さゆり</p><p class="truncate text-xs text-primary">会場で参加する</p></div><span class="shrink-0 text-xs text-subtle">8/19 08:15</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">山本 大輔</p><p class="truncate text-xs text-primary">オンラインで参加する</p></div><span class="shrink-0 text-xs text-subtle">8/19 11:03</span></div>
     </div>
     <div data-readslist="unread" style="display:none;">
+      <div class="mb-2 rounded-lg border border-warning-border bg-warning-surface px-3 py-2.5">
+        <p class="text-xs text-warning">未回答が5人います。Push・メールでもう一度知らせます（10分に1回まで）。</p>
+        <button type="button" data-svremind class="mt-2 h-12 w-full rounded-full bg-primary text-sm font-medium text-white transition-colors hover:bg-primary-mid md:h-10">未回答者に再通知</button>
+        <p data-svremindmsg class="mt-1.5 text-xs font-semibold text-success" style="display:none;">5人に送信しました</p>
+      </div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">中</div><span class="min-w-0 flex-1 truncate text-sm text-text">中村 陽菜</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">小</div><span class="min-w-0 flex-1 truncate text-sm text-text">小林 翔</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">加</div><span class="min-w-0 flex-1 truncate text-sm text-text">加藤 結衣</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">吉</div><span class="min-w-0 flex-1 truncate text-sm text-text">吉田 蓮</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山田 芽依</span></div>
+    </div>
+    <div data-readslist="tally" style="display:none;">
+      <div class="rounded-lg border border-border bg-background-light p-3">
+        <p class="text-sm font-bold text-text">社内勉強会はどの形で参加しますか？</p>
+        <p class="mt-0.5 text-xs text-subtle">1つ選択 ・ 回答 19人 / 対象 24人</p>
+        <div class="mt-3 flex flex-col gap-2.5">
+          <div>
+            <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+              <span class="min-w-0 flex-1 text-text">会場で参加する</span>
+              <span class="shrink-0 text-subtle">11人 ・ 58%</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-border">
+              <div class="h-1.5 rounded-full bg-primary transition-all" style="width:58%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+              <span class="min-w-0 flex-1 text-text">オンラインで参加する</span>
+              <span class="shrink-0 text-subtle">6人 ・ 32%</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-border">
+              <div class="h-1.5 rounded-full bg-primary transition-all" style="width:32%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+              <span class="min-w-0 flex-1 text-text">欠席する</span>
+              <span class="shrink-0 text-subtle">2人 ・ 11%</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-border">
+              <div class="h-1.5 rounded-full bg-primary transition-all" style="width:11%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -427,24 +545,65 @@ document.addEventListener('click', function(e){
     <button type="button" data-close-slide="announcement-reads" class="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold text-primary hover:bg-background"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>詳細に戻る</button>
   </div>
   <div class="flex shrink-0 gap-1 border-b border-border px-4">
-    <button type="button" data-readstab="read" class="tab-btn tab-btn-secondary is-active">既読 <span data-f="a-readcount"></span></button>
-    <button type="button" data-readstab="unread" class="tab-btn tab-btn-secondary">未読 <span data-f="a-unreadcount"></span></button>
+    <button type="button" data-readstab="read" class="tab-btn tab-btn-secondary is-active">回答済み <span data-f="a-readcount"></span></button>
+    <button type="button" data-readstab="unread" class="tab-btn tab-btn-secondary">未回答 <span data-f="a-unreadcount"></span></button>
+    <button type="button" data-readstab="tally" class="tab-btn tab-btn-secondary">集計</button>
   </div>
   <div class="min-h-0 flex-1 overflow-y-auto px-3 py-2">
     <div data-readslist="read">
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">佐</div><span class="min-w-0 flex-1 truncate text-sm text-text">佐藤 花子</span><span class="shrink-0 text-xs text-subtle">8/18 09:12</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">鈴</div><span class="min-w-0 flex-1 truncate text-sm text-text">鈴木 一郎</span><span class="shrink-0 text-xs text-subtle">8/18 09:30</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">高</div><span class="min-w-0 flex-1 truncate text-sm text-text">高橋 美咲</span><span class="shrink-0 text-xs text-subtle">8/18 10:02</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">伊</div><span class="min-w-0 flex-1 truncate text-sm text-text">伊藤 健太</span><span class="shrink-0 text-xs text-subtle">8/18 12:44</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">渡</div><span class="min-w-0 flex-1 truncate text-sm text-text">渡辺 さゆり</span><span class="shrink-0 text-xs text-subtle">8/19 08:15</span></div>
-      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山本 大輔</span><span class="shrink-0 text-xs text-subtle">8/19 11:03</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">佐</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">佐藤 花子</p><p class="truncate text-xs text-primary">会場で参加する</p></div><span class="shrink-0 text-xs text-subtle">8/18 09:12</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">鈴</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">鈴木 一郎</p><p class="truncate text-xs text-primary">オンラインで参加する</p></div><span class="shrink-0 text-xs text-subtle">8/18 09:30</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">高</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">高橋 美咲</p><p class="truncate text-xs text-primary">会場で参加する</p></div><span class="shrink-0 text-xs text-subtle">8/18 10:02</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">伊</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">伊藤 健太</p><p class="truncate text-xs text-primary">欠席する</p></div><span class="shrink-0 text-xs text-subtle">8/18 12:44</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">渡</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">渡辺 さゆり</p><p class="truncate text-xs text-primary">会場で参加する</p></div><span class="shrink-0 text-xs text-subtle">8/19 08:15</span></div>
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><div class="min-w-0 flex-1"><p class="truncate text-sm text-text">山本 大輔</p><p class="truncate text-xs text-primary">オンラインで参加する</p></div><span class="shrink-0 text-xs text-subtle">8/19 11:03</span></div>
     </div>
     <div data-readslist="unread" style="display:none;">
+      <div class="mb-2 rounded-lg border border-warning-border bg-warning-surface px-3 py-2.5">
+        <p class="text-xs text-warning">未回答が5人います。Push・メールでもう一度知らせます（10分に1回まで）。</p>
+        <button type="button" data-svremind class="mt-2 h-12 w-full rounded-full bg-primary text-sm font-medium text-white transition-colors hover:bg-primary-mid md:h-10">未回答者に再通知</button>
+        <p data-svremindmsg class="mt-1.5 text-xs font-semibold text-success" style="display:none;">5人に送信しました</p>
+      </div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">中</div><span class="min-w-0 flex-1 truncate text-sm text-text">中村 陽菜</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">小</div><span class="min-w-0 flex-1 truncate text-sm text-text">小林 翔</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">加</div><span class="min-w-0 flex-1 truncate text-sm text-text">加藤 結衣</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">吉</div><span class="min-w-0 flex-1 truncate text-sm text-text">吉田 蓮</span></div>
       <div class="flex items-center gap-2.5 rounded-lg px-2 py-2"><div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">山</div><span class="min-w-0 flex-1 truncate text-sm text-text">山田 芽依</span></div>
+    </div>
+    <div data-readslist="tally" style="display:none;">
+      <div class="rounded-lg border border-border bg-background-light p-3">
+        <p class="text-sm font-bold text-text">社内勉強会はどの形で参加しますか？</p>
+        <p class="mt-0.5 text-xs text-subtle">1つ選択 ・ 回答 19人 / 対象 24人</p>
+        <div class="mt-3 flex flex-col gap-2.5">
+          <div>
+            <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+              <span class="min-w-0 flex-1 text-text">会場で参加する</span>
+              <span class="shrink-0 text-subtle">11人 ・ 58%</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-border">
+              <div class="h-1.5 rounded-full bg-primary transition-all" style="width:58%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+              <span class="min-w-0 flex-1 text-text">オンラインで参加する</span>
+              <span class="shrink-0 text-subtle">6人 ・ 32%</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-border">
+              <div class="h-1.5 rounded-full bg-primary transition-all" style="width:32%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex items-baseline justify-between gap-2 text-xs">
+              <span class="min-w-0 flex-1 text-text">欠席する</span>
+              <span class="shrink-0 text-subtle">2人 ・ 11%</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-border">
+              <div class="h-1.5 rounded-full bg-primary transition-all" style="width:11%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -495,6 +654,41 @@ document.addEventListener('click', function(e){
       </div>
       <div>
         <button type="button" class="text-xs font-medium text-primary hover:underline">＋ リンクを追加</button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">アンケートを付ける</p><p class="text-xs text-subtle">回答した人だけが既読になります</p></div>
+        <button type="button" data-switch aria-checked="true" class="relative h-6 w-10 shrink-0 rounded-full bg-primary transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform" style="transform:translateX(16px);"></span></button>
+      </div>
+      <div class="flex flex-col gap-3 rounded-lg border border-border bg-background p-3">
+        <div>
+          <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">設問</p>
+          <input type="text" maxlength="200" value="社内勉強会はどの形で参加しますか？" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+        </div>
+        <div>
+          <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">選択肢（2〜10）</p>
+          <div class="flex items-center gap-1.5">
+            <input type="text" maxlength="100" value="会場で参加する" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            <button type="button" aria-label="この選択肢を削除" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <input type="text" maxlength="100" value="オンラインで参加する" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            <button type="button" aria-label="この選択肢を削除" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <input type="text" maxlength="100" value="欠席する" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            <button type="button" aria-label="この選択肢を削除" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+          </div>
+          <button type="button" class="mt-2 text-xs font-medium text-primary hover:underline">＋ 選択肢を追加（3/10）</button>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <p class="text-sm text-text">複数選択できるようにする</p>
+          <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <div><p class="text-sm text-text">結果を回答者にも見せる</p><p class="text-xs text-subtle">OFFなら投稿者だけが集計を見られます</p></div>
+          <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+        </div>
+        <p class="text-xs text-subtle">公開終了日時を設定すると、その時刻が回答の締切になります。</p>
       </div>
       <div>
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">公開開始日時</p>
@@ -568,6 +762,41 @@ document.addEventListener('click', function(e){
       </div>
       <div>
         <button type="button" class="text-xs font-medium text-primary hover:underline">＋ リンクを追加</button>
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <div><p class="text-sm text-text">アンケートを付ける</p><p class="text-xs text-subtle">回答した人だけが既読になります</p></div>
+        <button type="button" data-switch aria-checked="true" class="relative h-6 w-10 shrink-0 rounded-full bg-primary transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform" style="transform:translateX(16px);"></span></button>
+      </div>
+      <div class="flex flex-col gap-3 rounded-lg border border-border bg-background p-3">
+        <div>
+          <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">設問</p>
+          <input type="text" maxlength="200" value="社内勉強会はどの形で参加しますか？" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+        </div>
+        <div>
+          <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">選択肢（2〜10）</p>
+          <div class="flex items-center gap-1.5">
+            <input type="text" maxlength="100" value="会場で参加する" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            <button type="button" aria-label="この選択肢を削除" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <input type="text" maxlength="100" value="オンラインで参加する" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            <button type="button" aria-label="この選択肢を削除" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <input type="text" maxlength="100" value="欠席する" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+            <button type="button" aria-label="この選択肢を削除" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] hover:text-danger"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+          </div>
+          <button type="button" class="mt-2 text-xs font-medium text-primary hover:underline">＋ 選択肢を追加（3/10）</button>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <p class="text-sm text-text">複数選択できるようにする</p>
+          <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <div><p class="text-sm text-text">結果を回答者にも見せる</p><p class="text-xs text-subtle">OFFなら投稿者だけが集計を見られます</p></div>
+          <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+        </div>
+        <p class="text-xs text-subtle">公開終了日時を設定すると、その時刻が回答の締切になります。</p>
       </div>
       <div>
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">公開開始日時</p>
@@ -677,6 +906,16 @@ document.addEventListener('click', function(ev){
   window.cnShareTimer = setTimeout(function(){
     Array.prototype.forEach.call(msgs, function(n){ n.textContent = ''; });
   }, 1800);
+});
+</script>
+<script>
+// 未回答者への再通知ボタン（デモ用の見た目の反応のみ）
+document.addEventListener('click', function(e){
+  var rem = e.target.closest('[data-svremind]');
+  if (!rem) return;
+  rem.setAttribute('disabled', 'disabled');
+  rem.classList.add('opacity-[0.38]');
+  document.querySelectorAll('[data-svremindmsg]').forEach(function(n){ n.style.display = ''; });
 });
 </script>
 <script src="tour.js"></script>
