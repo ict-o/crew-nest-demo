@@ -1406,18 +1406,24 @@
                 <!-- 精算カード -->
                 <div class="rounded-lg border border-accent-border bg-accent-lightest">
                   <div class="hidden min-h-[56px] items-center gap-2 border-b border-accent-border px-4 py-2 md:flex">
-                    <span class="flex-1 text-[13px] font-bold text-accent-dark">報奨金精算</span>
-                    <button type="button" class="flex h-10 items-center gap-1.5 rounded-full border border-accent-border bg-transparent px-4 text-[13px] font-medium text-accent-dark transition-colors hover:bg-accent/10">
+                    <div class="flex min-w-0 flex-1 items-center gap-2">
+                      <span data-settle-title class="text-[13px] font-bold text-accent-dark">報奨金精算</span>
+                      <span data-settle-chip class="rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[11px] font-medium text-info">繰越 2年度分（2024〜2026年度）</span>
+                      <span data-settle-chip class="rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[11px] font-medium text-info">最低 500 pt</span>
+                    </div>
+                    <button type="button" data-settle-readbtn data-settle-edit-open class="flex h-10 items-center gap-1.5 rounded-full border border-accent-border bg-transparent px-4 text-[13px] font-medium text-accent-dark transition-colors hover:bg-accent/10">
                       <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg>
                       精算設定を編集
                     </button>
-                    <button type="button" class="flex h-10 items-center justify-center rounded-full bg-accent px-5 text-[13px] font-medium text-primary transition-colors hover:opacity-85">報奨金申請一覧</button>
+                    <button type="button" data-settle-readbtn data-open-dialog="bonus-list" class="flex h-10 items-center justify-center rounded-full bg-accent px-5 text-[13px] font-medium text-primary transition-colors hover:opacity-85">報奨金申請一覧</button>
+                    <button type="button" data-settle-editbtn style="display:none;" class="flex h-10 items-center rounded-full px-4 text-[13px] font-medium text-accent-dark hover:bg-accent/10">キャンセル</button>
+                    <button type="button" data-settle-editbtn style="display:none;" class="flex h-10 items-center justify-center rounded-full border-none bg-accent px-5 text-[13px] font-medium text-primary">保存する</button>
                   </div>
-                  <div class="hidden items-stretch px-4 py-3.5 md:flex">
+                  <div data-settle-read class="hidden items-stretch px-4 py-3.5 md:flex">
                     <div class="flex-[1.5] border-r border-accent-border pr-5">
                       <p class="mb-1.5 text-[11px] font-bold text-accent-dark">総支給額（概算）</p>
                       <p class="flex h-9 items-center text-2xl font-bold text-primary">¥ 42,300</p>
-                      <p class="mt-1 text-[11px] text-muted">全社員の獲得済み 42,300 pt × レート 1.00</p>
+                      <p class="mt-1 text-[11px] text-muted">全社員の獲得済み 42,300 pt（うち繰越 9,800 pt）× レート 1.00</p>
                     </div>
                     <div class="flex-[0.8] border-r border-accent-border px-5">
                       <p class="mb-1.5 text-[11px] font-bold text-accent-dark">変換レート</p>
@@ -1435,23 +1441,75 @@
                       <p class="mt-1 text-[11px] text-muted">受付中</p>
                     </div>
                   </div>
+                  <!-- 編集モード（PC）: BudgetYearPanel.tsx の isSettlementEditing を再現。既存4列の下に繰越年数・最低申請ポイントの2行目を足す -->
+                  <div data-settle-edit-pc style="display:none;" class="hidden px-4 py-3.5 md:block">
+                    <div class="flex items-stretch">
+                      <div class="flex-[1.5] border-r border-accent-border pr-5">
+                        <p class="mb-1.5 text-[11px] font-bold text-accent-dark">総支給額（概算）</p>
+                        <p class="flex h-9 items-center text-2xl font-bold text-primary" aria-live="polite">¥ 42,300</p>
+                        <p class="mt-1 text-[11px] text-muted">42,300 pt × 1.00</p>
+                      </div>
+                      <div class="flex-[0.8] border-r border-accent-border px-5">
+                        <p class="mb-1.5 text-[11px] font-bold text-accent-dark">変換レート</p>
+                        <input type="text" inputmode="decimal" value="1.00" aria-label="変換レート"
+                          class="h-9 w-[84px] rounded-lg border border-accent bg-background-light px-2.5 text-[15px] font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
+                      </div>
+                      <div class="flex-[0.9] border-r border-accent-border px-5">
+                        <p class="mb-1.5 text-[11px] font-bold text-accent-dark">申請者数</p>
+                        <p class="flex h-9 items-center text-base font-bold text-primary">12 <span class="ml-1 text-xs text-subtle">/ 42 名</span></p>
+                      </div>
+                      <div class="flex-[1.3] pl-5">
+                        <p class="mb-1.5 text-[11px] font-bold text-accent-dark">申請期間</p>
+                        <div class="flex items-center gap-1.5">
+                          <button type="button" aria-label="申請開始日" aria-haspopup="dialog" class="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 min-w-0 flex-1"><span class="min-w-0 truncate text-left">2027/01/06（水）</span><svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true" class="shrink-0 text-subtle"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Z"></path></svg></button>
+                          <span class="text-[11px] text-accent-dark">〜</span>
+                          <button type="button" aria-label="申請終了日" aria-haspopup="dialog" class="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 min-w-0 flex-1"><span class="min-w-0 truncate text-left">2027/01/31（日）</span><svg width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true" class="shrink-0 text-subtle"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Z"></path></svg></button>
+                        </div>
+                        <p class="mt-1 text-[11px] text-muted">2026年度分</p>
+                      </div>
+                    </div>
+                    <div class="mt-3.5 flex items-start gap-5 border-t border-accent-border pt-3.5">
+                      <div class="shrink-0">
+                        <p class="mb-1.5 text-[11px] font-bold text-accent-dark">繰越年数</p>
+                        <div class="flex items-center gap-1.5">
+                          <input type="text" inputmode="numeric" value="2" aria-label="繰越年数"
+                            class="h-9 w-[60px] rounded-lg border border-accent bg-background-light px-2.5 text-[15px] font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
+                          <span class="text-[13px] text-accent-dark">年度分</span>
+                        </div>
+                      </div>
+                      <div class="shrink-0">
+                        <p class="mb-1.5 text-[11px] font-bold text-accent-dark">最低申請ポイント</p>
+                        <div class="flex items-center gap-1.5">
+                          <input type="text" inputmode="numeric" value="500" aria-label="最低申請ポイント"
+                            class="h-9 w-[84px] rounded-lg border border-accent bg-background-light px-2.5 text-[15px] font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
+                          <span class="text-[13px] text-accent-dark">pt</span>
+                        </div>
+                      </div>
+                      <p class="flex-1 pt-6 text-[11px] leading-relaxed text-muted">この年度の申請で2024〜2026年度に稼いだ分を拾います。500 pt 未満のときは申請できず、次の申請期間へ繰り越されます。</p>
+                    </div>
+                  </div>
                   <!-- モバイル -->
-                  <div class="px-[14px] py-[14px] md:hidden">
+                  <div data-settle-read class="px-[14px] py-[14px] md:hidden">
                     <p class="mb-1 text-[11px] font-bold text-accent-dark">総支給額（概算）</p>
                     <p class="text-2xl font-bold text-primary">¥42,300</p>
-                    <p class="mt-[3px] text-[11px] text-muted">全社員の獲得済み 42,300 pt × レート 1.00</p>
+                    <p class="mt-[3px] text-[11px] text-muted">全社員の獲得済み 42,300 pt（うち繰越 9,800 pt）× レート 1.00</p>
                     <div class="mt-[14px] flex border-t border-accent-border pt-3">
                       <div class="flex-1 pr-[10px]"><p class="mb-[3px] text-[10px] font-bold text-accent-dark">変換レート</p><p class="text-[14px] font-bold text-primary">1.00</p></div>
                       <div class="flex-1 border-l border-r border-accent-border px-[10px]"><p class="mb-[3px] text-[10px] font-bold text-accent-dark">申請者数</p><p class="text-[14px] font-bold text-primary">12<span class="text-[10px] font-semibold">/42名</span></p><p class="mt-[2px] text-[10px] text-muted">未申請 30 名</p></div>
                       <div class="flex-1 pl-[10px]"><p class="mb-[3px] text-[10px] font-bold text-accent-dark">申請期間</p><p class="text-[11px] font-bold leading-[1.5] text-primary">01/06〜01/31</p><p class="mt-[2px] text-[10px] text-muted">受付中</p></div>
                     </div>
                     <div class="mt-[14px] flex gap-2">
-                      <button type="button" class="flex h-12 flex-1 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-primary">報奨金申請一覧</button>
-                      <button type="button" class="flex h-12 flex-1 items-center justify-center gap-[5px] rounded-full border border-accent-border text-[13px] font-medium text-accent-dark">
+                      <button type="button" data-open-dialog="bonus-list" class="flex h-12 flex-1 items-center justify-center rounded-full bg-accent text-[13px] font-medium text-primary">報奨金申請一覧</button>
+                      <button type="button" data-settle-edit-open class="flex h-12 flex-1 items-center justify-center gap-[5px] rounded-full border border-accent-border text-[13px] font-medium text-accent-dark">
                         <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg>
                         精算設定を編集
                       </button>
                     </div>
+                  </div>
+                  <!-- モバイル: 編集中は総支給額だけを半透明で残す（本体は下のボトムシートに入力欄がある） -->
+                  <div data-settle-edit-mobile-hero style="display:none;" class="px-[14px] py-[14px] opacity-50 md:hidden">
+                    <p class="mb-1 text-[11px] font-bold text-accent-dark">総支給額（概算）</p>
+                    <p class="text-2xl font-bold text-primary">¥42,300</p>
                   </div>
                 </div>
                 <!-- 総予算ブロック -->
@@ -6207,6 +6265,244 @@ document.addEventListener('click', function(e){
     plApply();
   }
 });
+</script>
+
+<!-- クエスト報奨金の繰り越し: 精算設定の編集モードとボトムシート（BudgetYearPanel.tsx の isSettlementEditing を再現） -->
+<div data-settle-scrim style="display:none;" class="fixed inset-0 z-[109] bg-black/40 md:hidden" aria-hidden="true"></div>
+<div data-settle-sheet role="dialog" aria-modal="true" aria-label="精算設定"
+  class="fixed inset-x-0 bottom-0 z-[110] flex max-h-[90dvh] min-h-0 translate-y-full flex-col rounded-t-2xl bg-background-light shadow-md transition-transform duration-300 ease-in-out md:hidden">
+  <div class="mx-auto mb-3.5 mt-2 h-1 w-9 rounded-full bg-muted-border" aria-hidden="true"></div>
+  <div class="overflow-y-auto px-4 pb-8">
+    <h2 class="mb-3.5 text-[15px] font-bold text-text">精算設定（2026年度分）</h2>
+
+    <div class="sticky top-0 z-10 mb-4 rounded-lg border border-accent-border bg-accent-lightest px-3.5 py-3">
+      <p class="mb-1 text-[11px] font-bold text-accent-dark">総支給額（概算）</p>
+      <p class="text-2xl font-bold text-primary" aria-live="polite">¥42,300</p>
+      <p class="mt-1 text-[11px] text-muted">42,300 pt × 1.00</p>
+    </div>
+
+    <div class="mb-3.5">
+      <label class="mb-1.5 block text-xs font-semibold text-subtle" for="m-settle-rate">変換レート（1 pt あたりの円）</label>
+      <input id="m-settle-rate" type="text" inputmode="decimal" value="1.00"
+        class="h-12 w-full rounded-lg border border-muted-border bg-background-light px-3.5 text-base font-bold text-primary focus-visible:border-primary-mid focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+    </div>
+
+    <div class="mb-4">
+      <p class="mb-1.5 text-xs font-semibold text-subtle">申請期間（任意）</p>
+      <div class="flex gap-2.5">
+        <div class="flex-1">
+          <label class="mb-1 block text-[11px] text-muted" for="m-settle-start">開始日</label>
+          <input id="m-settle-start" type="date" value="2027-01-06" class="h-12 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+        </div>
+        <div class="flex-1">
+          <label class="mb-1 block text-[11px] text-muted" for="m-settle-end">終了日</label>
+          <input id="m-settle-end" type="date" value="2027-01-31" class="h-12 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <p class="mb-1.5 text-xs font-semibold text-subtle">繰越・最低申請ポイント</p>
+      <div class="flex gap-2.5">
+        <div class="flex-1">
+          <label class="mb-1 block text-[11px] text-muted" for="m-settle-carry">繰越年数（年度分）</label>
+          <input id="m-settle-carry" type="text" inputmode="numeric" value="2"
+            class="h-12 w-full rounded-lg border border-muted-border bg-background-light px-3.5 text-base font-bold text-primary focus-visible:border-primary-mid focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+        </div>
+        <div class="flex-1">
+          <label class="mb-1 block text-[11px] text-muted" for="m-settle-min">最低申請ポイント（pt）</label>
+          <input id="m-settle-min" type="text" inputmode="numeric" value="500"
+            class="h-12 w-full rounded-lg border border-muted-border bg-background-light px-3.5 text-base font-bold text-primary focus-visible:border-primary-mid focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+        </div>
+      </div>
+      <p class="mt-1.5 text-[11px] leading-relaxed text-muted">この年度の申請で2024〜2026年度に稼いだ分を拾います。500 pt 未満のときは申請できず、次の申請期間へ繰り越されます。</p>
+    </div>
+
+    <div class="flex gap-2.5">
+      <button type="button" data-settle-edit-close class="flex h-12 flex-1 items-center justify-center rounded-full border border-muted-border bg-transparent text-sm font-medium text-subtle">キャンセル</button>
+      <button type="button" data-settle-edit-close class="flex h-12 flex-1 items-center justify-center rounded-full border-none bg-primary text-sm font-medium text-white">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- クエスト報奨金申請一覧（繰り越し機能で追加） -->
+<div data-dialog="bonus-list" class="fixed inset-0 z-[110] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="dialog" aria-modal="true" aria-labelledby="bonus-list-title" class="flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-background-light shadow-md">
+    <div class="flex shrink-0 items-start gap-2 border-b border-border px-5 py-4">
+      <div class="min-w-0 flex-1">
+        <h2 id="bonus-list-title" class="text-sm font-bold text-primary">クエスト報奨金申請一覧</h2>
+        <p class="mt-0.5 text-[11px] text-subtle">2026年度分 ｜ 期限: 2027/01/06 〜 2027/01/31 ｜ レート: ¥1.00 / pt ｜ 繰越: 2024年度分まで</p>
+      </div>
+      <button type="button" data-close-dialog aria-label="閉じる" class="flex h-8 w-8 items-center justify-center rounded-full text-subtle transition-colors hover:bg-background">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+      </button>
+    </div>
+
+    <div class="grid shrink-0 grid-cols-2 border-b border-border md:grid-cols-4">
+      <div class="border-b border-r border-border py-2.5 text-center md:border-b-0">
+        <p class="mb-1 text-[10px] text-subtle-light">申請済み</p>
+        <p class="text-lg font-bold leading-none text-success">12<span class="ml-0.5 text-xs font-normal text-subtle">件</span></p>
+      </div>
+      <div class="border-b border-border py-2.5 text-center md:border-b-0 md:border-r">
+        <p class="mb-1 text-[10px] text-subtle-light">未申請</p>
+        <p class="text-lg font-bold leading-none text-text">30<span class="ml-0.5 text-xs font-normal text-subtle">件</span></p>
+      </div>
+      <div class="border-r border-border py-2.5 text-center">
+        <p class="mb-1 text-[10px] text-subtle-light">プロフィール不足</p>
+        <p class="text-lg font-bold leading-none text-warning">3<span class="ml-0.5 text-xs font-normal text-subtle">名</span></p>
+      </div>
+      <div class="bg-warning-surface py-2.5 text-center">
+        <p class="mb-1 text-[10px] text-warning">未申請の見込み</p>
+        <p class="text-lg font-bold leading-none text-warning">¥18,600</p>
+        <p class="mt-0.5 text-[10px] text-warning">18,600 pt（うち繰越 7,400 pt）</p>
+      </div>
+    </div>
+
+    <div class="min-h-0 flex-1 overflow-y-auto px-5 py-3">
+      <div class="flex flex-col divide-y divide-border md:hidden">
+        <div class="flex items-start justify-between gap-2 py-3">
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-primary">佐藤 花子</p>
+            <p class="mt-0.5 text-[11px] text-subtle-light">1001</p>
+          </div>
+          <div class="flex w-24 shrink-0 flex-col items-end gap-1">
+            <span class="rounded-full bg-success-surface px-2 py-0.5 text-[10px] font-medium text-success">申請済み</span>
+            <p class="mt-0.5 text-[12px] font-bold leading-none text-primary">3,200pt</p>
+            <p class="text-right text-[10px] text-subtle">うち繰越 1,400</p>
+            <p class="text-[10px] text-subtle">¥3,200</p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2 py-3">
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-primary">鈴木 一郎</p>
+            <p class="mt-0.5 text-[11px] text-subtle-light">1002</p>
+          </div>
+          <div class="flex w-24 shrink-0 flex-col items-end gap-1">
+            <span class="rounded-full bg-success-surface px-2 py-0.5 text-[10px] font-medium text-success">申請済み</span>
+            <p class="mt-0.5 text-[12px] font-bold leading-none text-primary">900pt</p>
+            <p class="text-[10px] text-subtle">¥900</p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2 py-3 opacity-50">
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-text">田中 実</p>
+            <p class="mt-0.5 text-[11px] text-subtle-light">1003</p>
+          </div>
+          <div class="flex w-24 shrink-0 flex-col items-end gap-1">
+            <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">未申請</span>
+            <p class="mt-0.5 text-[12px] font-bold leading-none text-warning">1,500pt</p>
+            <p class="text-right text-[10px] text-subtle">見込み ・ うち繰越 600</p>
+            <p class="text-[10px] text-subtle">¥1,500</p>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-2 py-3 opacity-50">
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-text">高橋 未来</p>
+            <p class="mt-0.5 text-[11px] text-subtle-light">1004</p>
+            <div class="mt-1"><button type="button" class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-semibold text-warning">プロフィール不足</button></div>
+          </div>
+          <div class="flex w-24 shrink-0 flex-col items-end gap-1">
+            <span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">未申請</span>
+            <p class="mt-0.5 text-[12px] font-bold leading-none text-warning">400pt</p>
+            <p class="text-right text-[10px] text-subtle">見込み</p>
+            <p class="text-[10px] text-subtle">¥400</p>
+          </div>
+        </div>
+      </div>
+      <table class="hidden w-full md:table">
+        <thead>
+          <tr class="border-b border-border text-[11px] text-subtle">
+            <th class="py-3 pr-2 text-left"><input type="checkbox" aria-label="全ページの出力対象を選択"></th>
+            <th class="py-3 pr-2 text-left">氏名・社員番号</th>
+            <th class="py-3 pr-2 text-right">申請pt</th>
+            <th class="py-3 pr-2 text-right">うち繰越</th>
+            <th class="py-3 pr-2 text-right">換算額</th>
+            <th class="py-3 text-center">ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-border transition-colors last:border-0 hover:bg-background">
+            <td class="py-3 pl-1 pr-2"><input type="checkbox" checked aria-label="佐藤 花子 を出力対象にする"></td>
+            <td class="py-3 pr-2">
+              <div class="text-sm font-semibold text-primary">佐藤 花子</div>
+              <div class="mt-0.5 text-[11px] text-subtle-light">1001</div>
+            </td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-primary">3,200 pt</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[13px] font-medium text-subtle">1,400 pt</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-primary">¥3,200</span></td>
+            <td class="py-3 text-center"><span class="rounded-full bg-success-surface px-2 py-0.5 text-xs font-medium text-success">申請済み</span></td>
+          </tr>
+          <tr class="border-b border-border transition-colors last:border-0 hover:bg-background">
+            <td class="py-3 pl-1 pr-2"><input type="checkbox" checked aria-label="鈴木 一郎 を出力対象にする"></td>
+            <td class="py-3 pr-2">
+              <div class="text-sm font-semibold text-primary">鈴木 一郎</div>
+              <div class="mt-0.5 text-[11px] text-subtle-light">1002</div>
+            </td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-primary">900 pt</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[13px] text-subtle-light">—</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-primary">¥900</span></td>
+            <td class="py-3 text-center"><span class="rounded-full bg-success-surface px-2 py-0.5 text-xs font-medium text-success">申請済み</span></td>
+          </tr>
+          <tr class="border-b border-border transition-colors last:border-0 hover:bg-background opacity-50">
+            <td class="py-3 pl-1 pr-2"><input type="checkbox" disabled aria-label="田中 実 を出力対象にする"></td>
+            <td class="py-3 pr-2">
+              <div class="text-sm font-semibold text-text">田中 実</div>
+              <div class="mt-0.5 text-[11px] text-subtle-light">1003</div>
+            </td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-warning">1,500 pt</span><span class="ml-1 text-[10px] text-subtle">見込み</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[13px] font-medium text-subtle">600 pt</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-subtle">¥1,500</span></td>
+            <td class="py-3 text-center"><span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-medium text-subtle">未申請</span></td>
+          </tr>
+          <tr class="border-b border-border transition-colors last:border-0 hover:bg-background opacity-50">
+            <td class="py-3 pl-1 pr-2"><input type="checkbox" disabled aria-label="高橋 未来 を出力対象にする"></td>
+            <td class="py-3 pr-2">
+              <div class="text-sm font-semibold text-text">高橋 未来</div>
+              <div class="mt-0.5 text-[11px] text-subtle-light">1004</div>
+              <div class="mt-1"><button type="button" class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-semibold text-warning">プロフィール不足</button></div>
+            </td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-warning">400 pt</span><span class="ml-1 text-[10px] text-subtle">見込み</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[13px] text-subtle-light">—</span></td>
+            <td class="py-3 pr-2 text-right"><span class="text-[15px] font-bold text-subtle">¥400</span></td>
+            <td class="py-3 text-center"><span class="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-medium text-subtle">未申請</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex shrink-0 flex-col-reverse gap-2 border-t border-border px-5 py-4 md:flex-row md:justify-end">
+      <button type="button" data-close-dialog class="h-12 w-full rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background md:h-10 md:w-auto">閉じる</button>
+      <button type="button" class="h-12 w-full rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid md:h-10 md:w-auto">CSV を出力</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// クエスト報奨金の繰り越し: 精算設定の編集モード切替（読み取り⇄編集）。PC はカード内で入れ替え、
+// モバイルはヒーローを半透明にしつつ下からボトムシートを出す（BudgetYearPanel.tsx の isSettlementEditing 相当）
+(function () {
+  function q(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+  function toggle(editing) {
+    q('[data-settle-read]').forEach(function (n) { n.style.display = editing ? 'none' : ''; });
+    var editPc = document.querySelector('[data-settle-edit-pc]');
+    if (editPc) editPc.style.display = editing ? '' : 'none';
+    var heroMb = document.querySelector('[data-settle-edit-mobile-hero]');
+    if (heroMb) heroMb.style.display = editing ? '' : 'none';
+    var title = document.querySelector('[data-settle-title]');
+    if (title) title.textContent = editing ? '報奨金精算 — 設定を編集中' : '報奨金精算';
+    q('[data-settle-chip]').forEach(function (n) { n.style.display = editing ? 'none' : ''; });
+    q('[data-settle-readbtn]').forEach(function (n) { n.style.display = editing ? 'none' : ''; });
+    q('[data-settle-editbtn]').forEach(function (n) { n.style.display = editing ? '' : 'none'; });
+    var sheet = document.querySelector('[data-settle-sheet]');
+    var scrim = document.querySelector('[data-settle-scrim]');
+    if (sheet) sheet.classList.toggle('translate-y-full', !editing);
+    if (scrim) scrim.style.display = editing ? '' : 'none';
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-settle-edit-open]')) { toggle(true); return; }
+    if (e.target.closest('[data-settle-edit-close]') || e.target.closest('[data-settle-scrim]')) { toggle(false); }
+  });
+})();
 </script>
 </body>
 </html>

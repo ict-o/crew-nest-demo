@@ -221,10 +221,18 @@
                       <span class="text-xs text-subtle">申請中</span>
                       <span class="text-sm font-medium text-subtle">600 pt</span>
                     </div>
-                    <div class="flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg bg-background px-3 py-2 md:flex-[1_1_0]">
-                      <span class="text-xs text-subtle">2025年度 獲得</span>
-                      <span class="text-sm font-medium text-primary">8,900 pt</span>
-                    </div>
+                    <button type="button" data-open-dialog="bonus-apply"
+                      aria-label="2025年度分 9,600ポイント（うち繰越 700ポイント）を交換申請する"
+                      class="flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg bg-primary-lightest px-3 py-2 text-left transition hover:brightness-[0.97] active:brightness-[0.94] md:flex-[1_1_0]">
+                      <span class="flex items-center gap-1">
+                        <span class="text-xs font-medium text-primary">2025年度</span>
+                        <span class="shrink-0 rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[10px] font-medium text-info">繰越あり</span>
+                      </span>
+                      <span class="truncate">
+                        <span class="text-sm font-bold text-primary">9,600 pt</span>
+                        <span class="ml-1.5 inline-flex items-center gap-0.5 text-xs font-medium text-primary">交換申請<span aria-hidden="true" class="text-[10px] opacity-70">›</span></span>
+                      </span>
+                    </button>
                   </div>
                 </div>
                 <div class="h-px bg-border"></div>
@@ -516,10 +524,18 @@
                     <span class="text-xs text-subtle">申請中</span>
                     <span class="text-sm font-medium text-subtle">600 pt</span>
                   </div>
-                  <div class="flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg bg-background px-3 py-2">
-                    <span class="text-xs text-subtle">2025年度 獲得</span>
-                    <span class="text-sm font-medium text-primary">8,900 pt</span>
-                  </div>
+                  <button type="button" data-open-dialog="bonus-apply"
+                    aria-label="2025年度分 9,600ポイント（うち繰越 700ポイント）を交換申請する"
+                    class="flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg bg-primary-lightest px-3 py-2 text-left transition hover:brightness-[0.97] active:brightness-[0.94]">
+                    <span class="flex items-center gap-1">
+                      <span class="text-xs font-medium text-primary">2025年度</span>
+                      <span class="shrink-0 rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[10px] font-medium text-info">繰越あり</span>
+                    </span>
+                    <span class="truncate">
+                      <span class="text-sm font-bold text-primary">9,600 pt</span>
+                      <span class="ml-1.5 inline-flex items-center gap-0.5 text-xs font-medium text-primary">交換申請<span aria-hidden="true" class="text-[10px] opacity-70">›</span></span>
+                    </span>
+                  </button>
                 </div>
               </div>
               <div class="h-px bg-border"></div>
@@ -1063,5 +1079,52 @@ CNTour.define('home', [
   { target: '[data-tour="home-customize"]', title: 'ホーム画面をカスタマイズ', body: 'このボタンから、カードの並び替えや表示・非表示を変更できます。自分の使いやすいホーム画面に整えてみてください。' }
 ]);
 </script>
+
+<!-- クエスト報奨金の交換申請確認（繰り越し機能で追加。BonusApplicationModal.tsx を再現。閉じるボタンは無く、背景クリックとキャンセルで閉じる） -->
+<div data-dialog="bonus-apply" class="fixed inset-0 z-[110] items-center justify-center bg-black/50 px-4" style="display:none;">
+  <div role="dialog" aria-modal="true" class="w-full max-w-sm rounded-2xl bg-background-light shadow-md">
+    <div class="px-5 pt-5 text-center">
+      <h2 class="text-base font-bold text-primary">クエスト報奨金申請の確認</h2>
+      <p class="mt-0.5 text-[11px] text-subtle">2025年度分 ｜ 申請期限: 2026年1月31日</p>
+    </div>
+    <div class="px-5 pt-3">
+      <p class="text-xs font-medium text-subtle">内訳</p>
+      <div class="mt-1 divide-y divide-border rounded-lg border border-border">
+        <div class="flex items-center justify-between px-3 py-2">
+          <span class="flex items-center gap-1.5 text-[11px] text-subtle">
+            2023年度
+            <span class="shrink-0 rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning">今回が最後</span>
+          </span>
+          <span class="text-[13px] font-medium text-primary">700 pt</span>
+        </div>
+        <div class="flex items-center justify-between px-3 py-2">
+          <span class="flex items-center gap-1.5 text-[11px] text-subtle">2025年度</span>
+          <span class="text-[13px] font-medium text-primary">8,900 pt</span>
+        </div>
+      </div>
+      <p class="mt-1.5 text-[11px] text-subtle">2023年度分は次の申請期間では対象外になります。最低申請ポイントは 500 pt です。</p>
+    </div>
+    <div class="px-5 py-4 space-y-2">
+      <p class="text-[11px] text-subtle">今回申請するクエスト報奨金額を確認してください。内容に問題がなければ申請を実行します。</p>
+      <div class="flex items-center justify-between rounded-lg bg-background px-3 py-2">
+        <span class="text-[11px] text-subtle">対象ポイント（2025年度獲得分）</span>
+        <span class="text-[13px] font-bold text-primary">9,600 pt</span>
+      </div>
+      <div class="flex items-center justify-between rounded-lg bg-background px-3 py-2">
+        <span class="text-[11px] text-subtle">変換レート</span>
+        <span class="text-[13px] font-bold text-primary">¥1 / pt</span>
+      </div>
+      <div class="flex items-center justify-between rounded-lg bg-primary/10 px-3 py-2">
+        <span class="text-[11px] font-bold text-primary">報奨金額（目安）</span>
+        <span class="text-lg font-bold text-primary">¥9,600</span>
+      </div>
+      <p class="rounded-lg bg-background px-3 py-2 text-[10px] leading-relaxed text-subtle-light">申請後はポイントがロックされます。実際の支給額は会社の判断により決定されます。</p>
+    </div>
+    <div class="flex flex-col gap-2 px-5 pb-5">
+      <button type="button" data-close-dialog class="w-full rounded-full bg-primary px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-primary-mid">申請を実行する</button>
+      <button type="button" data-close-dialog class="w-full rounded-full border border-border bg-background px-4 py-2.5 text-[13px] font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
