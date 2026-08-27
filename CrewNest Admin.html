@@ -5449,7 +5449,7 @@ var ueSort = { key: 'name', dir: 'asc' };
 
 function ueJobOf(r){
   var v = (r.getAttribute('data-u-job') || '').trim();
-  return (v === '' || v === '-') ? null : v;   // 役職の未設定は昇降どちらでも末尾
+  return (v === '' || v === '-') ? null : v;   // 役職の未設定は昇順で末尾・降順で先頭
 }
 function ueNameCmp(a, b){
   return a.getAttribute('data-u-name').localeCompare(b.getAttribute('data-u-name'), 'ja')
@@ -5469,8 +5469,8 @@ function ueSortRows(){
       if (ueSort.key === 'job') {
         var aj = ueJobOf(a), bj = ueJobOf(b);
         if (aj === null && bj === null) return ueNameCmp(a, b);
-        if (aj === null) return 1;
-        if (bj === null) return -1;
+        if (aj === null) return sign;
+        if (bj === null) return -sign;
         return aj.localeCompare(bj, 'ja') * sign || ueNameCmp(a, b);
       }
       if (ueSort.key === 'todo') {
