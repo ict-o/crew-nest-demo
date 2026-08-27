@@ -425,7 +425,7 @@
                   <span class="text-sm font-bold text-primary">+10 pt</span>
                   <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">+5 xp</span>
                 </div>
-                <button type="button" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
+                <button type="button" data-loading-sim="receive" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
               </li>
               <li class="flex min-w-0 items-center gap-3 py-3 first:pt-0 last:pb-0">
                 <div class="relative shrink-0">
@@ -441,7 +441,7 @@
                   <span class="text-sm font-bold text-primary">+200 pt</span>
                   <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">+80 xp</span>
                 </div>
-                <button type="button" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
+                <button type="button" data-loading-sim="receive" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
               </li>
             </ul>
           </div>
@@ -628,7 +628,7 @@
                 <span class="text-sm font-bold text-primary">+10 pt</span>
                 <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">+5 xp</span>
               </div>
-              <button type="button" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
+              <button type="button" data-loading-sim="receive" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
             </li>
             <li class="flex min-w-0 items-center gap-3 py-3 first:pt-0 last:pb-0">
               <div class="relative shrink-0">
@@ -644,7 +644,7 @@
                 <span class="text-sm font-bold text-primary">+200 pt</span>
                 <span class="rounded-full border border-success-border bg-success-surface px-2 py-0.5 text-[11px] font-bold text-success">+80 xp</span>
               </div>
-              <button type="button" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
+              <button type="button" data-loading-sim="receive" class="shrink-0 rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white hover:bg-primary-mid">受け取る</button>
             </li>
           </ul>
         </div>
@@ -810,6 +810,7 @@
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
 <script src="more-sheet.js"></script>
+<script src="loading-feedback.js"></script>
 
 <!-- 安否確認 回答ダイアログ -->
 <div data-dialog="safety-response" class="fixed inset-0 z-[110] items-end justify-center bg-black/45 md:items-center md:p-4" style="display:none;">
