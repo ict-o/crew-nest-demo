@@ -37,6 +37,25 @@
   }
 </script>
 <style>
+/* 交換申請セルのシャイン（申請可能なときに光の帯が走る） */
+@keyframes bonus-cta-shine {
+  0% { transform: translateX(-160%) skewX(-20deg); }
+  55%, 100% { transform: translateX(360%) skewX(-20deg); }
+}
+.bonus-cta-shine { position: relative; overflow: hidden; }
+.bonus-cta-shine::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 45%;
+  background: linear-gradient(105deg, transparent, rgb(255 255 255 / 0.55), transparent);
+  animation: bonus-cta-shine 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bonus-cta-shine::after { animation: none; background: none; }
+}
+
   :root {
     --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
     --z-header: 50; --z-tooltip: 100;
@@ -223,14 +242,11 @@
                     </div>
                     <button type="button" data-open-dialog="bonus-apply"
                       aria-label="2025年度分 9,600ポイント（うち繰越 700ポイント）を交換申請する"
-                      class="flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg bg-primary-lightest px-3 py-2 text-left transition hover:brightness-[0.97] active:brightness-[0.94] md:flex-[1_1_0]">
-                      <span class="flex items-center gap-1">
-                        <span class="text-xs font-medium text-primary">2025年度</span>
-                        <span class="shrink-0 rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[10px] font-medium text-info">繰越あり</span>
-                      </span>
-                      <span class="truncate">
-                        <span class="text-sm font-bold text-primary">9,600 pt</span>
-                        <span class="ml-1.5 inline-flex items-center gap-0.5 text-xs font-medium text-primary">交換申請<span aria-hidden="true" class="text-[10px] opacity-70">›</span></span>
+                      style="background:linear-gradient(90deg,var(--color-accent-bright,#E8C66A) 0%,var(--color-accent,#C6A75E) 100%);" class="bonus-cta-shine flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg px-3 py-2 text-left shadow-sm transition hover:brightness-[0.97] active:brightness-[0.94] md:flex-[1_1_0]">
+                      <span class="truncate text-sm font-bold text-primary">9,600 pt</span>
+                      <span class="flex min-w-0 items-baseline justify-between gap-1">
+                        <span class="inline-flex items-center gap-0.5 text-xs font-bold text-primary">交換する<span aria-hidden="true" class="text-[10px] opacity-70">›</span></span>
+                        <span class="shrink-0 text-[10px] font-medium text-primary opacity-75">8/31まで</span>
                       </span>
                     </button>
                   </div>
@@ -526,14 +542,11 @@
                   </div>
                   <button type="button" data-open-dialog="bonus-apply"
                     aria-label="2025年度分 9,600ポイント（うち繰越 700ポイント）を交換申請する"
-                    class="flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg bg-primary-lightest px-3 py-2 text-left transition hover:brightness-[0.97] active:brightness-[0.94]">
-                    <span class="flex items-center gap-1">
-                      <span class="text-xs font-medium text-primary">2025年度</span>
-                      <span class="shrink-0 rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[10px] font-medium text-info">繰越あり</span>
-                    </span>
-                    <span class="truncate">
-                      <span class="text-sm font-bold text-primary">9,600 pt</span>
-                      <span class="ml-1.5 inline-flex items-center gap-0.5 text-xs font-medium text-primary">交換申請<span aria-hidden="true" class="text-[10px] opacity-70">›</span></span>
+                    style="background:linear-gradient(90deg,var(--color-accent-bright,#E8C66A) 0%,var(--color-accent,#C6A75E) 100%);" class="bonus-cta-shine flex min-w-0 flex-1 flex-col justify-center gap-0.5 rounded-lg px-3 py-2 text-left shadow-sm transition hover:brightness-[0.97] active:brightness-[0.94]">
+                    <span class="truncate text-sm font-bold text-primary">9,600 pt</span>
+                    <span class="flex min-w-0 items-baseline justify-between gap-1">
+                      <span class="inline-flex items-center gap-0.5 text-xs font-bold text-primary">交換する<span aria-hidden="true" class="text-[10px] opacity-70">›</span></span>
+                      <span class="shrink-0 text-[10px] font-medium text-primary opacity-75">8/31まで</span>
                     </span>
                   </button>
                 </div>
