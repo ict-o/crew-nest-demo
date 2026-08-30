@@ -5808,7 +5808,7 @@ document.addEventListener('slidewillopen', function(ev){
     all('[data-qe-heading]').forEach(function(n){ n.textContent = isCopy ? 'クエストをコピーして作成' : (isNew ? 'クエストを追加' : 'クエストを編集'); });
     all('[data-qe-savebtn]').forEach(function(n){ n.textContent = isCopy ? '作成する' : '保存する'; });
     all('[data-qe-copybtn]').forEach(function(n){ n.style.display = (isNew || isCopy) ? 'none' : ''; });
-    all('[data-qe-title]').forEach(function(n){ n.value = (t.getAttribute('data-q-title') || '') + (isCopy ? 'のコピー' : ''); });
+    all('[data-qe-title]').forEach(function(n){ n.value = t.getAttribute('data-q-title') || ''; });
     all('[data-qe-pt]').forEach(function(n){ n.value = t.getAttribute('data-q-pt') || '0'; });
     all('[data-qe-xp]').forEach(function(n){ n.value = t.getAttribute('data-q-xp') || '0'; });
     all('[data-qe-freq]').forEach(function(n){ n.value = t.getAttribute('data-q-freq') || 'UNLIMITED'; });
