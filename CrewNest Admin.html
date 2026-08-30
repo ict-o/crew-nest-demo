@@ -6090,13 +6090,26 @@ document.addEventListener('click', function(e){
   function closeRowMenus(){
     document.querySelectorAll('[data-q-rowmenu]').forEach(function(m){ m.style.display = 'none'; });
   }
+  // 行の折りたたみラッパー（data-tree-body の overflow:hidden）でメニューがクリップされるため、
+  // 開くたびに position:fixed でボタン基準の座標へ配置し body 直下相当の見え方に逃がす
+  // （本体アプリの Radix DropdownMenu が body へポータルするのと同じ効果）
+  function positionRowMenu(btn, menu){
+    var rect = btn.getBoundingClientRect();
+    menu.style.position = 'fixed';
+    menu.style.top = (rect.bottom + 4) + 'px';
+    menu.style.right = (window.innerWidth - rect.right) + 'px';
+    menu.style.left = 'auto';
+  }
   document.querySelectorAll('[data-q-rowmenu-btn]').forEach(function(btn){
     btn.addEventListener('click', function(e){
       e.stopPropagation();
       var menu = btn.parentElement.querySelector('[data-q-rowmenu]');
       var willOpen = menu && menu.style.display !== 'block';
       closeRowMenus();
-      if (menu && willOpen) menu.style.display = 'block';
+      if (menu && willOpen) {
+        positionRowMenu(btn, menu);
+        menu.style.display = 'block';
+      }
     });
   });
   document.querySelectorAll('[data-q-copy-item]').forEach(function(item){
@@ -6110,6 +6123,9 @@ document.addEventListener('click', function(e){
   document.addEventListener('click', function(e){
     if (!e.target.closest('[data-q-rowmenu]') && !e.target.closest('[data-q-rowmenu-btn]')) closeRowMenus();
   });
+  // スクロール・リサイズで開いたままだと座標がズレるため、その場合は閉じる（厳密追従はしない）
+  document.addEventListener('scroll', closeRowMenus, true);
+  window.addEventListener('resize', closeRowMenus);
   // クエスト編集パネルのヘッダ「コピーして作成」: 表示中の値のままコピーモードへ切り替える
   document.addEventListener('click', function(e){
     var copyBtn = e.target.closest('[data-qe-copybtn]');
