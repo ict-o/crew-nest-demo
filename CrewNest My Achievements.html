@@ -258,7 +258,7 @@
       </div>
 
       <div data-panel="incoming" class="mt-2">
-        <div class="flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="sec_incoming" data-tabkey="ALL" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">2</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="APPROVAL" class="tab-btn tab-btn-secondary ">対応待ち<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">2</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">承認した<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">0</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="RETURNED" class="tab-btn tab-btn-secondary ">差し戻した<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">0</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="REJECTED" class="tab-btn tab-btn-secondary ">却下した<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">0</span></button></div>
+        <div class="flex gap-1 overflow-x-auto"><button type="button" data-tabgroup="sec_incoming" data-tabkey="ALL" class="tab-btn tab-btn-secondary is-active">すべて<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">4</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="APPROVAL" class="tab-btn tab-btn-secondary ">対応待ち<span class="rounded-full px-2 py-0.5 text-xs bg-accent text-primary font-bold">2</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="APPROVED" class="tab-btn tab-btn-secondary ">承認した<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">0</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="RETURNED" class="tab-btn tab-btn-secondary ">差し戻した<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">0</span></button><button type="button" data-tabgroup="sec_incoming" data-tabkey="REJECTED" class="tab-btn tab-btn-secondary ">却下した<span class="rounded-full px-2 py-0.5 text-xs bg-background text-subtle">0</span></button></div>
         <div class="mt-4 flex flex-col gap-3">
         <div data-open-slide="ach-detail" data-item data-status="APPROVAL" class="w-full cursor-pointer overflow-hidden rounded-xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
           <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
@@ -280,6 +280,30 @@
           <div class="flex flex-wrap items-center gap-3 text-sm text-subtle">
             <span>2026/06/27 16:20</span>
             <span>申告者: 渡辺 さゆり</span>
+          </div>
+        </div>
+        <div data-open-slide="ach-detail" data-item data-status="REASSIGNED_PENDING" class="w-full cursor-pointer overflow-hidden rounded-xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5B7FC0;">
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+            <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-warning-surface text-warning border border-warning-border">申請中</span>
+            <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">50 pt</span>
+            <span class="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium bg-neutral-surface text-subtle border-neutral-border">再割り当て済み → 高橋美咲さん</span>
+          </div>
+          <p class="mb-2 font-semibold text-text">月次レポート作成</p>
+          <div class="flex flex-wrap items-center gap-3 text-sm text-subtle">
+            <span>2026/06/12 10:00</span>
+            <span>申告者: 佐藤花子</span>
+          </div>
+        </div>
+        <div data-open-slide="ach-detail" data-item data-status="REASSIGNED_APPROVED" class="w-full cursor-pointer overflow-hidden rounded-xl border-l-4 bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg" style="border-left-color:#5A9E74;">
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+            <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-success-surface text-success border border-success-border">承認済み</span>
+            <span class="rounded-full border border-primary bg-primary-lightest px-2 py-0.5 text-[11px] font-bold text-primary">80 pt</span>
+            <span class="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium bg-neutral-surface text-subtle border-neutral-border">再割り当て済み → 鈴木一郎さん</span>
+          </div>
+          <p class="mb-2 font-semibold text-text">新規顧客ヒアリング</p>
+          <div class="flex flex-wrap items-center gap-3 text-sm text-subtle">
+            <span>2026/05/20 14:00</span>
+            <span>申告者: 佐藤花子</span>
           </div>
         </div></div>
       </div>
