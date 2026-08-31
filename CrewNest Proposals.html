@@ -53,6 +53,11 @@
   .ring-gauge { border-radius:9999px; display:inline-block; }
   .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.5rem; cursor:pointer; border-right:3px solid transparent; }
   .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); }
+
+  /* いいねの長押し押下フィードバック（[data-like] = ハートSVG＋数字の inline-flex span） */
+  [data-like] { position: relative; transform-origin: center; transition: transform .15s ease-in-out; }
+  [data-like].is-pressing { transition: transform .15s ease-in-out; transform: scale(0.85); }
+  [data-like].is-recognized { transition: transform .25s cubic-bezier(0.34, 1.4, 0.64, 1); transform: scale(1.2); }
 </style>
 <link rel="stylesheet" href="demo-watermark.css">
 <script src="demo-banner.js"></script>
@@ -695,7 +700,18 @@ document.addEventListener('click', function(ev){
     window.openSlide('proposal-likes');
   }
 
-  var timer, recognized = false, suppress = false, start = null;
+  var LONGPRESS_MS = 500;
+  var MOVE_THRESHOLD_PX = 10;
+  var POP_MS = 250; // 成立ポップの演出時間。この時間だけ経ったら表示だけ元へ戻す
+  var OVERLAY_GUARD_MS = 400; // 成立した押下が終わってからこの間、いいね一覧のオーバーレイ操作を無視する
+
+  var timer, recognized = false, suppress = false, start = null, activeTrigger = null;
+  var overlayGuardUntil = 0;
+
+  function clearFeedback(trigger) {
+    if (!trigger) return;
+    trigger.classList.remove('is-pressing', 'is-recognized');
+  }
 
   document.addEventListener('touchstart', function (e) {
     var trigger = e.target.closest('[data-like]');
@@ -704,32 +720,71 @@ document.addEventListener('click', function(ev){
     var t = e.touches[0];
     start = { x: t.clientX, y: t.clientY };
     recognized = false;
+    activeTrigger = trigger;
     clearTimeout(timer);
-    timer = setTimeout(function () { recognized = true; }, 500);
+    trigger.classList.add('is-pressing');
+    timer = setTimeout(function () {
+      recognized = true;
+      trigger.classList.remove('is-pressing');
+      trigger.classList.add('is-recognized');
+      if ('vibrate' in navigator) navigator.vibrate(30);
+      openLikes(trigger); // 成立と同時に一覧を開く（指はまだ画面上）
+      setTimeout(function () { trigger.classList.remove('is-recognized'); }, POP_MS);
+    }, LONGPRESS_MS);
   }, { passive: true });
 
   document.addEventListener('touchmove', function (e) {
-    if (!start) return;
+    if (!start || recognized) return; // 成立後の移動では取り消さない
     var t = e.touches[0];
     if (!t) return;
-    if (Math.hypot(t.clientX - start.x, t.clientY - start.y) > 10) { clearTimeout(timer); recognized = false; }
+    if (Math.hypot(t.clientX - start.x, t.clientY - start.y) > MOVE_THRESHOLD_PX) {
+      clearTimeout(timer);
+      clearFeedback(activeTrigger);
+      start = null;
+      activeTrigger = null;
+    }
   }, { passive: true });
 
   document.addEventListener('touchend', function (e) {
     clearTimeout(timer);
+    var wasRecognized = recognized;
     start = null;
-    if (!recognized) return;
+    if (!wasRecognized) {
+      clearFeedback(activeTrigger);
+      activeTrigger = null;
+      return;
+    }
+    // 成立済み: openLikes は成立時点で呼び済みなのでここでは呼ばない。
+    // 合成 click の消費と、オーバーレイ誤クリックガードだけ張る
     recognized = false;
+    activeTrigger = null;
     suppress = true;
-    var trigger = e.target.closest('[data-like]');
+    overlayGuardUntil = Date.now() + OVERLAY_GUARD_MS;
     if (e.cancelable) e.preventDefault();
-    if (trigger) openLikes(trigger);
   });
 
-  document.addEventListener('touchcancel', function () { clearTimeout(timer); recognized = false; start = null; });
+  document.addEventListener('touchcancel', function () {
+    clearTimeout(timer);
+    if (recognized) {
+      recognized = false;
+      suppress = true;
+      overlayGuardUntil = Date.now() + OVERLAY_GUARD_MS;
+    }
+    clearFeedback(activeTrigger);
+    start = null;
+    activeTrigger = null;
+  });
 
-  // 長押し由来の click を消費する（capture でカード・共通スライド機構より先に止める）
+  // 長押し由来の click／成立直後のオーバーレイ誤クリックを消費する
+  // （capture でカード・共通スライド機構より先に止める）
   document.addEventListener('click', function (e) {
+    var overlayGuarded = Date.now() < overlayGuardUntil &&
+      (e.target.closest('[data-overlay="proposal-likes"]') || e.target.closest('[data-slide="proposal-likes"] [data-close-slide]'));
+    if (overlayGuarded) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     if (!suppress) return;
     suppress = false;
     e.preventDefault();
