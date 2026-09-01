@@ -145,8 +145,17 @@
       </a>
     </div>
   </nav>
+  <!-- 検索 -->
+  <div class="border-t border-white/10 px-3 py-2">
+    <button type="button" data-open-dialog="search" class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+      <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </span>
+      <span class="truncate">検索</span>
+    </button>
+  </div>
   <div class="border-t border-white/10 px-3 py-3">
-    <button type="button" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+    <button type="button" data-tour="user-menu" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
       <span class="min-w-0 flex-1">
         <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
@@ -434,6 +443,7 @@ document.addEventListener('click', function(e){
 <script src="slide-panels.js"></script>
 <script src="user-menu.js"></script>
 <script src="more-sheet.js"></script>
+<script src="search.js"></script>
 <script src="loading-feedback.js"></script>
 </body>
 </html>

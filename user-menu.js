@@ -652,7 +652,9 @@
   /* ============ 初期化: ボタンにメニューを取り付け ============ */
   function init() {
     // サイドナビ下部のユーザーボタン（名前+メール表示のボタン）
-    var sideBtn = document.querySelector('aside .border-t.border-white\\/10 button');
+    // 検索行を追加すると border-t.border-white/10 の button が複数になるため、
+    // 最初に一致した button を拾う書き方ではなくユーザー行だけを一意に指す data-tour="user-menu" で取得する
+    var sideBtn = document.querySelector('aside [data-tour="user-menu"]');
     attachMenu(sideBtn, 'bottom-full left-2 right-2 mb-1 w-auto', false);
     // モバイルヘッダーのアカウントボタン
     var mobileBtn = document.querySelector('header button[aria-label="アカウント"]');
