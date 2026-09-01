@@ -207,7 +207,7 @@
              data-a-period="2026/08/18 09:00 〜 無期限" data-a-notify="通知: 送信済み（Push・メール）" data-a-read="19" data-a-unread="5"
              data-a-body="9月5日（金）17:00 より会議室Aにて社内勉強会を開催します。オンライン参加も可能です。&#10;&#10;参加登録は添付のフォームからお願いします。"
              class="w-full cursor-pointer rounded-xl border border-border bg-background-light p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">公開中</span><span class="rounded-full border border-neutral-border bg-neutral-surface px-2.5 py-0.5 text-xs font-semibold text-subtle">アンケート</span></div>
+          <div class="mb-1.5 flex flex-wrap items-center gap-1.5"><span class="rounded-full border border-success-border bg-success-surface px-2.5 py-0.5 text-xs font-semibold text-success">公開中</span><span class="inline-flex items-center gap-1 rounded-full border border-info-border bg-info-surface px-2.5 py-0.5 text-xs font-semibold text-info"><svg viewBox="0 -960 960 960" width="12" height="12" fill="currentColor" aria-hidden="true" class="shrink-0"><path d="M280-80 120-240l160-160 56 58-62 62h406v-160h80v240H274l62 62-56 58Zm-80-440v-240h486l-62-62 56-58 160 160-160 160-56-58 62-62H280v160h-80Z"/></svg>毎月 18日 09:00</span><span class="rounded-full border border-neutral-border bg-neutral-surface px-2.5 py-0.5 text-xs font-semibold text-subtle">アンケート</span></div>
           <div class="mb-2"><p class="min-w-0 text-base font-semibold text-text">社内勉強会「生成AI活用術」開催のお知らせ</p></div>
           <p class="mb-2 text-sm text-subtle">2026/08/18 09:00 〜 無期限</p>
           <div class="flex items-center gap-2">
@@ -699,7 +699,7 @@ document.addEventListener('click', function(e){
         <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
       </div>
       <div class="flex items-center justify-between gap-3">
-        <div><p class="text-sm text-text">繰り返し再掲載</p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
+        <div><p class="flex items-center gap-1.5 text-sm text-text">繰り返し再掲載<button type="button" data-repeat-info aria-label="繰り返しの説明" class="-m-1 inline-flex shrink-0 items-center justify-center rounded-full p-1 text-subtle-light transition-colors hover:bg-black/[0.08] hover:text-subtle"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button></p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
         <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
       </div>
       <div class="flex items-center justify-between gap-3">
@@ -807,7 +807,7 @@ document.addEventListener('click', function(e){
         <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
       </div>
       <div class="flex items-center justify-between gap-3">
-        <div><p class="text-sm text-text">繰り返し再掲載</p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
+        <div><p class="flex items-center gap-1.5 text-sm text-text">繰り返し再掲載<button type="button" data-repeat-info aria-label="繰り返しの説明" class="-m-1 inline-flex shrink-0 items-center justify-center rounded-full p-1 text-subtle-light transition-colors hover:bg-black/[0.08] hover:text-subtle"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button></p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
         <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
       </div>
       <div class="flex items-center justify-between gap-3">
@@ -918,6 +918,36 @@ document.addEventListener('click', function(e){
   rem.classList.add('opacity-[0.38]');
   document.querySelectorAll('[data-svremindmsg]').forEach(function(n){ n.style.display = ''; });
 });
+</script>
+<script>
+// 「繰り返し再掲載」の説明ポップオーバー（クリック/タップで開閉。実アプリの InfoPopover 相当）
+(function(){
+  var pop = document.createElement('div');
+  pop.style.display = 'none';
+  pop.className = 'fixed z-[130] w-72 max-w-[calc(100vw-24px)] rounded-lg border border-border bg-background-light p-3 text-xs text-text shadow-md';
+  pop.innerHTML = '<p class="mb-1.5 font-bold text-text">「繰り返す」の動き</p><ul class="flex list-disc flex-col gap-1 pl-4">'
+    + '<li>選んだ頻度で、同じお知らせを自動で再掲載します（基準は公開開始日時）</li>'
+    + '<li>再掲載のたびに全員が未読に戻ります（アンケートの回答もリセット）</li>'
+    + '<li>「通知を送る」がONなら、再掲載のたびに通知します</li>'
+    + '<li>公開終了日時・バナー表示の期間も同じ間隔で自動的に延長されます（終了なしの場合はそのまま）</li>'
+    + '<li>新しいお知らせは増えません（同じお知らせが最新として掲載されます）</li></ul>';
+  document.body.appendChild(pop);
+  function showAt(btn){
+    pop.style.display = '';
+    var r = btn.getBoundingClientRect();
+    var w = pop.offsetWidth, h = pop.offsetHeight;
+    var left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
+    var top = r.bottom + 8;
+    if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 8);
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('[data-repeat-info]');
+    if (btn) { e.stopPropagation(); if (pop.style.display === 'none') showAt(btn); else pop.style.display = 'none'; return; }
+    if (pop.style.display !== 'none' && !pop.contains(e.target)) pop.style.display = 'none';
+  });
+})();
 </script>
 <script src="tour.js"></script>
 <script>
