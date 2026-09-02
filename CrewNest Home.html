@@ -207,7 +207,7 @@
         <div class="flex min-w-0 flex-col gap-4">
 
           <!-- クエストサマリー -->
-          <div data-tour="home-quest-summary" class="w-full rounded-lg shadow-sm">
+          <div data-tour="home-quest-summary" data-card="quest-summary" class="w-full rounded-lg shadow-sm">
             <div class="flex flex-col">
               <div class="flex items-center gap-4 rounded-t-lg px-5 py-4" style="background: linear-gradient(135deg, #2E8B6F28 0%, #2E8B6F12 100%);">
                 <img src="public/icons/ranks/rank3.png" alt="ランク3" width="56" height="56" class="shrink-0">
@@ -281,7 +281,7 @@
           </div>
 
           <!-- カレンダー -->
-          <div data-tour="home-calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
+          <div data-tour="home-calendar" data-card="calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
             <div class="flex items-center gap-3 px-4 pb-2 pt-3.5">
               <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-lightest">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="#042154"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"></path></svg>
@@ -354,7 +354,7 @@
         <div class="flex min-w-0 flex-col gap-4">
 
           <!-- 通知（重要お知らせ＋通常フィード統合） -->
-          <div data-tour="home-notifications" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div data-tour="home-notifications" data-card="notification" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <div class="mb-4 flex min-w-0 items-center justify-between gap-3">
               <div class="flex min-w-0 items-center gap-2">
                 <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">通知</h2>
@@ -413,7 +413,7 @@
           </div>
 
           <!-- 受け取れるボーナス -->
-          <div data-tour="home-bonus" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div data-tour="home-bonus" data-card="claimable-quest" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <div class="mb-4 flex items-center justify-between">
               <div class="flex min-w-0 items-center gap-2">
                 <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">受け取れるボーナス</h2>
@@ -457,7 +457,7 @@
           </div>
 
           <!-- 経費未精算サマリ -->
-          <a href="CrewNest Expense Claims.html" data-tour="home-expense" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
+          <a href="CrewNest Expense Claims.html" data-tour="home-expense" data-card="expense-summary" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <img src="public/icons/apply.png" alt="" style="width:20px;height:20px;object-fit:contain;">
             </span>
@@ -470,7 +470,7 @@
           </a>
 
           <!-- クイックリンク -->
-          <div data-tour="home-quicklinks" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+          <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
             <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
               <a href="#" class="group flex flex-col items-center gap-1.5">
@@ -507,7 +507,7 @@
       <div class="flex flex-col gap-4 md:hidden">
 
         <!-- クエストサマリー -->
-        <div data-tour="home-quest-summary" class="w-full rounded-lg shadow-sm">
+        <div data-tour="home-quest-summary" data-card="quest-summary" class="w-full rounded-lg shadow-sm">
           <div class="flex flex-col">
             <div class="flex items-center gap-4 rounded-t-lg px-5 py-4" style="background: linear-gradient(135deg, #2E8B6F28 0%, #2E8B6F12 100%);">
               <img src="public/icons/ranks/rank3.png" alt="ランク3" width="56" height="56" class="shrink-0">
@@ -581,7 +581,7 @@
         </div>
 
         <!-- 通知（FeedNotificationsCard: 未読のみ） -->
-        <div data-tour="home-notifications" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-tour="home-notifications" data-card="notification" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
           <div class="mb-3 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">通知</h2>
@@ -616,7 +616,7 @@
         </div>
 
         <!-- 受け取れるボーナス -->
-        <div data-tour="home-bonus" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-tour="home-bonus" data-card="claimable-quest" class="w-full min-w-0 rounded-lg border border-border bg-background-light p-4 shadow-sm">
           <div class="mb-4 flex items-center justify-between">
             <div class="flex min-w-0 items-center gap-2">
               <h2 class="text-sm font-bold uppercase tracking-wide text-subtle">受け取れるボーナス</h2>
@@ -660,7 +660,7 @@
         </div>
 
         <!-- 経費未精算サマリ -->
-        <a href="CrewNest Expense Claims.html" data-tour="home-expense" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
+        <a href="CrewNest Expense Claims.html" data-tour="home-expense" data-card="expense-summary" class="flex items-center gap-3 rounded-lg border border-border bg-background-light p-4 shadow-sm transition-colors hover:bg-background">
           <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
             <img src="public/icons/apply.png" alt="" style="width:20px;height:20px;object-fit:contain;">
           </span>
@@ -673,7 +673,7 @@
         </a>
 
         <!-- カレンダー -->
-        <div data-tour="home-calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
+        <div data-tour="home-calendar" data-card="calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
           <div class="flex items-center gap-3 px-4 pb-2 pt-3.5">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-lightest">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="#042154"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"></path></svg>
@@ -742,7 +742,7 @@
         </div>
 
         <!-- クイックリンク -->
-        <div data-tour="home-quicklinks" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+        <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
           <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
           <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
             <a href="#" class="group flex flex-col items-center gap-1.5">
@@ -821,6 +821,7 @@
 <script src="user-menu.js"></script>
 <script src="more-sheet.js"></script>
 <script src="search.js"></script>
+<script src="home-card-link.js"></script>
 <script src="loading-feedback.js"></script>
 
 <!-- 安否確認 回答ダイアログ -->

@@ -26,7 +26,9 @@
   // 検索対象の種類ごとのアイコンは、サイドナビ・その他シートで使っている実ファイルをそのまま参照する（base64化して二重に埋め込まない）
   var GROUP_ORDER = ['notification', 'quest', 'proposal', 'announcement', 'document', 'quicklink', 'user'];
   var GROUP_LABEL = { notification: '通知', quest: 'クエスト', proposal: 'アイデア', announcement: 'お知らせ', document: '書類提出', quicklink: 'クイックリンク', user: 'ユーザー' };
-  // 「設定」は SEARCH_ITEMS/GROUP_ORDER に含めず、常に末尾に別枠で描画する（本体 SearchDialog.tsx と同じ並び）
+  // 「ホーム」「設定」は SEARCH_ITEMS/GROUP_ORDER に含めず、サーバー枠の下に別枠で描画する
+  // （本体 SearchDialog.tsx と同じ並び: サーバー枠 → ホーム → 設定）
+  var HOME_LABEL = 'ホーム';
   var SETTINGS_LABEL = '設定';
   var ICON_SRC = {
     notification: 'public/icons/notification.png',
@@ -34,7 +36,8 @@
     proposal: 'public/icons/proposal.png',
     announcement: 'public/icons/megaphone.png',
     document: 'public/icons/airplane.png',
-    quicklink: 'public/icons/ui/open_in_new.svg'
+    quicklink: 'public/icons/ui/open_in_new.svg',
+    home: 'public/icons/home.png'
   };
   // user / settings は既存の png アセットが無いため、user-menu.js の ICONS.person / ICONS.settings と同じパスをインライン化する
   var ICON_SVG_PATH = {
@@ -52,6 +55,26 @@
 
   function searchSettingsCatalog(qLower) {
     return SETTINGS_CATALOG.filter(function (entry) {
+      return entry.label.toLowerCase().indexOf(qLower) !== -1 ||
+        entry.description.toLowerCase().indexOf(qLower) !== -1 ||
+        entry.keywords.some(function (k) { return k.toLowerCase().indexOf(qLower) !== -1; });
+    });
+  }
+
+  // ホームカードカタログ。本体 homeCardCatalog.ts の7件（ラベル・説明はそのまま）。
+  // href は CrewNest Home.html?card=<id>（home-card-link.js が受け取り、該当カードへ寄せて強調する）
+  var HOME_CATALOG = [
+    { id: 'quest-summary', label: 'クエストサマリー', description: '獲得ポイント・レベル・ボーナス申請の状況', keywords: ['ポイント', 'レベル', 'xp', '経験値', '称号', 'ボーナス', '申請', 'サマリー'] },
+    { id: 'notification', label: '通知', description: '未読の通知と重要なお知らせ', keywords: ['お知らせ', '未読', '通知'] },
+    { id: 'calendar', label: 'カレンダー', description: '今後の予定（Outlook・外部カレンダー）', keywords: ['予定', 'スケジュール', 'outlook', 'カレンダー'] },
+    { id: 'claimable-quest', label: '未獲得クエスト報酬', description: '受け取れるボーナス（デイリーログイン等）', keywords: ['受け取れるボーナス', '報酬', '受け取る', 'ログイン', 'デイリー', 'ボーナス'] },
+    { id: 'expense-summary', label: '経費未精算サマリー', description: '未精算の経費件数と金額', keywords: ['経費', '未精算', '精算', '立替', '経費精算'] },
+    { id: 'quick-links', label: 'クイックリンク', description: 'よく使う社内外リンク', keywords: ['リンク', 'ショートカット', 'クイックリンク'] },
+    { id: 'gas-price', label: '全国平均ガソリン価格', description: '全国平均のガソリン価格', keywords: ['ガソリン', '燃料', 'ガス代', '給油', '価格', 'レギュラー'] }
+  ];
+
+  function searchHomeCatalog(qLower) {
+    return HOME_CATALOG.filter(function (entry) {
       return entry.label.toLowerCase().indexOf(qLower) !== -1 ||
         entry.description.toLowerCase().indexOf(qLower) !== -1 ||
         entry.keywords.some(function (k) { return k.toLowerCase().indexOf(qLower) !== -1; });
@@ -155,10 +178,21 @@
       '</span></button>';
   }
 
+  // ホーム行（クライアント専用カタログ）。CrewNest Home.html?card=<id> への内部リンク
+  // （Home ページ上ならリロードで同 URL。home-card-link.js が受け取り、カードへ寄せて強調する）
+  function homeRowHtml(entry, q) {
+    return '<a href="CrewNest Home.html?card=' + escapeHtml(entry.id) + '" class="' + ROW_CLASS + '">' +
+      iconHtml('home') +
+      '<span class="min-w-0 flex-1">' +
+      '<span class="block truncate text-sm font-medium text-text">' + highlight(entry.label, q) + '</span>' +
+      '<span class="mt-0.5 block line-clamp-2 text-xs text-subtle">' + highlight(entry.description, q) + '</span>' +
+      '</span></a>';
+  }
+
   function emptyStateHtml() {
     return '<div class="flex flex-col items-center justify-center px-6 py-16 text-center">' +
       '<p class="text-sm font-medium text-subtle">キーワードを入力してください</p>' +
-      '<p class="mt-1 text-xs text-subtle-light">通知・クエスト・アイデア・お知らせ・書類提出・クイックリンク・ユーザー・設定を検索できます</p>' +
+      '<p class="mt-1 text-xs text-subtle-light">通知・クエスト・アイデア・お知らせ・書類提出・クイックリンク・ユーザー・ホーム・設定を検索できます</p>' +
       '</div>';
   }
 
@@ -179,9 +213,11 @@
       var matched = SEARCH_ITEMS.filter(function (item) {
         return item.title.toLowerCase().indexOf(qLower) !== -1 || item.body.toLowerCase().indexOf(qLower) !== -1;
       });
-      // 「設定」はサーバー枠と独立したクライアント専用カタログ。常に末尾に描画する（本体 SearchDialog.tsx と同じ並び）
+      // 「ホーム」「設定」はサーバー枠と独立したクライアント専用カタログ。サーバー枠の下に常に描画する
+      // （本体 SearchDialog.tsx と同じ並び: サーバー枠 → ホーム → 設定）
+      var homeHits = searchHomeCatalog(qLower);
       var settingsHits = searchSettingsCatalog(qLower);
-      if (matched.length === 0 && settingsHits.length === 0) {
+      if (matched.length === 0 && homeHits.length === 0 && settingsHits.length === 0) {
         html = noResultHtml(q);
       } else {
         html = '';
@@ -191,6 +227,10 @@
           html += '<p class="px-3 pb-1 pt-3 text-[10.5px] font-semibold tracking-wide text-subtle first:pt-1">' + GROUP_LABEL[type] + '</p>';
           items.forEach(function (item) { html += rowHtml(item, q); });
         });
+        if (homeHits.length > 0) {
+          html += '<p class="px-3 pb-1 pt-3 text-[10.5px] font-semibold tracking-wide text-subtle first:pt-1">' + HOME_LABEL + '</p>';
+          homeHits.forEach(function (entry) { html += homeRowHtml(entry, q); });
+        }
         if (settingsHits.length > 0) {
           html += '<p class="px-3 pb-1 pt-3 text-[10.5px] font-semibold tracking-wide text-subtle first:pt-1">' + SETTINGS_LABEL + '</p>';
           settingsHits.forEach(function (entry) { html += settingsRowHtml(entry, q); });
