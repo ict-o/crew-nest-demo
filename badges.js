@@ -162,17 +162,17 @@
 
   /* ---- 定義（11シリーズ＋シークレット6種） ---- */
   var SERIES = [
-    { key: 'login',    fixed: 'こつこつログイン', conds: ['累計10日', '累計100日', '累計300日', '累計1000日'] },
-    { key: 'streak',   names: ['三日坊主卒業', '皆勤賞', '鉄壁の習慣'], conds: ['連続5営業日', '連続20営業日', '連続60営業日'] },
-    { key: 'early',    names: ['早起きは三文の徳', '朝型人間', '太陽より早い'], conds: ['8時前ログイン累計10日', '8時前ログイン累計50日', '8時前ログイン累計150日'] },
-    { key: 'idea',     names: ['とりあえず言ってみた', '改善したがり', '黙っていられない人', 'アイデアの泉'], conds: ['アイデア投稿1件', 'アイデア投稿5件', 'アイデア投稿10件', 'アイデア投稿30件'] },
-    { key: 'adopt',    names: ['はじめての採用', '会社を動かす人', '改革の立役者'], conds: ['アイデア採用1件', 'アイデア採用5件', 'アイデア採用15件'] },
-    { key: 'like',     fixed: '共感を呼ぶ人', conds: ['もらったいいね10', 'もらったいいね50', 'もらったいいね150'] },
-    { key: 'quest',    fixed: 'クエストハンター', conds: ['クエスト達成10件', 'クエスト達成50件', 'クエスト達成200件', 'クエスト達成500件'] },
-    { key: 'points',   fixed: 'ポイントコレクター', conds: ['累計1,000pt', '累計5,000pt', '累計20,000pt'] },
-    { key: 'reaction', names: ['応援団員', '応援団長', '総応援団長'], conds: ['リアクション送信30回', 'リアクション送信100回', 'リアクション送信300回'] },
-    { key: 'survey',   names: ['聞かれたら答える人', '意見箱の主', '全社の声'], conds: ['アンケート回答3回', 'アンケート回答10回', 'アンケート回答30回'] },
-    { key: 'rank',     names: ['初優勝', '常勝', '殿堂入り'], conds: ['月間ランキング1位 1回', '月間ランキング1位 3回', '月間ランキング1位 10回'] }
+    { key: 'login',    names: ['こつこつログイン', 'すっかり常連', 'ヘビーユーザー', '歴戦の英雄'], conds: ['累計10日', '累計100日', '累計500日', '累計2000日'] },
+    { key: 'streak',   names: ['三日坊主卒業', '生活の一部', '終わらない旅'], conds: ['連続4日', '連続30日', '連続100日'] },
+    { key: 'early',    names: ['早起きは三文の徳', 'モーニングルーティーン', '太陽より早い'], conds: ['8時前ログイン累計3日', '8時前ログイン累計30日', '8時前ログイン累計150日'] },
+    { key: 'idea',     names: ['言うだけならタダ', '改善したがり', '黙っていられない人', 'アイデアの泉'], conds: ['アイデア投稿1件', 'アイデア投稿5件', 'アイデア投稿20件', 'アイデア投稿100件'] },
+    { key: 'adopt',    names: ['はじめての採用', '会社を動かす人', '改革の立役者'], conds: ['アイデア採用1件', 'アイデア採用5件', 'アイデア採用20件'] },
+    { key: 'like',     names: ['共感を呼ぶ人', 'ヒットメーカー', 'カリスマ'], conds: ['もらったいいね1', 'もらったいいね30', 'もらったいいね100'] },
+    { key: 'quest',    names: ['出発の足跡', 'クエスト中毒', 'S級冒険者', 'オーバーロード'], conds: ['クエスト達成1件', 'クエスト達成20件', 'クエスト達成100件', 'クエスト達成500件'] },
+    { key: 'points',   names: ['ほんのちょっとのポイント', '塵も積もれば', 'ポイ活マスター'], conds: ['累計1,000pt', '累計100,000pt', '累計1,000,000pt'] },
+    { key: 'reaction', names: ['初めてのリアクション', 'とりあえず押しておく', 'スタンプ職人', 'リアクション芸人'], conds: ['リアクション送信1回', 'リアクション送信50回', 'リアクション送信300回', 'リアクション送信1000回'] },
+    { key: 'survey',   names: ['聞かれたら答える人', '意見箱の主', '全社の声'], conds: ['アンケート回答1回', 'アンケート回答5回', 'アンケート回答20回'] },
+    { key: 'rank',     names: ['初優勝', 'またお前か', '絶対王者', '殿堂入り'], conds: ['月間ランキング1位 1回', '月間ランキング1位 3回', '月間ランキング1位 10回', '月間ランキング1位 30回'] }
   ];
   var SECRETS = [
     { key: 'xmas',     name: 'クリスマス', cond: '12/25にログインする' },
@@ -190,17 +190,17 @@
 
   /* ---- 自分（田中）のデモデータ（d = 現在段階の獲得日） ---- */
   var MY = {
-    login:    { t: 3, cur: 412,  next: 1000,  d: '2026/04/02' },
-    streak:   { t: 2, cur: 34,   next: 60,    d: '2026/08/18' },
-    early:    { t: 1, cur: 23,   next: 50,    d: '2026/07/29' },
-    idea:     { t: 3, cur: 14,   next: 30,    d: '2026/06/11' },
-    adopt:    { t: 1, cur: 2,    next: 5,     d: '2026/05/23' },
-    like:     { t: 2, cur: 87,   next: 150,   d: '2026/07/03' },
-    quest:    { t: 3, cur: 214,  next: 500,   d: '2026/08/02' },
-    points:   { t: 2, cur: 8420, next: 20000, d: '2026/06/30' },
-    reaction: { t: 3, complete: true,         d: '2026/08/21' },
-    survey:   { t: 1, cur: 6,    next: 10,    d: '2026/07/15' },
-    rank:     { t: 0, cur: 0,    next: 1 }
+    login:    { t: 3, cur: 612,    next: 2000,    d: '2026/04/02' },
+    streak:   { t: 2, cur: 34,     next: 100,     d: '2026/08/18' },
+    early:    { t: 1, cur: 23,     next: 30,      d: '2026/07/29' },
+    idea:     { t: 3, cur: 24,     next: 100,     d: '2026/06/11' },
+    adopt:    { t: 1, cur: 2,      next: 5,       d: '2026/05/23' },
+    like:     { t: 2, cur: 87,     next: 100,     d: '2026/07/03' },
+    quest:    { t: 3, cur: 214,    next: 500,     d: '2026/08/02' },
+    points:   { t: 2, cur: 128000, next: 1000000, d: '2026/06/30' },
+    reaction: { t: 3, cur: 560,    next: 1000,    d: '2026/08/21' },
+    survey:   { t: 2, cur: 6,      next: 20,      d: '2026/07/15' },
+    rank:     { t: 0, cur: 0,      next: 1 }
   };
   var MY_SECRETS = { xmas: '2025/12/25', sisi: '2026/03/04' };
 
@@ -371,8 +371,8 @@
       '<div class="cn-badge-pop w-full max-w-xs rounded-2xl bg-background-light p-6 text-center shadow-md">' +
       '<p class="text-[11px] font-bold tracking-[0.2em] text-accent-dark">バッジ獲得！</p>' +
       '<div class="mx-auto mt-2 flex justify-center">' + badgeSVG('login', 4, 120, false) + '</div>' +
-      '<p class="mt-2 text-base font-bold text-text">こつこつログイン <span class="text-[10px] font-bold tracking-[0.12em] text-subtle">PLATINUM</span></p>' +
-      '<p class="mt-1 text-xs text-subtle">累計1000日ログインを達成しました</p>' +
+      '<p class="mt-2 text-base font-bold text-text">歴戦の英雄 <span class="text-[10px] font-bold tracking-[0.12em] text-subtle">PLATINUM</span></p>' +
+      '<p class="mt-1 text-xs text-subtle">累計2000日ログインを達成しました</p>' +
       '<button type="button" data-celebrate-close class="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-primary px-6 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">閉じる</button>' +
       '</div></div>';
   }
