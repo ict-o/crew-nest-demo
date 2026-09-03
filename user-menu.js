@@ -334,6 +334,16 @@
       '<span class="text-sm text-subtle">tanaka@ict-o.com</span>' +
       '<span class="text-[10px] text-subtle-light">Entra IDで管理</span>' +
       '</div></div>' +
+      /* バッジ: 獲得済みの表示バッジ＋図鑑への導線（badges.js の cnMyBadgeRowHtml が描画） */
+      '<div>' +
+      '<p class="mb-1 text-[10px] font-bold uppercase tracking-wider text-subtle-light">バッジ</p>' +
+      '<div class="flex items-center gap-1.5 border-b border-border pb-2">' +
+      window.cnMyBadgeRowHtml(44) +
+      '<button type="button" data-open-badge-zukan class="ml-auto inline-flex h-8 shrink-0 items-center gap-0.5 whitespace-nowrap rounded-full px-2 text-xs font-medium text-primary transition-colors hover:bg-black/[0.08]">図鑑' +
+      '<svg width="14" height="14" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg>' +
+      '</button>' +
+      '</div>' +
+      '</div>' +
       '<div>' +
       '<p aria-hidden="true" class="mb-1 text-[10px] font-bold uppercase tracking-wider text-subtle-light">自己紹介</p>' +
       '<div data-mdgroup="profile-bio" class="flex flex-col">' +
