@@ -31,6 +31,34 @@
     '  .cn-badge-pop { animation: none; }',
     '  .cn-badge-max { animation: none; filter: drop-shadow(0 0 5px rgba(240, 215, 140, 0.8)); }',
     '  .cn-badge-shine { display: none; }',
+    '}',
+    '/* 獲得演出プレビュー: 1個ずつ順送り表示するときの登場ポップ＋光輪＋一閃シャイン（本体 globals.css と同じ one-shot 版） */',
+    '.cn-badge-enter { animation: cnBadgeEnterPop .42s cubic-bezier(0.34, 1.56, 0.64, 1) both; }',
+    '@keyframes cnBadgeEnterPop {',
+    '  0% { transform: scale(.3); opacity: 0; }',
+    '  60% { transform: scale(1.08); opacity: 1; }',
+    '  100% { transform: scale(1); opacity: 1; }',
+    '}',
+    '.cn-badge-halo-once {',
+    '  animation: cnBadgeHaloOnce .8s ease-out .38s both;',
+    '  background: radial-gradient(circle, rgba(240, 215, 140, 0.85) 0%, rgba(240, 215, 140, 0) 70%);',
+    '  pointer-events: none;',
+    '}',
+    '@keyframes cnBadgeHaloOnce {',
+    '  0% { opacity: 0; transform: scale(.55); }',
+    '  45% { opacity: .85; }',
+    '  100% { opacity: 0; transform: scale(1.5); }',
+    '}',
+    '.cn-badge-shine-once { animation: cnBadgeShineOnce .65s ease-in-out .42s both; }',
+    '@keyframes cnBadgeShineOnce {',
+    '  0% { transform: translateX(-48px); opacity: 0; }',
+    '  18% { opacity: 1; }',
+    '  75% { opacity: 1; }',
+    '  100% { transform: translateX(48px); opacity: 0; }',
+    '}',
+    '@media (prefers-reduced-motion: reduce) {',
+    '  .cn-badge-enter { animation: none; }',
+    '  .cn-badge-halo-once, .cn-badge-shine-once { animation: none; opacity: 0; }',
     '}'
   ].join('\n');
 
@@ -123,7 +151,7 @@
     var body = LINE[key].split('CURRENT').join(color);
     return '<g transform="translate(' + dx + ' ' + dy + ') scale(1.5)" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + body + '</g>';
   }
-  function badgeSVG(key, tier, size, locked) {
+  function badgeSVG(key, tier, size, locked, shineOnce) {
     var m = METALS[locked ? 'locked' : METAL_BY_TIER[tier - 1]];
     var level = locked ? 1 : tier;
     var id = 'bz' + (uid++);
@@ -156,6 +184,12 @@
         '<linearGradient id="' + id + 's" x1="0" y1="0" x2="1" y2="0">' +
         '<stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>';
       b += '<g clip-path="url(#' + id + 'mc)"><g transform="rotate(25 50 58)"><rect class="cn-badge-shine" x="36" y="-10" width="16" height="140" fill="url(#' + id + 's)"/></g></g>';
+    }
+    if (shineOnce && !locked) {
+      defs += '<clipPath id="' + id + 'somc"><circle cx="50" cy="58" r="30"/></clipPath>' +
+        '<linearGradient id="' + id + 'sos" x1="0" y1="0" x2="1" y2="0">' +
+        '<stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>';
+      b += '<g clip-path="url(#' + id + 'somc)"><g transform="rotate(25 50 58)"><rect class="cn-badge-shine-once" x="36" y="-10" width="16" height="140" fill="url(#' + id + 'sos)"/></g></g>';
     }
     return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 100 100"' + (isMax ? ' class="cn-badge-max"' : '') + ' aria-hidden="true"><defs>' + defs + '</defs>' + b + '</svg>';
   }
@@ -365,15 +399,45 @@
       '<p class="mt-1.5 text-xs text-subtle">シークレットバッジ</p>';
   }
 
-  /* ---- 獲得演出（プレビュー） ---- */
+  /* ---- 獲得演出（プレビュー） ----
+     本体 BadgeEarnedModal と同じ「1個ずつ順送り＋シャインバースト」を再現する。
+     複数バッジは celebrateStep で送り、切り替えごとに panel の innerHTML を丸ごと作り直すことで
+     cn-badge-enter / cn-badge-halo-once / cn-badge-shine-once を毎回再生させる（React の key 再マウントの代替）。 */
+  var CELEBRATE_DEMO = [
+    { key: 'login', tier: 4, name: '歴戦の英雄', desc: '累計2000日ログインを達成しました' },
+    { key: 'like', tier: 1, name: '共感を呼ぶ人', desc: 'もらったいいね1を達成しました' },
+    { key: 'quest', tier: 2, name: 'クエスト中毒', desc: 'クエスト達成20件を達成しました' }
+  ];
+  var METAL_LABEL = ['BRONZE', 'SILVER', 'GOLD', 'PLATINUM'];
+  var celebrateStep = 0;
+
+  function celebrateDotsHtml() {
+    if (CELEBRATE_DEMO.length <= 1) return '';
+    var dots = CELEBRATE_DEMO.map(function (_, i) {
+      return '<span class="inline-block h-1.5 w-1.5 rounded-full ' + (i === celebrateStep ? 'bg-primary' : 'bg-border') + '"></span>';
+    }).join('');
+    return '<div aria-hidden="true" class="mt-3 flex items-center justify-center gap-1.5">' + dots + '</div>';
+  }
+  function celebratePanelHtml() {
+    var b = CELEBRATE_DEMO[celebrateStep];
+    var isLast = celebrateStep >= CELEBRATE_DEMO.length - 1;
+    var btnAttr = isLast ? 'data-celebrate-close' : 'data-celebrate-next';
+    var btnLabel = isLast ? '閉じる' : '次へ（あと' + (CELEBRATE_DEMO.length - 1 - celebrateStep) + '個）';
+    return '<p class="text-[11px] font-bold tracking-[0.2em] text-accent-dark">バッジ獲得！</p>' +
+      '<div class="relative mx-auto mt-2" style="width:120px;height:120px;">' +
+      '<span class="cn-badge-halo-once absolute -inset-[18%] rounded-full"></span>' +
+      '<div class="cn-badge-enter">' + badgeSVG(b.key, b.tier, 120, false, true) + '</div>' +
+      '</div>' +
+      '<p class="mt-2 text-base font-bold text-text">' + b.name + ' <span class="text-[10px] font-bold tracking-[0.12em] text-subtle">' + METAL_LABEL[b.tier - 1] + '</span></p>' +
+      '<p class="mt-1 text-xs text-subtle">' + b.desc + '</p>' +
+      celebrateDotsHtml() +
+      '<button type="button" ' + btnAttr + ' class="mt-5 inline-flex min-h-10 w-full items-center justify-center rounded-full bg-primary px-6 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">' + btnLabel + '</button>';
+  }
   function celebrateHtml() {
+    celebrateStep = 0;
     return '<div data-celebrate-host class="fixed inset-0 z-[130] flex items-center justify-center bg-black/60 p-6">' +
-      '<div class="cn-badge-pop w-full max-w-xs rounded-2xl bg-background-light p-6 text-center shadow-md">' +
-      '<p class="text-[11px] font-bold tracking-[0.2em] text-accent-dark">バッジ獲得！</p>' +
-      '<div class="mx-auto mt-2 flex justify-center">' + badgeSVG('login', 4, 120, false) + '</div>' +
-      '<p class="mt-2 text-base font-bold text-text">歴戦の英雄 <span class="text-[10px] font-bold tracking-[0.12em] text-subtle">PLATINUM</span></p>' +
-      '<p class="mt-1 text-xs text-subtle">累計2000日ログインを達成しました</p>' +
-      '<button type="button" data-celebrate-close class="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-primary px-6 py-1.5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">閉じる</button>' +
+      '<div data-celebrate-panel class="w-full max-w-xs rounded-2xl bg-background-light p-6 text-center shadow-md">' +
+      celebratePanelHtml() +
       '</div></div>';
   }
 
@@ -399,6 +463,12 @@
       var h = document.createElement('div');
       h.innerHTML = celebrateHtml();
       document.body.appendChild(h.firstChild);
+      return;
+    }
+    if (e.target.closest('[data-celebrate-next]')) {
+      celebrateStep += 1;
+      var panel = document.querySelector('[data-celebrate-panel]');
+      if (panel) panel.innerHTML = celebratePanelHtml();
       return;
     }
     if (e.target.closest('[data-celebrate-close]')) {
