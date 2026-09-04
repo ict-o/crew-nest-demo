@@ -701,15 +701,45 @@ document.addEventListener('click', function(e){
       </div>
       <div>
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">公開開始日時</p>
-        <input type="text" value="2026/08/19 17:00" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <input data-repeat-start-input type="datetime-local" value="2026-08-19T17:00" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
       </div>
       <div class="flex items-center justify-between gap-3">
         <p class="text-sm text-text">公開終了日時を設定</p>
         <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
       </div>
-      <div class="flex items-center justify-between gap-3">
-        <div><p class="flex items-center gap-1.5 text-sm text-text">繰り返し再掲載<button type="button" data-repeat-info aria-label="繰り返しの説明" class="-m-1 inline-flex shrink-0 items-center justify-center rounded-full p-1 text-subtle-light transition-colors hover:bg-black/[0.08] hover:text-subtle"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button></p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
-        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      <div class="flex flex-col gap-3 rounded-lg border border-border bg-background p-3">
+        <div class="flex items-center justify-between gap-3">
+          <div><p class="flex items-center gap-1.5 text-sm text-text">繰り返し再掲載<button type="button" data-repeat-info aria-label="繰り返しの説明" class="-m-1 inline-flex shrink-0 items-center justify-center rounded-full p-1 text-subtle-light transition-colors hover:bg-black/[0.08] hover:text-subtle"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button></p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
+          <button type="button" data-switch data-watch="repeat" aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+        </div>
+        <div data-watch-target="repeat-on" data-repeat-root class="flex flex-col gap-3" style="display:none;">
+          <div>
+            <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">頻度</p>
+            <select data-repeat-freq aria-label="繰り返しの頻度" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="DAILY">毎日</option><option value="WEEKLY" selected>毎週</option><option value="MONTHLY">毎月</option><option value="YEARLY">毎年</option>
+            </select>
+          </div>
+          <div data-repeat-anchor-row style="display:none;">
+            <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">日付</p>
+            <select data-repeat-anchor aria-label="繰り返しの日付" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option data-repeat-anchor-day value="ANCHOR_DAY" selected>19日（公開開始日と同じ）</option><option value="MONTH_END">月末</option><option value="LAST_BUSINESS_DAY">最終営業日</option>
+            </select>
+          </div>
+          <div data-repeat-shift-row>
+            <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">休業日に当たったとき</p>
+            <select data-repeat-shift aria-label="休業日に当たったときの調整" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="NONE">そのまま公開</option><option value="NEXT" selected>翌営業日に公開</option><option value="PREV">前営業日に公開</option>
+            </select>
+          </div>
+          <div data-repeat-bizonly-row class="flex items-center justify-between gap-3" style="display:none;">
+            <div><p class="text-sm text-text">営業日のみ公開</p><p class="text-xs text-subtle">土日・祝日・会社休業日には再掲載しません</p></div>
+            <button type="button" data-switch data-repeat-bizonly aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+          </div>
+          <p data-repeat-desc class="text-xs text-subtle">毎週 水曜 17:00 にこの公開設定で再掲載します（公開開始日時の曜日・時刻を使います）</p>
+          <p class="text-xs text-subtle">次回の再掲載: <strong data-repeat-next class="font-semibold text-text">2026/08/26（水）17:00</strong></p>
+          <p data-repeat-shift-note class="text-xs text-subtle" style="display:none;"></p>
+          <p class="text-xs text-subtle">全員が未読に戻り、「通知を送る」がONなら再通知します</p>
+        </div>
       </div>
       <div class="flex items-center justify-between gap-3">
         <div><p class="text-sm text-text">重要（バナー表示）</p><p class="text-xs text-subtle">ホームのバナーに表示します</p></div>
@@ -809,15 +839,45 @@ document.addEventListener('click', function(e){
       </div>
       <div>
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">公開開始日時</p>
-        <input type="text" value="2026/08/19 17:00" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <input data-repeat-start-input type="datetime-local" value="2026-08-19T17:00" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
       </div>
       <div class="flex items-center justify-between gap-3">
         <p class="text-sm text-text">公開終了日時を設定</p>
         <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
       </div>
-      <div class="flex items-center justify-between gap-3">
-        <div><p class="flex items-center gap-1.5 text-sm text-text">繰り返し再掲載<button type="button" data-repeat-info aria-label="繰り返しの説明" class="-m-1 inline-flex shrink-0 items-center justify-center rounded-full p-1 text-subtle-light transition-colors hover:bg-black/[0.08] hover:text-subtle"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button></p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
-        <button type="button" data-switch aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+      <div class="flex flex-col gap-3 rounded-lg border border-border bg-background p-3">
+        <div class="flex items-center justify-between gap-3">
+          <div><p class="flex items-center gap-1.5 text-sm text-text">繰り返し再掲載<button type="button" data-repeat-info aria-label="繰り返しの説明" class="-m-1 inline-flex shrink-0 items-center justify-center rounded-full p-1 text-subtle-light transition-colors hover:bg-black/[0.08] hover:text-subtle"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button></p><p class="text-xs text-subtle">毎日・毎週・毎月・毎年から選べます</p></div>
+          <button type="button" data-switch data-watch="repeat" aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+        </div>
+        <div data-watch-target="repeat-on" data-repeat-root class="flex flex-col gap-3" style="display:none;">
+          <div>
+            <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">頻度</p>
+            <select data-repeat-freq aria-label="繰り返しの頻度" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="DAILY">毎日</option><option value="WEEKLY" selected>毎週</option><option value="MONTHLY">毎月</option><option value="YEARLY">毎年</option>
+            </select>
+          </div>
+          <div data-repeat-anchor-row style="display:none;">
+            <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">日付</p>
+            <select data-repeat-anchor aria-label="繰り返しの日付" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option data-repeat-anchor-day value="ANCHOR_DAY" selected>19日（公開開始日と同じ）</option><option value="MONTH_END">月末</option><option value="LAST_BUSINESS_DAY">最終営業日</option>
+            </select>
+          </div>
+          <div data-repeat-shift-row>
+            <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">休業日に当たったとき</p>
+            <select data-repeat-shift aria-label="休業日に当たったときの調整" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="NONE">そのまま公開</option><option value="NEXT" selected>翌営業日に公開</option><option value="PREV">前営業日に公開</option>
+            </select>
+          </div>
+          <div data-repeat-bizonly-row class="flex items-center justify-between gap-3" style="display:none;">
+            <div><p class="text-sm text-text">営業日のみ公開</p><p class="text-xs text-subtle">土日・祝日・会社休業日には再掲載しません</p></div>
+            <button type="button" data-switch data-repeat-bizonly aria-checked="false" class="relative h-6 w-10 shrink-0 rounded-full bg-border transition-colors"><span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform"></span></button>
+          </div>
+          <p data-repeat-desc class="text-xs text-subtle">毎週 水曜 17:00 にこの公開設定で再掲載します（公開開始日時の曜日・時刻を使います）</p>
+          <p class="text-xs text-subtle">次回の再掲載: <strong data-repeat-next class="font-semibold text-text">2026/08/26（水）17:00</strong></p>
+          <p data-repeat-shift-note class="text-xs text-subtle" style="display:none;"></p>
+          <p class="text-xs text-subtle">全員が未読に戻り、「通知を送る」がONなら再通知します</p>
+        </div>
       </div>
       <div class="flex items-center justify-between gap-3">
         <div><p class="text-sm text-text">重要（バナー表示）</p><p class="text-xs text-subtle">ホームのバナーに表示します</p></div>
@@ -958,6 +1018,208 @@ document.addEventListener('click', function(e){
     if (btn) { e.stopPropagation(); if (pop.style.display === 'none') showAt(btn); else pop.style.display = 'none'; return; }
     if (pop.style.display !== 'none' && !pop.contains(e.target)) pop.style.display = 'none';
   });
+})();
+</script>
+<script>
+// お知らせ「繰り返す」（営業日オプション）の次回計算。CrewNest Admin.html の同機能から移植
+// （休業日カレンダーの編集機能は使わないため、判定用のサンプルデータのみ移植）
+(function(){
+  var WD_JP = ['日','月','火','水','木','金','土'];
+  var HOLIDAYS = {
+    '2026-01-01':'元日','2026-01-12':'成人の日','2026-02-11':'建国記念の日','2026-02-23':'天皇誕生日',
+    '2026-03-20':'春分の日','2026-04-29':'昭和の日','2026-05-03':'憲法記念日','2026-05-04':'みどりの日','2026-05-05':'こどもの日','2026-05-06':'休日',
+    '2026-07-20':'海の日','2026-08-11':'山の日','2026-09-21':'敬老の日','2026-09-22':'国民の休日','2026-09-23':'秋分の日',
+    '2026-10-12':'スポーツの日','2026-11-03':'文化の日','2026-11-23':'勤労感謝の日'
+  };
+  // 会社の上書き（true=営業日に変更／false=会社休業日として追加）
+  var bizOverrides = { '2026-08-13': false, '2026-08-14': false, '2026-11-23': true };
+  // 毎年の上書き（月日固定）
+  var bizYearlyOverrides = { '12-30': false };
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  function toKey(y,m,d){ return y + '-' + pad(m) + '-' + pad(d); }
+  function daysInMonth(y,m){ return new Date(y, m, 0).getDate(); }
+  function addDays(y,m,d,delta){ var dt = new Date(y, m - 1, d); dt.setDate(dt.getDate() + delta); return { y: dt.getFullYear(), m: dt.getMonth() + 1, d: dt.getDate() }; }
+  function weekdayOf(y,m,d){ return new Date(y, m - 1, d).getDay(); }
+  function isDefaultClosed(key){
+    var md = key.slice(5);
+    if (md === '12-31' || md === '01-01' || md === '01-02' || md === '01-03') return true;
+    if (HOLIDAYS[key]) return true;
+    var p = key.split('-').map(Number);
+    var dow = weekdayOf(p[0], p[1], p[2]);
+    return dow === 0 || dow === 6;
+  }
+  function isBusinessDayKey(key){
+    if (Object.prototype.hasOwnProperty.call(bizOverrides, key)) return bizOverrides[key];
+    var ymd = key.slice(5);
+    if (Object.prototype.hasOwnProperty.call(bizYearlyOverrides, ymd)) return bizYearlyOverrides[ymd];
+    return !isDefaultClosed(key);
+  }
+  function afterObj(ay,am,ad){ return new Date(ay, am - 1, ad); }
+  function shiftDate(y,m,d,mode){
+    var key = toKey(y,m,d);
+    if (mode === 'NONE' || isBusinessDayKey(key)) return { y: y, m: m, d: d };
+    var delta = mode === 'PREV' ? -1 : 1;
+    var cur = { y: y, m: m, d: d };
+    for (var i = 0; i < 60; i++){
+      cur = addDays(cur.y, cur.m, cur.d, delta);
+      if (isBusinessDayKey(toKey(cur.y, cur.m, cur.d))) return cur;
+    }
+    return cur;
+  }
+  function lastBusinessDayOfMonth(y,m){
+    var cur = { y: y, m: m, d: daysInMonth(y, m) };
+    for (var i = 0; i < 40; i++){
+      if (isBusinessDayKey(toKey(cur.y, cur.m, cur.d))) return cur;
+      cur = addDays(cur.y, cur.m, cur.d, -1);
+    }
+    return cur;
+  }
+  function monthAnchor(ay, am, targetDay, offset){
+    var total = ay * 12 + (am - 1) + offset;
+    var y = Math.floor(total / 12), m = (total % 12) + 1;
+    return { y: y, m: m, d: Math.min(targetDay, daysInMonth(y, m)) };
+  }
+  function computeNext(freq, anchor, shift, bizOnly, ay, am, ad){
+    var after = afterObj(ay, am, ad), i, cand, key, wasHoliday, shifted;
+    if (freq === 'DAILY') {
+      cand = addDays(ay, am, ad, 1);
+      for (i = 0; i < 40; i++){
+        if (!bizOnly || isBusinessDayKey(toKey(cand.y, cand.m, cand.d))) return { result: cand, note: null };
+        cand = addDays(cand.y, cand.m, cand.d, 1);
+      }
+      return { result: cand, note: null };
+    }
+    if (freq === 'WEEKLY') {
+      for (i = 1; i <= 60; i++){
+        cand = addDays(ay, am, ad, 7 * i);
+        key = toKey(cand.y, cand.m, cand.d);
+        wasHoliday = !isBusinessDayKey(key);
+        shifted = shiftDate(cand.y, cand.m, cand.d, shift);
+        if (afterObj(shifted.y, shifted.m, shifted.d) > after) {
+          return { result: shifted, note: (wasHoliday && shift !== 'NONE') ? { orig: cand, mode: shift } : null };
+        }
+      }
+    }
+    if (freq === 'MONTHLY') {
+      if (anchor === 'LAST_BUSINESS_DAY') {
+        for (i = 1; i <= 24; i++){
+          var mo = monthAnchor(ay, am, 1, i);
+          var lb = lastBusinessDayOfMonth(mo.y, mo.m);
+          if (afterObj(lb.y, lb.m, lb.d) > after) return { result: lb, note: null };
+        }
+      } else {
+        var targetDay = anchor === 'MONTH_END' ? 31 : ad;
+        for (i = 1; i <= 24; i++){
+          cand = monthAnchor(ay, am, targetDay, i);
+          key = toKey(cand.y, cand.m, cand.d);
+          wasHoliday = !isBusinessDayKey(key);
+          shifted = shiftDate(cand.y, cand.m, cand.d, shift);
+          if (afterObj(shifted.y, shifted.m, shifted.d) > after) {
+            return { result: shifted, note: (wasHoliday && shift !== 'NONE') ? { orig: cand, mode: shift } : null };
+          }
+        }
+      }
+    }
+    if (freq === 'YEARLY') {
+      for (i = 1; i <= 5; i++){
+        cand = { y: ay + i, m: am, d: Math.min(ad, daysInMonth(ay + i, am)) };
+        key = toKey(cand.y, cand.m, cand.d);
+        wasHoliday = !isBusinessDayKey(key);
+        shifted = shiftDate(cand.y, cand.m, cand.d, shift);
+        if (afterObj(shifted.y, shifted.m, shifted.d) > after) {
+          return { result: shifted, note: (wasHoliday && shift !== 'NONE') ? { orig: cand, mode: shift } : null };
+        }
+      }
+    }
+    return { result: null, note: null };
+  }
+  function fmtDate(y,m,d,time){ return y + '/' + pad(m) + '/' + pad(d) + '（' + WD_JP[weekdayOf(y,m,d)] + '）' + time; }
+  function freqPart(freq, anchor, ad, wdName){
+    if (freq === 'DAILY') return '毎日';
+    if (freq === 'WEEKLY') return '毎週 ' + wdName + '曜';
+    if (freq === 'MONTHLY') {
+      if (anchor === 'MONTH_END') return '毎月 月末';
+      if (anchor === 'LAST_BUSINESS_DAY') return '毎月 最終営業日';
+      return '毎月 ' + ad + '日';
+    }
+    return '毎年';
+  }
+  function suffixPart(freq, anchor, shift, bizOnly){
+    if (freq === 'DAILY') return bizOnly ? '（営業日のみ）' : '';
+    if (freq === 'MONTHLY' && anchor === 'LAST_BUSINESS_DAY') return '';
+    if (shift === 'NEXT') return '（休業日は翌営業日）';
+    if (shift === 'PREV') return '（休業日は前営業日）';
+    var unit = freq === 'WEEKLY' ? '曜日' : freq === 'YEARLY' ? '月日' : '日';
+    return '（公開開始日時の' + unit + '・時刻を使います）';
+  }
+  function fmtNote(note){
+    if (!note) return '';
+    var o = note.orig;
+    var dir = note.mode === 'PREV' ? '前' : '翌';
+    return o.m + '/' + o.d + '（' + WD_JP[weekdayOf(o.y, o.m, o.d)] + '）は休業日のため' + dir + '営業日に再掲載します';
+  }
+  function updateRepeatRoot(root){
+    if (!root) return;
+    var freqSel = root.querySelector('[data-repeat-freq]');
+    if (!freqSel) return;
+    var anchorSel = root.querySelector('[data-repeat-anchor]');
+    var shiftSel = root.querySelector('[data-repeat-shift]');
+    var bizSwitch = root.querySelector('[data-repeat-bizonly]');
+    var freq = freqSel.value, anchor = anchorSel.value, shift = shiftSel.value;
+    var bizOnly = bizSwitch.getAttribute('aria-checked') === 'true';
+    root.querySelector('[data-repeat-anchor-row]').style.display = freq === 'MONTHLY' ? '' : 'none';
+    root.querySelector('[data-repeat-bizonly-row]').style.display = freq === 'DAILY' ? '' : 'none';
+    root.querySelector('[data-repeat-shift-row]').style.display = (freq !== 'DAILY' && !(freq === 'MONTHLY' && anchor === 'LAST_BUSINESS_DAY')) ? '' : 'none';
+    var panel = root.closest('[data-slide]') || document;
+    var startInput = panel.querySelector('[data-repeat-start-input]');
+    var val = (startInput && startInput.value) || '2026-08-19T17:00';
+    var dp = val.split('T');
+    var d0 = dp[0].split('-').map(Number);
+    var ay = d0[0], am = d0[1], ad = d0[2], time = dp[1] || '17:00';
+    var dayOpt = anchorSel.querySelector('[data-repeat-anchor-day]');
+    if (dayOpt) dayOpt.textContent = ad + '日（公開開始日と同じ）';
+    var wdName = WD_JP[weekdayOf(ay, am, ad)];
+    root.querySelector('[data-repeat-desc]').textContent =
+      freqPart(freq, anchor, ad, wdName) + ' ' + time + ' にこの公開設定で再掲載します' + suffixPart(freq, anchor, shift, bizOnly);
+    var calc = computeNext(freq, anchor, shift, bizOnly, ay, am, ad);
+    root.querySelector('[data-repeat-next]').textContent = calc.result ? fmtDate(calc.result.y, calc.result.m, calc.result.d, time) : '—';
+    var noteEl = root.querySelector('[data-repeat-shift-note]');
+    if (calc.note) { noteEl.textContent = fmtNote(calc.note); noteEl.style.display = ''; }
+    else { noteEl.textContent = ''; noteEl.style.display = 'none'; }
+  }
+  function allRepeatRoots(){ return document.querySelectorAll('[data-repeat-root]'); }
+  allRepeatRoots().forEach(updateRepeatRoot);
+  document.addEventListener('change', function(e){
+    if (e.target.closest('[data-repeat-freq],[data-repeat-anchor],[data-repeat-shift]')) {
+      updateRepeatRoot(e.target.closest('[data-repeat-root]'));
+    }
+    if (e.target.matches('[data-repeat-start-input]')) {
+      var panel = e.target.closest('[data-slide]') || document;
+      panel.querySelectorAll('[data-repeat-root]').forEach(updateRepeatRoot);
+    }
+  });
+  // 「繰り返す」本体と「営業日のみ公開」の2つのスイッチは、このファイル自身の汎用 [data-switch]
+  // ハンドラと user-menu.js の汎用 [data-switch] ハンドラが同じクリックで二重に aria-checked を
+  // 反転させて相殺してしまう（既存の不具合。他のスイッチにも及ぶが対応はこの2つに限定する）ため、
+  // capture フェーズで自前トグル＋stopPropagation して二重処理を避ける
+  document.addEventListener('click', function(e){
+    var sw = e.target.closest('[data-switch][data-watch], [data-switch][data-repeat-bizonly]');
+    if (!sw) return;
+    e.stopPropagation();
+    var on = sw.getAttribute('aria-checked') === 'true';
+    sw.setAttribute('aria-checked', String(!on));
+    sw.classList.toggle('bg-primary', !on);
+    sw.classList.toggle('bg-border', on);
+    var knob = sw.firstElementChild;
+    if (knob) knob.style.transform = on ? '' : 'translateX(16px)';
+    var key = sw.getAttribute('data-watch');
+    if (key) {
+      document.querySelectorAll('[data-watch-target="' + key + '-on"]').forEach(function(el){ el.style.display = !on ? '' : 'none'; });
+      document.querySelectorAll('[data-watch-target="' + key + '-off"]').forEach(function(el){ el.style.display = !on ? 'none' : ''; });
+    }
+    updateRepeatRoot(sw.closest('[data-repeat-root]'));
+  }, true);
 })();
 </script>
 <script src="tour.js"></script>
