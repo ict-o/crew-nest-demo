@@ -195,32 +195,52 @@
   }
 
   /* ---- 定義（11シリーズ＋シークレット6種） ---- */
+  /* description は本体 badgeDefinitions.server.ts の description（詳細モーダルの「〜した証」文言）と同じ。conds は 2026-09-04 に「累計」→「通算」統一 */
   var SERIES = [
-    { key: 'login',    names: ['こつこつログイン', 'すっかり常連', 'ヘビーユーザー', '歴戦の英雄'], conds: ['累計10日', '累計100日', '累計500日', '累計2000日'] },
-    { key: 'streak',   names: ['三日坊主卒業', '生活の一部', '終わらない旅'], conds: ['連続4日', '連続30日', '連続100日'] },
-    { key: 'early',    names: ['早起きは三文の徳', 'モーニングルーティーン', '太陽より早い'], conds: ['朝4時〜8時のログイン累計3日', '朝4時〜8時のログイン累計30日', '朝4時〜8時のログイン累計150日'] },
-    { key: 'idea',     names: ['言うだけならタダ', '改善したがり', '黙っていられない人', 'アイデアの泉'], conds: ['アイデア投稿1件', 'アイデア投稿5件', 'アイデア投稿20件', 'アイデア投稿100件'] },
-    { key: 'adopt',    names: ['はじめての採用', '会社を動かす人', '改革の立役者'], conds: ['アイデア採用1件', 'アイデア採用5件', 'アイデア採用20件'] },
-    { key: 'like',     names: ['共感を呼ぶ人', 'ヒットメーカー', 'カリスマ'], conds: ['もらったいいね1', 'もらったいいね30', 'もらったいいね100'] },
-    { key: 'quest',    names: ['出発の足跡', 'クエスト中毒', 'S級冒険者', 'オーバーロード'], conds: ['クエスト達成1件', 'クエスト達成20件', 'クエスト達成100件', 'クエスト達成500件'] },
-    { key: 'points',   names: ['ほんのちょっとのポイント', '塵も積もれば', 'ポイ活マスター'], conds: ['累計1,000pt', '累計100,000pt', '累計1,000,000pt'] },
-    { key: 'reaction', names: ['初めてのリアクション', 'とりあえず押しておく', 'スタンプ職人', 'リアクション芸人'], conds: ['リアクション送信1回', 'リアクション送信50回', 'リアクション送信300回', 'リアクション送信1000回'] },
-    { key: 'survey',   names: ['聞かれたら答える人', '意見箱の主', '全社の声'], conds: ['アンケート回答1回', 'アンケート回答5回', 'アンケート回答20回'] },
-    { key: 'rank',     names: ['初優勝', 'またお前か', '絶対王者', '殿堂入り'], conds: ['月間ランキング1位 1回', '月間ランキング1位 3回', '月間ランキング1位 10回', '月間ランキング1位 30回'] }
+    { key: 'login',    names: ['こつこつログイン', 'すっかり常連', 'ヘビーユーザー', '歴戦の英雄'], conds: ['通算10日', '通算100日', '通算500日', '通算2000日'],
+      descs: ['通算10日ログインした証', '通算100日ログインした証', '通算500日ログインした証', '通算2000日ログインした証'] },
+    { key: 'streak',   names: ['三日坊主卒業', '生活の一部', '終わらない旅'], conds: ['連続4日', '連続30日', '連続100日'],
+      descs: ['4日連続でログインした証', '30日連続でログインした証', '100日連続でログインした証'] },
+    { key: 'early',    names: ['早起きは三文の徳', 'モーニングルーティーン', '太陽より早い'], conds: ['朝4時〜8時のログイン通算3日', '朝4時〜8時のログイン通算30日', '朝4時〜8時のログイン通算150日'],
+      descs: ['朝4時〜8時に通算3日ログインした証', '朝4時〜8時に通算30日ログインした証', '朝4時〜8時に通算150日ログインした証'] },
+    { key: 'idea',     names: ['言うだけならタダ', '改善したがり', '黙っていられない人', 'アイデアの泉'], conds: ['アイデア投稿1件', 'アイデア投稿5件', 'アイデア投稿20件', 'アイデア投稿100件'],
+      descs: ['はじめてアイデアを投稿した証', 'アイデアを5件投稿した証', 'アイデアを20件投稿した証', 'アイデアを100件投稿した証'] },
+    { key: 'adopt',    names: ['はじめての採用', '会社を動かす人', '改革の立役者'], conds: ['アイデア採用1件', 'アイデア採用5件', 'アイデア採用20件'],
+      descs: ['はじめてアイデアが採用された証', 'アイデアが5件採用された証', 'アイデアが20件採用された証'] },
+    { key: 'like',     names: ['共感を呼ぶ人', 'ヒットメーカー', 'カリスマ'], conds: ['もらったいいね1', 'もらったいいね30', 'もらったいいね100'],
+      descs: ['はじめていいねをもらった証', 'いいねを30回もらった証', 'いいねを100回もらった証'] },
+    { key: 'quest',    names: ['出発の足跡', 'クエスト中毒', 'S級冒険者', 'オーバーロード'], conds: ['クエスト達成1件', 'クエスト達成20件', 'クエスト達成100件', 'クエスト達成500件'],
+      descs: ['はじめてクエストを達成した証', 'クエストを20件達成した証', 'クエストを100件達成した証', 'クエストを500件達成した証'] },
+    { key: 'points',   names: ['ほんのちょっとのポイント', '塵も積もれば', 'ポイ活マスター'], conds: ['通算1,000pt', '通算100,000pt', '通算1,000,000pt'],
+      descs: ['通算1,000ptを獲得した証', '通算100,000ptを獲得した証', '通算1,000,000ptを獲得した証'] },
+    { key: 'reaction', names: ['初めてのリアクション', 'とりあえず押しておく', 'スタンプ職人', 'リアクション芸人'], conds: ['リアクション送信1回', 'リアクション送信50回', 'リアクション送信300回', 'リアクション送信1000回'],
+      descs: ['はじめてリアクションを送った証', 'リアクションを50回送った証', 'リアクションを300回送った証', 'リアクションを1000回送った証'] },
+    { key: 'survey',   names: ['聞かれたら答える人', '意見箱の主', '全社の声'], conds: ['アンケート回答1回', 'アンケート回答5回', 'アンケート回答20回'],
+      descs: ['はじめてアンケートに回答した証', 'アンケートに5回回答した証', 'アンケートに20回回答した証'] },
+    { key: 'rank',     names: ['初優勝', 'またお前か', '絶対王者', '殿堂入り'], conds: ['月間ランキング1位 1回', '月間ランキング1位 3回', '月間ランキング1位 10回', '月間ランキング1位 30回'],
+      descs: ['月間ランキングで1位になった証', '月間ランキング1位を3回獲得した証', '月間ランキング1位を10回獲得した証', '月間ランキング1位を30回獲得した証'] }
   ];
   var SECRETS = [
-    { key: 'xmas',     name: 'クリスマス', cond: '12/25にログインする' },
-    { key: 'newyear',  name: '正月', cond: '1/1にログインする' },
-    { key: 'tanabata', name: '七夕', cond: '7/7にログインする' },
-    { key: 'sisi',     name: 'シッシッシ', cond: '午前4:44にログインする' },
-    { key: 'always',   name: 'いつでも一緒', cond: '同じ日に 0-4 / 4-8 / 8-12 / 12-16 / 16-20 / 20-24時 すべてでアプリを開く' },
-    { key: 'unread',   name: '未読スルー', cond: '通知を20件以上未読のままにする' }
+    { key: 'xmas',     name: 'クリスマス', cond: '12/25にログインする', desc: 'クリスマスの日にログインした証' },
+    { key: 'newyear',  name: '正月', cond: '1/1にログインする', desc: '元日にログインした証' },
+    { key: 'tanabata', name: '七夕', cond: '7/7にログインする', desc: '七夕の日にログインした証' },
+    { key: 'sisi',     name: 'シッシッシ', cond: '午前4:44にログインする', desc: '午前4時44分にログインした証' },
+    { key: 'always',   name: 'いつでも一緒', cond: '同じ日に 0-4 / 4-8 / 8-12 / 12-16 / 16-20 / 20-24時 すべてでアプリを開く', desc: '同じ日に 0-4 / 4-8 / 8-12 / 12-16 / 16-20 / 20-24時 のすべてでアプリを開いた証' },
+    { key: 'unread',   name: '未読スルー', cond: '通知を20件以上未読のままにする', desc: '通知を20件以上ためこんだ証' }
   ];
   var BY_KEY = {};
   SERIES.forEach(function (s) { BY_KEY[s.key] = s; });
   var SECRET_BY_KEY = {};
   SECRETS.forEach(function (s) { SECRET_BY_KEY[s.key] = s; });
   function tierName(s, tier) { return s.fixed || s.names[tier - 1]; }
+
+  /* ---- NEW マーク（承認モック docs/superpowers/mock/2026-09-04-badge-detail-new-mark.html の variant b）----
+     自分の図鑑・バッジ行にのみ表示。詳細を開いた瞬間に消える（demo は JS 変数で状態保持） */
+  var NEW_KEYS = { 'series:streak': true, 'series:adopt': true, 'secret:sisi': true };
+  function newMarkHtml(kind, key) {
+    if (!NEW_KEYS[kind + ':' + key]) return '';
+    return '<span data-bnew-mark title="NEW" aria-label="新しく獲得したバッジ" class="absolute h-2.5 w-2.5 rounded-full bg-accent" style="right:18%;top:26%;box-shadow:0 0 0 2px var(--color-background-light);"></span>';
+  }
 
   /* ---- 自分（田中）のデモデータ（d = 現在段階の獲得日） ---- */
   var MY = {
@@ -266,7 +286,7 @@
     /* 新しく獲得した順（アップグレードで獲得日が更新される想定）。最大5個 */
     items.sort(function (a, b) { return a.d < b.d ? 1 : -1; });
     return items.slice(0, 5).map(function (it) {
-      return '<button type="button" data-bdetail="' + it.kind + ':me:' + it.key + '" aria-label="' + it.label + '" class="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' + badgeSVG(it.key, it.t, size, false) + '</button>';
+      return '<button type="button" data-bdetail="' + it.kind + ':me:' + it.key + '" aria-label="' + it.label + '" class="relative rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' + badgeSVG(it.key, it.t, size, false) + newMarkHtml(it.kind, it.key) + '</button>';
     }).join('');
   };
   function earnedCount(userKey) {
@@ -292,13 +312,15 @@
   function seriesTile(userKey, s) {
     var t = userKey === 'me' ? MY[s.key].t : (function () { var e = findBadge(userKey, s.key); return e ? e[1] : 0; })();
     var earned = t > 0;
-    return '<button type="button" data-bdetail="series:' + userKey + ':' + s.key + '" aria-label="' + (earned ? tierName(s, t) : '未獲得のバッジ') + '" class="' + TILE_CLASS + '">' +
-      badgeSVG(s.key, earned ? t : 1, 56, !earned) + '</button>';
+    var mark = userKey === 'me' && earned ? newMarkHtml('series', s.key) : '';
+    return '<button type="button" data-bdetail="series:' + userKey + ':' + s.key + '" aria-label="' + (earned ? tierName(s, t) : '未獲得のバッジ') + '" class="relative ' + TILE_CLASS + '">' +
+      badgeSVG(s.key, earned ? t : 1, 56, !earned) + mark + '</button>';
   }
   function secretTile(userKey, s) {
     var earned = userKey === 'me' ? !!MY_SECRETS[s.key] : !!findBadge(userKey, s.key);
-    return '<button type="button" data-bdetail="secret:' + userKey + ':' + s.key + '" aria-label="' + (earned ? s.name : 'シークレットバッジ') + '" class="' + TILE_CLASS + '">' +
-      badgeSVG(s.key, 3, 56, !earned) + '</button>';
+    var mark = userKey === 'me' && earned ? newMarkHtml('secret', s.key) : '';
+    return '<button type="button" data-bdetail="secret:' + userKey + ':' + s.key + '" aria-label="' + (earned ? s.name : 'シークレットバッジ') + '" class="relative ' + TILE_CLASS + '">' +
+      badgeSVG(s.key, 3, 56, !earned) + mark + '</button>';
   }
   function zukanSection(label, tiles) {
     return '<p class="mb-1.5 mt-5 text-[10px] font-bold tracking-wider text-subtle-light first:mt-0">' + label + '</p>' +
@@ -336,6 +358,7 @@
   function earnedDateLine(d) {
     return '<p class="mt-1.5 text-[11px] text-subtle">獲得日: ' + d + '</p>';
   }
+  function descLine(text) { return '<p class="mt-1 text-sm text-subtle">' + text + '</p>'; }
   function gaugeHtml(cur, next) {
     var pct = Math.min(100, Math.round((cur / next) * 100));
     return '<div class="mx-auto mt-2 h-1 w-4/5 rounded-full bg-border"><div class="h-1 rounded-full bg-accent" style="width:' + pct + '%"></div></div>' +
@@ -355,13 +378,14 @@
       }
       return '<span class="flex justify-center">' + badgeSVG(key, earned ? st.t : 1, 96, !earned) + '</span>' +
         '<p class="mt-2 text-base font-bold ' + (earned ? 'text-text' : 'text-subtle-light') + '">' + (earned ? tierName(s, st.t) : tierName(s, 1)) + '</p>' +
+        (earned ? descLine(s.descs[st.t - 1]) : '') +
         (earned && st.d ? earnedDateLine(st.d) : '') + body;
     }
     var e = findBadge(userKey, key);
     if (e) {
       return '<span class="flex justify-center">' + badgeSVG(key, e[1], 96, false) + '</span>' +
         '<p class="mt-2 text-base font-bold text-text">' + tierName(s, e[1]) + '</p>' +
-        '<p class="mt-1.5 text-xs text-subtle">' + s.conds[e[1] - 1] + '</p>' +
+        descLine(s.descs[e[1] - 1]) +
         earnedDateLine(e[2]);
     }
     return '<span class="flex justify-center">' + badgeSVG(key, 1, 96, true) + '</span>' +
@@ -376,7 +400,7 @@
       if (d) {
         return '<span class="flex justify-center">' + badgeSVG(key, 3, 96, false) + '</span>' +
           '<p class="mt-2 text-base font-bold text-text">' + s.name + '</p>' +
-          '<p class="mt-1.5 text-xs text-subtle">' + s.cond + '</p>' + earnedDateLine(d);
+          descLine(s.desc) + earnedDateLine(d);
       }
       return '<span class="flex justify-center">' + badgeSVG(key, 3, 96, true) + '</span>' +
         '<p class="mt-2 text-base font-bold text-subtle-light">？？？</p>' +
@@ -392,7 +416,7 @@
       }
       return '<span class="flex justify-center">' + badgeSVG(key, 3, 96, false) + '</span>' +
         '<p class="mt-2 text-base font-bold text-text">' + s.name + '</p>' +
-        '<p class="mt-1.5 text-xs text-subtle">' + s.cond + '</p>' + earnedDateLine(e[2]);
+        descLine(s.desc) + earnedDateLine(e[2]);
     }
     return '<span class="flex justify-center">' + badgeSVG(key, 3, 96, true) + '</span>' +
       '<p class="mt-2 text-base font-bold text-subtle-light">？？？</p>' +
@@ -477,7 +501,13 @@
     }
     var detailBtn = e.target.closest('[data-bdetail]');
     if (detailBtn) {
-      var parts = detailBtn.getAttribute('data-bdetail').split(':');
+      var bdetail = detailBtn.getAttribute('data-bdetail');
+      var parts = bdetail.split(':');
+      /* 詳細を開いた瞬間に既読化（自分の図鑑のみ・JS 変数で状態保持） */
+      if (parts[1] === 'me' && NEW_KEYS[parts[0] + ':' + parts[2]]) {
+        delete NEW_KEYS[parts[0] + ':' + parts[2]];
+        document.querySelectorAll('[data-bdetail="' + bdetail + '"] [data-bnew-mark]').forEach(function (m) { m.remove(); });
+      }
       var inner = parts[0] === 'series' ? seriesDetailInner(parts[1], parts[2]) : secretDetailInner(parts[1], parts[2]);
       var dv = document.createElement('div');
       dv.innerHTML = detailShell(inner);
