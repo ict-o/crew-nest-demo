@@ -181,21 +181,15 @@
         <span class="ml-4 shrink-0 rounded-full px-4 py-2 text-sm font-medium text-white" style="background-color:#C0392B;">回答する</span>
       </button>
 
-      <!-- モバイル: 重要なおしらせ（PinnedAnnouncementsCard、ボード外・先頭固定） -->
-      <div class="md:hidden">
-        <button type="button" class="w-full min-w-0 rounded-xl border border-danger-border bg-danger-surface px-4 py-3 text-left">
-          <div class="flex min-w-0 items-start gap-3">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-urgent/10">
-              <img src="public/icons/megaphone.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+      <!-- モバイル: 重要なおしらせ（PinnedAnnouncementsCard、ボード外・先頭固定）。各件「アイコン＋重要＋タイトル」の1行。本文・時刻はタップで開く詳細で読む -->
+      <div class="flex flex-col gap-2 md:hidden">
+        <button type="button" class="w-full min-w-0 rounded-xl border border-danger-border bg-danger-surface px-3 py-2 text-left">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-urgent/10">
+              <img src="public/icons/megaphone.png" alt="" style="width:18px;height:18px;object-fit:contain;">
             </span>
-            <div class="min-w-0 flex-1">
-              <div class="mb-0.5 flex min-w-0 items-center gap-2">
-                <span class="shrink-0 rounded border border-danger-border bg-danger-surface px-1.5 py-0.5 text-[10px] font-bold text-danger">重要</span>
-                <p class="min-w-0 truncate text-sm font-bold text-text">年末年始の休業期間について</p>
-              </div>
-              <p class="line-clamp-2 text-xs text-danger">12/29〜1/4を休業とさせていただきます。緊急時の連絡体制は…</p>
-              <time class="text-xs text-subtle">2時間前</time>
-            </div>
+            <span class="shrink-0 rounded border border-danger-border bg-danger-surface px-1.5 py-0.5 text-[10px] font-bold text-danger">重要</span>
+            <p class="min-w-0 flex-1 truncate text-sm font-bold text-text">年末年始の休業期間について</p>
           </div>
         </button>
       </div>
