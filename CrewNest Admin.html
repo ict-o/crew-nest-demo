@@ -1900,7 +1900,7 @@
             <div class="border-b border-border bg-background px-2 py-2 md:px-4">
               <div class="grid grid-cols-[96px_1fr] gap-2 md:flex md:items-center md:gap-2">
                 <select aria-label="ロールで絞り込み" class="h-9 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50" data-u-rolefilter>
-                  <option value="all" selected>全員</option><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member">一般</option>
+                  <option value="all" selected>全員</option><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member">一般</option><option value="sales">営業</option><option value="ga">総務</option>
                 </select>
                 <input type="text" placeholder="名前・メールで検索" data-u-search class="w-full rounded-lg border border-border bg-background-light px-3 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary md:max-w-xs">
                 <span class="hidden whitespace-nowrap text-xs text-subtle md:inline">ライセンス <span class="font-bold text-text">42 / 50</span></span>
@@ -1988,12 +1988,12 @@
                   </div>
                   <div class="mt-2"><div class="text-[11.5px] text-subtle-light">-</div></div>
                 </div>
-                <div data-user-row data-u-name="渡辺 さゆり" data-u-pts="-" data-u-email="watanabe@ict-o.com" data-u-role="member" data-u-job="-" data-u-invited="false" data-u-todocount="0" data-u-todo="0" data-open-slide="user-edit" class="cursor-pointer px-2 py-3 transition-colors hover:bg-background ">
+                <div data-user-row data-u-name="渡辺 さゆり" data-u-pts="-" data-u-email="watanabe@ict-o.com" data-u-role="sales" data-u-job="-" data-u-invited="false" data-u-todocount="0" data-u-todo="0" data-open-slide="user-edit" class="cursor-pointer px-2 py-3 transition-colors hover:bg-background ">
                   <div class="flex items-center gap-2.5">
                     <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#7A6030;">渡</span>
                     <div class="min-w-0 flex-1">
                       <div class="flex items-center gap-1.5">
-                        <span class="inline-flex shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold bg-background text-subtle border border-border">一般</span>
+                        <span class="inline-flex shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold bg-info-surface text-info border border-info-border">営業</span>
                         <div class="truncate text-sm font-semibold text-text">渡辺 さゆり</div>
                       </div>
                       <div class="truncate text-xs text-subtle">watanabe@ict-o.com</div>
@@ -2067,12 +2067,12 @@
                     <td class="px-4 py-2.5"><div class="text-xs font-semibold text-accent whitespace-nowrap">860 pt</div></td>
                     <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle-light">-</div></td>
                   </tr>
-                  <tr data-user-row data-u-name="渡辺 さゆり" data-u-pts="-" data-u-email="watanabe@ict-o.com" data-u-role="member" data-u-job="-" data-u-invited="false" data-u-todocount="0" data-u-todo="0" data-open-slide="user-edit" class="cursor-pointer border-b border-border transition-colors hover:bg-background ">
+                  <tr data-user-row data-u-name="渡辺 さゆり" data-u-pts="-" data-u-email="watanabe@ict-o.com" data-u-role="sales" data-u-job="-" data-u-invited="false" data-u-todocount="0" data-u-todo="0" data-open-slide="user-edit" class="cursor-pointer border-b border-border transition-colors hover:bg-background ">
                     <td class="px-4 py-2.5"><div class="flex items-center gap-2.5">
                       <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:#7A6030;">渡</span>
                       <div><div class="flex items-center gap-1.5"><div class="text-sm font-semibold text-text">渡辺 さゆり</div></div><div class="text-xs text-subtle">watanabe@ict-o.com</div></div>
                     </div></td>
-                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold bg-background text-subtle border border-border">一般</span></td>
+                    <td class="px-4 py-2.5"><span class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold bg-info-surface text-info border border-info-border">営業</span></td>
                     <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">-</div></td>
                     <td class="px-4 py-2.5"><div class="text-xs text-subtle-light">対象外</div></td>
                     <td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle-light">-</div></td>
@@ -2125,6 +2125,10 @@
     <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">休業日カレンダー</p><p data-bizcal-summary class="mt-0.5 text-xs text-subtle">2026年: 休業日 22日（会社休業日 2日・営業日に変更 2日）</p></div>
     <button type="button" data-open-slide="business-calendar" class="hidden md:inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
     <button type="button" data-open-slide="business-calendar-m" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] md:hidden">編集</button></div>
+                <div class="flex items-center gap-4 py-4">
+    <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">ロール</p><p data-roles-summary class="mt-0.5 text-xs text-subtle"></p></div>
+    <button type="button" data-open-slide="roles" class="hidden md:inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
+    <button type="button" data-open-slide="roles-m" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] md:hidden">編集</button></div>
               </div>
               <div class="max-w-[600px]">
                 <span class="mb-1.5 mt-6 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">外部連携</span>
@@ -4636,6 +4640,58 @@ document.addEventListener('click', function(e){
     <button type="button" data-close-slide="idea-cat-edit" class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button>
   </div></div>
 
+<!-- ロール管理（PC: センターモーダル。クイックリンク管理と同じ器） -->
+<div data-modal="roles" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/50 p-4 md:flex" style="display:none;">
+  <div data-r-root role="dialog" aria-modal="true" aria-labelledby="roles-title-d" class="flex max-h-[80vh] w-[440px] max-w-full flex-col rounded-2xl bg-background-light shadow-md">
+    <div data-rview="list" class="flex min-h-0 flex-1 flex-col">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <h2 id="roles-title-d" class="min-w-0 flex-1 text-[15px] font-bold text-text">ロール</h2>
+        <button type="button" data-r-new class="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-primary px-3.5 text-xs font-medium text-white transition-colors hover:bg-primary-mid">＋ 追加</button>
+        <button type="button" data-close-slide="roles" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto px-4 py-3">
+        <div data-r-list class="rounded-xl border border-border bg-background"></div>
+        <p class="mt-3 text-xs text-subtle">ロールは権限の組み合わせに名前を付けたものです。ユーザーには1つのロールを割り当てます（割り当てはユーザー管理の編集画面で行います）。行の左のハンドルをドラッグすると並び替えできます。行をクリックすると権限を編集できます。</p>
+      </div>
+    </div>
+    <div data-rview="form" class="flex min-h-0 flex-1 flex-col" style="display:none;">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <button type="button" data-r-back aria-label="一覧に戻る" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
+        <h2 data-r-heading class="min-w-0 flex-1 text-[15px] font-bold text-text">ロールを編集</h2>
+        <button type="button" data-close-slide="roles" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div data-r-form-body class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4"></div>
+      <div class="flex shrink-0 justify-end gap-2 rounded-b-2xl border-t border-border px-5 py-3"><button type="button" data-r-back class="inline-flex h-10 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button><button type="button" data-r-save class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button></div>
+    </div>
+  </div>
+</div>
+<!-- ロール管理（モバイル: ボトムシート） -->
+<div data-overlay="roles-m" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
+<div data-slide="roles-m" data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex max-h-[85vh] flex-col rounded-t-2xl bg-background-light pb-[env(safe-area-inset-bottom)] shadow-md transition-transform duration-300" style="transform:translateY(100%);">
+  <div aria-hidden="true" class="mx-auto mb-1 mt-3 h-1.5 w-12 shrink-0 rounded-full bg-border"></div>
+  <div data-r-root class="flex min-h-0 flex-1 flex-col">
+    <div data-rview="list" class="flex min-h-0 flex-1 flex-col">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <h2 class="min-w-0 flex-1 text-[15px] font-bold text-text">ロール</h2>
+        <button type="button" data-r-new class="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-primary px-3.5 text-xs font-medium text-white transition-colors hover:bg-primary-mid">＋ 追加</button>
+        <button type="button" data-close-slide="roles-m" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div class="min-h-0 flex-1 overflow-y-auto px-4 py-3">
+        <div data-r-list class="rounded-xl border border-border bg-background"></div>
+        <p class="mt-3 text-xs text-subtle">ロールは権限の組み合わせに名前を付けたものです。ユーザーには1つのロールを割り当てます（割り当てはユーザー管理の編集画面で行います）。行の左のハンドルをドラッグすると並び替えできます。行をクリックすると権限を編集できます。</p>
+      </div>
+    </div>
+    <div data-rview="form" class="flex min-h-0 flex-1 flex-col" style="display:none;">
+      <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
+        <button type="button" data-r-back aria-label="一覧に戻る" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
+        <h2 data-r-heading class="min-w-0 flex-1 text-[15px] font-bold text-text">ロールを編集</h2>
+        <button type="button" data-close-slide="roles-m" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
+      </div>
+      <div data-r-form-body class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4"></div>
+      <div class="flex shrink-0 flex-col-reverse gap-2 border-t border-border px-5 py-3"><button type="button" data-r-back class="inline-flex h-12 w-full items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button><button type="button" data-r-save class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button></div>
+    </div>
+  </div>
+</div>
 <div data-slide="user-edit" data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
   <div class="flex shrink-0 items-center justify-between border-b border-border px-4 py-3">
     <span class="text-sm font-bold text-text">ユーザー編集</span>
@@ -4655,7 +4711,7 @@ document.addEventListener('click', function(e){
         <div class="rounded-lg bg-background px-3 py-2"><p class="text-[10px] text-subtle">提出待ち書類</p><p class="text-sm font-bold text-primary">1 件</p></div>
       </div>
     </div>
-    <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール</label><select data-ue="role" aria-label="ロール" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member">一般</option></select></div>
+    <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール</label><select data-ue="role" aria-label="ロール" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member">一般</option><option value="sales">営業</option><option value="ga">総務</option></select><p class="mt-1 text-[11px] text-subtle">ロールの内容は<a href="#system" class="text-primary hover:underline">システム設定</a>で確認できます</p></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">メールアドレス</label><input data-ue="email-input" type="email" readonly aria-readonly="true" class="w-full cursor-not-allowed rounded-lg border border-border bg-background px-2 py-1.5 text-sm text-subtle"><p class="mt-1 text-[11px] text-subtle-light">Entra ID から自動取得</p></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">役職</label><input data-ue="job" type="text" readonly aria-readonly="true" class="w-full cursor-not-allowed rounded-lg border border-border bg-background px-2 py-1.5 text-sm text-subtle"><p class="mt-1 text-[11px] text-subtle-light">Entra ID から自動取得</p></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ポイント設定</label>
@@ -4706,7 +4762,7 @@ document.addEventListener('click', function(e){
         <div class="rounded-lg bg-background px-3 py-2"><p class="text-[10px] text-subtle">提出待ち書類</p><p class="text-sm font-bold text-primary">1 件</p></div>
       </div>
     </div>
-    <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール</label><select data-ue="role" aria-label="ロール" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member">一般</option></select></div>
+    <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール</label><select data-ue="role" aria-label="ロール" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member">一般</option><option value="sales">営業</option><option value="ga">総務</option></select><p class="mt-1 text-[11px] text-subtle">ロールの内容は<a href="#system" class="text-primary hover:underline">システム設定</a>で確認できます</p></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">メールアドレス</label><input data-ue="email-input" type="email" readonly aria-readonly="true" class="w-full cursor-not-allowed rounded-lg border border-border bg-background px-2 py-1.5 text-sm text-subtle"><p class="mt-1 text-[11px] text-subtle-light">Entra ID から自動取得</p></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">役職</label><input data-ue="job" type="text" readonly aria-readonly="true" class="w-full cursor-not-allowed rounded-lg border border-border bg-background px-2 py-1.5 text-sm text-subtle"><p class="mt-1 text-[11px] text-subtle-light">Entra ID から自動取得</p></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ポイント設定</label>
@@ -4746,8 +4802,6 @@ document.addEventListener('click', function(e){
       <input data-inv-email type="email" autocomplete="off" required class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">氏名（任意）</label>
       <input type="text" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></div>
-    <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール</label>
-      <select aria-label="ロール" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member" selected>一般</option></select></div>
   </div>
   <div class="flex items-center justify-end gap-3 border-t border-border px-4 py-3">
     <button type="button" data-close-slide="user-invite" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
@@ -4765,8 +4819,6 @@ document.addEventListener('click', function(e){
       <input data-inv-email type="email" autocomplete="off" required class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></div>
     <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">氏名（任意）</label>
       <input type="text" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></div>
-    <div><label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール</label>
-      <select aria-label="ロール" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="admin">管理者</option><option value="leader">リーダー</option><option value="member" selected>一般</option></select></div>
   </div>
   <div class="flex items-center justify-end gap-3 border-t border-border px-4 py-3">
     <button type="button" data-close-slide="user-invite" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
@@ -5644,7 +5696,7 @@ function ueFilterUsers(){
     r.style.display = ok ? '' : 'none';
   });
 }
-var UE_ROLE_RANK = { admin: 0, leader: 1, member: 2 };
+var UE_ROLE_RANK = { admin: 0, leader: 1, member: 2, sales: 3, ga: 4 };
 var UE_SORT_DEFAULT_DIR = { name: 'asc', role: 'asc', job: 'asc', pts: 'desc', todo: 'desc' };
 var UE_SORT_ICON_SWAP = '<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-u-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>';
 var UE_SORT_ICON_ASC = '<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-primary" data-u-sort-icon><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>';
@@ -7129,6 +7181,472 @@ document.addEventListener('click', function(e){
       return;
     }
   });
+})();
+</script>
+<script>
+(function () {
+  // ---- データ定義 ----
+  // 管理画面の左タブと同じ順・同じ名前で並べる（どの権限がどのタブに効くかを一目で対応づけるため）
+  var PERMISSION_GROUPS = [
+    { label: 'クエスト', items: [
+      { key: 'quests', label: 'クエスト管理', tab: 'ダッシュボード・一覧・レベル定義', desc: 'クエスト・カテゴリ・レベル定義の閲覧と編集', scoped: false },
+      { key: 'achievements', label: '実績承認', tab: '実績タブ', desc: '申請の閲覧、承認・差し戻し・再割り当て', scoped: true },
+      { key: 'points', label: 'ポイント運用', tab: '設定・予算タブ', desc: '年度・換算係数・予算・報奨金申請・ボーナス付与', scoped: false },
+    ]},
+    { label: 'アイデア', items: [
+      { key: 'ideas', label: 'アイデア', desc: '提案の閲覧、承認・却下・採用、カテゴリ管理', scoped: false },
+    ]},
+    { label: 'ユーザー', items: [
+      { key: 'users', label: 'ユーザー管理', desc: 'ユーザー情報の閲覧・編集、招待(全社のみ)。ロールの変更は含まない', scoped: true },
+    ]},
+    { label: 'システム', items: [
+      { key: 'settings.approval', label: '承認設定', desc: '既定の上長', scoped: false },
+      { key: 'settings.quickLinks', label: 'クイックリンク', desc: 'リンクの作成・並び順・アイコン', scoped: false },
+      { key: 'settings.tasks', label: '定期実行', desc: 'タスクの ON/OFF・手動実行。会社をまたぐ共通処理のため管理者だけが扱う', scoped: false, adminOnly: true },
+      { key: 'settings.holidays', label: '休業日カレンダー', desc: '休業日・営業日の上書き', scoped: false },
+      { key: 'settings.notifications', label: '通知設定', desc: '強制配信・Teams 申請通知・テストメール', scoped: false },
+      { key: 'settings.integrations', label: '外部連携', desc: 'M365 連携・ユーザー取り込み・Bot 設定', scoped: false },
+      { key: 'roles', label: 'ロール管理', desc: 'ロールの作成・編集、ユーザーへの割り当て。実質的に管理者と同じ権限になるため管理者だけが扱う', scoped: false, adminOnly: true },
+    ]},
+    { label: 'お知らせ', items: [
+      { key: 'announcements', label: 'お知らせ管理', desc: '全件の既読状況と催促、他人の投稿の編集・削除', scoped: false },
+    ]},
+    { label: '書類', items: [
+      { key: 'documents', label: '書類', desc: '提出依頼と提出物の閲覧、依頼作成・承認', scoped: true },
+    ]},
+    { label: '安否確認', items: [
+      { key: 'safety', label: '安否確認', desc: 'イベント・訓練・設定の閲覧、イベント作成・完了操作', scoped: false },
+    ]},
+    { label: '経費精算', items: [
+      { key: 'expenses', label: '経費精算', desc: '集計・一覧の閲覧、受領依頼・ソース・テンプレート管理', scoped: false },
+    ]},
+    { label: '有休', items: [
+      { key: 'paidLeave', label: '有休', desc: '取得状況の閲覧、CSV 取り込み・集計対象の切替', scoped: false },
+    ]},
+  ];
+
+  var ALL_KEYS = [];
+  PERMISSION_GROUPS.forEach(function (g) {
+    g.items.forEach(function (it) { ALL_KEYS.push(it.key); });
+  });
+
+  function permMeta(key) {
+    for (var i = 0; i < PERMISSION_GROUPS.length; i++) {
+      var items = PERMISSION_GROUPS[i].items;
+      for (var j = 0; j < items.length; j++) {
+        if (items[j].key === key) return items[j];
+      }
+    }
+    return null;
+  }
+
+  function buildPerms(overrides) {
+    var perms = {};
+    ALL_KEYS.forEach(function (key) { perms[key] = { level: 'none', scope: null }; });
+    if (overrides) {
+      Object.keys(overrides).forEach(function (key) { perms[key] = overrides[key]; });
+    }
+    return perms;
+  }
+
+  function buildAllEditPerms() {
+    var perms = {};
+    ALL_KEYS.forEach(function (key) {
+      var meta = permMeta(key);
+      perms[key] = { level: 'edit', scope: meta.scoped ? 'all' : null };
+    });
+    return perms;
+  }
+
+  function clonePerms(perms) {
+    var out = {};
+    Object.keys(perms).forEach(function (key) {
+      out[key] = { level: perms[key].level, scope: perms[key].scope };
+    });
+    return out;
+  }
+
+  var ROLES = [
+    { id: 'admin', systemKey: 'admin', name: '管理者', users: 3, perms: buildAllEditPerms() },
+    { id: 'member', systemKey: 'member', name: '一般', users: 30, perms: buildPerms({}) },
+    { id: 'leader', systemKey: null, name: 'リーダー', users: 8, perms: buildPerms({
+      quests: { level: 'view', scope: null },
+      achievements: { level: 'edit', scope: 'subordinates' },
+      announcements: { level: 'view', scope: null },
+      documents: { level: 'edit', scope: 'subordinates' },
+      users: { level: 'view', scope: 'subordinates' },
+      safety: { level: 'view', scope: null },
+      paidLeave: { level: 'view', scope: null },
+      'settings.holidays': { level: 'edit', scope: null },
+    }) },
+    { id: 'sales', systemKey: null, name: '営業', users: 1, perms: buildPerms({
+      users: { level: 'edit', scope: 'all' },
+      'settings.holidays': { level: 'edit', scope: null },
+    }) },
+    { id: 'ga', systemKey: null, name: '総務', users: 0, perms: buildPerms({
+      announcements: { level: 'edit', scope: null },
+      'settings.quickLinks': { level: 'edit', scope: null },
+      'settings.holidays': { level: 'edit', scope: null },
+    }) },
+  ];
+
+  // ---- 共通ボタンクラス（adminButtons.ts） ----
+  var BASE_BTN = 'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors disabled:opacity-[0.38] disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50';
+  var FILLED = 'bg-primary text-white hover:bg-primary-mid active:bg-primary-darkest';
+  var OUTLINED = 'border border-border text-subtle hover:bg-black/[0.08] active:bg-black/[0.12]';
+  var DANGER = 'border border-danger-border bg-danger-surface text-danger hover:bg-danger-surface active:bg-danger-surface';
+  var BTN_FILLED_CTA = BASE_BTN + ' ' + FILLED + ' h-12 md:h-10 px-5 text-sm';
+  var BTN_OUTLINED_CTA = BASE_BTN + ' ' + OUTLINED + ' h-12 md:h-10 px-5 text-sm';
+  var BTN_DANGER_CTA = BASE_BTN + ' ' + DANGER + ' h-12 md:h-10 px-5 text-sm';
+
+  function segmentClass(selected) {
+    var sel = selected
+      ? 'border-primary bg-primary-lightest text-primary'
+      : 'border-border text-subtle hover:bg-black/[0.08]';
+    return 'flex-1 rounded-full border py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:opacity-[0.38] disabled:cursor-not-allowed ' + sel;
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // ---- タブ切替 ----
+  // ---- ロール一覧描画 ----
+  function summarizeRole(role) {
+    if (role.systemKey === 'admin') return 'すべての項目を編集（固定）';
+    if (role.systemKey === 'member') return '管理機能なし（固定）';
+    var parts = [];
+    ALL_KEYS.forEach(function (key) {
+      var p = role.perms[key];
+      if (!p || p.level === 'none') return;
+      var meta = permMeta(key);
+      if (meta.adminOnly) return;
+      if (p.level === 'edit') {
+        var scopeText = meta.scoped ? (p.scope === 'all' ? '・全社' : '・自分の部下') : '';
+        parts.push(meta.label + '（編集' + scopeText + '）');
+      } else {
+        parts.push(meta.label + '（閲覧）');
+      }
+    });
+    return parts.length ? parts.join('・') : '管理機能なし';
+  }
+
+  var HANDLE_SVG = '<svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"></path></svg>';
+  var PENCIL_SVG = '<svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path></svg>';
+
+  function renderRolesList() {
+    var rowsHtml = ROLES.length
+      ? ROLES.map(function (role) {
+          var chip = role.systemKey
+            ? '<span class="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-subtle">組み込み</span>'
+            : '';
+          return (
+            '<div data-r-row data-role-id="' + role.id + '" role="button" tabindex="0" class="group flex cursor-pointer items-center gap-2 border-b border-border px-3 py-2.5 transition-colors first:rounded-t-xl last:rounded-b-xl last:border-b-0 hover:bg-black/[0.04]">' +
+            '<button type="button" data-r-handle aria-label="' + escapeHtml(role.name) + 'を並び替え" class="shrink-0 cursor-grab touch-none select-none p-0.5 text-subtle-light opacity-100 md:opacity-0 md:group-hover:opacity-100 active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' + HANDLE_SVG + '</button>' +
+            '<div class="min-w-0 flex-1">' +
+            '<div class="flex flex-wrap items-center gap-1.5"><span class="text-sm font-medium text-text">' + escapeHtml(role.name) + '</span>' + chip + '</div>' +
+            '<div class="truncate text-xs text-subtle">' + escapeHtml(summarizeRole(role)) + '</div>' +
+            '</div>' +
+            '<span class="shrink-0 text-xs text-subtle">' + role.users + '人</span>' +
+            '<span aria-hidden="true" class="shrink-0 text-subtle">' + PENCIL_SVG + '</span>' +
+            '</div>'
+          );
+        }).join('')
+      : '<div class="flex flex-col items-center justify-center py-16 text-subtle">' +
+        '<p class="text-sm font-medium">ロールがありません</p>' +
+        '<p class="mt-1 text-xs text-subtle-light">「＋ 追加」から作成してください</p>' +
+        '</div>';
+    document.querySelectorAll('[data-r-list]').forEach(function (el) { el.innerHTML = rowsHtml; });
+    var summary = ROLES.length + '件（' + ROLES.map(function (r) { return r.name; }).join('・') + '）';
+    document.querySelectorAll('[data-roles-summary]').forEach(function (el) { el.textContent = summary; });
+  }
+
+  // ---- 権限行 ----
+  function renderPermRow(item, perm, isFixed) {
+    var levels = [
+      { key: 'none', label: 'なし' },
+      { key: 'view', label: '閲覧' },
+      { key: 'edit', label: '編集' },
+    ];
+    var scopeVisible = item.scoped && perm.level !== 'none';
+    var warningHtml = item.warning
+      ? '<div class="mt-1 text-xs text-warning">' + escapeHtml(item.warning) + '</div>'
+      : '';
+    var buttonsHtml = levels.map(function (lv) {
+      var pressed = perm.level === lv.key;
+      return (
+        '<button type="button" data-perm-level="' + lv.key + '" aria-pressed="' + pressed + '"' +
+        (isFixed ? ' disabled' : '') + ' class="' + segmentClass(pressed) + '">' + lv.label + '</button>'
+      );
+    }).join('');
+    var scopeHtml = item.scoped
+      ? (
+        '<div data-perm-scope-wrap class="mt-2 flex items-center gap-2' + (scopeVisible ? '' : ' hidden') + '">' +
+        '<span class="text-xs text-subtle">範囲</span>' +
+        '<select data-perm-scope aria-label="' + escapeHtml(item.label) + ' の範囲"' + (isFixed ? ' disabled' : '') +
+        ' class="h-9 flex-1 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-[0.38] disabled:cursor-not-allowed">' +
+        '<option value="subordinates"' + (perm.scope === 'subordinates' ? ' selected' : '') + '>自分の部下</option>' +
+        '<option value="all"' + (perm.scope === 'all' ? ' selected' : '') + '>全社</option>' +
+        '</select>' +
+        '</div>'
+      )
+      : '';
+    if (item.adminOnly) {
+      return (
+        '<div data-perm-row="' + item.key + '" class="rounded-lg border border-border bg-background px-3 py-2.5">' +
+        '<div class="flex flex-wrap items-center gap-1.5">' +
+        '<span class="text-sm font-semibold text-text">' + escapeHtml(item.label) + '</span>' +
+        '<span class="rounded-full border border-border bg-background-light px-2 py-0.5 text-[10px] font-medium text-subtle">管理者のみ</span>' +
+        '</div>' +
+        '<div class="mt-0.5 text-xs text-subtle">' + escapeHtml(item.desc) + '</div>' +
+        '</div>'
+      );
+    }
+    return (
+      '<div data-perm-row="' + item.key + '" class="rounded-lg border border-border bg-background px-3 py-2.5">' +
+      '<div class="flex flex-wrap items-center gap-1.5">' +
+      '<span class="text-sm font-semibold text-text">' + escapeHtml(item.label) + '</span>' +
+      (item.tab ? '<span class="rounded-full border border-info-border bg-info-surface px-2 py-0.5 text-[10px] font-medium text-info">' + escapeHtml(item.tab) + '</span>' : '') +
+      '</div>' +
+      '<div class="mt-0.5 text-xs text-subtle">' + escapeHtml(item.desc) + '</div>' +
+      warningHtml +
+      '<div class="mt-2 flex gap-1.5" role="group" aria-label="' + escapeHtml(item.label) + ' の操作レベル">' + buttonsHtml + '</div>' +
+      scopeHtml +
+      '</div>'
+    );
+  }
+
+  function updatePermRowUI(key, perm) {
+    document.querySelectorAll('[data-perm-row="' + key + '"]').forEach(function (row) {
+      row.querySelectorAll('[data-perm-level]').forEach(function (btn) {
+        var lvl = btn.getAttribute('data-perm-level');
+        var pressed = perm.level === lvl;
+        btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+        btn.className = segmentClass(pressed);
+      });
+      var wrap = row.querySelector('[data-perm-scope-wrap]');
+      if (wrap) {
+        var meta = permMeta(key);
+        var visible = meta.scoped && perm.level !== 'none';
+        wrap.classList.toggle('hidden', !visible);
+        var select = wrap.querySelector('[data-perm-scope]');
+        if (select) select.value = perm.scope || 'subordinates';
+      }
+    });
+  }
+
+  function wirePermRows(bodyEl, perms, isFixed) {
+    bodyEl.addEventListener('click', function (e) {
+      if (isFixed) return;
+      var btn = e.target.closest('[data-perm-level]');
+      if (!btn) return;
+      var row = btn.closest('[data-perm-row]');
+      var key = row.getAttribute('data-perm-row');
+      perms[key].level = btn.getAttribute('data-perm-level');
+      if (perms[key].level !== 'none' && !perms[key].scope) perms[key].scope = 'subordinates';
+      updatePermRowUI(key, perms[key]);
+    });
+    bodyEl.addEventListener('change', function (e) {
+      var select = e.target.closest('[data-perm-scope]');
+      if (!select) return;
+      var row = select.closest('[data-perm-row]');
+      var key = row.getAttribute('data-perm-row');
+      perms[key].scope = select.value;
+    });
+  }
+
+  // ---- モーダル内のビュー切替（クイックリンク管理と同じ一覧⇄フォーム方式） ----
+  function showView(name) {
+    document.querySelectorAll('[data-r-root]').forEach(function (root) {
+      root.querySelectorAll('[data-rview]').forEach(function (v) {
+        v.style.display = v.getAttribute('data-rview') === name ? '' : 'none';
+      });
+    });
+  }
+
+  var editing = null; // { role, perms, isNew, isFixed, deleteDisabled }
+
+  function openForm(role) {
+    var isNew = !role;
+    var isFixed = !!role && (role.systemKey === 'admin' || role.systemKey === 'member');
+    var isBuiltin = !!role && !!role.systemKey;
+    var perms = role ? clonePerms(role.perms) : buildPerms({});
+    var canDelete = !!role && !isBuiltin;
+    var deleteDisabled = canDelete && role.users > 0;
+    editing = { role: role, perms: perms, isNew: isNew, isFixed: isFixed, deleteDisabled: deleteDisabled };
+
+    document.querySelectorAll('[data-r-heading]').forEach(function (el) { el.textContent = isNew ? '新しいロール' : 'ロールを編集'; });
+
+    var note = '';
+    if (role && role.systemKey === 'admin') {
+      note = '組み込みロールです。名前は変更できます。権限はすべて「編集・全社」で固定です。';
+    } else if (role && role.systemKey === 'member') {
+      note = '組み込みロールです。名前は変更できます。権限は「なし」で固定です。新しいユーザーにはこのロールが付きます。';
+    }
+
+    var bodyHtml =
+      '<label class="flex flex-col gap-1"><span class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール名</span>' +
+      '<input type="text" maxlength="50" value="' + escapeHtml(role ? role.name : '') + '" data-r-name placeholder="例: 営業" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>' +
+      (note ? '<div class="rounded-lg border border-info-border bg-info-surface px-3 py-2 text-xs text-info">' + escapeHtml(note) + '</div>' : '') +
+      '<div>' +
+      '<div class="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-subtle">権限</div>' +
+      '<p class="mb-3 text-[11px] text-subtle">管理画面の左タブと同じ順に並んでいます。</p>' +
+      PERMISSION_GROUPS.map(function (group) {
+        return (
+          '<div class="mb-4">' +
+          '<div class="mb-2 flex items-center gap-1 text-xs font-semibold"><span class="text-subtle">管理 ›</span><span class="text-text">' + escapeHtml(group.label) + '</span></div>' +
+          '<div class="flex flex-col gap-2">' +
+          group.items.map(function (item) { return renderPermRow(item, perms[item.key], isFixed); }).join('') +
+          '</div>' +
+          '</div>'
+        );
+      }).join('') +
+      '</div>' +
+      (canDelete
+        ? '<div class="mt-2 border-t border-border pt-4">' +
+          '<button type="button" data-r-delete class="' + BTN_DANGER_CTA + ' w-full"' + (deleteDisabled ? ' disabled' : '') + '>このロールを削除</button>' +
+          (deleteDisabled ? '<p class="mt-2 text-[11px] text-subtle">割り当て中のユーザーがいるため削除できません</p>' : '') +
+          '</div>'
+        : '');
+
+    document.querySelectorAll('[data-r-form-body]').forEach(function (bodyEl) {
+      bodyEl.innerHTML = bodyHtml;
+      bodyEl.scrollTop = 0;
+      wirePermRows(bodyEl, perms, isFixed);
+    });
+    // 名前入力: PC/モバイルの2つを同期
+    var nameInputs = document.querySelectorAll('[data-r-name]');
+    nameInputs.forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        nameInputs.forEach(function (other) { if (other !== inp) other.value = inp.value; });
+      });
+    });
+    showView('form');
+  }
+
+  function saveForm() {
+    if (!editing) return;
+    var inp = document.querySelector('[data-r-name]');
+    var value = inp ? inp.value.trim() : '';
+    if (!value) return;
+    if (editing.isNew) {
+      ROLES.push({ id: 'role-' + Date.now(), systemKey: null, name: value, users: 0, perms: editing.perms });
+    } else {
+      editing.role.name = value;
+      editing.role.perms = editing.perms;
+    }
+    editing = null;
+    renderRolesList();
+    showView('list');
+  }
+
+  function deleteRole() {
+    if (!editing || !editing.role || editing.deleteDisabled) return;
+    var id = editing.role.id;
+    ROLES = ROLES.filter(function (r) { return r.id !== id; });
+    editing = null;
+    renderRolesList();
+    showView('list');
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-r-new]')) { openForm(null); return; }
+    if (e.target.closest('[data-r-back]')) { editing = null; showView('list'); return; }
+    if (e.target.closest('[data-r-save]')) { saveForm(); return; }
+    if (e.target.closest('[data-r-delete]')) { deleteRole(); return; }
+    var row = e.target.closest('[data-r-row]');
+    if (row) {
+      var roleId = row.getAttribute('data-role-id');
+      var role = ROLES.filter(function (r) { return r.id === roleId; })[0];
+      if (role) openForm(role);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var row = e.target.closest && e.target.closest('[data-r-row]');
+    if (!row) return;
+    e.preventDefault();
+    row.click();
+  });
+
+
+  // ---- 並び替え（マウス: 6px 移動で開始 / タッチ: 200ms 長押しで開始。挿入位置は直前に線で示す） ----
+  var drag = null;
+  function clearDragIndicator() {
+    document.querySelectorAll('[data-r-row].ring-2').forEach(function (r) { r.classList.remove('ring-2', 'ring-inset', 'ring-primary/60'); });
+    document.querySelectorAll('[data-r-row].opacity-50').forEach(function (r) { r.classList.remove('opacity-50'); });
+  }
+  function rowsOf(list) { return Array.prototype.slice.call(list.querySelectorAll('[data-r-row]')); }
+  function insertIndexFor(list, y) {
+    var rows = rowsOf(list);
+    for (var i = 0; i < rows.length; i++) {
+      var b = rows[i].getBoundingClientRect();
+      if (y < b.top + b.height / 2) return i;
+    }
+    return rows.length;
+  }
+  document.addEventListener('pointerdown', function (e) {
+    var handle = e.target.closest('[data-r-handle]');
+    if (!handle) return;
+    var row = handle.closest('[data-r-row]');
+    var list = handle.closest('[data-r-list]');
+    if (!row || !list) return;
+    e.preventDefault();
+    drag = { row: row, list: list, roleId: row.getAttribute('data-role-id'), startY: e.clientY, active: false, timer: null, pointerId: e.pointerId };
+    if (e.pointerType === 'touch') {
+      drag.timer = setTimeout(function () { if (drag) { drag.active = true; row.classList.add('opacity-50'); } }, 200);
+    }
+    try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  document.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    if (!drag.active) {
+      if (e.pointerType === 'touch') { if (Math.abs(e.clientY - drag.startY) > 6) { clearTimeout(drag.timer); drag = null; } return; }
+      if (Math.abs(e.clientY - drag.startY) < 6) return;
+      drag.active = true;
+      drag.row.classList.add('opacity-50');
+    }
+    e.preventDefault();
+    var idx = insertIndexFor(drag.list, e.clientY);
+    var rows = rowsOf(drag.list);
+    rows.forEach(function (r) { r.classList.remove('ring-2', 'ring-inset', 'ring-primary/60'); });
+    var target = rows[idx] || null;
+    if (target && target !== drag.row) target.classList.add('ring-2', 'ring-inset', 'ring-primary/60');
+    drag.insertIndex = idx;
+  });
+  function endDrag(e) {
+    if (!drag) return;
+    clearTimeout(drag.timer);
+    var wasActive = drag.active;
+    var roleId = drag.roleId;
+    var idx = drag.insertIndex;
+    clearDragIndicator();
+    drag = null;
+    if (!wasActive || idx === undefined) return;
+    var from = ROLES.findIndex(function (r) { return r.id === roleId; });
+    if (from < 0) return;
+    var item = ROLES.splice(from, 1)[0];
+    if (idx > from) idx -= 1;
+    ROLES.splice(idx, 0, item);
+    renderRolesList();
+  }
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+  // ハンドルのクリックで行の編集を開かない（ドラッグ専用）
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-r-handle]')) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  // モーダル／シートを開くたびに一覧ビューから始める
+  document.addEventListener('slidewillopen', function (e) {
+    if (!e.detail || (e.detail.id !== 'roles' && e.detail.id !== 'roles-m')) return;
+    editing = null;
+    renderRolesList();
+    showView('list');
+  });
+  renderRolesList();
 })();
 </script>
 </body>
