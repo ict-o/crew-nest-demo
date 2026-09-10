@@ -33,7 +33,7 @@
   :root {
     --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
     --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
-    --z-header: 50;
+    --z-header: 50; --z-tooltip: 100;
     --bottom-nav-h: 3rem;
   }
   html, body { background: #F7F8FA; }
@@ -3117,13 +3117,23 @@
         <div data-adminpanel="paidleave">
           <div class="mb-1 flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-xl font-bold text-text">有休取得状況</h2>
-            <div class="flex items-center gap-2">
-              <select aria-label="対象年" class="h-9 rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
-                <option>2024年</option><option>2025年</option><option selected>2026年</option>
-              </select>
-              <button type="button" class="hidden md:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-mid">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>CSVアップロード
-              </button>
+            <div class="flex flex-wrap items-center justify-end gap-2">
+              <div class="w-[120px]">
+                <select aria-label="対象年" class="h-9 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option>2024年</option><option>2025年</option><option selected>2026年</option>
+                </select>
+              </div>
+              <div role="group" aria-label="有休データの取込" class="hidden items-center gap-2 md:flex">
+                <button type="button" data-yn-open class="inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">有休ノートから取り込む</button>
+                <div class="relative">
+                  <button type="button" data-pl-menu-toggle aria-haspopup="true" aria-label="その他の取込操作" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"/></svg>
+                  </button>
+                  <div data-pl-menu role="menu" aria-label="その他の取込操作" class="hidden absolute right-0 top-full z-[110] mt-1 w-44 rounded-lg border border-border bg-background-light py-1 shadow-md">
+                    <button type="button" role="menuitem" data-pl-csv-open class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-text hover:bg-background">CSVアップロード</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <p class="mb-4 text-xs text-subtle">最終アップロード: 2026/08/18 10:15（田中佑樹・kyuka_shukei.csv）</p>
@@ -3146,7 +3156,7 @@
             </article>
           </div>
 
-          <div class="mb-4 grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_340px]">
+          <div class="mb-4 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1fr)_340px]">
             <div class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
               <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <h3 class="text-sm font-semibold text-text">月次推移（全体・取得率%）</h3>
@@ -3156,13 +3166,16 @@
                 </div>
               </div>
               <div class="mx-auto w-full max-w-[720px]">
-                <svg data-pl-chart-variant="monthly" style="height:auto;display:none" viewBox="0 0 560 200" class="pl-chart-variant w-full" role="img" aria-label="月次推移(全体・取得率%)の折れ線グラフ"><line x1="36" y1="134.5" x2="552" y2="134.5" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="138.5" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">5</text><line x1="36" y1="93" x2="552" y2="93" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="97" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">10</text><line x1="36" y1="51.5" x2="552" y2="51.5" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="55.5" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">15</text><line x1="36" y1="10" x2="552" y2="10" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="14" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">20</text><text x="36" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">1</text><text x="82.9" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">2</text><text x="129.8" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">3</text><text x="176.7" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">4</text><text x="223.6" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">5</text><text x="270.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">6</text><text x="317.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">7</text><text x="364.4" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">8</text><text x="411.3" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">9</text><text x="458.2" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">10</text><text x="505.1" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">11</text><text x="552" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">12</text><path d="M36 142.8 C59.45 142.8 59.45 151.1 82.9 151.1 C106.35000000000001 151.1 106.35000000000001 147 129.8 147 C153.25 147 153.25 126.2 176.7 126.2 C200.14999999999998 126.2 200.14999999999998 130.4 223.6 130.4 C247.05 130.4 247.05 145.3 270.5 145.3 C294 145.3 294 117.1 317.5 117.1 C340.95 117.1 340.95 14.2 364.4 14.2" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 151.1 C59.45 151.1 59.45 155.3 82.9 155.3 C106.35000000000001 155.3 106.35000000000001 151.1 129.8 151.1 C153.25 151.1 153.25 134.5 176.7 134.5 C200.14999999999998 134.5 200.14999999999998 142.8 223.6 142.8 C247.05 142.8 247.05 155.3 270.5 155.3 C294 155.3 294 142.8 317.5 142.8 C340.95 142.8 340.95 51.5 364.4 51.5 C387.85 51.5 387.85 155.3 411.3 155.3 C434.75 155.3 434.75 155.3 458.2 155.3 C481.65 155.3 481.65 155.3 505.1 155.3 C528.55 155.3 528.55 157.7 552 157.7" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 155.3 C59.45 155.3 59.45 159.4 82.9 159.4 C106.35000000000001 159.4 106.35000000000001 155.3 129.8 155.3 C153.25 155.3 153.25 142.8 176.7 142.8 C200.14999999999998 142.8 200.14999999999998 147 223.6 147 C247.05 147 247.05 159.4 270.5 159.4 C294 159.4 294 147 317.5 147 C340.95 147 340.95 68.1 364.4 68.1 C387.85 68.1 387.85 155.3 411.3 155.3 C434.75 155.3 434.75 155.3 458.2 155.3 C481.65 155.3 481.65 155.3 505.1 155.3 C528.55 155.3 528.55 142.8 552 142.8" fill="none" stroke="var(--color-border)" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div data-pl-chart-box class="relative">
+                <svg data-pl-chart-variant="monthly" style="height:auto;display:none" viewBox="0 0 560 200" class="pl-chart-variant w-full" role="img" aria-label="月次推移(全体・取得率%)の棒グラフ"><line x1="36" y1="134.5" x2="552" y2="134.5" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="138.5" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">5</text><line x1="36" y1="93" x2="552" y2="93" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="97" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">10</text><line x1="36" y1="51.5" x2="552" y2="51.5" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="55.5" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">15</text><line x1="36" y1="10" x2="552" y2="10" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="14" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">20</text><text x="57.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">1</text><text x="100.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">2</text><text x="143.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">3</text><text x="186.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">4</text><text x="229.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">5</text><text x="272.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">6</text><text x="315.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">7</text><text x="358.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">8</text><text x="401.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">9</text><text x="444.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">10</text><text x="487.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">11</text><text x="530.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">12</text><path data-pl-trend-bar data-month="1" d="M41 176 L41 146.8 Q41 142.8 45 142.8 L70 142.8 Q74 142.8 74 146.8 L74 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="2" d="M84 176 L84 155.1 Q84 151.1 88 151.1 L113 151.1 Q117 151.1 117 155.1 L117 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="3" d="M127 176 L127 150.95 Q127 146.95 131 146.95 L156 146.95 Q160 146.95 160 150.95 L160 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="4" d="M170 176 L170 130.2 Q170 126.2 174 126.2 L199 126.2 Q203 126.2 203 130.2 L203 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="5" d="M213 176 L213 134.35 Q213 130.35 217 130.35 L242 130.35 Q246 130.35 246 134.35 L246 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="6" d="M256 176 L256 149.29 Q256 145.29 260 145.29 L285 145.29 Q289 145.29 289 149.29 L289 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="7" d="M299 176 L299 121.07 Q299 117.07 303 117.07 L328 117.07 Q332 117.07 332 121.07 L332 176 Z" fill="var(--color-primary)"/><path data-pl-trend-bar data-month="8" d="M342 176 L342 18.15 Q342 14.15 346 14.15 L371 14.15 Q375 14.15 375 18.15 L375 176 Z" fill="var(--color-primary)"/><path d="M57.5 151.1 C79 151.1 79 155.25 100.5 155.25 C122 155.25 122 151.1 143.5 151.1 C165 151.1 165 134.5 186.5 134.5 C208 134.5 208 142.8 229.5 142.8 C251 142.8 251 155.25 272.5 155.25 C294 155.25 294 142.8 315.5 142.8 C337 142.8 337 51.5 358.5 51.5 C380 51.5 380 155.25 401.5 155.25 C423 155.25 423 155.25 444.5 155.25 C466 155.25 466 155.25 487.5 155.25 C509 155.25 509 157.74 530.5 157.74" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M57.5 155.25 C79 155.25 79 159.4 100.5 159.4 C122 159.4 122 155.25 143.5 155.25 C165 155.25 165 142.8 186.5 142.8 C208 142.8 208 146.95 229.5 146.95 C251 146.95 251 159.4 272.5 159.4 C294 159.4 294 146.95 315.5 146.95 C337 146.95 337 68.1 358.5 68.1 C380 68.1 380 155.25 401.5 155.25 C423 155.25 423 155.25 444.5 155.25 C466 155.25 466 155.25 487.5 155.25 C509 155.25 509 142.8 530.5 142.8" fill="none" stroke="var(--color-subtle-light)" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/><rect data-pl-trend-hit data-month="1" data-x="57.5" data-top-y="142.8" x="36" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="1月 2026年4% 2025年3% 2024年2.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>1月</p><p class='text-white'>2026年 4%</p><p class='text-white'>2025年 3%</p><p class='text-white'>2024年 2.5%</p>"/><rect data-pl-trend-hit data-month="2" data-x="100.5" data-top-y="151.1" x="79" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="2月 2026年3% 2025年2.5% 2024年2%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>2月</p><p class='text-white'>2026年 3%</p><p class='text-white'>2025年 2.5%</p><p class='text-white'>2024年 2%</p>"/><rect data-pl-trend-hit data-month="3" data-x="143.5" data-top-y="146.95" x="122" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="3月 2026年3.5% 2025年3% 2024年2.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>3月</p><p class='text-white'>2026年 3.5%</p><p class='text-white'>2025年 3%</p><p class='text-white'>2024年 2.5%</p>"/><rect data-pl-trend-hit data-month="4" data-x="186.5" data-top-y="126.2" x="165" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="4月 2026年6% 2025年5% 2024年4%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>4月</p><p class='text-white'>2026年 6%</p><p class='text-white'>2025年 5%</p><p class='text-white'>2024年 4%</p>"/><rect data-pl-trend-hit data-month="5" data-x="229.5" data-top-y="130.35" x="208" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="5月 2026年5.5% 2025年4% 2024年3.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>5月</p><p class='text-white'>2026年 5.5%</p><p class='text-white'>2025年 4%</p><p class='text-white'>2024年 3.5%</p>"/><rect data-pl-trend-hit data-month="6" data-x="272.5" data-top-y="145.29" x="251" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="6月 2026年3.7% 2025年2.5% 2024年2%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>6月</p><p class='text-white'>2026年 3.7%</p><p class='text-white'>2025年 2.5%</p><p class='text-white'>2024年 2%</p>"/><rect data-pl-trend-hit data-month="7" data-x="315.5" data-top-y="117.07" x="294" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="7月 2026年7.1% 2025年4% 2024年3.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>7月</p><p class='text-white'>2026年 7.1%</p><p class='text-white'>2025年 4%</p><p class='text-white'>2024年 3.5%</p>"/><rect data-pl-trend-hit data-month="8" data-x="358.5" data-top-y="14.15" x="337" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="8月 2026年19.5% 2025年15% 2024年13%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>8月</p><p class='text-white'>2026年 19.5%</p><p class='text-white'>2025年 15%</p><p class='text-white'>2024年 13%</p>"/><rect data-pl-trend-hit data-month="9" data-x="401.5" data-top-y="155.25" x="380" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="9月 2025年2.5% 2024年2.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>9月</p><p class='text-white'>2025年 2.5%</p><p class='text-white'>2024年 2.5%</p>"/><rect data-pl-trend-hit data-month="10" data-x="444.5" data-top-y="155.25" x="423" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="10月 2025年2.5% 2024年2.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>10月</p><p class='text-white'>2025年 2.5%</p><p class='text-white'>2024年 2.5%</p>"/><rect data-pl-trend-hit data-month="11" data-x="487.5" data-top-y="155.25" x="466" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="11月 2025年2.5% 2024年2.5%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>11月</p><p class='text-white'>2025年 2.5%</p><p class='text-white'>2024年 2.5%</p>"/><rect data-pl-trend-hit data-month="12" data-x="530.5" data-top-y="142.8" x="509" y="10" width="43" height="166" fill="transparent" tabindex="0" role="img" aria-label="12月 2025年2.2% 2024年4%" class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tip="<p class='font-semibold text-white'>12月</p><p class='text-white'>2025年 2.2%</p><p class='text-white'>2024年 4%</p>"/></svg>
                 <svg data-pl-chart-variant="cumulative" style="height:auto;" viewBox="0 0 560 200" class="pl-chart-variant w-full" role="img" aria-label="累積推移(全体・取得率%)の折れ線グラフ"><line x1="36" y1="134.5" x2="552" y2="134.5" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="138.5" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">20</text><line x1="36" y1="93" x2="552" y2="93" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="97" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">40</text><line x1="36" y1="51.5" x2="552" y2="51.5" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="55.5" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">60</text><line x1="36" y1="10" x2="552" y2="10" stroke="var(--color-border)" stroke-width="1"/><text x="31" y="14" font-size="14" fill="var(--color-subtle-light)" text-anchor="end">80</text><text x="36" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">1</text><text x="82.9" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">2</text><text x="129.8" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">3</text><text x="176.7" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">4</text><text x="223.6" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">5</text><text x="270.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">6</text><text x="317.5" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">7</text><text x="364.4" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">8</text><text x="411.3" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">9</text><text x="458.2" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">10</text><text x="505.1" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">11</text><text x="552" y="194" font-size="16" fill="var(--color-subtle-light)" text-anchor="middle">12</text><path d="M36 167.7 C59.45 167.7 59.45 161.5 82.9 161.5 C106.35000000000001 161.5 106.35000000000001 154.2 129.8 154.2 C153.25 154.2 153.25 141.8 176.7 141.8 C200.14999999999998 141.8 200.14999999999998 130.4 223.6 130.4 C247.05 130.4 247.05 122.7 270.5 122.7 C294 122.7 294 107.9 317.5 107.9 C340.95 107.9 340.95 67.5 364.4 67.5" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 169.8 C59.45 169.8 59.45 164.6 82.9 164.6 C106.35000000000001 164.6 106.35000000000001 158.4 129.8 158.4 C153.25 158.4 153.25 148 176.7 148 C200.14999999999998 148 200.14999999999998 139.7 223.6 139.7 C247.05 139.7 247.05 134.5 270.5 134.5 C294 134.5 294 126.2 317.5 126.2 C340.95 126.2 340.95 95.1 364.4 95.1 C387.85 95.1 387.85 89.9 411.3 89.9 C434.75 89.9 434.75 84.7 458.2 84.7 C481.65 84.7 481.65 79.5 505.1 79.5 C528.55 79.5 528.55 74.9 552 74.9" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 170.8 C59.45 170.8 59.45 166.7 82.9 166.7 C106.35000000000001 166.7 106.35000000000001 161.5 129.8 161.5 C153.25 161.5 153.25 153.2 176.7 153.2 C200.14999999999998 153.2 200.14999999999998 145.9 223.6 145.9 C247.05 145.9 247.05 141.8 270.5 141.8 C294 141.8 294 134.5 317.5 134.5 C340.95 134.5 340.95 107.5 364.4 107.5 C387.85 107.5 387.85 102.3 411.3 102.3 C434.75 102.3 434.75 97.2 458.2 97.2 C481.65 97.2 481.65 92 505.1 92 C528.55 92 528.55 83.7 552 83.7" fill="none" stroke="var(--color-border)" stroke-width="1.5" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div data-pl-chart-tooltip role="tooltip" class="hidden pointer-events-none absolute z-[var(--z-tooltip)] whitespace-nowrap rounded-md bg-primary px-2 py-1.5 text-xs shadow-md"></div>
+                </div>
                 <div class="mt-1 flex flex-wrap items-center justify-center gap-3 text-[11px] text-subtle-light"><span class="inline-flex items-center gap-1"><span aria-hidden="true" class="inline-block h-0.5 w-4 rounded-full" style="background:var(--color-primary);"></span>2026年 52.3%</span><span class="inline-flex items-center gap-1"><span aria-hidden="true" class="inline-block h-0.5 w-4 rounded-full" style="background:var(--color-accent);"></span>2025年 48.7%</span><span class="inline-flex items-center gap-1"><span aria-hidden="true" class="inline-block h-0.5 w-4 rounded-full" style="background:var(--color-border);"></span>2024年 44.5%</span></div>
               </div>
             </div>
 
-            <div class="flex min-h-0 flex-col rounded-lg border border-border bg-background-light p-4 shadow-sm md:h-0 md:min-h-full">
+            <div class="flex min-h-0 flex-col rounded-lg border border-border bg-background-light p-4 shadow-sm xl:h-0 xl:min-h-full">
               <h3 class="mb-2 shrink-0 text-sm font-semibold text-text">部署別取得率</h3>
               <div class="min-h-0 flex-1 overflow-y-auto overscroll-y-contain">
                 <ul class="flex flex-col gap-0.5"><li><button type="button" data-pl-dept-btn="営業部" aria-pressed="false" class="w-full rounded-lg px-2 py-2 text-left transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span class="flex items-baseline justify-between gap-2"><span class="min-w-0 truncate text-sm text-text">営業部</span><span class="shrink-0 text-sm font-semibold text-text">60.7%</span></span><span class="mt-1 flex items-center gap-2"><span class="h-1.5 min-w-0 flex-1 rounded-full bg-border"><span class="block h-1.5 rounded-full bg-primary" style="width:60.7%;"></span></span><span class="shrink-0 text-[11px] text-subtle-light">1名</span></span></button></li><li><button type="button" data-pl-dept-btn="各部管理者" aria-pressed="false" class="w-full rounded-lg px-2 py-2 text-left transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span class="flex items-baseline justify-between gap-2"><span class="min-w-0 truncate text-sm text-text">各部管理者</span><span class="shrink-0 text-sm font-semibold text-text">50.9%</span></span><span class="mt-1 flex items-center gap-2"><span class="h-1.5 min-w-0 flex-1 rounded-full bg-border"><span class="block h-1.5 rounded-full bg-primary" style="width:50.9%;"></span></span><span class="shrink-0 text-[11px] text-subtle-light">3名</span></span></button></li><li><button type="button" data-pl-dept-btn="ソリューション事業部1部" aria-pressed="false" class="w-full rounded-lg px-2 py-2 text-left transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span class="flex items-baseline justify-between gap-2"><span class="min-w-0 truncate text-sm text-text">ソリューション事業部1部</span><span class="shrink-0 text-sm font-semibold text-text">58.9%</span></span><span class="mt-1 flex items-center gap-2"><span class="h-1.5 min-w-0 flex-1 rounded-full bg-border"><span class="block h-1.5 rounded-full bg-primary" style="width:58.9%;"></span></span><span class="shrink-0 text-[11px] text-subtle-light">2名</span></span></button></li><li><button type="button" data-pl-dept-btn="ソリューション事業部2部" aria-pressed="false" class="w-full rounded-lg px-2 py-2 text-left transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span class="flex items-baseline justify-between gap-2"><span class="min-w-0 truncate text-sm text-text">ソリューション事業部2部</span><span class="shrink-0 text-sm font-semibold text-text">58.3%</span></span><span class="mt-1 flex items-center gap-2"><span class="h-1.5 min-w-0 flex-1 rounded-full bg-border"><span class="block h-1.5 rounded-full bg-primary" style="width:58.3%;"></span></span><span class="shrink-0 text-[11px] text-subtle-light">2名</span></span></button></li><li><button type="button" data-pl-dept-btn="ソリューション事業部3部" aria-pressed="false" class="w-full rounded-lg px-2 py-2 text-left transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span class="flex items-baseline justify-between gap-2"><span class="min-w-0 truncate text-sm text-text">ソリューション事業部3部</span><span class="shrink-0 text-sm font-semibold text-text">38.6%</span></span><span class="mt-1 flex items-center gap-2"><span class="h-1.5 min-w-0 flex-1 rounded-full bg-border"><span class="block h-1.5 rounded-full bg-primary" style="width:38.6%;"></span></span><span class="shrink-0 text-[11px] text-subtle-light">2名</span></span></button></li><li><button type="button" data-pl-dept-btn="ソリューション事業部4部" aria-pressed="false" class="w-full rounded-lg px-2 py-2 text-left transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span class="flex items-baseline justify-between gap-2"><span class="min-w-0 truncate text-sm text-text">ソリューション事業部4部</span><span class="shrink-0 text-sm font-semibold text-text">45.0%</span></span><span class="mt-1 flex items-center gap-2"><span class="h-1.5 min-w-0 flex-1 rounded-full bg-border"><span class="block h-1.5 rounded-full bg-primary" style="width:45.0%;"></span></span><span class="shrink-0 text-[11px] text-subtle-light">1名</span></span></button></li></ul>
@@ -3250,8 +3263,8 @@
             </div>
           </div>
 
-          <button type="button" aria-label="CSVアップロード" class="fixed right-4 bottom-20 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md md:hidden">
-            <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+          <button type="button" data-yn-open aria-label="有休ノートから取り込む" class="fixed right-4 bottom-20 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md md:hidden">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
           </button>
         </div>
 
@@ -6455,6 +6468,29 @@ document.addEventListener('click', function(e){
 })();
 </script>
 <script>
+// ---- 有休モック: その他の取込操作メニュー（⋮）----
+function plCloseMenu(){
+  var menu = document.querySelector('[data-pl-menu]');
+  if (menu) menu.classList.add('hidden');
+}
+document.addEventListener('click', function(e){
+  var toggle = e.target.closest('[data-pl-menu-toggle]');
+  if (toggle) {
+    e.stopPropagation();
+    var menu = toggle.parentElement.querySelector('[data-pl-menu]');
+    if (menu) menu.classList.toggle('hidden');
+    return;
+  }
+  if (e.target.closest('[data-pl-csv-open]')) {
+    plCloseMenu();
+    return;
+  }
+  if (!e.target.closest('[data-pl-menu]')) plCloseMenu();
+});
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') plCloseMenu();
+});
+
 // ---- 有休モック: 月次推移(月別・累積)切替 / 集計対象トグル ----
 var PL_ACTIVE_BTN = 'rounded-full bg-primary px-2.5 py-1 text-xs font-medium text-white';
 var PL_INACTIVE_BTN = 'rounded-full border border-border px-2.5 py-1 text-xs font-medium text-subtle';
@@ -6465,7 +6501,64 @@ function setPlChartVariant(v){
   document.querySelectorAll('[data-pl-chart-btn]').forEach(function(btn){
     btn.className = (btn.getAttribute('data-pl-chart-btn') === v) ? PL_ACTIVE_BTN : PL_INACTIVE_BTN;
   });
+  plTrendClose();
 }
+
+// ---- 有休モック: 月次推移(月別)の棒グラフの値表示（ホバー/タップ）----
+var PL_TREND_CHART_W = 560, PL_TREND_CHART_H = 200, PL_TREND_TOOLTIP_GAP = 8;
+var plTrendOpenMonth = null;
+function plTrendClose(){
+  plTrendOpenMonth = null;
+  var tip = document.querySelector('[data-pl-chart-tooltip]');
+  if (tip) tip.classList.add('hidden');
+}
+function plTrendOpen(rect){
+  var box = document.querySelector('[data-pl-chart-box]');
+  var tip = document.querySelector('[data-pl-chart-tooltip]');
+  if (!box || !tip) return;
+  plTrendOpenMonth = rect.getAttribute('data-month');
+  tip.innerHTML = rect.getAttribute('data-tip');
+  tip.style.visibility = 'hidden';
+  tip.classList.remove('hidden');
+  var boxRect = box.getBoundingClientRect();
+  var tipRect = tip.getBoundingClientRect();
+  var anchorX = (parseFloat(rect.getAttribute('data-x')) / PL_TREND_CHART_W) * boxRect.width;
+  var anchorY = (parseFloat(rect.getAttribute('data-top-y')) / PL_TREND_CHART_H) * boxRect.height;
+  var top = anchorY - PL_TREND_TOOLTIP_GAP - tipRect.height;
+  if (top < 0) top = anchorY + PL_TREND_TOOLTIP_GAP;
+  top = Math.max(0, Math.min(top, boxRect.height - tipRect.height));
+  var left = anchorX - tipRect.width / 2;
+  left = Math.max(0, Math.min(left, boxRect.width - tipRect.width));
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+  tip.style.visibility = 'visible';
+}
+document.querySelectorAll('[data-pl-trend-hit]').forEach(function(rect){
+  rect.addEventListener('pointerenter', function(e){
+    if (e.pointerType !== 'mouse') return;
+    plTrendOpen(rect);
+  });
+  rect.addEventListener('pointerleave', function(e){
+    if (e.pointerType !== 'mouse') return;
+    plTrendClose();
+  });
+  rect.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'mouse') return;
+    e.stopPropagation();
+    if (plTrendOpenMonth === rect.getAttribute('data-month')) {
+      plTrendClose();
+    } else {
+      plTrendOpen(rect);
+    }
+  });
+  rect.addEventListener('focus', function(){ plTrendOpen(rect); });
+  rect.addEventListener('blur', function(){ plTrendClose(); });
+});
+document.addEventListener('pointerdown', function(e){
+  if (plTrendOpenMonth === null) return;
+  if (e.target.closest('[data-pl-trend-hit]')) return;
+  plTrendClose();
+});
 document.addEventListener('click', function(e){
   var cbtn = e.target.closest('[data-pl-chart-btn]');
   if (cbtn) { setPlChartVariant(cbtn.getAttribute('data-pl-chart-btn')); return; }
@@ -6603,6 +6696,83 @@ document.addEventListener('click', function(e){
     plApply();
   }
 });
+</script>
+
+<!-- 有休ノートから取り込む: 確認ダイアログ（AlertDialog を再現した静的モック。通常→ログイン→いない社員の再確認の3状態） -->
+<div data-yn-overlay style="display:none;" class="fixed inset-0 z-[120] bg-black/50"></div>
+<div data-yn-dialog role="alertdialog" aria-modal="true" aria-labelledby="yn-dialog-title" style="display:none;" class="fixed left-1/2 top-1/2 z-[121] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-background-light p-6 shadow-md">
+  <p id="yn-dialog-title" class="text-base font-bold text-text">2026年の既存データを上書きします</p>
+  <p class="mt-2 text-sm text-subtle">有休ノートから取得して取り込みます。よろしいですか？この操作は取り消せません。</p>
+
+  <div class="mt-4">
+    <label class="mb-1 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle" for="yn-year">対象年</label>
+    <select id="yn-year" aria-label="対象年" class="h-9 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+      <option>2024年</option><option>2025年</option><option selected>2026年</option>
+    </select>
+  </div>
+
+  <div data-yn-step="login" style="display:none;" class="mt-4 space-y-3">
+    <p class="text-xs text-subtle">有休ノートへのログインが必要です。有休ノートのアカウントを入力してください。</p>
+    <div>
+      <label class="mb-1 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle" for="yn-email">有休ノートのメールアドレス</label>
+      <input id="yn-email" type="email" autocomplete="username" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" />
+    </div>
+    <div>
+      <label class="mb-1 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle" for="yn-password">有休ノートのパスワード</label>
+      <input id="yn-password" type="password" autocomplete="current-password" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" />
+    </div>
+  </div>
+
+  <div data-yn-step="removed" style="display:none;" class="mt-4 rounded-lg border border-warning-border bg-warning-surface p-3 text-xs text-warning">
+    <p class="font-semibold">前回の取込にいた社員が今回の CSV にいません</p>
+    <p class="mt-1">社員02（002）</p>
+    <p class="mt-1">退職などで正しければ、そのまま「取り込む」を押してください。</p>
+  </div>
+
+  <div class="mt-5 flex flex-col-reverse gap-2 md:flex-row md:justify-end">
+    <button type="button" data-yn="cancel" class="inline-flex min-h-12 items-center justify-center rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-background">キャンセル</button>
+    <button type="button" data-yn="ok" class="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">取り込む</button>
+  </div>
+</div>
+<script>
+// ---- 有休ノートから取り込む: 確認ダイアログの3状態（通常 → ログイン → いない社員の再確認 → 閉じる） ----
+(function () {
+  var overlay = document.querySelector('[data-yn-overlay]');
+  var dialog = document.querySelector('[data-yn-dialog]');
+  if (!overlay || !dialog) return;
+  var loginStep = dialog.querySelector('[data-yn-step="login"]');
+  var removedStep = dialog.querySelector('[data-yn-step="removed"]');
+  var ynStep = 0; // 0=通常 1=ログイン 2=いない社員の再確認
+
+  function render() {
+    loginStep.style.display = ynStep === 1 ? '' : 'none';
+    removedStep.style.display = ynStep === 2 ? '' : 'none';
+  }
+  function openDialog() {
+    ynStep = 0;
+    render();
+    overlay.style.display = '';
+    dialog.style.display = '';
+  }
+  function closeDialog() {
+    overlay.style.display = 'none';
+    dialog.style.display = 'none';
+    ynStep = 0;
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-yn-open]')) { openDialog(); return; }
+    if (e.target === overlay || e.target.closest('[data-yn="cancel"]')) { closeDialog(); return; }
+    if (e.target.closest('[data-yn="ok"]')) {
+      if (ynStep === 0) { ynStep = 1; render(); }
+      else if (ynStep === 1) { ynStep = 2; render(); }
+      else { closeDialog(); }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && dialog.style.display !== 'none') closeDialog();
+  });
+})();
 </script>
 
 <!-- クエスト報奨金の繰り越し: 精算設定の編集モードとボトムシート（BudgetYearPanel.tsx の isSettlementEditing を再現） -->
