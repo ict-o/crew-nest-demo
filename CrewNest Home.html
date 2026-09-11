@@ -463,6 +463,14 @@
             <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px] shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
           </a>
 
+          <!-- 今月の稼働 -->
+          <button type="button" data-tour="home-utilization" data-card="utilization" data-util-open aria-haspopup="dialog" class="flex w-full items-center gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+            <p class="shrink-0 text-sm font-medium text-text">今月の稼働</p>
+            <p class="min-w-0 flex-1 text-right text-sm text-text" data-util-field="headline">あと <span class="text-lg font-bold text-primary" data-util-field="restDays">4.0</span> 日（<span data-util-field="restHours">32h</span>）休めます</p>
+            <p class="min-w-0 flex-1 text-right text-sm font-medium text-warning" data-util-field="statusLine" hidden></p>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px] shrink-0 text-subtle-light" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+          </button>
+
           <!-- クイックリンク -->
           <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
             <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
@@ -666,6 +674,14 @@
           <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px] shrink-0 text-subtle-light"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
         </a>
 
+        <!-- 今月の稼働 -->
+        <button type="button" data-tour="home-utilization" data-card="utilization" data-util-open aria-haspopup="dialog" class="flex w-full items-center gap-3 rounded-lg border border-border bg-background-light p-4 text-left shadow-sm transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+          <p class="shrink-0 text-sm font-medium text-text">今月の稼働</p>
+          <p class="min-w-0 flex-1 text-right text-sm text-text" data-util-field="headline">あと <span class="text-lg font-bold text-primary" data-util-field="restDays">4.0</span> 日（<span data-util-field="restHours">32h</span>）休めます</p>
+          <p class="min-w-0 flex-1 text-right text-sm font-medium text-warning" data-util-field="statusLine" hidden></p>
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-[18px] w-[18px] shrink-0 text-subtle-light" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg>
+        </button>
+
         <!-- カレンダー -->
         <div data-tour="home-calendar" data-card="calendar" class="rounded-lg border border-border bg-background-light shadow-sm">
           <div class="flex items-center gap-3 px-4 pb-2 pt-3.5">
@@ -818,6 +834,7 @@
 <script src="home-card-link.js"></script>
 <script src="loading-feedback.js"></script>
 <script src="badges.js"></script>
+<script src="home-card.js"></script>
 
 <!-- 安否確認 回答ダイアログ -->
 <div data-dialog="safety-response" class="fixed inset-0 z-[110] items-end justify-center bg-black/45 md:items-center md:p-4" style="display:none;">
@@ -1096,6 +1113,7 @@ CNTour.define('home', [
   { target: '[data-tour="home-notifications"]', title: '通知', body: '承認結果や提出依頼などのお知らせが届きます。重要なお知らせもここに表示されます。' },
   { target: '[data-tour="home-bonus"]', title: '受け取れるボーナス', body: '達成済みのボーナスはここから受け取れます。' },
   { target: '[data-tour="home-expense"]', title: '経費 未精算', body: '未精算の経費の件数と合計金額です。タップすると経費精算ページへ移動します。' },
+  { target: '[data-tour="home-utilization"]', title: '今月の稼働', body: '客先との契約条件と有休の申請状況から、今月あと何日休めるかを表示します。精算の下限を下回る見込みのときは注意が表示されます。' },
   { target: '[data-tour="home-quicklinks"]', title: 'クイックリンク', body: '給与明細や勤怠など、よく使う社内システムへのショートカットです。' },
   { target: '[data-tour="home-customize"]', title: 'ホーム画面をカスタマイズ', body: 'このボタンから、カードの並び替えや表示・非表示を変更できます。自分の使いやすいホーム画面に整えてみてください。' }
 ]);
