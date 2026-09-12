@@ -57,13 +57,15 @@ function he(s) { var er = s.querySelector('[data-ct="error"]'); er.textContent =
 function se(s, m) { var er = s.querySelector('[data-ct="error"]'); er.textContent = m; er.style.display = ''; }
 function cf(s) { var f = s.querySelector('[data-ct="form"]'); f.style.display = 'none'; f.removeAttribute('data-editing'); he(s); }
 function gv(s, t) { s.querySelectorAll('[data-ct-group]').forEach(function (g) { g.style.display = g.getAttribute('data-ct-group') === t ? '' : 'none'; }); }
+function setEf(s, ym) { var p = ym.split('-'); s.querySelector('[data-ct-f="effYear"]').value = p[0]; s.querySelector('[data-ct-f="effMonth"]').value = p[1]; }
+function getEf(s) { return s.querySelector('[data-ct-f="effYear"]').value + '-' + s.querySelector('[data-ct-f="effMonth"]').value; }
 function dv(s) { var sel = s.querySelector('[data-ct-f="daily"]'), c = s.querySelector('[data-ct-f="dailyCustom"]'); c.style.display = sel.value === 'custom' ? '' : 'none'; }
 function su(s, u) {
   var tg = s.querySelector('[data-ct="unitToggle"]'); tg.setAttribute('data-value', u);
   tg.querySelectorAll('[data-ct-unit]').forEach(function (b) {
     var a = b.getAttribute('data-ct-unit') === u;
     b.setAttribute('aria-pressed', a ? 'true' : 'false');
-    b.className = 'rounded-full border px-3 py-1 text-xs ' + (a ? 'bg-primary text-white border-primary' : 'border-border text-subtle');
+    b.className = 'flex-1 rounded-full border py-1.5 text-xs font-medium ' + (a ? 'border-primary bg-primary-lightest text-primary' : 'border-border text-subtle');
   });
 }
 function fd(s, v) {
@@ -73,7 +75,7 @@ function fd(s, v) {
 }
 function oa(s) {
   var f = s.querySelector('[data-ct="form"]'); f.removeAttribute('data-editing');
-  s.querySelector('[data-ct-f="effectiveFrom"]').value = nm(CM);
+  setEf(s, nm(CM));
   s.querySelector('[data-ct-f="client"]').value = '';
   s.querySelector('[data-ct-f="type"]').value = 'RANGE';
   fd(s, 8); su(s, 'HOURS');
@@ -89,7 +91,7 @@ function oa(s) {
 function oe(s, idx) {
   var h = CT[CU] || [], e = h[idx]; if (!e) return;
   var f = s.querySelector('[data-ct="form"]'); f.setAttribute('data-editing', e.effectiveFrom);
-  s.querySelector('[data-ct-f="effectiveFrom"]').value = e.effectiveFrom;
+  setEf(s, e.effectiveFrom);
   s.querySelector('[data-ct-f="client"]').value = e.client || '';
   s.querySelector('[data-ct-f="type"]').value = e.type;
   fd(s, e.daily); su(s, e.unit || 'HOURS');
@@ -104,8 +106,7 @@ function oe(s, idx) {
 }
 function rd(s) { var sel = s.querySelector('[data-ct-f="daily"]'); return sel.value === 'custom' ? s.querySelector('[data-ct-f="dailyCustom"]').value : sel.value; }
 function vb(s) {
-  var ef = s.querySelector('[data-ct-f="effectiveFrom"]').value;
-  if (!ef) return { error: '適用開始月を入力してください' };
+  var ef = getEf(s);
   var cl = s.querySelector('[data-ct-f="client"]').value;
   var ty = s.querySelector('[data-ct-f="type"]').value;
   var dr = rd(s), d = parseFloat(dr);
