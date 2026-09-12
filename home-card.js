@@ -46,7 +46,7 @@
         '</div>' +
         '<div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4">' +
           '<p class="text-xs text-subtle" data-util-field="clientLabel"></p>' +
-          '<p class="text-sm text-text" data-util-field="headline">あと <span class="text-lg font-bold text-primary" data-util-field="restDays"></span> 日（<span data-util-field="restHours"></span>）休めます</p>' +
+          '<p class="text-sm text-text" data-util-field="headline">下限まで あと <span class="text-lg font-bold text-primary" data-util-field="restDays"></span> 日（<span data-util-field="restHours"></span>）</p>' +
           '<p class="text-sm text-danger" data-util-field="missingLine" hidden>有休データと突合できません。社員番号の登録を管理者に確認してください</p>' +
           '<dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="details">' +
             '<dt class="text-subtle">予定稼働</dt><dd class="flex items-baseline justify-end gap-2 text-text"><span class="text-xs text-subtle" data-util-field="plannedNote"></span><span class="tabular-nums" data-util-field="planned"></span></dd>' +
