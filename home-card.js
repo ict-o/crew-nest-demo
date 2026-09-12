@@ -10,8 +10,8 @@
     ok: {
       clientLabel: "株式会社アルファ ／ 基幹刷新PJ ・ 上限下限 120〜180h",
       restDays: "4.0", restHours: "32h",
-      planned: "152h（営業日 19日 × 8h）", leave: "0h", expected: "152h",
-      limitLabel: "精算下限", limit: "120h（上限 180h）",
+      plannedNote: "営業日 19日 × 8h", planned: "152h", leave: "0h", expected: "152h",
+      limitLabel: "精算下限", limitNote: "上限 180h", limit: "120h",
       status: null, missing: false, importedAt: "有休データ: 9/8 取込",
     },
   };
@@ -48,15 +48,15 @@
           '<p class="text-xs text-subtle" data-util-field="clientLabel"></p>' +
           '<p class="text-sm text-text" data-util-field="headline">あと <span class="text-lg font-bold text-primary" data-util-field="restDays"></span> 日（<span data-util-field="restHours"></span>）休めます</p>' +
           '<p class="text-sm text-danger" data-util-field="missingLine" hidden>有休データと突合できません。社員番号の登録を管理者に確認してください</p>' +
-          '<dl class="grid grid-cols-2 gap-y-1.5 text-sm" data-util-field="details">' +
-            '<dt class="text-subtle">予定稼働</dt><dd class="text-right text-text" data-util-field="planned"></dd>' +
-            '<dt class="text-subtle">有休</dt><dd class="text-right text-text" data-util-field="leave"></dd>' +
-            '<dt class="text-subtle">見込み稼働</dt><dd class="text-right text-text" data-util-field="expected"></dd>' +
-            '<dt class="text-subtle" data-util-field="limitLabel">精算下限</dt><dd class="text-right text-text" data-util-field="limit"></dd>' +
+          '<dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="details">' +
+            '<dt class="text-subtle">予定稼働</dt><dd class="flex items-baseline justify-end gap-2 text-text"><span class="text-xs text-subtle" data-util-field="plannedNote"></span><span class="tabular-nums" data-util-field="planned"></span></dd>' +
+            '<dt class="text-subtle">有休</dt><dd class="text-right text-text tabular-nums" data-util-field="leave"></dd>' +
+            '<dt class="text-subtle">見込み稼働</dt><dd class="text-right text-text tabular-nums" data-util-field="expected"></dd>' +
+            '<dt class="text-subtle" data-util-field="limitLabel">精算下限</dt><dd class="flex items-baseline justify-end gap-2 text-text"><span class="text-xs text-subtle" data-util-field="limitNote"></span><span class="tabular-nums" data-util-field="limit"></span></dd>' +
           '</dl>' +
           '<div class="rounded-lg border border-warning-border bg-warning-surface px-3 py-2 text-xs text-warning" data-util-field="statusRow" role="status" hidden></div>' +
           '<p class="text-xs text-subtle" data-util-field="importedAt"></p>' +
-          '<p class="text-[11px] text-subtle">有休は有休ノートに申請済みの分を差し引いています。予定より休みが増える場合は営業担当に連絡してください</p>' +
+          '<p class="text-[11px] text-subtle">有休は有休ノートに申請済みの分を差し引いています</p>' +
         '</div>' +
       '</div>';
     document.body.appendChild(wrap);
@@ -76,8 +76,8 @@
     if (s.status) row.textContent = s.status;
     if (!s.missing) {
       setText(detail, "restDays", s.restDays); setText(detail, "restHours", s.restHours);
-      setText(detail, "planned", s.planned); setText(detail, "leave", s.leave); setText(detail, "expected", s.expected);
-      setText(detail, "limitLabel", s.limitLabel); setText(detail, "limit", s.limit);
+      setText(detail, "plannedNote", s.plannedNote); setText(detail, "planned", s.planned); setText(detail, "leave", s.leave); setText(detail, "expected", s.expected);
+      setText(detail, "limitLabel", s.limitLabel); setText(detail, "limitNote", s.limitNote); setText(detail, "limit", s.limit);
     }
   }
   function openDetail() { if (!detail) detail = buildDetail(); applyDetail(UTIL_MOCK_STATES[current]); detail.hidden = false; detail.querySelector('[role="dialog"]').focus(); }
