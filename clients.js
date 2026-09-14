@@ -119,6 +119,12 @@
     if (toggle) applyOwncal(toggle.getAttribute('aria-checked') !== 'true');
   });
 
+  // 「保存する」で客先パネルを閉じる（休業日カレンダーを開く裏保存は別ボタンなので対象外）
+  document.addEventListener('click', function (e) {
+    var save = e.target.closest('[data-ce="save"]');
+    if (save && window.closeSlide) window.closeSlide('client-edit');
+  });
+
   document.addEventListener('input', function (e) {
     var input = e.target.closest('[data-c-search]');
     if (!input) return;
