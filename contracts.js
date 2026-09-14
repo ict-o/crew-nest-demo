@@ -1,9 +1,13 @@
 /* ============================================================
-   CrewNest DEMO: ユーザー編集パネルの契約条件セクション（issue #54 稼働早見表）
+   CrewNest DEMO: 契約条件の共通データ・ダイアログ（issue #54 稼働早見表 + 契約タブ追補）
    使い方: <script src="contracts.js"></script>（CrewNest Admin.html に追加）
-   本体 src/features/admin/components/ContractSection.tsx の React 化前の静的再現。
-   フォームは body 直下のモーダル（PC 中央／モバイル ボトムシート）に出す。器の構成は
-   home-card.js の buildDetail() に揃えている。
+   本体 src/features/admin/components/ContractSection.tsx・ContractMemberPanel.tsx の
+   React 化前の静的再現。フォームは body 直下のモーダル（PC 中央／モバイル ボトムシート）に出す。
+   器の構成は home-card.js の buildDetail() に揃えている。
+   ユーザー編集パネルの「契約」セクション（data-contract-section）はサマリー表示だけを担い、
+   契約の追加・編集・履歴は「契約 › メンバー」パネル（contract-members.js）で行う。
+   このファイルは契約データ（CT）とダイアログ（buildDialog/oa/oe）を window.CNContracts で公開し、
+   contract-members.js から使う。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/admin-contract.js
    ============================================================ */
 (function () {
@@ -13,11 +17,26 @@ var DF = ['6.5', '7', '7.5', '7.75', '8'];
 var CT = {
   '鈴木 一郎': [
     { effectiveFrom: '2026-04', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2025-10', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 120, upper: 180 }
+    { effectiveFrom: '2025-10', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 120, upper: 180 },
+    { effectiveFrom: '2027-01', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'MIDPOINT', daily: 8, base: 160 }
   ],
   '佐藤 恵子': [{ effectiveFrom: '2026-01', client: 'ベータ商事', type: 'BUSINESS_DAYS', daily: 7.75, lowerAdj: -20, upperAdj: null }],
   '田中 佑樹': [{ effectiveFrom: '2026-07', client: 'ガンマ技研', type: 'MIDPOINT', daily: 8, base: 160 }],
-  '伊藤 健太': [],
+  // 履歴の「11 件以上で折りたたむ」動作確認用。2015-04 から毎年 4 月開始の上限下限契約 12 件（客先はベータ商事）
+  '伊藤 健太': [
+    { effectiveFrom: '2015-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2016-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2017-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2018-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2019-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2020-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2021-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2022-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2023-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2024-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2025-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
+    { effectiveFrom: '2026-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 }
+  ],
   '渡辺 さゆり': [{ effectiveFrom: '2025-04', client: '', type: 'NONE', daily: 8 }],
   '小林 直人': []
 };
@@ -27,7 +46,41 @@ function ml(ym) { var p = ym.split('-'); return p[0] + '年' + parseInt(p[1], 10
 function nm(ym) { var p = ym.split('-'), y = +p[0], m = +p[1] + 1; if (m > 12) { m = 1; y += 1; } return y + '-' + (m < 10 ? '0' + m : m); }
 function cd(c) { return c ? c : 'なし'; }
 function ga(h) { var a = null; h.forEach(function (e) { if (e.effectiveFrom <= CM && (!a || e.effectiveFrom > a.effectiveFrom)) a = e; }); return a; }
-function dl(e) {
+// 適用開始月から当月（CM）までの月数（当月を含む）。12か月未満は「Nか月目」、12か月以上は「N年目」／端数があれば「N年Mか月目」。
+// 未来の開始月（月数が0以下）は null（一覧・パネルとも表示しない）
+function durationLabel(effectiveFrom) {
+  var f = effectiveFrom.split('-'), fy = +f[0], fm = +f[1];
+  var c = CM.split('-'), cy = +c[0], cm = +c[1];
+  var n = (cy - fy) * 12 + (cm - fm) + 1;
+  if (n <= 0) return null;
+  if (n < 12) return n + 'か月目';
+  var y = Math.floor(n / 12), r = n % 12;
+  return r === 0 ? (y + '年目') : (y + '年' + r + 'か月目');
+}
+// 契約種別に応じた「下限〜上限」相当のラベル・値（NONE は精算なしなのでこの行を出さない）
+function rangeCell(e) {
+  if (e.type === 'RANGE') {
+    var sfx = e.unit === 'RATIO' ? '%' : 'h';
+    var lt = e.lower != null ? fn(e.lower) + sfx : null, ut = e.upper != null ? fn(e.upper) + sfx : null;
+    var rt = lt && ut ? '下限 ' + lt + ' 〜 上限 ' + ut : lt ? '下限 ' + lt : '上限 ' + ut;
+    return { label: '下限〜上限', value: rt };
+  }
+  if (e.type === 'MIDPOINT') return { label: '基準時間', value: fn(e.base) + 'h' };
+  if (e.type === 'BUSINESS_DAYS') {
+    var adj = '下限調整 ' + fn(e.lowerAdj) + 'h';
+    if (e.upperAdj != null) adj += ' ／ 上限調整 ' + fn(e.upperAdj) + 'h';
+    return { label: '下限〜上限', value: adj };
+  }
+  return null;
+}
+// h（契約履歴）を適用開始月の降順で全件返す（パネルの履歴一覧用。current/past の分類はしない）
+function allRows(h) {
+  var rows = h.map(function (e, i) { return { e: e, idx: i }; });
+  rows.sort(function (a, b) { return b.e.effectiveFrom.localeCompare(a.e.effectiveFrom); });
+  return rows;
+}
+// withDate=false のとき末尾の「○年○月から適用」を付けない（一覧の「現在の契約」列は適用開始月を別列に出すため）
+function dl(e, withDate) {
   var d = fn(e.daily) + 'h', parts;
   if (e.type === 'RANGE') {
     var sfx = e.unit === 'RATIO' ? '%' : 'h';
@@ -37,23 +90,44 @@ function dl(e) {
   } else if (e.type === 'MIDPOINT') { parts = ['定時 ' + d, '基準 ' + fn(e.base) + 'h']; }
   else if (e.type === 'BUSINESS_DAYS') { var adj = '下限調整 ' + fn(e.lowerAdj) + 'h'; if (e.upperAdj != null) adj += ' ／ 上限調整 ' + fn(e.upperAdj) + 'h'; parts = ['定時 ' + d, adj]; }
   else { parts = ['精算なし']; }
-  parts.push(ml(e.effectiveFrom) + 'から適用');
+  if (withDate !== false) parts.push(ml(e.effectiveFrom) + 'から適用');
   return parts.join(' ／ ');
 }
-function rs(el, ap) {
-  if (!ap) { el.innerHTML = '<p class="text-xs text-subtle">契約条件が登録されていません</p>'; return; }
+// nextFuture: ap が無いときに「N年M月からの契約があります」を出すための直近の未来契約（無ければ null）
+function rs(el, ap, nextFuture) {
+  if (!ap) {
+    if (nextFuture) { el.innerHTML = '<p class="text-xs text-subtle">現在適用中の契約はありません（' + esc(ml(nextFuture.effectiveFrom)) + 'からの契約があります）</p>'; return; }
+    el.innerHTML = '<p class="text-xs text-subtle">契約が登録されていません</p>';
+    return;
+  }
   var l1 = cd(ap.client) + ' ・ ' + TL[ap.type];
   el.innerHTML = '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(dl(ap)) + '</p>';
 }
-function rh(el, h, ap) {
-  if (!h.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
+// rows: allRows()/classify() が返す { e, idx }[]（idx は CT[名前] 配列内での本来の位置。編集ボタンの対象解決に使う）
+// ap: 適用中の契約（無ければ null）。cm: 当月（渡すと未来の行に「予定」チップを付ける）
+function rh(el, rows, ap, cm) {
+  if (!rows.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
   el.style.display = '';
-  var rows = h.map(function (e, i) { return { e: e, idx: i }; }).sort(function (a, b) { return b.e.effectiveFrom.localeCompare(a.e.effectiveFrom); });
   el.innerHTML = rows.map(function (row) {
     var e = row.e;
-    var chip = ap && e.effectiveFrom === ap.effectiveFrom ? '<span class="rounded-full bg-primary-lightest px-2 py-0.5 text-[10px] font-bold text-primary">適用中</span>' : '';
+    var chip = '';
+    if (ap && e.effectiveFrom === ap.effectiveFrom) chip = '<span class="rounded-full bg-primary-lightest px-2 py-0.5 text-[10px] font-bold text-primary">適用中</span>';
+    else if (cm && e.effectiveFrom > cm) chip = '<span class="rounded-full bg-background px-2 py-0.5 text-[10px] text-subtle">予定</span>';
     return '<div class="flex items-center gap-2 px-3 py-2 text-xs"><span class="shrink-0 text-text font-semibold">' + esc(ml(e.effectiveFrom)) + 'から</span><span class="min-w-0 flex-1 truncate text-subtle">' + esc(TL[e.type]) + ' ・ ' + esc(cd(e.client)) + '</span>' + chip + '<button type="button" data-ct-edit="' + row.idx + '" class="inline-flex h-8 shrink-0 items-center rounded-full border border-border px-3 text-xs text-subtle hover:bg-black/[0.08]">編集</button></div>';
   }).join('');
+}
+// current（適用中。無ければ null）と、常時表示すべき visible（current＋未来。適用開始月の降順）、
+// 折りたたむ past（visible に入らない、current より前の行。適用開始月の降順）に分ける
+function classify(h, cm) {
+  var rows = h.map(function (e, i) { return { e: e, idx: i }; });
+  var current = ga(h);
+  var visible = [], past = [];
+  rows.forEach(function (row) {
+    if (current && row.e.effectiveFrom < current.effectiveFrom) past.push(row); else visible.push(row);
+  });
+  visible.sort(function (a, b) { return b.e.effectiveFrom.localeCompare(a.e.effectiveFrom); });
+  past.sort(function (a, b) { return b.e.effectiveFrom.localeCompare(a.e.effectiveFrom); });
+  return { current: current, visible: visible, past: past };
 }
 function he() { var er = DLG.querySelector('[data-ct="error"]'); er.textContent = ''; er.style.display = 'none'; }
 function se(m) { var er = DLG.querySelector('[data-ct="error"]'); er.textContent = m; er.style.display = ''; }
@@ -280,12 +354,17 @@ function vb() {
   if (dup) return { error: '同じ適用開始月の条件があります' };
   return { entry: entry, editing: editing };
 }
+// ユーザー編集パネルの「契約」セクション（適用中サマリーだけ。履歴・追加は「契約 › メンバー」へ移した）
 function rSec(s) {
-  var h = CT[CU] || [], ap = ga(h);
-  rs(s.querySelector('[data-ct="summary"]'), ap);
-  rh(s.querySelector('[data-ct="history"]'), h, ap);
+  var h = CT[CU] || [];
+  var c = classify(h, CM);
+  var nextFuture = !c.current && c.visible.length ? c.visible[c.visible.length - 1].e : null;
+  rs(s.querySelector('[data-ct="summary"]'), c.current, nextFuture);
 }
-function rAll() { document.querySelectorAll('[data-contract-section]').forEach(rSec); }
+function rAll() {
+  document.querySelectorAll('[data-contract-section]').forEach(rSec);
+  document.dispatchEvent(new CustomEvent('cn-contracts-changed', { detail: { name: CU } }));
+}
 function hSave() {
   if (!CU) return;
   var r = vb();
@@ -308,16 +387,53 @@ function hDel() {
   cf();
 }
 document.addEventListener('slidewillopen', function (e) {
-  if (!e.detail || e.detail.id !== 'user-edit') return;
+  if (!e.detail) return;
   var tr = e.detail.trigger;
-  CU = tr && tr.getAttribute ? tr.getAttribute('data-u-name') : null;
-  rAll();
+  if (e.detail.id === 'user-edit') {
+    CU = tr && tr.getAttribute ? tr.getAttribute('data-u-name') : null;
+    rAll();
+    return;
+  }
+  if (e.detail.id === 'contract-member') {
+    CU = tr && tr.getAttribute ? tr.getAttribute('data-m-name') : null;
+    document.dispatchEvent(new CustomEvent('cn-contract-member-open', { detail: { name: CU } }));
+  }
 });
+// ユーザー編集パネルの「契約タブで管理 →」リンク: パネルを閉じて契約タブ›メンバーへ切り替え、その人のパネルを開く
 document.addEventListener('click', function (e) {
-  var s = e.target.closest('[data-contract-section]'); if (!s) return;
-  var ab = e.target.closest('[data-ct="add"]');
-  if (ab) { CS = ab; oa(); return; }
-  var eb = e.target.closest('[data-ct-edit]');
-  if (eb) { CS = eb; oe(parseInt(eb.getAttribute('data-ct-edit'), 10)); return; }
+  var link = e.target.closest('[data-ct="manage-link"]');
+  if (!link) return;
+  e.preventDefault();
+  var name = CU;
+  if (!name) return;
+  if (window.closeSlide) window.closeSlide('user-edit');
+  var utab = document.querySelector('[data-utab="contracts"]');
+  if (utab) utab.click();
+  var uctab = document.querySelector('[data-uctab="members"]');
+  if (uctab) uctab.click();
+  var row = document.querySelector('[data-member-row][data-m-name="' + name + '"]');
+  if (row && window.openSlide) {
+    document.dispatchEvent(new CustomEvent('slidewillopen', { detail: { id: 'contract-member', trigger: row } }));
+    window.openSlide('contract-member', row);
+  }
 });
+// contract-members.js（契約 › メンバーの一覧・パネル）へ公開する API
+window.CNContracts = {
+  CT: CT,
+  CM: CM,
+  ml: ml,
+  fn: fn,
+  cd: cd,
+  TL: TL,
+  ga: ga,
+  dl: dl,
+  rs: rs,
+  rh: rh,
+  classify: classify,
+  durationLabel: durationLabel,
+  rangeCell: rangeCell,
+  allRows: allRows,
+  openAdd: function (trigger) { CS = trigger || null; oa(); },
+  openEdit: function (idx, trigger) { CS = trigger || null; oe(idx); }
+};
 })();
