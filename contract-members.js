@@ -267,7 +267,7 @@
       }
       var note = p.querySelector('[data-cm-p="note"]');
       if (note) {
-        if (!m.leaveOk) { note.textContent = '有休データと突合できないため、ホームの「今月の稼働」カードは表示されません'; note.style.display = ''; }
+        if (!m.leaveOk) { note.textContent = '有休データと突合できないため、ホームの「プロジェクト」カードは表示されません'; note.style.display = ''; }
         else { note.style.display = 'none'; }
       }
       C.rh(p.querySelector('[data-cm-p="history"]'), shown, current, C.CM);
