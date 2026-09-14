@@ -9,6 +9,7 @@
   var UTIL_MOCK_STATES = {
     ok: {
       clientLabel: "株式会社アルファ ／ 基幹刷新PJ ・ 上限下限 120〜180h",
+      sinceLabel: "2026年4月から ・ 6か月目",
       restDays: "4.0", restHours: "32h",
       plannedNote: "営業日 19日 × 8h", planned: "152h", leave: "0h", expected: "152h",
       limitLabel: "精算下限", limitNote: "上限 180h", limit: "120h",
@@ -45,7 +46,7 @@
           '<button type="button" data-util-close aria-label="閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>' +
         '</div>' +
         '<div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4">' +
-          '<p class="text-xs text-subtle" data-util-field="clientLabel"></p>' +
+          '<div class="space-y-0.5"><p class="text-xs text-subtle" data-util-field="clientLabel"></p><p class="text-xs text-subtle" data-util-field="sinceLabel"></p></div>' +
           '<p class="text-sm text-text" data-util-field="headline">下限まで あと <span class="text-lg font-bold text-primary" data-util-field="restDays"></span> 日（<span data-util-field="restHours"></span>）</p>' +
           '<p class="text-sm text-danger" data-util-field="missingLine" hidden>有休データと突合できません。社員番号の登録を管理者に確認してください</p>' +
           '<dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="details">' +
@@ -66,7 +67,7 @@
   }
   var detail = null;
   function applyDetail(s) {
-    setText(detail, "clientLabel", s.clientLabel);
+    setText(detail, "clientLabel", s.clientLabel); setText(detail, "sinceLabel", s.sinceLabel);
     setText(detail, "importedAt", s.importedAt);
     q(detail, "headline").hidden = !!s.missing;
     q(detail, "details").hidden = !!s.missing;
