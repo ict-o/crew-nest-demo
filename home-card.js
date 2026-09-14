@@ -28,6 +28,7 @@
     statusLine.hidden = !s.status;
     if (s.status) statusLine.textContent = s.status;
     else { setText(card, "restDays", s.restDays); setText(card, "restHours", s.restHours); }
+    setText(card, "sinceLabel", s.sinceLabel);
   }
 
   // 詳細（PC: 中央モーダル ／ モバイル: ボトムシート）。両方 1 つの DOM で、md ブレークポイントで器のクラスを切り替える
@@ -42,7 +43,7 @@
         'md:inset-auto md:left-1/2 md:top-1/2 md:w-full md:max-w-md md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl md:pb-0">' +
         '<div class="mx-auto mt-2 h-1.5 w-12 shrink-0 rounded-full bg-border md:hidden"></div>' +
         '<div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-4">' +
-          '<h2 id="util-detail-title" class="text-[15px] font-bold text-text">今月の稼働</h2>' +
+          '<h2 id="util-detail-title" class="flex items-center gap-2 text-[15px] font-bold text-text"><svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" class="text-primary" aria-hidden="true"><path d="M160-200v-440 440-15 15Zm0 80q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v171q-18-13-38-22.5T800-508v-132H160v440h283q3 21 9 41t15 39H160Zm240-600h160v-80H400v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Zm20-208v-112h-40v128l86 86 28-28-74-74Z"/></svg>プロジェクト</h2>' +
           '<button type="button" data-util-close aria-label="閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>' +
         '</div>' +
         '<div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4">' +
