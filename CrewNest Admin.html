@@ -2105,46 +2105,45 @@
             <div data-uctab-panel="members" class="active">
               <div class="flex min-h-0 flex-1 flex-col md:py-4">
                 <div class="border-b border-border bg-background px-2 py-2 md:px-4">
-                  <div class="flex flex-col gap-2 md:flex-row md:items-center">
-                    <input type="text" placeholder="名前・メールで検索" data-cm-search class="w-full rounded-lg border border-border bg-background-light px-3 py-1.5 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary md:max-w-xs">
-                    <select aria-label="部署で絞り込み" data-cm-deptfilter class="h-9 rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
-                      <option value="all" selected>すべての部署</option>
-                      <option value="__none__">部署未設定</option>
-                    </select>
-                  </div>
-                  <div class="mt-2 flex flex-wrap items-center gap-1.5" role="group" aria-label="契約の絞り込み">
-                    <button type="button" data-cm-chip="none" aria-pressed="false" class="rounded-full border border-border bg-background-light px-2.5 py-1 text-xs text-subtle">契約なし</button>
-                  </div>
-                  <div class="mt-2 flex items-center gap-1 md:hidden">
-                    <div class="w-[150px]">
-                      <select data-cm-sort-select aria-label="並び替えの項目" class="h-9 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
-                        <option value="name" selected>氏名順</option>
-                        <option value="dept">部署順</option>
-                        <option value="contract">現在の契約順</option>
-                        <option value="effective">適用開始順</option>
+                  <div class="flex items-center gap-2">
+                    <div class="w-40 shrink-0 md:order-2 md:w-[180px]">
+                      <select aria-label="部署で絞り込み" data-cm-deptfilter class="h-9 w-full rounded-lg border border-border bg-background-light px-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <option value="all" selected>すべての部署</option>
+                        <option value="__none__">部署未設定</option>
                       </select>
                     </div>
-                    <button type="button" data-cm-sort-dir aria-label="昇順（押すと降順に切替）" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full border border-border bg-background-light text-subtle transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
-                      <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
-                    </button>
+                    <input type="text" placeholder="名前・メールで検索" data-cm-search class="min-w-0 flex-1 rounded-lg border border-border bg-background-light px-3 py-1.5 text-sm text-text placeholder:text-subtle-light focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary md:order-1 md:max-w-xs">
+                  </div>
+                  <div class="mt-2 flex items-center gap-2" role="group" aria-label="契約の絞り込み">
+                    <button type="button" data-cm-chip="none" aria-pressed="false" class="rounded-full border border-border bg-background-light px-2.5 py-1 text-xs text-subtle">契約なし</button>
+                    <div class="ml-auto flex items-center gap-1 md:hidden">
+                      <div class="w-[150px]">
+                        <select data-cm-sort-select aria-label="並び替えの項目" class="h-9 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50">
+                          <option value="name" selected>氏名順</option>
+                          <option value="dept">部署順</option>
+                          <option value="contract">現在の契約順</option>
+                          <option value="effective">適用開始順</option>
+                        </select>
+                      </div>
+                      <button type="button" data-cm-sort-dir aria-label="昇順（押すと降順に切替）" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full border border-border bg-background-light text-subtle transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="min-h-0 flex-1 overflow-y-auto">
                   <div class="md:hidden divide-y divide-border" data-cm-list="mobile"></div>
-                  <table class="hidden md:table w-full border-collapse">
+                  <div class="hidden overflow-x-auto overscroll-x-contain md:block">
+                  <table class="w-full min-w-[840px] table-fixed border-collapse">
                     <thead class="sticky top-0"><tr class="border-b border-border bg-background">
-                      <th class="w-[26%] px-4 py-2 text-left" aria-sort="ascending">
-                        <div class="flex items-center gap-2.5">
-                          <button type="button" data-cm-sort-btn="name" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">氏名<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-primary" data-cm-sort-icon><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></button>
-                          <button type="button" data-cm-sort-btn="dept" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">部署<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-cm-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button>
-                        </div>
-                      </th>
-                      <th class="w-[22%] px-4 py-2 text-left text-[10.5px] font-bold uppercase tracking-wide text-subtle">メール</th>
-                      <th class="w-[36%] px-4 py-2 text-left"><button type="button" data-cm-sort-btn="contract" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">現在の契約<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-cm-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button></th>
-                      <th class="w-[16%] px-4 py-2 text-left"><button type="button" data-cm-sort-btn="effective" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">適用開始<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-cm-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button></th>
+                      <th class="w-[30%] px-4 py-2 text-left" aria-sort="ascending"><button type="button" data-cm-sort-btn="name" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">氏名<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-primary" data-cm-sort-icon><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></button></th>
+                      <th class="w-[14%] px-4 py-2 text-left"><button type="button" data-cm-sort-btn="dept" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">部署<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-cm-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button></th>
+                      <th class="w-[32%] px-4 py-2 text-left"><button type="button" data-cm-sort-btn="contract" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">現在の契約<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-cm-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button></th>
+                      <th class="w-[24%] px-4 py-2 text-left"><button type="button" data-cm-sort-btn="effective" class="inline-flex items-center gap-1 rounded text-[10.5px] font-bold uppercase tracking-wide text-subtle transition-colors hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">適用開始<svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-subtle-light" data-cm-sort-icon><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button></th>
                     </tr></thead>
                     <tbody data-cm-list="desktop"></tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             </div>

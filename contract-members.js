@@ -36,15 +36,21 @@
     var l1 = C.cd(ap.client) + ' ・ ' + C.TL[ap.type];
     return '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(C.dl(ap, false)) + '</p>';
   }
-  // 1行目「2026年4月から」、2行目に継続期間（durationLabel。null になることは無い想定 = ga() が返す
-  // 適用中の契約は常に effectiveFrom <= 当月）
-  function effectiveCellHtml(m, mobile) {
+  // 1行「2026年4月から ・ 3か月目」（縦積みにしない。契約なしは呼び出し側で「-」を出す）
+  function effectiveCellHtml(m) {
     var C = window.CNContracts;
     var ap = C.ga(C.CT[m.name] || []);
-    if (!ap) return mobile ? '' : '<span class="text-[11.5px] text-subtle-light">-</span>'; // モバイルは「未設定」だけ見せて日付の行を出さない
+    if (!ap) return '<span class="text-[11.5px] text-subtle-light">-</span>';
     var dur = C.durationLabel(ap.effectiveFrom);
-    return '<p class="text-[11.5px] text-subtle">' + esc(C.ml(ap.effectiveFrom)) + 'から</p>' +
-      (dur ? '<p class="text-[11.5px] text-subtle-light">' + esc(dur) + '</p>' : '');
+    return '<p class="whitespace-nowrap text-[11.5px] text-subtle">' + esc(C.ml(ap.effectiveFrom)) + 'から' + (dur ? ' ・ ' + esc(dur) : '') + '</p>';
+  }
+  // モバイルカードの契約要約（1行「客先 ・ 種別 ・ 2026年4月から ・ 3か月目」）。契約なしは「未設定」
+  function mobileContractSummary(m) {
+    var C = window.CNContracts;
+    var ap = C.ga(C.CT[m.name] || []);
+    if (!ap) return '未設定';
+    var dur = C.durationLabel(ap.effectiveFrom);
+    return C.cd(ap.client) + ' ・ ' + C.TL[ap.type] + ' ・ ' + C.ml(ap.effectiveFrom) + 'から' + (dur ? ' ・ ' + dur : '');
   }
   function deptHtml(m) { return m.dept ? esc(m.dept) : '<span class="text-subtle-light">部署未設定</span>'; }
   function leaveChipHtml(m) { return m.leaveOk ? '' : '<span class="rounded-full bg-background px-2 py-0.5 text-[10px] text-subtle">有休データなし</span>'; }
@@ -64,7 +70,7 @@
   }
 
   function mobileRowHtml(m) {
-    return '<div data-member-row data-m-name="' + esc(m.name) + '"' + rowSortAttrs(m) + ' data-open-slide="contract-member" class="cursor-pointer px-4 py-3 transition-colors hover:bg-background">' +
+    return '<div data-member-row data-m-name="' + esc(m.name) + '"' + rowSortAttrs(m) + ' data-open-slide="contract-member" class="cursor-pointer px-4 py-2.5 transition-colors hover:bg-background">' +
       '<div class="flex items-center gap-2.5">' +
         '<span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:' + avatarColor(m.name) + ';">' + esc(m.name.charAt(0)) + '</span>' +
         '<div class="min-w-0 flex-1">' +
@@ -72,18 +78,17 @@
           '<div class="truncate text-xs text-subtle-light">' + deptHtml(m) + '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="mt-2 text-xs text-subtle">' + esc(m.email) + '</div>' +
-      '<div class="mt-2 rounded-lg bg-background px-2.5 py-2" data-m="contract">' + contractCellHtml(m) + '</div>' +
-      '<div data-m="effective">' + effectiveCellHtml(m, true) + '</div>' +
+      '<p class="mt-1 text-xs text-subtle truncate" data-m="summary">' + esc(mobileContractSummary(m)) + '</p>' +
     '</div>';
   }
   function desktopRowHtml(m) {
+    var chip = leaveChipHtml(m);
     return '<tr data-member-row data-m-name="' + esc(m.name) + '"' + rowSortAttrs(m) + ' data-open-slide="contract-member" class="cursor-pointer border-b border-border transition-colors hover:bg-background">' +
       '<td class="px-4 py-2.5"><div class="flex items-center gap-2.5">' +
         '<span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style="background:' + avatarColor(m.name) + ';">' + esc(m.name.charAt(0)) + '</span>' +
-        '<div><div class="flex items-center gap-1.5"><div class="whitespace-nowrap text-sm font-semibold text-text">' + esc(m.name) + '</div>' + leaveChipHtml(m) + '</div><div class="text-xs text-subtle-light">' + deptHtml(m) + '</div></div>' +
+        '<div class="min-w-0"><div class="truncate text-sm font-semibold text-text">' + esc(m.name) + '</div>' + (chip ? '<div class="mt-0.5">' + chip + '</div>' : '') + '</div>' +
       '</div></td>' +
-      '<td class="px-4 py-2.5 text-xs text-subtle">' + esc(m.email) + '</td>' +
+      '<td class="px-4 py-2.5"><div class="text-[11.5px] text-subtle">' + deptHtml(m) + '</div></td>' +
       '<td class="px-4 py-2.5" data-m="contract">' + contractCellHtml(m) + '</td>' +
       '<td class="px-4 py-2.5" data-m="effective">' + effectiveCellHtml(m) + '</td>' +
     '</tr>';
@@ -115,8 +120,12 @@
     var C = window.CNContracts;
     var ap = C.ga(C.CT[name] || []);
     document.querySelectorAll('[data-member-row][data-m-name="' + name + '"]').forEach(function (row) {
-      var c = row.querySelector('[data-m="contract"]'); if (c) c.innerHTML = contractCellHtml(m);
-      var ef = row.querySelector('[data-m="effective"]'); if (ef) ef.innerHTML = effectiveCellHtml(m, row.tagName !== 'TR');
+      if (row.tagName === 'TR') {
+        var c = row.querySelector('[data-m="contract"]'); if (c) c.innerHTML = contractCellHtml(m);
+        var ef = row.querySelector('[data-m="effective"]'); if (ef) ef.innerHTML = effectiveCellHtml(m);
+      } else {
+        var sum = row.querySelector('[data-m="summary"]'); if (sum) sum.textContent = mobileContractSummary(m);
+      }
       if (ap) { row.setAttribute('data-m-contract', ap.client || ''); row.setAttribute('data-m-effective', ap.effectiveFrom); }
       else { row.removeAttribute('data-m-contract'); row.removeAttribute('data-m-effective'); }
     });
