@@ -331,7 +331,7 @@
     if (chip) {
       var on = chip.getAttribute('aria-pressed') !== 'true';
       chip.setAttribute('aria-pressed', on ? 'true' : 'false');
-      chip.className = 'rounded-full border px-2.5 py-1 text-xs ' + (on ? 'border-warning-border bg-warning-surface font-semibold text-warning' : 'border-border bg-background-light text-subtle');
+      chip.className = 'rounded-full border px-3 py-2 text-xs md:px-2.5 md:py-1 ' + (on ? 'border-warning-border bg-warning-surface font-semibold text-warning' : 'border-border bg-background-light text-subtle');
       filterList();
       return;
     }
