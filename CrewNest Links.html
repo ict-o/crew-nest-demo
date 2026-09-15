@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — リンク</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --sidebar-w: 280px; --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  .mask { display:block; background-color: currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+  [data-panel]:not(.active) { display: none !important; }
+  .tab-btn { position:relative; display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; border-bottom:2px solid transparent; color: var(--color-subtle); transition: color .15s, border-color .15s; cursor:pointer; background:none; }
+  .tab-btn:hover { border-color: var(--color-border); color:#333; }
+  .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
+  .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .tab-btn.is-active > span.rounded-full { background-color: #EEF3FF !important; color: #042154 !important; font-weight: 500; }
+
+  .ring-gauge { border-radius:9999px; display:inline-block; }
+  .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.5rem; cursor:pointer; border-right:3px solid transparent; }
+  .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); }
+
+  summary { list-style: none; cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+  summary svg.fold-ico { transition: rotate .15s; }
+  details[open] summary svg.fold-ico { rotate: 180deg; }
+</style>
+<link rel="stylesheet" href="demo-watermark.css">
+<script src="demo-banner.js"></script>
+</head>
+<body>
+
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/icons/link.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">リンク</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </button>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <button type="button" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </button>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      <a href="CrewNest Home.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+        
+      </a>
+      <div>
+        
+      <a href="CrewNest Quests.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+        <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[0fr]" style="overflow:hidden;">
+          <div class="min-h-0 overflow-hidden">
+            
+        <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
+          
+          <a href="CrewNest My Achievements.html" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">承認状況</span>
+            <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+          </a>
+          <a href="CrewNest Quests.html" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">クエストボード</span>
+            
+          </a>
+          <a href="CrewNest Quests.html#ranking" class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">ランキング</span>
+            
+          </a>
+        </div>
+          </div>
+        </div>
+      </div>
+      <a href="CrewNest Proposals.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+        
+      </a>
+      <a href="CrewNest Expense Claims.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+        
+      </a>
+      <a href="CrewNest Announcements.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/megaphone.png" alt="" class="nav-ico"><span class="truncate">お知らせ</span>
+      </a>
+      <a href="CrewNest Documents.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      <a href="CrewNest Links.html" aria-current="page" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
+        <img src="public/icons/link.png" alt="" class="nav-ico"><span class="truncate">リンク</span>
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+      
+      <a href="CrewNest Admin.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+        
+      </a>
+    </div>
+  </nav>
+  <!-- 検索 -->
+  <div class="border-t border-white/10 px-3 py-2">
+    <button type="button" data-open-dialog="search" class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+      <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </span>
+      <span class="truncate">検索</span>
+    </button>
+  </div>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" data-tour="user-menu" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+1.5rem)] pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+
+    <div class="flex min-h-0 flex-col">
+      <div class="mb-3 flex items-center justify-between gap-3 md:mb-4">
+        <h1 data-tour="links-title" class="hidden items-center gap-3 text-2xl font-bold text-text md:flex"><img src="public/icons/link.png" class="h-7 w-7" alt="">リンク</h1>
+        <a href="CrewNest Admin.html" data-tour="links-manage" class="ml-auto inline-flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+          <svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true" class="shrink-0 text-subtle"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-1 13.5l103 78-110 190-119-50q-11 8-23 15t-24 12L590-80H370Zm112-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z"/></svg>
+          リンクを管理
+        </a>
+      </div>
+
+      <div class="mb-4 flex flex-col gap-3">
+        <div class="relative" data-tour="links-search">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-subtle-light"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="search" data-links-search aria-label="リンクを検索" placeholder="リンクを検索" autocomplete="off"
+                 class="w-full rounded-lg border border-border bg-background-light py-2 pl-10 pr-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+        </div>
+        <div role="tablist" aria-label="カテゴリで絞り込み" data-tour="links-tabs" class="flex gap-1 overflow-x-auto overscroll-x-contain border-b border-border [scrollbar-width:none]">
+          <button type="button" role="tab" data-cat-tab="all" aria-selected="true" class="tab-btn tab-btn-secondary is-active">すべて</button>
+          <button type="button" role="tab" data-cat-tab="internal" aria-selected="false" class="tab-btn tab-btn-secondary">社内サービス</button>
+          <button type="button" role="tab" data-cat-tab="apply" aria-selected="false" class="tab-btn tab-btn-secondary">各種申請</button>
+          <button type="button" role="tab" data-cat-tab="external" aria-selected="false" class="tab-btn tab-btn-secondary">外部サイト</button>
+        </div>
+      </div>
+
+      <div data-links-pane class="min-h-0 flex-1">
+        <div class="flex flex-col gap-6">
+
+          <section data-cat-section="internal">
+            <h2 class="mb-2 flex items-baseline gap-2 text-sm font-semibold text-text">社内サービス<span data-cat-count class="text-xs font-normal text-subtle">4件</span></h2>
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <div class="relative" data-link data-title="勤怠システム" data-desc="出退勤の打刻、残業・休日出勤の申請、月次の勤務実績の確認を行います。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">勤怠</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">勤怠システム</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">出退勤の打刻、残業・休日出勤の申請、月次の勤務実績の確認を行います。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="社内 Wiki" data-desc="業務手順や社内ルール、プロジェクトのナレッジをまとめた社内ドキュメントです。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Wi</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">社内 Wiki</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">業務手順や社内ルール、プロジェクトのナレッジをまとめた社内ドキュメントです。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="Teams" data-desc="チャット・会議・ファイル共有。社内連絡は原則こちらで行います。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Te</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">Teams</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">チャット・会議・ファイル共有。社内連絡は原則こちらで行います。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="経費規程" data-desc="交通費・出張費・接待費など、経費精算の対象と上限額を定めた社内規程です。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background-light"><img src="public/icons/links/keihi.svg" alt="" width="32" height="32" class="rounded"></span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">経費規程</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">交通費・出張費・接待費など、経費精算の対象と上限額を定めた社内規程です。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section data-cat-section="apply">
+            <h2 class="mb-2 flex items-baseline gap-2 text-sm font-semibold text-text">各種申請<span data-cat-count class="text-xs font-normal text-subtle">4件</span></h2>
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <div class="relative" data-link data-title="有休申請フォーム" data-desc="有給休暇・半休の申請フォーム。承認後に勤怠システムへ自動で反映されます。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background-light"><img src="public/icons/links/yukyu.svg" alt="" width="32" height="32" class="rounded"></span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">有休申請フォーム</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">有給休暇・半休の申請フォーム。承認後に勤怠システムへ自動で反映されます。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="在宅勤務申請" data-desc="在宅勤務・リモートワークを行う日の事前申請です。前日 17 時までに提出してください。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">在宅</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">在宅勤務申請</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">在宅勤務・リモートワークを行う日の事前申請です。前日 17 時までに提出してください。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="備品購入申請" data-desc="PC 周辺機器・書籍・消耗品など、会社経費で購入する備品の申請です。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">備品</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">備品購入申請</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">PC 周辺機器・書籍・消耗品など、会社経費で購入する備品の申請です。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="名刺発注" data-desc="名刺の新規作成・増刷の発注フォーム。納品まで約 1 週間かかります。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">名刺</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">名刺発注</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">名刺の新規作成・増刷の発注フォーム。納品まで約 1 週間かかります。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section data-cat-section="external">
+            <h2 class="mb-2 flex items-baseline gap-2 text-sm font-semibold text-text">外部サイト<span data-cat-count class="text-xs font-normal text-subtle">4件</span></h2>
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <div class="relative" data-link data-title="Azure ポータル" data-desc="Azure リソースの管理コンソール。社用アカウントでサインインしてください。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Az</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">Azure ポータル</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">Azure リソースの管理コンソール。社用アカウントでサインインしてください。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="GitHub" data-desc="ソースコードの管理と Pull Request のレビュー。組織アカウントでの利用が必須です。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Gi</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">GitHub</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">ソースコードの管理と Pull Request のレビュー。組織アカウントでの利用が必須です。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="Microsoft Learn" data-desc="Microsoft 製品・Azure の公式学習コンテンツと認定資格の情報を確認できます。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">ML</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">Microsoft Learn</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">Microsoft 製品・Azure の公式学習コンテンツと認定資格の情報を確認できます。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+              <div class="relative" data-link data-title="国税庁 e-Tax" data-desc="国税の電子申告・納税システム。年末調整や確定申告の参考情報も掲載されています。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">eT</span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-base font-medium text-text">国税庁 e-Tax</span>
+                    <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">国税の電子申告・納税システム。年末調整や確定申告の参考情報も掲載されています。</span>
+                  </span>
+                </a>
+                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                        class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                  <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+        <p data-links-empty hidden class="py-10 text-center text-sm text-subtle">一致するリンクがありません</p>
+      </div>
+    </div>
+  </main>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  <a href="CrewNest Home.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+  </a>
+  <a href="CrewNest Quests.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+  </a>
+  <a href="CrewNest Expense Claims.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">経費精算</span>
+  </a>
+  <a href="CrewNest Admin.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/management.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">管理</span>
+  </a>
+  <button type="button" id="more-nav-btn" data-nav-active aria-haspopup="dialog" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-primary">
+    <span style="display:flex;width:24px;height:24px;align-items:center;justify-content:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"/></svg>
+    </span>
+    <span class="whitespace-nowrap">その他</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </button>
+</nav>
+<script src="slide-panels.js"></script>
+<script src="confirm-dialog.js"></script>
+<script src="user-menu.js"></script>
+<script src="more-sheet.js"></script>
+<script src="search.js"></script>
+<script src="loading-feedback.js"></script>
+<script src="badges.js"></script>
+<script>
+// リンク一覧: 検索・カテゴリタブによる絞り込み（両方を同時に適用する）
+(function () {
+  var pane = document.querySelector('[data-links-pane]');
+  if (!pane) return;
+  var searchInput = document.querySelector('[data-links-search]');
+  var tabs = document.querySelectorAll('[data-cat-tab]');
+  var sections = pane.querySelectorAll('[data-cat-section]');
+  var empty = document.querySelector('[data-links-empty]');
+  var activeCat = 'all';
+
+  function norm(s) { return (s || '').toLowerCase(); }
+
+  function apply() {
+    var q = norm(searchInput ? searchInput.value.trim() : '');
+    var visibleTotal = 0;
+    sections.forEach(function (section) {
+      var cat = section.getAttribute('data-cat-section');
+      var catMatch = activeCat === 'all' || activeCat === cat;
+      var visibleInSection = 0;
+      section.querySelectorAll('[data-link]').forEach(function (card) {
+        var hay = norm(card.getAttribute('data-title')) + ' ' + norm(card.getAttribute('data-desc'));
+        var textMatch = !q || hay.indexOf(q) !== -1;
+        var show = catMatch && textMatch;
+        card.hidden = !show;
+        if (show) visibleInSection++;
+      });
+      section.hidden = !catMatch || visibleInSection === 0;
+      var countEl = section.querySelector('[data-cat-count]');
+      if (countEl) countEl.textContent = visibleInSection + '件';
+      visibleTotal += visibleInSection;
+    });
+    if (empty) empty.hidden = visibleTotal !== 0;
+  }
+
+  if (searchInput) searchInput.addEventListener('input', apply);
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      activeCat = tab.getAttribute('data-cat-tab');
+      tabs.forEach(function (t) {
+        var active = t === tab;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      apply();
+    });
+  });
+
+  // ピン（クイックリンクへの追加・除外）の見た目トグル
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-pin]');
+    if (!btn) return;
+    var pinned = btn.getAttribute('aria-pressed') === 'true';
+    btn.setAttribute('aria-pressed', pinned ? 'false' : 'true');
+    btn.setAttribute('aria-label', pinned ? 'クイックリンクに追加' : 'クイックリンクから外す');
+    btn.classList.toggle('text-primary', !pinned);
+    btn.classList.toggle('text-subtle', pinned);
+    var on = btn.querySelector('[data-pin-on]'), off = btn.querySelector('[data-pin-off]');
+    if (on) on.hidden = pinned;
+    if (off) off.hidden = !pinned;
+  });
+
+  apply();
+})();
+</script>
+<script src="tour.js"></script>
+<script>
+CNTour.define('links', [
+  { target: '[data-tour="links-title"]', title: 'リンク', body: '社内サービスや各種申請、外部サイトなど、管理者がまとめたリンク集です。カードを押すと新しいタブで開きます。カード右上のピンで、ホームのクイックリンクに追加できます。' },
+  { target: '[data-tour="links-search"]', title: '探す', body: '名前や説明で絞り込めます。下のタブでカテゴリを切り替えられます。' },
+  { target: '[data-tour="links-tabs"]', title: 'カテゴリ', body: '「すべて」か、カテゴリごとに表示を切り替えます。' },
+  { target: '[data-tour="links-manage"]', title: 'リンクを管理', body: '管理者はここからカテゴリとリンクを登録・編集できます。' }
+]);
+</script>
+</body>
+</html>
