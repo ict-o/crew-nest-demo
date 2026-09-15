@@ -33,7 +33,7 @@
   :root {
     --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
     --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
-    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60; --z-toast: 120;
     --sidebar-w: 280px; --bottom-nav-h: 3rem;
   }
   html, body { background: #F7F8FA; }
@@ -181,7 +181,8 @@
 
     <div class="flex min-h-0 flex-col">
       <div class="mb-3 flex items-center justify-between gap-3 md:mb-4">
-        <h1 data-tour="links-title" class="hidden items-center gap-3 text-2xl font-bold text-text md:flex"><img src="public/icons/link.png" class="h-7 w-7" alt="">リンク</h1>
+        <h1 class="hidden items-center gap-3 text-2xl font-bold text-text md:flex"><img src="public/icons/link.png" class="h-7 w-7" alt="">リンク</h1>
+        <button type="button" data-link-new class="hidden items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:inline-flex">＋ リンクを追加</button>
       </div>
 
       <div class="mb-4 flex flex-col gap-3">
@@ -190,67 +191,85 @@
           <input type="search" data-links-search aria-label="リンクを検索" placeholder="リンクを検索" autocomplete="off"
                  class="w-full rounded-lg border border-border bg-background-light py-2 pl-10 pr-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
         </div>
-        <div role="tablist" aria-label="カテゴリで絞り込み" data-tour="links-tabs" class="flex gap-1 overflow-x-auto overscroll-x-contain border-b border-border [scrollbar-width:none]">
-          <button type="button" role="tab" data-cat-tab="all" aria-selected="true" class="tab-btn tab-btn-secondary is-active">すべて</button>
-          <button type="button" role="tab" data-cat-tab="internal" aria-selected="false" class="tab-btn tab-btn-secondary">社内サービス</button>
-          <button type="button" role="tab" data-cat-tab="apply" aria-selected="false" class="tab-btn tab-btn-secondary">各種申請</button>
-          <button type="button" role="tab" data-cat-tab="external" aria-selected="false" class="tab-btn tab-btn-secondary">外部サイト</button>
+        <div data-tour="links-quick-links-bar" class="flex items-start gap-3 rounded-lg border border-border bg-info-surface px-4 py-3">
+          <svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true" class="mt-0.5 shrink-0 text-info"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+          <p class="text-sm text-text">ピン留めしたリンクは、ホーム画面のクイックリンクに表示されます。並び順はホーム画面の編集モードで変えられます</p>
         </div>
       </div>
 
       <div data-links-pane class="min-h-0 flex-1">
         <div class="flex flex-col gap-6">
 
-          <section data-cat-section="internal">
-            <h2 class="mb-2 flex items-baseline gap-2 text-sm font-semibold text-text">社内サービス<span data-cat-count class="text-xs font-normal text-subtle">4件</span></h2>
+          <section data-cat-section="internal" data-cat-name="社内サービス" class="rounded-lg border border-border bg-background-light p-4">
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <h2 data-cat-heading class="text-sm font-semibold text-text">社内サービス <span data-cat-count class="ml-1 text-xs font-normal text-subtle">4件</span></h2>
+              <div class="flex items-center gap-1">
+                <button type="button" data-cat-add aria-label="社内サービスにリンクを追加" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></button>
+                <div class="relative">
+                  <button type="button" data-cat-menu-toggle aria-haspopup="true" aria-label="社内サービスの操作" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg></button>
+                  <div data-cat-menu role="menu" aria-label="社内サービスの操作" class="hidden absolute right-0 top-full z-[var(--z-dropdown)] mt-1 w-40 rounded-lg border border-border bg-background-light py-1 shadow-md">
+                    <button type="button" role="menuitem" data-cat-rename class="flex w-full items-center px-4 py-2 text-left text-sm text-text hover:bg-background">名前を変更</button>
+                    <button type="button" role="menuitem" data-cat-delete class="flex w-full items-center px-4 py-2 text-left text-sm text-danger hover:bg-danger-surface">削除</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-              <div class="relative" data-link data-title="勤怠システム" data-desc="出退勤の打刻、残業・休日出勤の申請、月次の勤務実績の確認を行います。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="勤怠システム" data-desc="出退勤の打刻、残業・休日出勤の申請、月次の勤務実績の確認を行います。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">勤怠</span>
                   <span class="min-w-0 flex-1">
-                    <span class="block truncate text-base font-medium text-text">勤怠システム</span>
+                    <span class="flex flex-wrap items-center gap-2"><span class="block truncate text-base font-medium text-text">勤怠システム</span><span class="inline-flex items-center rounded-full border border-neutral-border bg-neutral-surface px-2 py-0.5 text-[11px] text-subtle">最初から表示</span></span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">出退勤の打刻、残業・休日出勤の申請、月次の勤務実績の確認を行います。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="社内 Wiki" data-desc="業務手順や社内ルール、プロジェクトのナレッジをまとめた社内ドキュメントです。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="社内 Wiki" data-desc="業務手順や社内ルール、プロジェクトのナレッジをまとめた社内ドキュメントです。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Wi</span>
                   <span class="min-w-0 flex-1">
-                    <span class="block truncate text-base font-medium text-text">社内 Wiki</span>
+                    <span class="flex flex-wrap items-center gap-2"><span class="block truncate text-base font-medium text-text">社内 Wiki</span><span class="inline-flex items-center rounded-full border border-neutral-border bg-neutral-surface px-2 py-0.5 text-[11px] text-subtle">最初から表示</span></span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">業務手順や社内ルール、プロジェクトのナレッジをまとめた社内ドキュメントです。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="Teams" data-desc="チャット・会議・ファイル共有。社内連絡は原則こちらで行います。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="Teams" data-desc="チャット・会議・ファイル共有。社内連絡は原則こちらで行います。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Te</span>
                   <span class="min-w-0 flex-1">
-                    <span class="block truncate text-base font-medium text-text">Teams</span>
+                    <span class="flex flex-wrap items-center gap-2"><span class="block truncate text-base font-medium text-text">Teams</span><span class="inline-flex items-center rounded-full border border-neutral-border bg-neutral-surface px-2 py-0.5 text-[11px] text-subtle">最初から表示</span></span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">チャット・会議・ファイル共有。社内連絡は原則こちらで行います。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="経費規程" data-desc="交通費・出張費・接待費など、経費精算の対象と上限額を定めた社内規程です。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="経費規程" data-desc="交通費・出張費・接待費など、経費精算の対象と上限額を定めた社内規程です。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background-light"><img src="public/icons/links/keihi.svg" alt="" width="32" height="32" class="rounded"></span>
                   <span class="min-w-0 flex-1">
-                    <span class="block truncate text-base font-medium text-text">経費規程</span>
+                    <span class="flex flex-wrap items-center gap-2"><span class="block truncate text-base font-medium text-text">経費規程</span><span class="inline-flex items-center rounded-full border border-neutral-border bg-neutral-surface px-2 py-0.5 text-[11px] text-subtle">最初から表示</span></span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">交通費・出張費・接待費など、経費精算の対象と上限額を定めた社内規程です。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
@@ -259,56 +278,76 @@
             </div>
           </section>
 
-          <section data-cat-section="apply">
-            <h2 class="mb-2 flex items-baseline gap-2 text-sm font-semibold text-text">各種申請<span data-cat-count class="text-xs font-normal text-subtle">4件</span></h2>
+          <section data-cat-section="apply" data-cat-name="各種申請" class="rounded-lg border border-border bg-background-light p-4">
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <h2 data-cat-heading class="text-sm font-semibold text-text">各種申請 <span data-cat-count class="ml-1 text-xs font-normal text-subtle">4件</span></h2>
+              <div class="flex items-center gap-1">
+                <button type="button" data-cat-add aria-label="各種申請にリンクを追加" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></button>
+                <div class="relative">
+                  <button type="button" data-cat-menu-toggle aria-haspopup="true" aria-label="各種申請の操作" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg></button>
+                  <div data-cat-menu role="menu" aria-label="各種申請の操作" class="hidden absolute right-0 top-full z-[var(--z-dropdown)] mt-1 w-40 rounded-lg border border-border bg-background-light py-1 shadow-md">
+                    <button type="button" role="menuitem" data-cat-rename class="flex w-full items-center px-4 py-2 text-left text-sm text-text hover:bg-background">名前を変更</button>
+                    <button type="button" role="menuitem" data-cat-delete class="flex w-full items-center px-4 py-2 text-left text-sm text-danger hover:bg-danger-surface">削除</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-              <div class="relative" data-link data-title="有休申請フォーム" data-desc="有給休暇・半休の申請フォーム。承認後に勤怠システムへ自動で反映されます。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="有休申請フォーム" data-desc="有給休暇・半休の申請フォーム。承認後に勤怠システムへ自動で反映されます。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background-light"><img src="public/icons/links/yukyu.svg" alt="" width="32" height="32" class="rounded"></span>
                   <span class="min-w-0 flex-1">
-                    <span class="block truncate text-base font-medium text-text">有休申請フォーム</span>
+                    <span class="flex flex-wrap items-center gap-2"><span class="block truncate text-base font-medium text-text">有休申請フォーム</span><span class="inline-flex items-center rounded-full border border-neutral-border bg-neutral-surface px-2 py-0.5 text-[11px] text-subtle">最初から表示</span></span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">有給休暇・半休の申請フォーム。承認後に勤怠システムへ自動で反映されます。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="true" aria-label="クイックリンクから外す"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="在宅勤務申請" data-desc="在宅勤務・リモートワークを行う日の事前申請です。前日 17 時までに提出してください。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="在宅勤務申請" data-desc="在宅勤務・リモートワークを行う日の事前申請です。前日 17 時までに提出してください。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">在宅</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">在宅勤務申請</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">在宅勤務・リモートワークを行う日の事前申請です。前日 17 時までに提出してください。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="備品購入申請" data-desc="PC 周辺機器・書籍・消耗品など、会社経費で購入する備品の申請です。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="備品購入申請" data-desc="PC 周辺機器・書籍・消耗品など、会社経費で購入する備品の申請です。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">備品</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">備品購入申請</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">PC 周辺機器・書籍・消耗品など、会社経費で購入する備品の申請です。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="名刺発注" data-desc="名刺の新規作成・増刷の発注フォーム。納品まで約 1 週間かかります。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="名刺発注" data-desc="名刺の新規作成・増刷の発注フォーム。納品まで約 1 週間かかります。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">名刺</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">名刺発注</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">名刺の新規作成・増刷の発注フォーム。納品まで約 1 週間かかります。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
@@ -317,56 +356,76 @@
             </div>
           </section>
 
-          <section data-cat-section="external">
-            <h2 class="mb-2 flex items-baseline gap-2 text-sm font-semibold text-text">外部サイト<span data-cat-count class="text-xs font-normal text-subtle">4件</span></h2>
+          <section data-cat-section="external" data-cat-name="外部サイト" class="rounded-lg border border-border bg-background-light p-4">
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <h2 data-cat-heading class="text-sm font-semibold text-text">外部サイト <span data-cat-count class="ml-1 text-xs font-normal text-subtle">4件</span></h2>
+              <div class="flex items-center gap-1">
+                <button type="button" data-cat-add aria-label="外部サイトにリンクを追加" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></button>
+                <div class="relative">
+                  <button type="button" data-cat-menu-toggle aria-haspopup="true" aria-label="外部サイトの操作" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg></button>
+                  <div data-cat-menu role="menu" aria-label="外部サイトの操作" class="hidden absolute right-0 top-full z-[var(--z-dropdown)] mt-1 w-40 rounded-lg border border-border bg-background-light py-1 shadow-md">
+                    <button type="button" role="menuitem" data-cat-rename class="flex w-full items-center px-4 py-2 text-left text-sm text-text hover:bg-background">名前を変更</button>
+                    <button type="button" role="menuitem" data-cat-delete class="flex w-full items-center px-4 py-2 text-left text-sm text-danger hover:bg-danger-surface">削除</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-              <div class="relative" data-link data-title="Azure ポータル" data-desc="Azure リソースの管理コンソール。社用アカウントでサインインしてください。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="Azure ポータル" data-desc="Azure リソースの管理コンソール。社用アカウントでサインインしてください。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Az</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">Azure ポータル</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">Azure リソースの管理コンソール。社用アカウントでサインインしてください。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="GitHub" data-desc="ソースコードの管理と Pull Request のレビュー。組織アカウントでの利用が必須です。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="GitHub" data-desc="ソースコードの管理と Pull Request のレビュー。組織アカウントでの利用が必須です。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">Gi</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">GitHub</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">ソースコードの管理と Pull Request のレビュー。組織アカウントでの利用が必須です。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="Microsoft Learn" data-desc="Microsoft 製品・Azure の公式学習コンテンツと認定資格の情報を確認できます。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="Microsoft Learn" data-desc="Microsoft 製品・Azure の公式学習コンテンツと認定資格の情報を確認できます。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">ML</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">Microsoft Learn</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">Microsoft 製品・Azure の公式学習コンテンツと認定資格の情報を確認できます。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
               </div>
-              <div class="relative" data-link data-title="国税庁 e-Tax" data-desc="国税の電子申告・納税システム。年末調整や確定申告の参考情報も掲載されています。">
-                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pr-14 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <div class="group relative" data-link data-title="国税庁 e-Tax" data-desc="国税の電子申告・納税システム。年末調整や確定申告の参考情報も掲載されています。">
+                <a href="#" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">eT</span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-base font-medium text-text">国税庁 e-Tax</span>
                     <span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">国税の電子申告・納税システム。年末調整や確定申告の参考情報も掲載されています。</span>
                   </span>
                 </a>
+                <button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
+                <button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
                 <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
@@ -374,6 +433,13 @@
               </div>
             </div>
           </section>
+
+          <div data-cat-add-block>
+            <button type="button" data-cat-add-new class="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-border py-6 text-center text-sm text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+              カテゴリを追加
+            </button>
+          </div>
 
         </div>
         <p data-links-empty hidden class="py-10 text-center text-sm text-subtle">一致するリンクがありません</p>
@@ -381,6 +447,7 @@
     </div>
   </main>
 </div>
+<button type="button" data-link-new aria-label="リンクを追加" class="fixed bottom-[calc(var(--bottom-nav-h)+1rem)] right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md md:hidden"><svg viewBox="0 -960 960 960" width="24" height="24" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></button>
 <nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
   <a href="CrewNest Home.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
     <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
@@ -411,6 +478,112 @@
     <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
   </button>
 </nav>
+<!-- リンク追加/編集（PC: 右からのスライドパネル） -->
+<div data-slide="link-edit" data-link-form data-hidden-transform="translateX(100%)" class="hidden md:flex fixed right-0 top-0 z-[95] h-screen w-[420px] flex-col border-l border-border bg-background-light shadow-md transition-transform duration-300 ease-in-out" style="transform:translateX(100%);">
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-4 py-3">
+      <span data-link-form-title class="text-sm font-bold text-text">リンクを追加</span>
+      <button type="button" data-close-slide="link-edit" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
+    </div>
+    <div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4">
+      <div>
+        <label class="block text-xs font-medium text-text">URL</label>
+        <input data-link-url-input type="url" placeholder="https://" class="mt-1 w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <p class="mt-1 text-[11px] text-subtle">入力後に「URLからアイコンを取得」でファビコンを自動設定できます</p>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-text">ラベル</label>
+        <input data-link-label-input type="text" placeholder="例: SharePoint" class="mt-1 w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-text">カテゴリ</label>
+        <select data-link-category-input class="mt-1 w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></select>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-text">説明</label>
+        <textarea data-link-desc-input rows="2" maxlength="200" placeholder="リンク先で何ができるか（200文字以内）" class="mt-1 w-full resize-none rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+      </div>
+      <label class="flex cursor-pointer items-center justify-between gap-4">
+        <span class="text-sm text-text">全員のクイックリンクに最初から表示する</span>
+        <button type="button" role="switch" aria-checked="false" data-switch data-link-default-input class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-border transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+      </label>
+      <div>
+        <label class="block text-xs font-medium text-text">アイコン</label>
+        <div class="mt-1 flex items-center gap-3">
+          <div data-link-icon-preview class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-background-light text-[10px] font-bold text-subtle">未設定</div>
+          <div class="flex flex-1 flex-col gap-2">
+            <button type="button" class="rounded-full border border-primary bg-background px-4 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/5">URLからアイコンを取得</button>
+            <button type="button" class="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium text-text transition-colors hover:bg-black/[0.08]">画像をアップロード</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-link-delete-row class="hidden shrink-0 border-t border-border px-4 py-3">
+      <button type="button" data-link-delete class="inline-flex h-10 w-full items-center justify-center rounded-full border border-danger-border bg-danger-surface px-5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">このリンクを削除</button>
+    </div>
+    <div class="flex shrink-0 items-center justify-end gap-2 border-t border-border px-4 py-3">
+      <button type="button" data-close-slide="link-edit" class="inline-flex h-10 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
+      <button type="button" data-link-save class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button>
+    </div>
+</div>
+<div data-overlay="link-edit" class="fixed inset-0 z-[90] bg-primary/30 md:hidden" style="display:none;"></div>
+<div data-slide="link-edit" data-link-form data-hidden-transform="translateY(100%)" class="md:hidden fixed inset-x-0 bottom-0 z-[95] flex max-h-[85vh] flex-col rounded-t-2xl bg-background-light pb-[env(safe-area-inset-bottom)] shadow-md transition-transform duration-300" style="transform:translateY(100%);">
+  <div aria-hidden="true" class="mx-auto mb-1 mt-3 h-1.5 w-12 shrink-0 rounded-full bg-border"></div>
+    <div class="flex shrink-0 items-center justify-between border-b border-border px-4 py-3">
+      <span data-link-form-title class="text-sm font-bold text-text">リンクを追加</span>
+      <button type="button" data-close-slide="link-edit" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
+    </div>
+    <div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4">
+      <div>
+        <label class="block text-xs font-medium text-text">URL</label>
+        <input data-link-url-input type="url" placeholder="https://" class="mt-1 w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <p class="mt-1 text-[11px] text-subtle">入力後に「URLからアイコンを取得」でファビコンを自動設定できます</p>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-text">ラベル</label>
+        <input data-link-label-input type="text" placeholder="例: SharePoint" class="mt-1 w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-text">カテゴリ</label>
+        <select data-link-category-input class="mt-1 w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></select>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-text">説明</label>
+        <textarea data-link-desc-input rows="2" maxlength="200" placeholder="リンク先で何ができるか（200文字以内）" class="mt-1 w-full resize-none rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+      </div>
+      <label class="flex cursor-pointer items-center justify-between gap-4">
+        <span class="text-sm text-text">全員のクイックリンクに最初から表示する</span>
+        <button type="button" role="switch" aria-checked="false" data-switch data-link-default-input class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-border transition-colors"><span class="absolute h-5 w-5 rounded-full bg-white shadow transition-all" style="left:2px;"></span></button>
+      </label>
+      <div>
+        <label class="block text-xs font-medium text-text">アイコン</label>
+        <div class="mt-1 flex items-center gap-3">
+          <div data-link-icon-preview class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-background-light text-[10px] font-bold text-subtle">未設定</div>
+          <div class="flex flex-1 flex-col gap-2">
+            <button type="button" class="rounded-full border border-primary bg-background px-4 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/5">URLからアイコンを取得</button>
+            <button type="button" class="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium text-text transition-colors hover:bg-black/[0.08]">画像をアップロード</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-link-delete-row class="hidden shrink-0 border-t border-border px-4 py-3">
+      <button type="button" data-link-delete class="inline-flex h-10 w-full items-center justify-center rounded-full border border-danger-border bg-danger-surface px-5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">このリンクを削除</button>
+    </div>
+    <div class="flex shrink-0 items-center justify-end gap-2 border-t border-border px-4 py-3">
+      <button type="button" data-close-slide="link-edit" class="inline-flex h-10 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
+      <button type="button" data-link-save class="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存する</button>
+    </div>
+</div>
+<!-- カテゴリ削除・リンク削除の確認ダイアログ（アプリの AlertDialog を再現） -->
+<div data-dialog="cat-delete" class="fixed inset-0 z-[120] items-center justify-center bg-black/45 p-4" style="display:none;">
+  <div role="alertdialog" aria-modal="true" class="w-full max-w-sm rounded-[20px] bg-background-light p-6 shadow-md">
+    <p data-cat-delete-title class="text-base font-bold text-text">このカテゴリを削除しますか？</p>
+    <p class="mt-2 text-sm text-subtle">所属するリンクは「未分類」に移動します</p>
+    <div class="mt-5 flex justify-end gap-2">
+      <button type="button" data-close-dialog class="inline-flex h-10 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>
+      <button type="button" data-close-dialog data-cat-delete-confirm class="inline-flex h-10 items-center justify-center rounded-full border border-danger-border bg-danger-surface px-5 text-sm font-medium text-danger transition-colors hover:bg-danger-surface/70">削除</button>
+    </div>
+  </div>
+</div>
 <script src="slide-panels.js"></script>
 <script src="confirm-dialog.js"></script>
 <script src="user-menu.js"></script>
@@ -419,76 +592,316 @@
 <script src="loading-feedback.js"></script>
 <script src="badges.js"></script>
 <script>
-// リンク一覧: 検索・カテゴリタブによる絞り込み（両方を同時に適用する）
+// リンク一覧: 検索による絞り込み（カテゴリタブは廃止。案内バーに置き換え）
 (function () {
   var pane = document.querySelector('[data-links-pane]');
   if (!pane) return;
   var searchInput = document.querySelector('[data-links-search]');
-  var tabs = document.querySelectorAll('[data-cat-tab]');
-  var sections = pane.querySelectorAll('[data-cat-section]');
   var empty = document.querySelector('[data-links-empty]');
-  var activeCat = 'all';
 
   function norm(s) { return (s || '').toLowerCase(); }
 
   function apply() {
     var q = norm(searchInput ? searchInput.value.trim() : '');
     var visibleTotal = 0;
-    sections.forEach(function (section) {
-      var cat = section.getAttribute('data-cat-section');
-      var catMatch = activeCat === 'all' || activeCat === cat;
+    pane.querySelectorAll('[data-cat-section]').forEach(function (section) {
       var visibleInSection = 0;
       section.querySelectorAll('[data-link]').forEach(function (card) {
         var hay = norm(card.getAttribute('data-title')) + ' ' + norm(card.getAttribute('data-desc'));
-        var textMatch = !q || hay.indexOf(q) !== -1;
-        var show = catMatch && textMatch;
+        var show = !q || hay.indexOf(q) !== -1;
         card.hidden = !show;
         if (show) visibleInSection++;
       });
-      section.hidden = !catMatch || visibleInSection === 0;
+      section.hidden = !!q && visibleInSection === 0;
       var countEl = section.querySelector('[data-cat-count]');
       if (countEl) countEl.textContent = visibleInSection + '件';
       visibleTotal += visibleInSection;
     });
-    if (empty) empty.hidden = visibleTotal !== 0;
+    var addBlock = document.querySelector('[data-cat-add-block]');
+    if (addBlock) addBlock.hidden = !!q;
+    if (empty) empty.hidden = !q || visibleTotal !== 0;
   }
 
   if (searchInput) searchInput.addEventListener('input', apply);
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      activeCat = tab.getAttribute('data-cat-tab');
-      tabs.forEach(function (t) {
-        var active = t === tab;
-        t.classList.toggle('is-active', active);
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      apply();
-    });
-  });
+  apply();
+  window.cnLinksApply = apply;
+})();
+</script>
+<script>
+// リンク一覧（管理者向け）: ピンのトースト・カテゴリ操作（＋/⋮/名前を変更/削除/追加）・
+// リンク追加/編集/削除パネル。並び替えのドラッグは見た目のみ（静的モック）。
+(function () {
+  var pane = document.querySelector('[data-links-pane]');
+  if (!pane) return;
 
-  // ピン（クイックリンクへの追加・除外）の見た目トグル
+  // ---- 下部中央トースト（ActionToast を再現） ----
+  var toastTimer = null;
+  function showToast(message) {
+    var host = document.getElementById('cn-links-toast');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'cn-links-toast';
+      host.setAttribute('role', 'status');
+      host.setAttribute('aria-live', 'polite');
+      host.className = 'fixed inset-x-0 bottom-20 z-[var(--z-toast)] flex justify-center px-4 md:bottom-6';
+      host.style.pointerEvents = 'none';
+      host.innerHTML = '<div class="rounded-full bg-text px-4 py-2 text-sm text-background-light shadow-md"></div>';
+      document.body.appendChild(host);
+    }
+    host.firstElementChild.textContent = message;
+    host.style.display = 'flex';
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () { host.style.display = 'none'; }, 2500);
+  }
+
+  // ---- ピン（クイックリンクへの追加・除外） ----
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('[data-pin]');
     if (!btn) return;
     var pinned = btn.getAttribute('aria-pressed') === 'true';
-    btn.setAttribute('aria-pressed', pinned ? 'false' : 'true');
-    btn.setAttribute('aria-label', pinned ? 'クイックリンクに追加' : 'クイックリンクから外す');
-    btn.classList.toggle('text-primary', !pinned);
-    btn.classList.toggle('text-subtle', pinned);
+    var next = !pinned;
+    btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+    btn.setAttribute('aria-label', next ? 'クイックリンクから外す' : 'クイックリンクに追加');
+    btn.classList.toggle('text-primary', next);
+    btn.classList.toggle('text-subtle', !next);
     var on = btn.querySelector('[data-pin-on]'), off = btn.querySelector('[data-pin-off]');
-    if (on) on.hidden = pinned;
-    if (off) off.hidden = !pinned;
+    if (on) on.hidden = !next;
+    if (off) off.hidden = next;
+    showToast(next ? 'クイックリンクに追加しました' : 'クイックリンクから削除しました');
   });
 
-  apply();
+  // ---- カテゴリの ⋮ メニュー ----
+  function closeAllCatMenus() {
+    document.querySelectorAll('[data-cat-menu]').forEach(function (m) { m.classList.add('hidden'); });
+  }
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('[data-cat-menu-toggle]');
+    if (toggle) {
+      var menu = toggle.parentElement.querySelector('[data-cat-menu]');
+      var willOpen = menu.classList.contains('hidden');
+      closeAllCatMenus();
+      if (willOpen) menu.classList.remove('hidden');
+      return;
+    }
+    if (!e.target.closest('[data-cat-menu]')) closeAllCatMenus();
+  });
+
+  // ---- カテゴリの名前を変更 ----
+  document.addEventListener('click', function (e) {
+    var renameBtn = e.target.closest('[data-cat-rename]');
+    if (!renameBtn) return;
+    closeAllCatMenus();
+    var section = renameBtn.closest('[data-cat-section]');
+    var heading = section.querySelector('[data-cat-heading]');
+    var headRow = heading.parentElement;
+    var current = section.getAttribute('data-cat-name');
+    var wrap = document.createElement('div');
+    wrap.className = 'flex flex-1 items-center gap-2';
+    wrap.innerHTML =
+      '<input type="text" value="' + current + '" aria-label="カテゴリ名" autofocus ' +
+      'class="flex-1 rounded-lg border border-border bg-background-light px-2 py-1 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">' +
+      '<button type="button" data-cat-rename-commit aria-label="変更を確定" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-mid"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg></span></button>' +
+      '<button type="button" data-cat-rename-cancel aria-label="編集をキャンセル" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full"><span class="flex h-8 w-8 items-center justify-center rounded-full border border-border text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></span></button>';
+    headRow.replaceChild(wrap, heading);
+    var input = wrap.querySelector('input');
+    input.focus();
+    input.select();
+    function commit() {
+      var name = input.value.trim();
+      if (!name) return;
+      heading.innerHTML = name + ' ' + heading.querySelector('[data-cat-count]').outerHTML;
+      section.setAttribute('data-cat-name', name);
+      section.querySelector('[data-cat-add]').setAttribute('aria-label', name + 'にリンクを追加');
+      section.querySelector('[data-cat-menu-toggle]').setAttribute('aria-label', name + 'の操作');
+      headRow.replaceChild(heading, wrap);
+    }
+    function cancel() { headRow.replaceChild(heading, wrap); }
+    wrap.querySelector('[data-cat-rename-commit]').addEventListener('click', commit);
+    wrap.querySelector('[data-cat-rename-cancel]').addEventListener('click', cancel);
+    input.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); commit(); }
+      else if (ev.key === 'Escape') cancel();
+    });
+  });
+
+  // ---- カテゴリの削除 ----
+  var catDeleteTarget = null;
+  document.addEventListener('click', function (e) {
+    var delBtn = e.target.closest('[data-cat-delete]');
+    if (delBtn) {
+      closeAllCatMenus();
+      catDeleteTarget = delBtn.closest('[data-cat-section]');
+      document.querySelector('[data-dialog="cat-delete"] [data-cat-delete-title]').textContent =
+        '「' + catDeleteTarget.getAttribute('data-cat-name') + '」を削除しますか？';
+      document.querySelector('[data-dialog="cat-delete"]').style.display = 'flex';
+      return;
+    }
+    var confirmBtn = e.target.closest('[data-cat-delete-confirm]');
+    if (confirmBtn && catDeleteTarget) {
+      catDeleteTarget.remove();
+      catDeleteTarget = null;
+      window.cnLinksApply && window.cnLinksApply();
+    }
+  });
+
+  // ---- カテゴリの追加 ----
+  var catAddBlock = document.querySelector('[data-cat-add-block]');
+  if (catAddBlock) {
+    var catAddDefault = catAddBlock.innerHTML;
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-cat-add-new]')) {
+        catAddBlock.innerHTML =
+          '<div class="rounded-lg border border-dashed border-border p-4">' +
+          '<div class="flex items-center gap-2">' +
+          '<input type="text" placeholder="カテゴリ名" aria-label="新しいカテゴリ名" autofocus ' +
+          'class="flex-1 rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">' +
+          '<button type="button" data-cat-add-commit class="inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary-mid">追加</button>' +
+          '<button type="button" data-cat-add-cancel class="inline-flex h-8 shrink-0 items-center justify-center rounded-full border border-border px-3 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">キャンセル</button>' +
+          '</div></div>';
+        catAddBlock.querySelector('input').focus();
+        return;
+      }
+      if (e.target.closest('[data-cat-add-cancel]')) { catAddBlock.innerHTML = catAddDefault; return; }
+      if (e.target.closest('[data-cat-add-commit]')) {
+        var input = catAddBlock.querySelector('input');
+        var name = input.value.trim();
+        if (!name) return;
+        var id = 'cat-' + Date.now();
+        var section = document.createElement('section');
+        section.setAttribute('data-cat-section', id);
+        section.setAttribute('data-cat-name', name);
+        section.className = 'rounded-lg border border-border bg-background-light p-4';
+        section.innerHTML =
+          '<div class="mb-2 flex items-center justify-between gap-2">' +
+          '<h2 data-cat-heading class="text-sm font-semibold text-text">' + name + ' <span data-cat-count class="ml-1 text-xs font-normal text-subtle">0件</span></h2>' +
+          '<div class="flex items-center gap-1">' +
+          '<button type="button" data-cat-add aria-label="' + name + 'にリンクを追加" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg></button>' +
+          '<div class="relative"><button type="button" data-cat-menu-toggle aria-haspopup="true" aria-label="' + name + 'の操作" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg></button>' +
+          '<div data-cat-menu role="menu" aria-label="' + name + 'の操作" class="hidden absolute right-0 top-full z-[var(--z-dropdown)] mt-1 w-40 rounded-lg border border-border bg-background-light py-1 shadow-md">' +
+          '<button type="button" role="menuitem" data-cat-rename class="flex w-full items-center px-4 py-2 text-left text-sm text-text hover:bg-background">名前を変更</button>' +
+          '<button type="button" role="menuitem" data-cat-delete class="flex w-full items-center px-4 py-2 text-left text-sm text-danger hover:bg-danger-surface">削除</button>' +
+          '</div></div></div></div>' +
+          '<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3"></div>';
+        pane.querySelector('.flex.flex-col.gap-6').insertBefore(section, catAddBlock);
+        catAddBlock.innerHTML = catAddDefault;
+        window.cnLinksApply && window.cnLinksApply();
+      }
+    });
+  }
+
+  // ---- リンク追加/編集パネル ----
+  var forms = document.querySelectorAll('[data-link-form]');
+  var editingCard = null; // 編集中のカード要素（null なら新規追加）
+
+  function categoryOptions(selectedId) {
+    var opts = '';
+    pane.querySelectorAll('[data-cat-section]').forEach(function (section) {
+      var id = section.getAttribute('data-cat-section');
+      var name = section.getAttribute('data-cat-name');
+      opts += '<option value="' + id + '"' + (id === selectedId ? ' selected' : '') + '>' + name + '</option>';
+    });
+    return opts;
+  }
+
+  function openForm(mode, categoryId, card) {
+    editingCard = card || null;
+    forms.forEach(function (root) {
+      root.querySelector('[data-link-form-title]').textContent = mode === 'edit' ? 'リンクを編集' : 'リンクを追加';
+      root.querySelector('[data-link-category-input]').innerHTML = categoryOptions(categoryId);
+      root.querySelector('[data-link-url-input]').value = card ? card.querySelector('a').getAttribute('href') : '';
+      root.querySelector('[data-link-label-input]').value = card ? card.getAttribute('data-title') : '';
+      root.querySelector('[data-link-desc-input]').value = card ? card.getAttribute('data-desc') : '';
+      var sw = root.querySelector('[data-link-default-input]');
+      sw.setAttribute('aria-checked', 'false');
+      sw.classList.remove('bg-primary'); sw.classList.add('bg-border');
+      var knob = sw.querySelector('span'); knob.style.left = '2px'; knob.style.right = '';
+      root.querySelector('[data-link-delete-row]').classList.toggle('hidden', mode !== 'edit');
+    });
+    document.dispatchEvent(new CustomEvent('slidewillopen', { detail: { id: 'link-edit' } }));
+    window.openSlide && window.openSlide('link-edit');
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-link-new]')) { openForm('create', null, null); return; }
+    var catAdd = e.target.closest('[data-cat-add]');
+    if (catAdd) { openForm('create', catAdd.closest('[data-cat-section]').getAttribute('data-cat-section'), null); return; }
+    var editBtn = e.target.closest('[data-link-edit]');
+    if (editBtn) {
+      var card = editBtn.closest('[data-link]');
+      openForm('edit', card.closest('[data-cat-section]').getAttribute('data-cat-section'), card);
+      return;
+    }
+  });
+
+  function updateCount(section) {
+    var countEl = section.querySelector('[data-cat-count]');
+    if (countEl) countEl.textContent = section.querySelectorAll('[data-link]').length + '件';
+  }
+
+  function buildCard(label, url, desc) {
+    var card = document.createElement('div');
+    card.className = 'group relative';
+    card.setAttribute('data-link', '');
+    card.setAttribute('data-title', label);
+    card.setAttribute('data-desc', desc);
+    card.innerHTML =
+      '<a href="' + url + '" target="_blank" rel="noopener" class="flex h-full items-start gap-3 rounded-lg border border-border bg-background-light p-4 pl-12 pr-24 shadow-sm transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' +
+      '<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-xs font-bold text-subtle">' + label.slice(0, 2) + '</span>' +
+      '<span class="min-w-0 flex-1"><span class="block truncate text-base font-medium text-text">' + label + '</span>' +
+      (desc ? '<span class="mt-0.5 line-clamp-2 block text-sm leading-snug text-subtle">' + desc + '</span>' : '') +
+      '</span></a>' +
+      '<button type="button" data-link-drag aria-label="並び替え" class="absolute left-0 top-0 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle-light transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] cursor-grab active:cursor-grabbing md:opacity-0 md:group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>' +
+      '<button type="button" data-link-edit aria-label="編集" class="absolute right-12 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>' +
+      '<button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加" class="absolute right-2 top-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' +
+      '<svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg>' +
+      '<svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg></button>';
+    return card;
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-link-save]')) {
+      var root = e.target.closest('[data-link-form]');
+      var label = root.querySelector('[data-link-label-input]').value.trim();
+      var url = root.querySelector('[data-link-url-input]').value.trim();
+      var desc = root.querySelector('[data-link-desc-input]').value.trim();
+      var categoryId = root.querySelector('[data-link-category-input]').value;
+      if (!label || !url) return;
+      var targetSection = pane.querySelector('[data-cat-section="' + CSS.escape(categoryId) + '"]');
+      if (!targetSection) return;
+      var grid = targetSection.querySelector('.grid');
+      if (editingCard) {
+        var oldSection = editingCard.closest('[data-cat-section]');
+        var fresh = buildCard(label, url, desc);
+        editingCard.replaceWith(fresh);
+        grid.appendChild(fresh);
+        if (oldSection !== targetSection) updateCount(oldSection);
+      } else {
+        grid.appendChild(buildCard(label, url, desc));
+      }
+      updateCount(targetSection);
+      window.closeSlide && window.closeSlide('link-edit');
+      window.cnLinksApply && window.cnLinksApply();
+      editingCard = null;
+      return;
+    }
+    if (e.target.closest('[data-link-delete]') && editingCard) {
+      var section = editingCard.closest('[data-cat-section]');
+      editingCard.remove();
+      updateCount(section);
+      window.closeSlide && window.closeSlide('link-edit');
+      window.cnLinksApply && window.cnLinksApply();
+      editingCard = null;
+    }
+  });
 })();
 </script>
 <script src="tour.js"></script>
 <script>
 CNTour.define('links', [
-  { target: '[data-tour="links-title"]', title: 'リンク', body: '社内サービスや各種申請、外部サイトなど、管理者がまとめたリンク集です。カードを押すと新しいタブで開きます。カード右上のピンで、ホームのクイックリンクに追加できます。' },
-  { target: '[data-tour="links-search"]', title: '探す', body: '名前や説明で絞り込めます。下のタブでカテゴリを切り替えられます。' },
-  { target: '[data-tour="links-tabs"]', title: 'カテゴリ', body: '「すべて」か、カテゴリごとに表示を切り替えます。' }
+  { title: 'リンク', body: '社内サービスや各種申請、外部サイトなど、管理者がまとめたリンク集です。カードを押すと新しいタブで開きます。カード右上の追加ボタンから、ホームのクイックリンクに追加できます。' },
+  { target: '[data-tour="links-search"]', title: '検索', body: '名前や説明で絞り込めます。' },
+  { target: '[data-tour="links-quick-links-bar"]', title: 'クイックリンク', body: 'ピン留めしたリンクは、ホーム画面のクイックリンクに表示されます。並び順はホーム画面の編集モードで変えられます。' },
+  { target: '[aria-label="操作ガイドを見る"]', title: 'いつでも見返せます', body: 'このボタンから、いつでもこのガイドをもう一度表示できます。' }
 ]);
 </script>
 </body>
