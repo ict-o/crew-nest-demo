@@ -246,7 +246,7 @@ function buildDialog() {
           '<p class="text-[11px] text-subtle">客先の営業日数 × 定時 に足した値が下限と上限になります</p>' +
         '</div>' +
         '<div data-ct-group="NONE" class="space-y-2">' +
-          '<p class="text-xs text-subtle">精算なし。ホームの「プロジェクト」カードは表示されません</p>' +
+          '<p class="text-xs text-subtle">精算なし。ホームの「プロジェクト」カードには予定稼働と有休の見込みだけが出ます</p>' +
         '</div>' +
         '<p data-ct="error" style="display:none" class="text-xs text-danger"></p>' +
       '</div>' +
