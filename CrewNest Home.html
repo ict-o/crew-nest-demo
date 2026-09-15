@@ -1177,7 +1177,7 @@ CNTour.define('home', [
   </div>
 </div>
 <style>
-  /* モーダル表示中はデモバナーを隠す（実アプリには存在せず、フッターの保存ボタンに重なるため） */
+  /* モーダル表示中はデモバナーを隠す（実アプリには存在せず、フッターの閉じるボタンに重なるため） */
   #ql-edit:not([hidden]) ~ #cn-demo-banner { display: none; }
 </style>
 <!-- クイックリンク編集モーダル（PC: 中央モーダル ／ モバイル: ボトムシート。1つの DOM を md で切り替える） -->
@@ -1333,15 +1333,14 @@ CNTour.define('home', [
       </div>
     </div>
 
-    <div class="flex shrink-0 flex-col-reverse gap-2 border-t border-border bg-background-light px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:flex-row md:justify-end md:rounded-b-2xl md:pb-4">
-      <button type="button" data-ql-close class="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:h-10 md:w-auto">キャンセル</button>
-      <button type="button" data-ql-save class="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:h-10 md:w-auto">保存</button>
+    <div class="flex shrink-0 justify-end border-t border-border bg-background-light px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:rounded-b-2xl">
+      <button type="button" data-ql-close class="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:h-10 md:w-auto">閉じる</button>
     </div>
   </div>
 </div>
 <script>
-// クイックリンク編集モーダルの開閉（鉛筆ボタンで開く。×・キャンセル・スクリム・Esc で閉じる）
-// ×で外す・＋で追加（追加できるリンク側は data-ql-added でグレーアウト）・検索・保存で閉じる、を動かす（並び替えは静的表示）
+// クイックリンク編集モーダルの開閉（鉛筆ボタンで開く。×・閉じる・スクリム・Esc で閉じる）
+// ×で外す・＋で追加（追加できるリンク側は data-ql-added でグレーアウト）・検索、は追加/除外のたびに自動保存される想定（並び替えは静的表示）
 (function () {
   var root = document.getElementById('ql-edit');
   if (!root) return;
@@ -1379,7 +1378,6 @@ CNTour.define('home', [
     if (t) { open(t); return; }
     if (root.hidden) return;
     if (e.target.closest('[data-ql-close]')) { close(); return; }
-    if (e.target.closest('[data-ql-save]')) { close(); return; }
 
     var removeBtn = e.target.closest('[data-ql-remove]');
     if (removeBtn) {
