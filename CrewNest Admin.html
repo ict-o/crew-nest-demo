@@ -4853,6 +4853,7 @@ document.addEventListener('click', function(e){
       <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
         <button type="button" data-r-back aria-label="一覧に戻る" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
         <h2 data-r-heading class="min-w-0 flex-1 text-[15px] font-bold text-text">ロールを編集</h2>
+        <button type="button" data-r-copy aria-label="コピーして作成" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"></path></svg></button>
         <button type="button" data-close-slide="roles" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
       </div>
       <div data-r-form-body class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4"></div>
@@ -4880,6 +4881,7 @@ document.addEventListener('click', function(e){
       <div class="flex shrink-0 items-center gap-2 border-b border-border px-5 py-4">
         <button type="button" data-r-back aria-label="一覧に戻る" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
         <h2 data-r-heading class="min-w-0 flex-1 text-[15px] font-bold text-text">ロールを編集</h2>
+        <button type="button" data-r-copy aria-label="コピーして作成" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"></path></svg></button>
         <button type="button" data-close-slide="roles-m" aria-label="閉じる" class="inline-flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"></path></svg></button>
       </div>
       <div data-r-form-body class="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4"></div>
@@ -8006,16 +8008,20 @@ document.addEventListener('click', function(e){
 
   var editing = null; // { role, perms, isNew, isFixed, deleteDisabled }
 
-  function openForm(role) {
+  // preset: コピーして作成のときの初期値 { name, perms }（role は null で新規扱い）
+  function openForm(role, preset) {
     var isNew = !role;
     var isFixed = !!role && (role.systemKey === 'admin' || role.systemKey === 'member');
     var isBuiltin = !!role && !!role.systemKey;
-    var perms = role ? clonePerms(role.perms) : buildPerms({});
+    var perms = preset ? preset.perms : role ? clonePerms(role.perms) : buildPerms({});
+    var initialName = preset ? preset.name : role ? role.name : '';
     var canDelete = !!role && !isBuiltin;
     var deleteDisabled = canDelete && role.users > 0;
     editing = { role: role, perms: perms, isNew: isNew, isFixed: isFixed, deleteDisabled: deleteDisabled };
 
-    document.querySelectorAll('[data-r-heading]').forEach(function (el) { el.textContent = isNew ? '新しいロール' : 'ロールを編集'; });
+    document.querySelectorAll('[data-r-heading]').forEach(function (el) { el.textContent = preset ? 'ロールをコピーして作成' : isNew ? '新しいロール' : 'ロールを編集'; });
+    // コピーはヘッダーのアイコン（クエスト編集と同じ）。既存ロールを開いているときだけ出す
+    document.querySelectorAll('[data-r-copy]').forEach(function (el) { el.style.display = role ? '' : 'none'; });
 
     var note = '';
     if (role && role.systemKey === 'admin') {
@@ -8026,7 +8032,7 @@ document.addEventListener('click', function(e){
 
     var bodyHtml =
       '<label class="flex flex-col gap-1"><span class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">ロール名</span>' +
-      '<input type="text" maxlength="50" value="' + escapeHtml(role ? role.name : '') + '" data-r-name placeholder="例: 営業" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>' +
+      '<input type="text" maxlength="50" value="' + escapeHtml(initialName) + '" data-r-name placeholder="例: 営業" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>' +
       (note ? '<div class="rounded-lg border border-info-border bg-info-surface px-3 py-2 text-xs text-info">' + escapeHtml(note) + '</div>' : '') +
       '<div>' +
       '<div class="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-subtle">権限</div>' +
@@ -8080,6 +8086,16 @@ document.addEventListener('click', function(e){
     showView('list');
   }
 
+  // いまフォームに表示している名前・権限（未保存の変更を含む）を初期値に新規作成フォームへ（即保存はしない）。名前は「○○のコピー」で 50 文字に収める
+  function copyRole() {
+    if (!editing || !editing.role) return;
+    var suffix = 'のコピー';
+    var inp = document.querySelector('[data-r-name]');
+    var source = (inp && inp.value.trim()) || editing.role.name;
+    var name = source.slice(0, 50 - suffix.length) + suffix;
+    openForm(null, { name: name, perms: clonePerms(editing.perms) });
+  }
+
   function deleteRole() {
     if (!editing || !editing.role || editing.deleteDisabled) return;
     var id = editing.role.id;
@@ -8093,6 +8109,7 @@ document.addEventListener('click', function(e){
     if (e.target.closest('[data-r-new]')) { openForm(null); return; }
     if (e.target.closest('[data-r-back]')) { editing = null; showView('list'); return; }
     if (e.target.closest('[data-r-save]')) { saveForm(); return; }
+    if (e.target.closest('[data-r-copy]')) { copyRole(); return; }
     if (e.target.closest('[data-r-delete]')) { deleteRole(); return; }
     var row = e.target.closest('[data-r-row]');
     if (row) {
