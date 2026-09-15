@@ -182,10 +182,6 @@
     <div class="flex min-h-0 flex-col">
       <div class="mb-3 flex items-center justify-between gap-3 md:mb-4">
         <h1 data-tour="links-title" class="hidden items-center gap-3 text-2xl font-bold text-text md:flex"><img src="public/icons/link.png" class="h-7 w-7" alt="">リンク</h1>
-        <a href="CrewNest Admin.html" data-tour="links-manage" class="ml-auto inline-flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border bg-background-light px-5 text-sm font-medium text-text transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
-          <svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true" class="shrink-0 text-subtle"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-1 13.5l103 78-110 190-119-50q-11 8-23 15t-24 12L590-80H370Zm112-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z"/></svg>
-          リンクを管理
-        </a>
       </div>
 
       <div class="mb-4 flex flex-col gap-3">
@@ -492,8 +488,7 @@
 CNTour.define('links', [
   { target: '[data-tour="links-title"]', title: 'リンク', body: '社内サービスや各種申請、外部サイトなど、管理者がまとめたリンク集です。カードを押すと新しいタブで開きます。カード右上のピンで、ホームのクイックリンクに追加できます。' },
   { target: '[data-tour="links-search"]', title: '探す', body: '名前や説明で絞り込めます。下のタブでカテゴリを切り替えられます。' },
-  { target: '[data-tour="links-tabs"]', title: 'カテゴリ', body: '「すべて」か、カテゴリごとに表示を切り替えます。' },
-  { target: '[data-tour="links-manage"]', title: 'リンクを管理', body: '管理者はここからカテゴリとリンクを登録・編集できます。' }
+  { target: '[data-tour="links-tabs"]', title: 'カテゴリ', body: '「すべて」か、カテゴリごとに表示を切り替えます。' }
 ]);
 </script>
 </body>
