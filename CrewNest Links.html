@@ -652,20 +652,25 @@
   var editToggle = document.querySelector('[data-links-edit-toggle]');
   var OUTLINED = ['border', 'border-border', 'text-subtle', 'hover:bg-black/[0.08]', 'active:bg-black/[0.12]'];
   var FILLED = ['bg-primary', 'text-white', 'hover:bg-primary-mid', 'active:bg-primary-darkest'];
+  function setEditing(editing) {
+    document.body.classList.toggle('links-editing', editing);
+    editToggle.textContent = editing ? '完了' : '編集';
+    editToggle.setAttribute('aria-pressed', editing ? 'true' : 'false');
+    OUTLINED.forEach(function (c) { editToggle.classList.toggle(c, !editing); });
+    FILLED.forEach(function (c) { editToggle.classList.toggle(c, editing); });
+    if (!editing) {
+      // 「完了」で閲覧表示へ戻る。開いたままのフォーム・メニューも閉じる
+      window.closeSlide && window.closeSlide('link-edit');
+      closeAllCatMenus();
+    }
+    window.cnLinksApply && window.cnLinksApply();
+  }
   if (editToggle) {
     editToggle.addEventListener('click', function () {
-      var editing = document.body.classList.toggle('links-editing');
-      editToggle.textContent = editing ? '完了' : '編集';
-      editToggle.setAttribute('aria-pressed', editing ? 'true' : 'false');
-      OUTLINED.forEach(function (c) { editToggle.classList.toggle(c, !editing); });
-      FILLED.forEach(function (c) { editToggle.classList.toggle(c, editing); });
-      if (!editing) {
-        // 「完了」で閲覧表示へ戻る。開いたままのフォーム・メニューも閉じる
-        window.closeSlide && window.closeSlide('link-edit');
-        closeAllCatMenus();
-      }
-      window.cnLinksApply && window.cnLinksApply();
+      setEditing(!document.body.classList.contains('links-editing'));
     });
+    // システム設定の「リンク」→「編集」（?edit=1）から来たときは最初から編集表示で開く（アプリの initialManaging と同じ）
+    if (new URLSearchParams(location.search).get('edit') === '1') setEditing(true);
   }
 
   // ---- 下部中央トースト（ActionToast を再現） ----
