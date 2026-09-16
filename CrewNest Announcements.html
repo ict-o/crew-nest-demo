@@ -363,6 +363,12 @@ document.addEventListener('click', function(e){
       <div class="mb-4">
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
         <div data-f="a-body" class="whitespace-pre-wrap rounded-lg bg-background px-3 py-2.5 text-sm leading-relaxed text-text"></div>
+        <div data-demo-reactions class="mt-1.5 flex flex-wrap items-center gap-1.5">
+          <button type="button" data-rx="👍" data-reactors="田中 佑樹,佐藤 花子,鈴木 一郎,高橋 美咲,伊藤 健太" aria-pressed="true" class="inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition border-primary/30 bg-primary/10 text-primary"><span>👍</span><span class="text-[11px] font-medium">5</span></button>
+          <button type="button" data-rx="🎉" data-reactors="山本 大輔,中村 陽菜" aria-pressed="false" class="inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition border-border bg-background-light text-subtle hover:border-primary/30 hover:bg-primary/10 hover:text-primary"><span>🎉</span><span class="text-[11px] font-medium">2</span></button>
+          <button type="button" data-rx="👀" data-reactors="小林 翔" aria-pressed="false" class="inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition border-border bg-background-light text-subtle hover:border-primary/30 hover:bg-primary/10 hover:text-primary"><span>👀</span><span class="text-[11px] font-medium">1</span></button>
+          <button type="button" data-demo-add aria-label="スタンプを追加" class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background-light text-subtle transition-colors hover:border-primary/30 hover:bg-primary/10 hover:text-primary"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-3.5 w-3.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        </div>
       </div>
       <div class="mb-4">
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">アンケート</p>
@@ -435,6 +441,12 @@ document.addEventListener('click', function(e){
       <div class="mb-4">
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">本文</p>
         <div data-f="a-body" class="whitespace-pre-wrap rounded-lg bg-background px-3 py-2.5 text-sm leading-relaxed text-text"></div>
+        <div data-demo-reactions class="mt-1.5 flex flex-wrap items-center gap-1.5">
+          <button type="button" data-rx="👍" data-reactors="田中 佑樹,佐藤 花子,鈴木 一郎,高橋 美咲,伊藤 健太" aria-pressed="true" class="inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition border-primary/30 bg-primary/10 text-primary"><span>👍</span><span class="text-[11px] font-medium">5</span></button>
+          <button type="button" data-rx="🎉" data-reactors="山本 大輔,中村 陽菜" aria-pressed="false" class="inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition border-border bg-background-light text-subtle hover:border-primary/30 hover:bg-primary/10 hover:text-primary"><span>🎉</span><span class="text-[11px] font-medium">2</span></button>
+          <button type="button" data-rx="👀" data-reactors="小林 翔" aria-pressed="false" class="inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition border-border bg-background-light text-subtle hover:border-primary/30 hover:bg-primary/10 hover:text-primary"><span>👀</span><span class="text-[11px] font-medium">1</span></button>
+          <button type="button" data-demo-add aria-label="スタンプを追加" class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background-light text-subtle transition-colors hover:border-primary/30 hover:bg-primary/10 hover:text-primary"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-3.5 w-3.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        </div>
       </div>
       <div class="mb-4">
         <p class="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-subtle">アンケート</p>
@@ -1421,6 +1433,134 @@ document.addEventListener('click', function(e){
     }
     updateRepeatRoot(sw.closest('[data-repeat-root]'));
   }, true);
+})();
+</script>
+<script>
+// お知らせ詳細のリアクション（デモ用: 付け外し・絵文字ピッカー・PC のホバーで押した人一覧）
+(function(){
+  var EMOJIS = ["👍", "❤️", "😄", "🎉", "👀", "🙏", "😮", "😢"];
+  var MY_NAME = "田中 佑樹";
+  var ON_CLASS = "border-primary/30 bg-primary/10 text-primary";
+  var OFF_CLASS = "border-border bg-background-light text-subtle hover:border-primary/30 hover:bg-primary/10 hover:text-primary";
+  var PICKER_WIDTH = 300, PICKER_HEIGHT = 48;
+
+  function reactorsOf(chip){ var v = chip.getAttribute("data-reactors") || ""; return v ? v.split(",") : []; }
+  function setReactors(chip, list){ chip.setAttribute("data-reactors", list.join(",")); }
+  function setChipClass(chip, mine){
+    chip.className = "inline-flex select-none items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition " + (mine ? ON_CLASS : OFF_CLASS);
+  }
+  function toggleChip(chip){
+    var mine = chip.getAttribute("aria-pressed") === "true";
+    var countSpan = chip.querySelector("span:last-child");
+    var count = parseInt(countSpan.textContent, 10) || 0;
+    if (mine) {
+      count -= 1;
+      if (count <= 0) { chip.remove(); return; }
+      countSpan.textContent = String(count);
+      chip.setAttribute("aria-pressed", "false");
+      setChipClass(chip, false);
+      setReactors(chip, reactorsOf(chip).filter(function(n){ return n !== MY_NAME; }));
+    } else {
+      count += 1;
+      countSpan.textContent = String(count);
+      chip.setAttribute("aria-pressed", "true");
+      setChipClass(chip, true);
+      setReactors(chip, reactorsOf(chip).concat([MY_NAME]));
+    }
+  }
+  function createChip(container, emoji){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.setAttribute("data-rx", emoji);
+    btn.setAttribute("data-reactors", MY_NAME);
+    btn.setAttribute("aria-pressed", "true");
+    setChipClass(btn, true);
+    var s1 = document.createElement("span"); s1.textContent = emoji;
+    var s2 = document.createElement("span"); s2.className = "text-[11px] font-medium"; s2.textContent = "1";
+    btn.appendChild(s1); btn.appendChild(s2);
+    container.insertBefore(btn, container.querySelector("[data-demo-add]"));
+  }
+
+  var pickerEl = null, pickerAnchorBtn = null;
+  function closePicker(){ if (pickerEl) { pickerEl.remove(); pickerEl = null; pickerAnchorBtn = null; } }
+  function openPicker(addBtn){
+    closePicker();
+    var rect = addBtn.getBoundingClientRect();
+    var top = (rect.top - PICKER_HEIGHT - 8 >= 0) ? (rect.top - PICKER_HEIGHT - 8) : (rect.bottom + 8);
+    var left = Math.max(8, Math.min(rect.left, window.innerWidth - PICKER_WIDTH - 8));
+    var el = document.createElement("div");
+    el.setAttribute("style", "position:fixed;top:" + top + "px;left:" + left + "px;z-index:130;");
+    el.className = "flex gap-1 rounded-lg border border-border bg-background p-2 shadow-sm";
+    EMOJIS.forEach(function(emoji){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("data-demo-picker-emoji", emoji);
+      b.className = "flex h-8 w-8 items-center justify-center rounded text-lg transition-colors hover:bg-background-light";
+      b.textContent = emoji;
+      el.appendChild(b);
+    });
+    document.body.appendChild(el);
+    pickerEl = el; pickerAnchorBtn = addBtn;
+  }
+
+  var hoverChip = null, hoverEl = null;
+  function hideHoverBubble(){ if (hoverEl) { hoverEl.remove(); hoverEl = null; } hoverChip = null; }
+  function showHoverBubble(chip){
+    var people = reactorsOf(chip);
+    if (people.length === 0) return;
+    var el = document.createElement("div");
+    el.setAttribute("role", "tooltip");
+    el.className = "pointer-events-none min-w-[160px] max-w-[220px] overflow-hidden rounded-lg border border-border bg-background-light shadow-sm";
+    el.setAttribute("style", "position:fixed;top:-9999px;left:-9999px;z-index:130;");
+    people.forEach(function(name){
+      var row = document.createElement("span"); row.className = "flex items-center gap-2 px-3 py-2";
+      var avatar = document.createElement("span"); avatar.className = "h-6 w-6 shrink-0 rounded-full bg-neutral-surface";
+      var label = document.createElement("span"); label.className = "truncate text-xs text-text"; label.textContent = name;
+      row.appendChild(avatar); row.appendChild(label); el.appendChild(row);
+    });
+    document.body.appendChild(el);
+    var rect = chip.getBoundingClientRect();
+    var h = el.getBoundingClientRect().height;
+    var top = (rect.top - h - 8 >= 0) ? (rect.top - h - 8) : (rect.bottom + 8);
+    var left = Math.max(8, Math.min(rect.left, window.innerWidth - 220 - 8));
+    el.style.top = top + "px"; el.style.left = left + "px";
+    hoverEl = el; hoverChip = chip;
+  }
+
+  document.addEventListener("mousedown", function(e){
+    if (!pickerEl) return;
+    if (pickerEl.contains(e.target) || (pickerAnchorBtn && pickerAnchorBtn.contains(e.target))) return;
+    closePicker();
+  });
+  document.addEventListener("click", function(e){
+    var addBtn = e.target.closest("[data-demo-add]");
+    if (addBtn) { if (pickerEl && pickerAnchorBtn === addBtn) closePicker(); else openPicker(addBtn); return; }
+    var pickerEmojiBtn = e.target.closest("[data-demo-picker-emoji]");
+    if (pickerEmojiBtn) {
+      var emoji = pickerEmojiBtn.getAttribute("data-demo-picker-emoji");
+      var container = pickerAnchorBtn ? pickerAnchorBtn.closest("[data-demo-reactions]") : null;
+      closePicker();
+      if (!container) return;
+      var existing = container.querySelector('[data-rx="' + emoji + '"]');
+      if (existing) toggleChip(existing); else createChip(container, emoji);
+      return;
+    }
+    var chip = e.target.closest("[data-demo-reactions] [data-rx]");
+    if (chip) toggleChip(chip);
+  });
+  var isDesktop = window.matchMedia("(min-width: 768px)");
+  document.addEventListener("mouseover", function(e){
+    if (!isDesktop.matches) return;
+    var chip = e.target.closest("[data-demo-reactions] [data-rx]");
+    if (!chip || chip === hoverChip) return;
+    hideHoverBubble(); showHoverBubble(chip);
+  });
+  document.addEventListener("mouseout", function(e){
+    var chip = e.target.closest("[data-demo-reactions] [data-rx]");
+    if (!chip || chip !== hoverChip) return;
+    if (chip.contains(e.relatedTarget)) return;
+    hideHoverBubble();
+  });
 })();
 </script>
 <script src="tour.js"></script>
