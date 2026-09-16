@@ -477,9 +477,13 @@
 
           <!-- クイックリンク -->
           <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
-            <div class="mb-3 flex items-center justify-between">
+            <div class="mb-3 flex items-center justify-between gap-3">
               <p class="text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
-              <a href="CrewNest Links.html" class="text-xs text-primary hover:underline">すべて見る →</a>
+              <!-- 操作ボタン → 「すべて見る →」（アプリの QuickLinksGridView と同じ並び）。「並び替え」はカード内で完結し、ホーム全体の編集モードとは連動しない -->
+              <div class="flex shrink-0 items-center gap-2">
+                <button type="button" data-ql-reorder-toggle aria-pressed="false" class="inline-flex h-8 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">並び替え</button>
+                <a href="CrewNest Links.html" class="rounded-full px-1 text-xs text-primary hover:underline">すべて見る →</a>
+              </div>
             </div>
             <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
               <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-2 right-0 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background-light text-subtle-light shadow-sm"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
@@ -761,9 +765,13 @@
 
         <!-- クイックリンク -->
         <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
-          <div class="mb-3 flex items-center justify-between">
+          <div class="mb-3 flex items-center justify-between gap-3">
             <p class="text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
-            <a href="CrewNest Links.html" class="text-xs text-primary hover:underline">すべて見る →</a>
+            <!-- 操作ボタン → 「すべて見る →」（アプリの QuickLinksGridView と同じ並び）。「並び替え」はカード内で完結し、ホーム全体の編集モードとは連動しない -->
+            <div class="flex shrink-0 items-center gap-2">
+              <button type="button" data-ql-reorder-toggle aria-pressed="false" class="inline-flex h-8 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">並び替え</button>
+              <a href="CrewNest Links.html" class="rounded-full px-1 text-xs text-primary hover:underline">すべて見る →</a>
+            </div>
           </div>
           <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
             <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-2 right-0 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background-light text-subtle-light shadow-sm"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
@@ -1125,7 +1133,7 @@ CNTour.define('home', [
   { target: '[data-tour="home-bonus"]', title: '受け取れるボーナス', body: '達成済みのボーナスはここから受け取れます。' },
   { target: '[data-tour="home-expense"]', title: '経費 未精算', body: '未精算の経費の件数と合計金額です。タップすると経費精算ページへ移動します。' },
   { target: '[data-tour="home-utilization"]', title: 'プロジェクト', body: '今のプロジェクトの契約がいつから続いているかと、客先との契約条件と有休の申請状況から出した「今月あと何日休めるか」を表示します。精算の下限を下回る見込みのときは注意が表示されます。' },
-  { target: '[data-tour="home-quicklinks"]', title: 'クイックリンク', body: 'よく使うリンクのショートカットです。「すべて見る」からリンクページを開いてピン留めすると、ここに追加されます。並び順は「ホーム画面をカスタマイズ」で変えられます。' },
+  { target: '[data-tour="home-quicklinks"]', title: 'クイックリンク', body: 'よく使うリンクのショートカットです。「すべて見る」からリンクページを開いてピン留めすると、ここに追加されます。並び順はカードの「並び替え」から変えられます。' },
   { target: '[data-tour="home-customize"]', title: 'ホーム画面をカスタマイズ', body: 'このボタンから、カードの並び替えや表示・非表示を変更できます。自分の使いやすいホーム画面に整えてみてください。' }
 ]);
 </script>
@@ -1177,18 +1185,19 @@ CNTour.define('home', [
   </div>
 </div>
 <style>
-  /* ホーム画面編集モード中はクイックリンクのタイルに小さなドラッグハンドルを出す（静的表示のみ） */
-  .home-edit-mode [data-ql-tile-handle] { display: flex !important; }
+  /* クイックリンクカードの「並び替え」中はタイルに小さなドラッグハンドルを出す（静的表示のみ。ホーム全体の編集モードとは連動しない） */
+  [data-card="quick-links"].ql-reordering [data-ql-tile-handle] { display: flex !important; }
 </style>
 <script>
-// ホーム画面カスタマイズ: クイックリンクのタイルに編集モード用ハンドルを出し入れする（静的モック）
-(function () {
-  var toggle = document.querySelector('[data-home-edit-toggle]');
-  if (!toggle) return;
-  toggle.addEventListener('click', function () {
-    document.body.classList.toggle('home-edit-mode');
+// クイックリンクの「並び替え」→「完了」: 押したカードのタイルにだけハンドルを出し入れする（静的モック）
+document.querySelectorAll('[data-ql-reorder-toggle]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var card = btn.closest('[data-card="quick-links"]');
+    var on = card.classList.toggle('ql-reordering');
+    btn.textContent = on ? '完了' : '並び替え';
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
-})();
+});
 </script>
 </body>
 </html>
