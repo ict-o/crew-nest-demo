@@ -135,6 +135,9 @@
         <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
         <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
       </a>
+      <a href="CrewNest Links.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/link.png" alt="" class="nav-ico"><span class="truncate">リンク</span>
+      </a>
     </div>
     <div class="mt-2 border-t border-white/10 pt-2">
       <a href="CrewNest Admin.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
@@ -474,27 +477,34 @@
 
           <!-- クイックリンク -->
           <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
-            <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <p class="text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
+              <!-- 操作ボタン → 「すべて見る →」（アプリの QuickLinksGridView と同じ並び）。「並び替え」はカード内で完結し、ホーム全体の編集モードとは連動しない -->
+              <div class="flex shrink-0 items-center gap-2">
+                <button type="button" data-ql-reorder-toggle aria-pressed="false" class="inline-flex h-8 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">並び替え</button>
+                <a href="CrewNest Links.html" class="rounded-full px-1 text-xs text-primary hover:underline">すべて見る →</a>
+              </div>
+            </div>
             <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
-              <a href="#" class="group flex flex-col items-center gap-1.5">
+              <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
                 <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                   <img src="public/icons/links/keihi.svg" alt="経費精算" width="48" height="48">
                 </div>
                 <span class="text-center text-[10px] font-medium leading-tight text-text">経費精算</span>
               </a>
-              <a href="#" class="group flex flex-col items-center gap-1.5">
+              <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
                 <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                   <img src="public/icons/links/kyuyo.svg" alt="給与明細" width="48" height="48">
                 </div>
                 <span class="text-center text-[10px] font-medium leading-tight text-text">給与明細</span>
               </a>
-              <a href="#" class="group flex flex-col items-center gap-1.5">
+              <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
                 <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                   <span class="text-sm font-bold text-subtle">勤怠</span>
                 </div>
                 <span class="text-center text-[10px] font-medium leading-tight text-text">勤怠管理</span>
               </a>
-              <a href="#" class="group flex flex-col items-center gap-1.5">
+              <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
                 <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                   <img src="public/icons/links/yukyu.svg" alt="有給申請" width="48" height="48">
                 </div>
@@ -755,27 +765,34 @@
 
         <!-- クイックリンク -->
         <div data-tour="home-quicklinks" data-card="quick-links" class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
+          <div class="mb-3 flex items-center justify-between gap-3">
+            <p class="text-xs font-semibold uppercase tracking-wide text-subtle">クイックリンク</p>
+            <!-- 操作ボタン → 「すべて見る →」（アプリの QuickLinksGridView と同じ並び）。「並び替え」はカード内で完結し、ホーム全体の編集モードとは連動しない -->
+            <div class="flex shrink-0 items-center gap-2">
+              <button type="button" data-ql-reorder-toggle aria-pressed="false" class="inline-flex h-8 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">並び替え</button>
+              <a href="CrewNest Links.html" class="rounded-full px-1 text-xs text-primary hover:underline">すべて見る →</a>
+            </div>
+          </div>
           <div class="grid gap-3" style="grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));">
-            <a href="#" class="group flex flex-col items-center gap-1.5">
+            <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
               <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                 <img src="public/icons/links/keihi.svg" alt="経費精算" width="48" height="48">
               </div>
               <span class="text-center text-[10px] font-medium leading-tight text-text">経費精算</span>
             </a>
-            <a href="#" class="group flex flex-col items-center gap-1.5">
+            <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
               <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                 <img src="public/icons/links/kyuyo.svg" alt="給与明細" width="48" height="48">
               </div>
               <span class="text-center text-[10px] font-medium leading-tight text-text">給与明細</span>
             </a>
-            <a href="#" class="group flex flex-col items-center gap-1.5">
+            <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
               <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                 <span class="text-sm font-bold text-subtle">勤怠</span>
               </div>
               <span class="text-center text-[10px] font-medium leading-tight text-text">勤怠管理</span>
             </a>
-            <a href="#" class="group flex flex-col items-center gap-1.5">
+            <a href="#" class="group relative flex flex-col items-center gap-1.5"><span data-ql-tile-handle hidden aria-hidden="true" class="absolute -top-3 left-[calc(50%-1.5rem)] z-10 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></span>
               <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg border border-border bg-background-light shadow-sm transition-shadow group-hover:shadow-md">
                 <img src="public/icons/links/yukyu.svg" alt="有給申請" width="48" height="48">
               </div>
@@ -788,7 +805,7 @@
 
       <!-- ホーム画面カスタマイズ -->
       <div class="mb-4 mt-1 flex items-center justify-end gap-2">
-        <button type="button" data-tour="home-customize" class="rounded-full border border-border bg-background-light px-4 py-1.5 text-xs font-medium text-text hover:bg-black/[0.08]">
+        <button type="button" data-tour="home-customize" data-home-edit-toggle class="rounded-full border border-border bg-background-light px-4 py-1.5 text-xs font-medium text-text hover:bg-black/[0.08]">
           ホーム画面をカスタマイズ
         </button>
       </div>
@@ -1108,7 +1125,7 @@ function historySelectTab(tab) {
 <script>
 CNTour.define('home', [
   { title: 'CREW NEST へようこそ！', body: 'はじめての方向けに、この画面の使い方をご案内します。' },
-  { target: 'nav[aria-label="メインナビゲーション"]', title: 'メニュー', body: 'クエスト・アイデア・お知らせ・書類提出・経費精算など、各機能へはここから移動します。通知やお知らせなどをまとめて探せる「検索」は、サイドバーの下部（スマートフォンでは「その他」の中）にあります。' },
+  { target: 'nav[aria-label="メインナビゲーション"]', title: 'メニュー', body: 'クエスト・アイデア・お知らせ・書類提出・経費精算・リンクなど、各機能へはここから移動します。通知やお知らせなどをまとめて探せる「検索」は、サイドバーの下部（スマートフォンでは「その他」の中）にあります。' },
   { target: '[data-tour="home-safety"]', title: '安否確認', body: '災害時に安否確認が届くと、ここに回答バナーが表示されます。「回答する」から状況を報告してください。' },
   { target: '[data-tour="home-quest-summary"]', title: 'あなたのランクとポイント', body: '現在のランク・レベル・今年度の獲得ポイントを確認できます。' },
   { target: '[data-tour="home-calendar"]', title: 'カレンダー', body: '会議や社内イベントなど今後の予定を確認できます。表示する期間（日・3日・週・月）を切り替えられます。右上の歯車から Google カレンダーなどの外部カレンダーを追加すると、予定をまとめて表示できます。' },
@@ -1116,7 +1133,7 @@ CNTour.define('home', [
   { target: '[data-tour="home-bonus"]', title: '受け取れるボーナス', body: '達成済みのボーナスはここから受け取れます。' },
   { target: '[data-tour="home-expense"]', title: '経費 未精算', body: '未精算の経費の件数と合計金額です。タップすると経費精算ページへ移動します。' },
   { target: '[data-tour="home-utilization"]', title: 'プロジェクト', body: '今のプロジェクトの契約がいつから続いているかと、客先との契約条件と有休の申請状況から出した「今月あと何日休めるか」を表示します。精算の下限を下回る見込みのときは注意が表示されます。' },
-  { target: '[data-tour="home-quicklinks"]', title: 'クイックリンク', body: '給与明細や勤怠など、よく使う社内システムへのショートカットです。' },
+  { target: '[data-tour="home-quicklinks"]', title: 'クイックリンク', body: 'よく使うリンクのショートカットです。「すべて見る」からリンクページを開いてピン留めすると、ここに追加されます。並び順はカードの「並び替え」から変えられます。' },
   { target: '[data-tour="home-customize"]', title: 'ホーム画面をカスタマイズ', body: 'このボタンから、カードの並び替えや表示・非表示を変更できます。自分の使いやすいホーム画面に整えてみてください。' }
 ]);
 </script>
@@ -1167,5 +1184,20 @@ CNTour.define('home', [
     </div>
   </div>
 </div>
+<style>
+  /* クイックリンクカードの「並び替え」中はタイルに小さなドラッグハンドルを出す（静的表示のみ。ホーム全体の編集モードとは連動しない） */
+  [data-card="quick-links"].ql-reordering [data-ql-tile-handle] { display: flex !important; }
+</style>
+<script>
+// クイックリンクの「並び替え」→「完了」: 押したカードのタイルにだけハンドルを出し入れする（静的モック）
+document.querySelectorAll('[data-ql-reorder-toggle]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var card = btn.closest('[data-card="quick-links"]');
+    var on = card.classList.toggle('ql-reordering');
+    btn.textContent = on ? '完了' : '並び替え';
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+});
+</script>
 </body>
 </html>

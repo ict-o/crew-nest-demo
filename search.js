@@ -24,8 +24,8 @@
   var MIN_QUERY_LENGTH = 2;
 
   // 検索対象の種類ごとのアイコンは、サイドナビ・その他シートで使っている実ファイルをそのまま参照する（base64化して二重に埋め込まない）
-  var GROUP_ORDER = ['notification', 'quest', 'proposal', 'announcement', 'document', 'quicklink', 'user'];
-  var GROUP_LABEL = { notification: '通知', quest: 'クエスト', proposal: 'アイデア', announcement: 'お知らせ', document: '書類提出', quicklink: 'クイックリンク', user: 'ユーザー' };
+  var GROUP_ORDER = ['notification', 'quest', 'proposal', 'announcement', 'document', 'link', 'user'];
+  var GROUP_LABEL = { notification: '通知', quest: 'クエスト', proposal: 'アイデア', announcement: 'お知らせ', document: '書類提出', link: 'リンク', user: 'ユーザー' };
   // 「ホーム」「設定」は SEARCH_ITEMS/GROUP_ORDER に含めず、サーバー枠の下に別枠で描画する
   // （本体 SearchDialog.tsx と同じ並び: サーバー枠 → ホーム → 設定）
   var HOME_LABEL = 'ホーム';
@@ -36,7 +36,7 @@
     proposal: 'public/icons/proposal.png',
     announcement: 'public/icons/megaphone.png',
     document: 'public/icons/airplane.png',
-    quicklink: 'public/icons/ui/open_in_new.svg',
+    link: 'public/icons/link.png',
     home: 'public/icons/home.png'
   };
   // user / settings は既存の png アセットが無いため、user-menu.js の ICONS.person / ICONS.settings と同じパスをインライン化する
@@ -114,9 +114,9 @@
     { type: 'document', title: '扶養控除等申告書', body: '期限: 2026/07/15 ・ 依頼者: 総務部', meta: '依頼中' },
     { type: 'document', title: 'マイナンバー届出', body: '期限: 2026/07/01 ・ 依頼者: 人事部', meta: '依頼中' },
     { type: 'document', title: '雇用契約書', body: '押印箇所を確認してほしいというコメントが届いています', meta: 'コメント' },
-    // クイックリンク
-    { type: 'quicklink', title: '給与明細', body: 'https://example.com/payroll', meta: null, url: 'https://example.com/payroll' },
-    { type: 'quicklink', title: 'NETFLIX', body: 'https://www.netflix.com/jp/', meta: null, url: 'https://www.netflix.com/jp/' },
+    // リンク
+    { type: 'link', title: '給与明細', body: '各種申請 ・ 給与明細を確認できます。', meta: null, url: 'https://example.com/payroll' },
+    { type: 'link', title: 'NETFLIX', body: '外部サイト ・ 福利厚生の動画配信サービスです。', meta: null, url: 'https://www.netflix.com/jp/' },
     // ユーザー
     { type: 'user', title: '田中 佑樹', body: 'tanaka@ict-o.com', meta: null },
     { type: 'user', title: '佐藤 恵子', body: 'sato@ict-o.com', meta: null }
@@ -156,10 +156,10 @@
       '</span>';
   }
 
-  // 行の3形態: クイックリンク=外部リンク（新しいタブ） / ユーザー=内部リンク相当 / それ以外=no-op ボタン
+  // 行の3形態: リンク=外部リンク（新しいタブ） / ユーザー=内部リンク相当 / それ以外=no-op ボタン
   function rowHtml(item, q) {
     var content = rowBodyHtml(item, q);
-    if (item.type === 'quicklink') {
+    if (item.type === 'link') {
       return '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener noreferrer" class="' + ROW_CLASS + '">' + content + '</a>';
     }
     if (item.type === 'user') {
@@ -192,7 +192,7 @@
   function emptyStateHtml() {
     return '<div class="flex flex-col items-center justify-center px-6 py-16 text-center">' +
       '<p class="text-sm font-medium text-subtle">キーワードを入力してください</p>' +
-      '<p class="mt-1 text-xs text-subtle-light">通知・クエスト・アイデア・お知らせ・書類提出・クイックリンク・ユーザー・ホーム・設定を検索できます</p>' +
+      '<p class="mt-1 text-xs text-subtle-light">通知・クエスト・アイデア・お知らせ・書類提出・リンク・ユーザー・ホーム・設定を検索できます</p>' +
       '</div>';
   }
 
