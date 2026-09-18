@@ -1,16 +1,17 @@
 /* ============================================================
-   CrewNest DEMO: 管理画面「契約」タブの › メンバー一覧・契約パネル（issue #54 契約タブ追補）
+   CrewNest DEMO: 管理画面「契約」タブの › メンバー一覧・契約パネル（issue #54 契約タブ追補 + 契約の情報追加モック）
    使い方: <script src="contract-members.js"></script>（CrewNest Admin.html の一番最後、
    contracts.js が公開する window.CNContracts・clients.js が公開する window.CNClients、
    UE_AVA（アバター色）より後に読み込む）
    本体 src/features/admin/components/ContractMembersClient.tsx・ContractMemberPanel.tsx の
    React 化前の静的再現。一覧・パネルの中身はこのファイルが window.CNContracts（contracts.js）の
-   CT（契約データ）・dl/rs/rh/classify/allRows/durationLabel/rangeCell と、window.CNClients
-   （clients.js）の客先データを使って描く。
+   CT（契約データ）・dl/rs/rh/classify/allRows/durationLabel/rangeCell/committedInfo/periodShort と、
+   window.CNClients（clients.js）の客先（プロジェクト）データを使って描く。
    部署・有休データ突合の可否は User に列が無く有休 CSV の取込行にしかない（設計書 §1）ため、
    デモではメンバーごとに固定値で持つ。
    並び替えは管理画面のユーザー一覧（data-u-sort-*、UsersTable の React 化前再現）と同じ方式を
    data-cm-sort-* で独立させて使う。
+   MEMBERS の氏名は window.CNMembers で公開する（clients.js の「自社の営業担当者」Select の選択肢に使う）。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/admin-contract-members.js
    ============================================================ */
 (function () {
@@ -22,6 +23,7 @@
     { name: '渡辺 さゆり', email: 'watanabe@ict-o.com', dept: '営業部', leaveOk: true },
     { name: '小林 直人', email: 'kobayashi@ict-o.com', dept: null, leaveOk: false }
   ];
+  window.CNMembers = MEMBERS.map(function (m) { return m.name; });
   var pastOpen = false; // パネルの「過去の条件を表示」開閉状態。パネルを閉じると戻る
   var openName = null;  // 現在パネルを開いているメンバー名（開いていなければ null）
 
@@ -29,6 +31,7 @@
   function memberOf(name) { return MEMBERS.filter(function (m) { return m.name === name; })[0] || null; }
   function avatarColor(name) { return (window.UE_AVA && window.UE_AVA[name]) || '#5C6B8A'; }
 
+  // 一覧の「現在の契約」列。適用中の契約があれば客先（プロジェクト）・種別、無ければ「未設定」
   function contractCellHtml(m) {
     var C = window.CNContracts;
     var ap = C.ga(C.CT[m.name] || []);
@@ -36,24 +39,39 @@
     var l1 = C.cd(ap.client) + ' ・ ' + C.TL[ap.type];
     return '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(C.dl(ap, false)) + '</p>';
   }
-  // 1行「2026年4月から ・ 3か月目」（縦積みにしない。契約なしは呼び出し側で「-」を出す）
+  // 1行目「2026年4月から ・ 3か月目」（プロジェクト継続の起点で数える）、2行目に確約期間があれば
+  // 「2026年12月まで確約」（過ぎていれば text-warning で「・ 期間超過」を追加）。契約なしは呼び出し側で「-」を出す
   function effectiveCellHtml(m) {
     var C = window.CNContracts;
-    var ap = C.ga(C.CT[m.name] || []);
+    var h = C.CT[m.name] || [];
+    var ap = C.ga(h);
     if (!ap) return '<span class="text-[11.5px] text-subtle-light">-</span>';
-    var dur = C.durationLabel(ap.effectiveFrom);
-    return '<p class="whitespace-nowrap text-[11.5px] text-subtle">' + esc(C.ml(ap.effectiveFrom)) + 'から' + (dur ? ' ・ ' + esc(dur) : '') + '</p>';
+    var origin = C.projectStart(h, ap);
+    var dur = C.durationLabel(origin);
+    var period = C.periodShort(origin);
+    var html = '<p class="whitespace-nowrap text-[11.5px] text-subtle">' + esc(period) + (dur ? ' ・ ' + esc(dur) : '') + '</p>';
+    var ci = C.committedInfo(ap.committedUntil, C.CM);
+    if (ci) {
+      var cls = ci.past ? 'text-warning' : 'text-subtle';
+      var txt = ci.label + '確約' + (ci.past ? ' ・ 期間超過' : '');
+      html += '<p class="whitespace-nowrap text-[11px] ' + cls + '">' + esc(txt) + '</p>';
+    }
+    return html;
   }
-  // モバイルカードの契約要約（1行「客先 ・ 種別 ・ 2026年4月から ・ 3か月目」）。契約なしは「未設定」
+  // モバイルカードの契約要約（1行「客先 ・ 種別 ・ 2026年4月から ・ 3か月目」、プロジェクト継続の起点で数える）。
+  // 契約なしは「未設定」
   function mobileContractSummary(m) {
     var C = window.CNContracts;
-    var ap = C.ga(C.CT[m.name] || []);
+    var h = C.CT[m.name] || [];
+    var ap = C.ga(h);
     if (!ap) return '未設定';
-    var dur = C.durationLabel(ap.effectiveFrom);
-    return C.cd(ap.client) + ' ・ ' + C.TL[ap.type] + ' ・ ' + C.ml(ap.effectiveFrom) + 'から' + (dur ? ' ・ ' + dur : '');
+    var origin = C.projectStart(h, ap);
+    var dur = C.durationLabel(origin);
+    return C.cd(ap.client) + ' ・ ' + C.TL[ap.type] + ' ・ ' + C.periodShort(origin) + (dur ? ' ・ ' + dur : '');
   }
   function deptHtml(m) { return m.dept ? esc(m.dept) : '<span class="text-subtle-light">部署未設定</span>'; }
-  function leaveChipHtml(m) { return m.leaveOk ? '' : '<span class="rounded-full bg-background px-2 py-0.5 text-[10px] text-subtle">有休データなし</span>'; }
+  // 有休データと突合できない人は営業への警告(ホームのカードが概算になる)なので注意色のチップにする
+  function leaveChipHtml(m) { return m.leaveOk ? '' : '<span class="rounded-full border border-warning-border bg-warning-surface px-2 py-0.5 text-[10px] font-medium text-warning">有休データなし</span>'; }
 
   // 並び替え用のデータ属性。data-m-dept／data-m-contract／data-m-effective は「無い」ことと「空文字」を
   // 区別するため、値が無いときは属性自体を付けない（欠損は末尾・先頭に固定するソートで使う）
@@ -226,30 +244,71 @@
   function linkBtn(attrHtml, label) {
     return '<button type="button" ' + attrHtml + ' class="text-left text-xs text-primary hover:underline">' + label + '</button>';
   }
-  // 「現在の契約」ブロック（適用中の契約があるときだけ使う）。客先の詳細は window.CNClients から引く
-  function currentContractBlockHtml(ap) {
+  // 「現在の契約」ブロック（適用中の契約があるときだけ使う）。客先の詳細は window.CNClients から引く。
+  // h は本人の契約履歴全体（プロジェクト継続の起点計算に使う）。待機は「待機」「種別」「定時」「適用開始」
+  // 「プロジェクト継続（該当時）」だけで、確約・勤務形態・単価・超過／控除・支援費は出さない
+  function currentContractBlockHtml(ap, h) {
     var C = window.CNContracts;
     var items = [];
-    if (ap.client) {
+    var isStandby = !ap.client;
+    if (!isStandby) {
       var cl = window.CNClients ? window.CNClients.get(ap.client) : null;
-      items.push(gridItem('客先', linkBtn('data-cm-open-client="' + esc(ap.client) + '"', esc(ap.client))));
-      items.push(gridItem('連絡先', cl && cl.contact ? esc(cl.contact) : unsetSpan()));
-      items.push(gridItem('客先営業担当者', cl && cl.sales ? esc(cl.sales) : unsetSpan()));
+      items.push(gridItem('プロジェクト', linkBtn('data-cm-open-client="' + esc(ap.client) + '"', esc(ap.client))));
+      items.push(gridItem('客先の連絡先', cl && cl.contact ? esc(cl.contact) : unsetSpan()));
       items.push(gridItem('客先リーダー', cl && cl.leader ? esc(cl.leader) : unsetSpan()));
+      var salesVal;
+      if (!cl || !cl.sales) {
+        salesVal = unsetSpan();
+      } else {
+        salesVal = esc(cl.sales);
+        if (cl.salesPhone) salesVal += '<br><span class="text-xs text-subtle">' + esc(cl.salesPhone) + '</span>';
+        if (cl.salesEmail) salesVal += '<br><span class="text-xs text-subtle">' + esc(cl.salesEmail) + '</span>';
+      }
+      items.push(gridItem('客先営業担当者', salesVal));
+      items.push(gridItem('自社の営業担当者', cl && cl.ourSales ? esc(cl.ourSales) : unsetSpan()));
+      items.push(gridItem('契約締結企業', cl && cl.primaryCompany ? esc(cl.primaryCompany) : '<span class="text-subtle-light">客先と同じ</span>'));
+      if (cl && cl.primaryCompany) {
+        var primaryVal = cl.primaryContact ? esc(cl.primaryContact) : unsetSpan();
+        if (cl.primaryContact) {
+          if (cl.primaryPhone) primaryVal += '<br><span class="text-xs text-subtle">' + esc(cl.primaryPhone) + '</span>';
+          if (cl.primaryEmail) primaryVal += '<br><span class="text-xs text-subtle">' + esc(cl.primaryEmail) + '</span>';
+        }
+        items.push(gridItem('締結企業の担当者', primaryVal));
+      }
       var bizVal;
       if (!cl) bizVal = unsetSpan();
       else if (cl.owncal) bizVal = linkBtn('data-open-slide="business-calendar"', '客先の休業日カレンダー');
       else bizVal = '自社の休業日カレンダー';
-      items.push(gridItem('営業日', bizVal));
+      items.push(gridItem('営業日', bizVal, 'col-span-2'));
     } else {
-      items.push('<div class="col-span-2"><p class="text-sm text-text">客先なし</p></div>');
+      items.push('<div class="col-span-2"><p class="text-sm text-text">待機</p></div>');
     }
     items.push(gridItem('種別', esc(C.TL[ap.type])));
     items.push(gridItem('定時', esc(C.fn(ap.daily)) + 'h'));
     var rc = C.rangeCell(ap);
     if (rc) items.push(gridItem(rc.label, esc(rc.value)));
-    var dur = C.durationLabel(ap.effectiveFrom);
-    items.push(gridItem('適用開始', esc(C.ml(ap.effectiveFrom)) + 'から' + (dur ? ' ・ ' + esc(dur) : ''), 'col-span-2'));
+    items.push(gridItem('適用開始', esc(C.periodFull(ap.effectiveFrom)), 'col-span-2'));
+    var origin = C.projectStart(h || [], ap);
+    if (origin && origin !== ap.effectiveFrom) {
+      var pdur = C.durationLabel(origin);
+      items.push(gridItem('プロジェクト継続', esc(C.periodFull(origin)) + (pdur ? ' ・ ' + esc(pdur) : ''), 'col-span-2'));
+    }
+    if (isStandby) {
+      return '<div class="grid grid-cols-2 gap-x-3 gap-y-2">' + items.join('') + '</div>';
+    }
+    var ci = C.committedInfo(ap.committedUntil, C.CM);
+    var cuVal = ci ? esc(ci.label) + (ci.past ? ' <span class="text-xs text-warning">確約期間を過ぎています</span>' : '') : unsetSpan();
+    items.push(gridItem('確約', cuVal, 'col-span-2'));
+    var ws = C.workStyleLabel(ap);
+    // 「出社 週3日 ／ リモート 週2日」は 1 列に収まらず「週2／日」で折れるので 1 行に伸ばす
+    items.push(gridItem('勤務形態', ws ? esc(ws) : unsetSpan(), 'col-span-2'));
+    var up = C.unitPriceLabel(ap);
+    items.push(gridItem('単価', up ? esc(up) : unsetSpan()));
+    if (ap.type !== 'NONE' && ap.unitPriceUnit !== 'HOURLY') {
+      var od = C.overtimeDeductionLabel(ap);
+      items.push(gridItem('超過／控除', od ? esc(od) : unsetSpan()));
+    }
+    items.push(gridItem('支援費', esc(C.supportFeeLabel(ap)), 'col-span-2'));
     return '<div class="grid grid-cols-2 gap-x-3 gap-y-2">' + items.join('') + '</div>';
   }
 
@@ -261,6 +320,9 @@
     var cls = C.classify(h, C.CM);
     var current = cls.current;
     var nextFuture = !current && cls.visible.length ? cls.visible[cls.visible.length - 1].e : null;
+    // visible には「current が無いときの全行」が入るため、開始月が当月以前（＝未来ではない）行を
+    // nextFuture 扱いしない
+    if (nextFuture && nextFuture.effectiveFrom <= C.CM) nextFuture = null;
     var all = C.allRows(h);
     var shown = all.slice(0, 10);
     var rest = all.slice(10);
@@ -271,12 +333,12 @@
       var deptEl = p.querySelector('[data-cm-p="dept"]'); if (deptEl) deptEl.textContent = m.dept || '部署未設定';
       var curEl = p.querySelector('[data-cm-p="current"]');
       if (curEl) {
-        if (current) curEl.innerHTML = currentContractBlockHtml(current);
+        if (current) curEl.innerHTML = currentContractBlockHtml(current, h);
         else C.rs(curEl, null, nextFuture);
       }
       var note = p.querySelector('[data-cm-p="note"]');
       if (note) {
-        if (!m.leaveOk) { note.textContent = '有休データと突合できないため、ホームの「プロジェクト」カードは表示されません'; note.style.display = ''; }
+        if (!m.leaveOk) { note.textContent = '有休データと突合できません。ホームの「プロジェクト」カードは有休を差し引かない概算になります。有休の取込で社員番号を確認してください'; note.style.display = ''; }
         else { note.style.display = 'none'; }
       }
       C.rh(p.querySelector('[data-cm-p="history"]'), shown, current, C.CM);

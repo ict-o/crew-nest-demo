@@ -1,7 +1,10 @@
 /* ============================================================
-   CrewNest DEMO: 今月の稼働カード（ホーム。issue #54 稼働早見表）
+   CrewNest DEMO: 今月の稼働カード（ホーム。issue #54 稼働早見表 + 契約の情報追加モック）
    使い方: <script src="home-card.js"></script>（CrewNest Home.html の badges.js の後に追加）
    本体 src/features/utilization/ の React 化前の静的再現。カードの状態は "ok" 固定。
+   「契約の情報追加」モック（実アプリ未実装。demo 専用）: 予定稼働などの既存 dl の下に「契約」見出し＋
+   確約・勤務形態・単価・超過／控除の dl を追加する（先頭の sinceLabel 行はそのまま。確約は未定なら
+   行を出さない。超過／控除は時間単価のときは行を出さない）。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/home-card.js
    ============================================================ */
 (function () {
@@ -9,11 +12,17 @@
   var UTIL_MOCK_STATES = {
     ok: {
       clientLabel: "株式会社アルファ ／ 基幹刷新PJ ・ 上限下限 120〜180h",
-      sinceLabel: "2026年4月から ・ 6か月目",
+      // プロジェクト継続の起点(鈴木は2025-10に同じプロジェクトの契約があるためそこから数える)
+      sinceLabel: "2025年10月から ・ 1年目",
       restDays: "4.0", restHours: "32h",
       plannedNote: "営業日 19日 × 8h", planned: "152h", leave: "0h", expected: "152h",
       limitLabel: "精算下限", limitNote: "上限 180h", limit: "120h",
-      status: null, missing: false, importedAt: "有休データ: 9/8 取込",
+      // approx: 有休データと突合できない人。有休 0 で計算し、カードに「概算」チップと詳細に注意を出す
+      status: null, missing: false, approx: true, importedAt: "有休データ: 9/8 取込",
+      committed: "2026年12月まで",
+      workStyle: "出社 週3日 ／ リモート 週2日",
+      unitPrice: "¥650,000／月",
+      overtimeDeduction: "¥4,000／h ／ ¥3,500／h",
     },
   };
   var current = "ok";
@@ -26,6 +35,7 @@
     var headline = q(card, "headline"), statusLine = q(card, "statusLine");
     headline.hidden = !!s.status;
     statusLine.hidden = !s.status;
+    var chip = q(card, "approxChip"); if (chip) chip.hidden = !s.approx;
     if (s.status) statusLine.textContent = s.status;
     else { setText(card, "restDays", s.restDays); setText(card, "restHours", s.restHours); }
     setText(card, "sinceLabel", s.sinceLabel);
@@ -50,12 +60,22 @@
           '<div class="space-y-0.5"><p class="text-xs text-subtle" data-util-field="clientLabel"></p><p class="text-xs text-subtle" data-util-field="sinceLabel"></p></div>' +
           '<p class="text-sm text-text" data-util-field="headline">下限まで あと <span class="text-lg font-bold text-primary" data-util-field="restDays"></span> 日（<span data-util-field="restHours"></span>）</p>' +
           '<p class="text-sm text-danger" data-util-field="missingLine" hidden>有休データと突合できません。社員番号の登録を管理者に確認してください</p>' +
+          '<p class="rounded-lg border border-warning-border bg-warning-surface px-3 py-2 text-xs text-warning" data-util-field="approxLine" hidden>有休を差し引かない概算です</p>' +
           '<dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="details">' +
             '<dt class="text-subtle">予定稼働</dt><dd class="flex items-baseline justify-end gap-2 text-text"><span class="text-xs text-subtle" data-util-field="plannedNote"></span><span class="tabular-nums" data-util-field="planned"></span></dd>' +
             '<dt class="text-subtle">有休</dt><dd class="text-right text-text tabular-nums" data-util-field="leave"></dd>' +
             '<dt class="text-subtle">見込み稼働</dt><dd class="text-right text-text tabular-nums" data-util-field="expected"></dd>' +
             '<dt class="text-subtle" data-util-field="limitLabel">精算下限</dt><dd class="flex items-baseline justify-end gap-2 text-text"><span class="text-xs text-subtle" data-util-field="limitNote"></span><span class="tabular-nums" data-util-field="limit"></span></dd>' +
           '</dl>' +
+          '<div>' +
+            '<p class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">契約</p>' +
+            '<dl class="mt-1.5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="contractDl">' +
+              '<div class="contents" data-util-field="committedRow"><dt class="text-subtle">確約</dt><dd class="text-right text-text tabular-nums" data-util-field="committed"></dd></div>' +
+              '<dt class="text-subtle">勤務形態</dt><dd class="text-right text-text" data-util-field="workStyle"></dd>' +
+              '<dt class="text-subtle">単価</dt><dd class="text-right text-text tabular-nums" data-util-field="unitPrice"></dd>' +
+              '<div class="contents" data-util-field="odRow"><dt class="text-subtle">超過／控除</dt><dd class="text-right text-text tabular-nums" data-util-field="overtimeDeduction"></dd></div>' +
+            '</dl>' +
+          '</div>' +
           '<div class="rounded-lg border border-warning-border bg-warning-surface px-3 py-2 text-xs text-warning" data-util-field="statusRow" role="status" hidden></div>' +
           '<p class="text-xs text-subtle" data-util-field="importedAt"></p>' +
           '<p class="text-[11px] text-subtle">有休は有休ノートに申請済みの分を差し引いています</p>' +
@@ -73,6 +93,7 @@
     q(detail, "headline").hidden = !!s.missing;
     q(detail, "details").hidden = !!s.missing;
     q(detail, "missingLine").hidden = !s.missing;
+    q(detail, "approxLine").hidden = !s.approx;
     var row = q(detail, "statusRow");
     row.hidden = !s.status || s.missing;
     if (s.status) row.textContent = s.status;
@@ -80,6 +101,11 @@
       setText(detail, "restDays", s.restDays); setText(detail, "restHours", s.restHours);
       setText(detail, "plannedNote", s.plannedNote); setText(detail, "planned", s.planned); setText(detail, "leave", s.leave); setText(detail, "expected", s.expected);
       setText(detail, "limitLabel", s.limitLabel); setText(detail, "limitNote", s.limitNote); setText(detail, "limit", s.limit);
+      q(detail, "committedRow").hidden = !s.committed;
+      setText(detail, "committed", s.committed); setText(detail, "workStyle", s.workStyle);
+      setText(detail, "unitPrice", s.unitPrice);
+      q(detail, "odRow").hidden = !s.overtimeDeduction;
+      setText(detail, "overtimeDeduction", s.overtimeDeduction);
     }
   }
   function openDetail() { if (!detail) detail = buildDetail(); applyDetail(UTIL_MOCK_STATES[current]); detail.hidden = false; detail.querySelector('[role="dialog"]').focus(); }

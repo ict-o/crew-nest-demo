@@ -1,7 +1,12 @@
 /* ============================================================
-   CrewNest DEMO: 管理画面「ユーザー」タブの客先サブタブ（issue #54 稼働早見表）
+   CrewNest DEMO: 管理画面「ユーザー」タブのプロジェクトサブタブ（issue #54 稼働早見表 + 契約の情報追加モック 3版）
    使い方: <script src="clients.js"></script>（CrewNest Admin.html に追加）
    本体 src/features/admin/components/AdminClientsClient.tsx・AdminUsersTabs.tsx の React 化前の静的再現。
+   「契約の情報追加」モック（実アプリ未実装。demo 専用フィールド）: 契約締結企業（primaryCompany。
+   ON/OFF は「客先と別の会社と契約している」トグル data-ce="hasprimary" で切り替える）・締結企業の担当者名
+   ／電話番号／メールアドレス（primaryContact/primaryPhone/primaryEmail）・客先営業担当者の電話番号／
+   メールアドレス（salesPhone/salesEmail）・自社の営業担当者（ourSales）。
+   自社の営業担当者の選択肢は window.CNMembers（contract-members.js が公開）を使う。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/admin-clients.js
    ============================================================ */
 (function () {
@@ -16,7 +21,7 @@
 
   // primary: 'users' | 'contracts'。secondary（primary==='contracts' のときだけ意味を持つ）: 'members' | 'clients'
   function updateFabVisibility(primary, secondary) {
-    var clientFab = document.querySelector('[data-open-slide="client-edit"][data-client-new="1"][aria-label="客先を追加"]');
+    var clientFab = document.querySelector('[data-open-slide="client-edit"][data-client-new="1"][aria-label="プロジェクトを追加"]');
     var userFab = document.querySelector('[data-open-slide="user-invite"][aria-label="ユーザーを招待"]');
     if (clientFab) clientFab.style.display = (primary === 'contracts' && secondary === 'clients') ? '' : 'none';
     if (userFab) userFab.style.display = (primary === 'users') ? '' : 'none';
@@ -61,6 +66,19 @@
     if (el) el.value = value;
   }
 
+  // 「自社の営業担当者」Select の選択肢（「未設定」＋ window.CNMembers）。パネルを開くたびに作る
+  // （clients.js は contract-members.js より前に読み込まれるため、window.CNMembers は起動時点では未定義。
+  // 実際に必要になるのはユーザー操作後＝全 script 実行後なので、この時点なら参照できる）
+  function fillOurSalesOptions(panel, selected) {
+    var sel = panel.querySelector('[data-ce="oursales"]');
+    if (!sel) return;
+    var names = window.CNMembers || [];
+    var html = '<option value="">未設定</option>';
+    names.forEach(function (n) { html += '<option value="' + n.replace(/"/g, '&quot;') + '">' + n + '</option>'; });
+    sel.innerHTML = html;
+    sel.value = selected || '';
+  }
+
   function applyOwncal(state) {
     document.querySelectorAll('[data-ce="owncal"]').forEach(function (btn) {
       btn.setAttribute('aria-checked', state ? 'true' : 'false');
@@ -77,28 +95,60 @@
     });
   }
 
+  // 「客先と別の会社と契約している」トグル。ON のときだけ「契約締結企業」欄（企業名／担当者名／
+  // 電話番号／メールアドレス）を出す
+  function applyHasPrimary(state) {
+    document.querySelectorAll('[data-ce="hasprimary"]').forEach(function (btn) {
+      btn.setAttribute('aria-checked', state ? 'true' : 'false');
+      var knob = btn.querySelector('span');
+      if (knob) {
+        knob.classList.toggle('translate-x-0', !state);
+        knob.classList.toggle('translate-x-[18px]', state);
+        btn.classList.toggle('bg-primary', state);
+        btn.classList.toggle('bg-border', !state);
+      }
+    });
+    document.querySelectorAll('[data-ce="primaryFields"]').forEach(function (el) {
+      el.style.display = state ? '' : 'none';
+    });
+  }
+
   document.addEventListener('slidewillopen', function (e) {
     if (!e.detail || e.detail.id !== 'client-edit') return;
     var trigger = e.detail.trigger;
     var isNew = !!(trigger && trigger.getAttribute('data-client-new') === '1');
-    var data = { name: '', project: '', contact: '', sales: '', leader: '', owncal: false, count: 0 };
+    var data = { name: '', project: '', primary: '', primarycontact: '', primaryphone: '', primaryemail: '', contact: '', sales: '', salesphone: '', salesemail: '', oursales: '', leader: '', owncal: false, count: 0 };
     if (!isNew && trigger) {
       data.name = trigger.getAttribute('data-c-name') || '';
       data.project = trigger.getAttribute('data-c-project') || '';
+      data.primary = trigger.getAttribute('data-c-primary') || '';
+      data.primarycontact = trigger.getAttribute('data-c-primarycontact') || '';
+      data.primaryphone = trigger.getAttribute('data-c-primaryphone') || '';
+      data.primaryemail = trigger.getAttribute('data-c-primaryemail') || '';
       data.contact = trigger.getAttribute('data-c-contact') || '';
       data.sales = trigger.getAttribute('data-c-sales') || '';
+      data.salesphone = trigger.getAttribute('data-c-salesphone') || '';
+      data.salesemail = trigger.getAttribute('data-c-salesemail') || '';
+      data.oursales = trigger.getAttribute('data-c-oursales') || '';
       data.leader = trigger.getAttribute('data-c-leader') || '';
       data.owncal = trigger.getAttribute('data-c-owncal') === '1';
       data.count = parseInt(trigger.getAttribute('data-c-count') || '0', 10);
     }
     document.querySelectorAll('[data-slide="client-edit"]').forEach(function (panel) {
       var titleEl = panel.querySelector('[data-ce="title"]');
-      if (titleEl) titleEl.textContent = isNew ? '客先を追加' : '客先を編集';
+      if (titleEl) titleEl.textContent = isNew ? 'プロジェクトを追加' : 'プロジェクトを編集';
       setFieldValue(panel, 'name', data.name);
       setFieldValue(panel, 'project', data.project);
       setFieldValue(panel, 'contact', data.contact);
       setFieldValue(panel, 'sales', data.sales);
+      setFieldValue(panel, 'salesphone', data.salesphone);
+      setFieldValue(panel, 'salesemail', data.salesemail);
+      fillOurSalesOptions(panel, data.oursales);
       setFieldValue(panel, 'leader', data.leader);
+      setFieldValue(panel, 'primary', data.primary);
+      setFieldValue(panel, 'primarycontact', data.primarycontact);
+      setFieldValue(panel, 'primaryphone', data.primaryphone);
+      setFieldValue(panel, 'primaryemail', data.primaryemail);
       var deleteWrap = panel.querySelector('[data-ce="delete-wrap"]');
       var deleteBtn = panel.querySelector('[data-ce="delete"]');
       var deleteNote = panel.querySelector('[data-ce="delete-note"]');
@@ -112,11 +162,14 @@
       }
     });
     applyOwncal(data.owncal);
+    applyHasPrimary(!!data.primary);
   });
 
   document.addEventListener('click', function (e) {
     var toggle = e.target.closest('[data-ce="owncal"]');
-    if (toggle) applyOwncal(toggle.getAttribute('aria-checked') !== 'true');
+    if (toggle) { applyOwncal(toggle.getAttribute('aria-checked') !== 'true'); return; }
+    var hasPrimaryToggle = e.target.closest('[data-ce="hasprimary"]');
+    if (hasPrimaryToggle) applyHasPrimary(hasPrimaryToggle.getAttribute('aria-checked') !== 'true');
   });
 
   // 「保存する」で客先パネルを閉じる（休業日カレンダーを開く裏保存は別ボタンなので対象外）
@@ -224,8 +277,9 @@
   });
 
   // 契約 › メンバーのパネル（contract-members.js）が「現在の契約」ブロックに客先の詳細（連絡先・担当者・
-  // リーダー・営業日）を出すための参照 API。客先データは DOM の data-client-row にしか無いため、
-  // 呼ばれた時点の DOM から都度組み立てる（客先の数が少ないデモなのでキャッシュはしない）
+  // リーダー・営業日・契約締結企業・電話・メール・自社の営業担当者）を出すための参照 API。客先データは
+  // DOM の data-client-row にしか無いため、呼ばれた時点の DOM から都度組み立てる（客先の数が少ないデモ
+  // なのでキャッシュはしない）
   function findClientRow(displayName) {
     var found = null;
     document.querySelectorAll('[data-c-list="desktop"] [data-client-row]').forEach(function (row) {
@@ -245,8 +299,15 @@
       return {
         name: row.getAttribute('data-c-name') || '',
         project: row.getAttribute('data-c-project') || '',
+        primaryCompany: row.getAttribute('data-c-primary') || '',
+        primaryContact: row.getAttribute('data-c-primarycontact') || '',
+        primaryPhone: row.getAttribute('data-c-primaryphone') || '',
+        primaryEmail: row.getAttribute('data-c-primaryemail') || '',
         contact: row.getAttribute('data-c-contact') || '',
         sales: row.getAttribute('data-c-sales') || '',
+        salesPhone: row.getAttribute('data-c-salesphone') || '',
+        salesEmail: row.getAttribute('data-c-salesemail') || '',
+        ourSales: row.getAttribute('data-c-oursales') || '',
         leader: row.getAttribute('data-c-leader') || '',
         owncal: row.getAttribute('data-c-owncal') === '1'
       };
