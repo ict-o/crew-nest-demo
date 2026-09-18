@@ -3,7 +3,7 @@
    使い方: <script src="home-card.js"></script>（CrewNest Home.html の badges.js の後に追加）
    本体 src/features/utilization/ の React 化前の静的再現。カードの状態は "ok" 固定。
    「契約の情報追加」モック（実アプリ未実装。demo 専用）: 予定稼働などの既存 dl の下に「契約」見出し＋
-   確約・勤務形態・単価・超過／控除の dl を追加する（先頭の sinceLabel 行はそのまま。確約は未定なら
+   契約更新・勤務形態・単価・精算単位・超過／控除の dl を追加する（先頭の sinceLabel 行はそのまま。契約更新は未定なら
    行を出さない。超過／控除は時間単価のときは行を出さない）。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/home-card.js
    ============================================================ */
@@ -11,18 +11,19 @@
   // 状態ごとの表示値。card = カードの 3 行目、detail = タップで開く詳細
   var UTIL_MOCK_STATES = {
     ok: {
-      clientLabel: "株式会社アルファ ／ 基幹刷新PJ ・ 上限下限 120〜180h",
+      clientLabel: "株式会社アルファ ／ 基幹刷新PJ ・ 上限下限 120〜180時間",
       // プロジェクト継続の起点(鈴木は2025-10に同じプロジェクトの契約があるためそこから数える)
       sinceLabel: "2025年10月から ・ 1年目",
-      restDays: "4.0", restHours: "32h",
-      plannedNote: "営業日 19日 × 8h", planned: "152h", leave: "0h", expected: "152h",
-      limitLabel: "精算下限", limitNote: "上限 180h", limit: "120h",
+      restDays: "4.0", restHours: "32時間",
+      plannedNote: "営業日 19日 × 8時間", planned: "152時間", leave: "0時間", expected: "152時間",
+      limitLabel: "精算下限", limitNote: "上限 180時間", limit: "120時間",
       // approx: 有休データと突合できない人。有休 0 で計算し、カードに「概算」チップと詳細に注意を出す
       status: null, missing: false, approx: true, importedAt: "有休データ: 9/8 取込",
-      committed: "2026年12月まで",
+      committed: "2026年12月まで契約済み",
       workStyle: "出社 週3日 ／ リモート 週2日",
       unitPrice: "¥650,000／月",
-      overtimeDeduction: "¥4,000／h ／ ¥3,500／h",
+      settlementUnit: "15分",
+      overtimeDeduction: "¥4,000／時間 ／ ¥3,500／時間",
     },
   };
   var current = "ok";
@@ -70,9 +71,10 @@
           '<div>' +
             '<p class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">契約</p>' +
             '<dl class="mt-1.5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="contractDl">' +
-              '<div class="contents" data-util-field="committedRow"><dt class="text-subtle">確約</dt><dd class="text-right text-text tabular-nums" data-util-field="committed"></dd></div>' +
+              '<div class="contents" data-util-field="committedRow"><dt class="text-subtle">契約更新</dt><dd class="text-right text-text tabular-nums" data-util-field="committed"></dd></div>' +
               '<dt class="text-subtle">勤務形態</dt><dd class="text-right text-text" data-util-field="workStyle"></dd>' +
               '<dt class="text-subtle">単価</dt><dd class="text-right text-text tabular-nums" data-util-field="unitPrice"></dd>' +
+              '<div class="contents" data-util-field="settlementUnitRow"><dt class="text-subtle">精算単位</dt><dd class="text-right text-text tabular-nums" data-util-field="settlementUnit"></dd></div>' +
               '<div class="contents" data-util-field="odRow"><dt class="text-subtle">超過／控除</dt><dd class="text-right text-text tabular-nums" data-util-field="overtimeDeduction"></dd></div>' +
             '</dl>' +
           '</div>' +
@@ -104,6 +106,8 @@
       q(detail, "committedRow").hidden = !s.committed;
       setText(detail, "committed", s.committed); setText(detail, "workStyle", s.workStyle);
       setText(detail, "unitPrice", s.unitPrice);
+      q(detail, "settlementUnitRow").hidden = !s.settlementUnit;
+      setText(detail, "settlementUnit", s.settlementUnit);
       q(detail, "odRow").hidden = !s.overtimeDeduction;
       setText(detail, "overtimeDeduction", s.overtimeDeduction);
     }

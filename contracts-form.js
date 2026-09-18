@@ -24,6 +24,8 @@ function uo() {
   var ty = DLG.querySelector('[data-ct-f="type"]').value;
   var unit = DLG.querySelector('[data-ct-f="unitPriceUnit"]').value;
   DLG.querySelector('[data-ct-group-not="NONE"]').style.display = (ty === 'NONE' || unit === 'HOURLY') ? 'none' : '';
+  // 精算単位は固定(精算なし)だけ出さない(単価が時間単価でも精算単位は使う)
+  DLG.querySelector('[data-ct="settlementUnitWrap"]').style.display = ty === 'NONE' ? 'none' : '';
 }
 // フォームの現在値から computedRate() に渡す ap 相当のオブジェクトを作る
 function formToAp() {
@@ -54,13 +56,13 @@ function refreshODPreview() {
   else if (r.mode === 'business-days') { el.textContent = '月ごとに計算(単価 ÷ その月の上限・下限)'; note.style.display = 'none'; }
   else if (r.mode === 'ratio') { el.textContent = '% 指定は月ごとに計算'; note.style.display = 'none'; }
   else {
-    el.textContent = '超過 ' + (r.oc != null ? CNContracts.yen(r.oc) + '／h' : '未設定') + ' ／ 控除 ' + (r.dc != null ? CNContracts.yen(r.dc) + '／h' : '未設定');
+    el.textContent = '超過 ' + (r.oc != null ? CNContracts.yen(r.oc) + '／時間' : '未設定') + ' ／ 控除 ' + (r.dc != null ? CNContracts.yen(r.dc) + '／時間' : '未設定');
     note.style.display = '';
   }
 }
 function setEf(ym) { var p = ym.split('-'); DLG.querySelector('[data-ct-f="effYear"]').value = p[0]; DLG.querySelector('[data-ct-f="effMonth"]').value = p[1]; }
 function getEf() { return DLG.querySelector('[data-ct-f="effYear"]').value + '-' + DLG.querySelector('[data-ct-f="effMonth"]').value; }
-// 確約期間(committedUntil)。年 Select が「未定」(空文字)のときは null
+// 契約更新(committedUntil)。年 Select が「未定」(空文字)のときは null
 function setEt(ym) {
   var y = DLG.querySelector('[data-ct-f="endYear"]'), m = DLG.querySelector('[data-ct-f="endMonth"]');
   if (!ym) { y.value = ''; m.value = '01'; } else { var p = ym.split('-'); y.value = p[0]; m.value = p[1]; }
@@ -70,7 +72,7 @@ function getEt() {
   var y = DLG.querySelector('[data-ct-f="endYear"]').value;
   return y ? (y + '-' + DLG.querySelector('[data-ct-f="endMonth"]').value) : null;
 }
-// 確約期間の年が「未定」のとき月 Select を隠す
+// 契約更新の年が「未定」のとき月 Select を隠す
 function seh() { var y = DLG.querySelector('[data-ct-f="endYear"]').value; DLG.querySelector('[data-ct-f="endMonth"]').style.display = y ? '' : 'none'; }
 function dv() { var sel = DLG.querySelector('[data-ct-f="daily"]'), c = DLG.querySelector('[data-ct-f="dailyCustom"]'); c.style.display = sel.value === 'custom' ? '' : 'none'; }
 function su(u) {
@@ -120,7 +122,7 @@ function sod(on) {
   btn.classList.toggle('bg-border', !on);
   DLG.querySelector('[data-ct="odOverrideFields"]').style.display = on ? '' : 'none';
 }
-// プロジェクトが「待機」(空)のときは確約期間以下(確約期間〜支援費)を隠し、注釈を出す
+// プロジェクトが「待機」(空)のときは契約更新以下(契約更新〜支援費)を隠し、注釈を出す
 function updateStandby() {
   var standby = DLG.querySelector('[data-ct-f="client"]').value === '';
   // 待機の注釈は出さない(依頼者の指示。待機のフォームは適用開始月とプロジェクトだけ)
@@ -138,20 +140,22 @@ function findPrevEntry(ef, editingEf) {
   });
   return best;
 }
-// 直前の契約が別のプロジェクト(待機を含む)のときだけ「前の契約からの継続として扱う」チェック行を出す。
-// 直前が同じプロジェクトなら自動でつながるためチェック行は出さない
+// 直前の契約があり、待機を選んでいないときは常に「前の契約からの継続として扱う」チェック行を出す。
+// 既定は直前と同じプロジェクトなら ON、違えば OFF(編集時は呼び出し元で保存値に上書きされる)
 function updatePrevProjectCheck() {
   var ef = getEf();
   var cl = DLG.querySelector('[data-ct-f="client"]').value;
   var editing = DLG.getAttribute('data-editing');
   var prev = findPrevEntry(ef, editing);
   // 待機(cl が空)ではトグルを出さない(待機の契約には継続の印を付けられない)
-  var diff = !!prev && cl !== '' && !CNContracts.sameProject(prev.client, cl);
-  DLG.querySelector('[data-ct="continuesWrap"]').style.display = diff ? '' : 'none';
-  if (!diff) scp(false);
+  var show = !!prev && cl !== '';
+  DLG.querySelector('[data-ct="continuesWrap"]').style.display = show ? '' : 'none';
+  if (!show) { scp(false); return; }
+  scp(CNContracts.sameProject(prev.client, cl));
 }
 var YEAR_OPTS = ['2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'].map(function (y) { return '<option value="' + y + '">' + y + '年</option>'; }).join('');
 var MONTH_OPTS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(function (m) { return '<option value="' + m + '">' + parseInt(m, 10) + '月</option>'; }).join('');
+var SETTLEMENT_UNIT_OPTS = CNContracts.SETTLEMENT_UNITS.map(function (u) { return '<option value="' + u + '">' + CNContracts.SETTLEMENT_UNIT_LABELS[u] + '</option>'; }).join('');
 // モーダルの器(body 直下に 1 つだけ)。PC 中央/モバイル ボトムシートの切り替えは home-card.js の buildDetail() と同じ構成
 function buildDialog() {
   var wrap = document.createElement('div');
@@ -192,19 +196,18 @@ function buildDialog() {
                 '<span class="pointer-events-none inline-block h-[18px] w-[18px] translate-x-0 rounded-full bg-background-light shadow-sm transition-transform duration-200"></span>' +
               '</button>' +
             '</div>' +
-            '<p class="mt-1 text-[11px] text-subtle">プロジェクト名が変わっても同じ案件の続きなら ON にします。同じプロジェクトの契約は自動でつながります</p>' +
           '</div>' +
         '</div>' +
         '<div data-ct="committedBlock">' +
-          '<label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">確約期間</label>' +
+          '<label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">契約更新</label>' +
           '<div class="grid grid-cols-2 gap-2">' +
-            '<select data-ct-f="endYear" aria-label="確約期間(年)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="">未定</option>' + YEAR_OPTS + '</select>' +
-            '<select data-ct-f="endMonth" aria-label="確約期間(月)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' + MONTH_OPTS + '</select>' +
+            '<select data-ct-f="endYear" aria-label="契約更新(年)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="">未定</option>' + YEAR_OPTS + '</select>' +
+            '<select data-ct-f="endMonth" aria-label="契約更新(月)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' + MONTH_OPTS + '</select>' +
           '</div>' +
-          '<p class="mt-2 text-[11px] text-subtle">客先と確約している最終月。過ぎても契約は続きます</p>' +
+          '<p class="mt-2 text-[11px] text-subtle">いつまで契約済みか。過ぎても契約は続きます</p>' +
         '</div>' +
         '<div data-ct="standbyNote" style="display:none">' +
-          '<p class="text-xs text-subtle">待機中は定時 8h の固定(精算なし)として扱います</p>' +
+          '<p class="text-xs text-subtle">待機中は定時 8時間 の固定(精算なし)として扱います</p>' +
         '</div>' +
         '<div data-ct="belowCommitted" class="space-y-3">' +
         '<div>' +
@@ -260,15 +263,19 @@ function buildDialog() {
         '<div data-ct-group="BUSINESS_DAYS" class="space-y-2">' +
           '<div class="grid grid-cols-2 gap-2">' +
             '<div>' +
-              '<span class="mb-1 block text-[10px] text-subtle">下限調整(h)</span>' +
+              '<span class="mb-1 block text-[10px] text-subtle">下限調整(時間)</span>' +
               '<input type="number" data-ct-f="lowerAdj" value="-20" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' +
             '</div>' +
             '<div>' +
-              '<span class="mb-1 block text-[10px] text-subtle">上限調整(h、任意)</span>' +
+              '<span class="mb-1 block text-[10px] text-subtle">上限調整(時間、任意)</span>' +
               '<input type="number" data-ct-f="upperAdj" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' +
             '</div>' +
           '</div>' +
           '<p class="text-[11px] text-subtle">客先の営業日数 × 定時 に足した値が下限と上限になります</p>' +
+        '</div>' +
+        '<div data-ct="settlementUnitWrap">' +
+          '<label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">精算単位</label>' +
+          '<select data-ct-f="settlementUnitMinutes" aria-label="精算単位" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' + SETTLEMENT_UNIT_OPTS + '</select>' +
         '</div>' +
         '<div data-ct-group="NONE" class="space-y-2">' +
           '<p class="text-xs text-subtle">精算なし。ホームの「プロジェクト」カードには予定稼働・有休・見込み稼働が出ます</p>' +
@@ -401,7 +408,7 @@ function cf() {
 function oa() {
   if (!DLG) DLG = buildDialog();
   DLG.removeAttribute('data-editing');
-  DLG.querySelector('[data-ct="title"]').textContent = '契約条件を追加';
+  DLG.querySelector('[data-ct="title"]').textContent = '契約を追加';
   setEf(CNContracts.nm(CM));
   setEt(null);
   DLG.querySelector('[data-ct-f="client"]').value = '';
@@ -413,6 +420,7 @@ function oa() {
   DLG.querySelector('[data-ct-f="base"]').value = '160';
   DLG.querySelector('[data-ct-f="lowerAdj"]').value = '-20';
   DLG.querySelector('[data-ct-f="upperAdj"]').value = '';
+  DLG.querySelector('[data-ct-f="settlementUnitMinutes"]').value = '1';
   DLG.querySelector('[data-ct-f="workOnsite"]').value = '';
   DLG.querySelector('[data-ct-f="workRemote"]').value = '';
   DLG.querySelector('[data-ct-f="unitPrice"]').value = '';
@@ -447,7 +455,7 @@ function oe(idx) {
   var h = CT[CNContracts.getCU()] || [], e = h[idx]; if (!e) return;
   if (!DLG) DLG = buildDialog();
   DLG.setAttribute('data-editing', e.effectiveFrom);
-  DLG.querySelector('[data-ct="title"]').textContent = '契約条件を編集';
+  DLG.querySelector('[data-ct="title"]').textContent = '契約を編集';
   setEf(e.effectiveFrom);
   fillFrom(e);
   gv(e.type);
@@ -470,6 +478,7 @@ function fillFrom(e) {
   DLG.querySelector('[data-ct-f="base"]').value = e.base != null ? CNContracts.fn(e.base) : '160';
   DLG.querySelector('[data-ct-f="lowerAdj"]').value = e.lowerAdj != null ? CNContracts.fn(e.lowerAdj) : '-20';
   DLG.querySelector('[data-ct-f="upperAdj"]').value = e.upperAdj != null ? CNContracts.fn(e.upperAdj) : '';
+  DLG.querySelector('[data-ct-f="settlementUnitMinutes"]').value = e.settlementUnitMinutes != null ? String(e.settlementUnitMinutes) : '1';
   DLG.querySelector('[data-ct-f="workOnsite"]').value = e.workOnsite != null ? CNContracts.fn(e.workOnsite) : '';
   DLG.querySelector('[data-ct-f="workRemote"]').value = e.workRemote != null ? CNContracts.fn(e.workRemote) : '';
   DLG.querySelector('[data-ct-f="unitPrice"]').value = e.unitPrice != null ? e.unitPrice : '';
@@ -487,7 +496,7 @@ function rd() { var sel = DLG.querySelector('[data-ct-f="daily"]'); return sel.v
 function vb() {
   var ef = getEf();
   var et = getEt();
-  if (et && et < ef) return { error: '確約期間は適用開始月以降にしてください' };
+  if (et && et < ef) return { error: '契約更新は適用開始月以降にしてください' };
   var cl = DLG.querySelector('[data-ct-f="client"]').value;
   var editing = DLG.getAttribute('data-editing');
   var h = CT[CNContracts.getCU()] || [];
@@ -496,13 +505,15 @@ function vb() {
   var continuesPrevious = cpOn();
   var entry;
   if (cl === '') {
-    // 待機: 種別 NONE・定時 8h 固定で保存し、他の欄は空にする
-    entry = { effectiveFrom: ef, committedUntil: et, client: '', type: 'NONE', daily: 8, workOnsite: null, workRemote: null, unitPrice: null, unitPriceUnit: null, overtimeRate: null, deductionRate: null, supportFee: { enabled: false } };
+    // 待機: 種別 NONE・定時 8時間 固定で保存し、他の欄は空にする
+    entry = { effectiveFrom: ef, committedUntil: et, client: '', type: 'NONE', daily: 8, workOnsite: null, workRemote: null, unitPrice: null, unitPriceUnit: null, overtimeRate: null, deductionRate: null, supportFee: { enabled: false }, settlementUnitMinutes: 1 };
   } else {
     var ty = DLG.querySelector('[data-ct-f="type"]').value;
     var dr = rd(), d = parseFloat(dr);
     if (!dr || isNaN(d) || d < 1 || d > 12 || Math.abs(d * 4 - Math.round(d * 4)) > 1e-9) return { error: '定時は1〜12の範囲で0.25刻みで入力してください' };
     entry = { effectiveFrom: ef, committedUntil: et, client: cl, type: ty, daily: d };
+    var suStr = DLG.querySelector('[data-ct-f="settlementUnitMinutes"]').value;
+    entry.settlementUnitMinutes = ty === 'NONE' ? 1 : (parseInt(suStr, 10) || 1);
     if (ty === 'RANGE') {
       var u = DLG.querySelector('[data-ct="unitToggle"]').getAttribute('data-value');
       var lr = DLG.querySelector('[data-ct-f="lower"]').value, ur = DLG.querySelector('[data-ct-f="upper"]').value;
@@ -520,7 +531,7 @@ function vb() {
       entry.base = ba;
     } else if (ty === 'BUSINESS_DAYS') {
       var lar = DLG.querySelector('[data-ct-f="lowerAdj"]').value, la = parseFloat(lar);
-      if (lar === '' || isNaN(la)) return { error: '下限調整(h)は必須です' };
+      if (lar === '' || isNaN(la)) return { error: '下限調整(時間)は必須です' };
       var uar = DLG.querySelector('[data-ct-f="upperAdj"]').value;
       entry.lowerAdj = la; entry.upperAdj = uar === '' ? null : parseFloat(uar);
     }
@@ -570,7 +581,7 @@ function hDel() {
   if (!CNContracts.getCU()) return;
   var editing = DLG.getAttribute('data-editing');
   if (!editing) return;
-  if (!window.confirm('この契約条件を削除します。よろしいですか?')) return;
+  if (!window.confirm('この契約を削除します。よろしいですか?')) return;
   var h = CT[CNContracts.getCU()] || [];
   var i = h.findIndex(function (x) { return x.effectiveFrom === editing; });
   if (i !== -1) h.splice(i, 1);

@@ -39,8 +39,8 @@
     var l1 = C.cd(ap.client) + ' ・ ' + C.TL[ap.type];
     return '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(C.dl(ap, false)) + '</p>';
   }
-  // 1行目「2026年4月から ・ 3か月目」（プロジェクト継続の起点で数える）、2行目に確約期間があれば
-  // 「2026年12月まで確約」（過ぎていれば text-warning で「・ 期間超過」を追加）。契約なしは呼び出し側で「-」を出す
+  // 1行目「2026年4月から ・ 3か月目」（プロジェクト継続の起点で数える）、2行目に契約更新の予定があれば
+  // 「2026年12月まで契約済み」（過ぎていれば text-warning で「・ 更新が必要」を追加）。契約なしは呼び出し側で「-」を出す
   function effectiveCellHtml(m) {
     var C = window.CNContracts;
     var h = C.CT[m.name] || [];
@@ -53,7 +53,7 @@
     var ci = C.committedInfo(ap.committedUntil, C.CM);
     if (ci) {
       var cls = ci.past ? 'text-warning' : 'text-subtle';
-      var txt = ci.label + '確約' + (ci.past ? ' ・ 期間超過' : '');
+      var txt = ci.label + (ci.past ? ' ・ 更新が必要' : '');
       html += '<p class="whitespace-nowrap text-[11px] ' + cls + '">' + esc(txt) + '</p>';
     }
     return html;
@@ -246,7 +246,7 @@
   }
   // 「現在の契約」ブロック（適用中の契約があるときだけ使う）。客先の詳細は window.CNClients から引く。
   // h は本人の契約履歴全体（プロジェクト継続の起点計算に使う）。待機は「待機」「種別」「定時」「適用開始」
-  // 「プロジェクト継続（該当時）」だけで、確約・勤務形態・単価・超過／控除・支援費は出さない
+  // 「プロジェクト継続（該当時）」だけで、契約更新・勤務形態・単価・精算単位・超過／控除・支援費は出さない
   function currentContractBlockHtml(ap, h) {
     var C = window.CNContracts;
     var items = [];
@@ -284,9 +284,10 @@
       items.push('<div class="col-span-2"><p class="text-sm text-text">待機</p></div>');
     }
     items.push(gridItem('種別', esc(C.TL[ap.type])));
-    items.push(gridItem('定時', esc(C.fn(ap.daily)) + 'h'));
+    items.push(gridItem('定時', esc(C.fn(ap.daily)) + '時間'));
     var rc = C.rangeCell(ap);
     if (rc) items.push(gridItem(rc.label, esc(rc.value)));
+    if (ap.type !== 'NONE') items.push(gridItem('精算単位', esc(C.settlementUnitLabel(ap))));
     items.push(gridItem('適用開始', esc(C.periodFull(ap.effectiveFrom)), 'col-span-2'));
     var origin = C.projectStart(h || [], ap);
     if (origin && origin !== ap.effectiveFrom) {
@@ -297,8 +298,8 @@
       return '<div class="grid grid-cols-2 gap-x-3 gap-y-2">' + items.join('') + '</div>';
     }
     var ci = C.committedInfo(ap.committedUntil, C.CM);
-    var cuVal = ci ? esc(ci.label) + (ci.past ? ' <span class="text-xs text-warning">確約期間を過ぎています</span>' : '') : unsetSpan();
-    items.push(gridItem('確約', cuVal, 'col-span-2'));
+    var cuVal = ci ? esc(ci.label) + (ci.past ? ' <span class="text-xs text-warning">契約更新が必要です</span>' : '') : unsetSpan();
+    items.push(gridItem('契約更新', cuVal, 'col-span-2'));
     var ws = C.workStyleLabel(ap);
     // 「出社 週3日 ／ リモート 週2日」は 1 列に収まらず「週2／日」で折れるので 1 行に伸ばす
     items.push(gridItem('勤務形態', ws ? esc(ws) : unsetSpan(), 'col-span-2'));

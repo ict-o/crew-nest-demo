@@ -8,13 +8,14 @@
    表記ヘルパー・ユーザー編集パネルの「契約」セクション(data-contract-section、サマリー表示のみ)の
    再描画を持つ。フォーム(追加・編集ダイアログ)は contracts-form.js が持つ。
    契約の追加・編集・履歴は「契約 › メンバー」パネル(contract-members.js)で行う。
-   「契約の情報追加」モック(実アプリ未実装。demo 専用フィールド): 確約期間(committedUntil。
-   客先と確約している最終月で、契約は終了しない)・勤務形態(workOnsite/workRemote)・
+   「契約の情報追加」モック(実アプリ未実装。demo 専用フィールド): 契約更新(committedUntil。
+   客先といつまで契約済みかを示す最終月で、契約は終了しない)・勤務形態(workOnsite/workRemote)・
    単価と単位(unitPrice/unitPriceUnit)・超過/控除(overtimeRate/deductionRate。未入力時は
-   単価と上限下限・基準時間からの計算値を表示)・支援費契約(supportFee)・
-   プロジェクト継続(continuesPrevious。同じプロジェクトの契約は自動でつながり、プロジェクト名が変わる
-   ときだけ「前の契約からの継続として扱う」チェックで明示的につなげるフラグ)。
-   待機(プロジェクト未選択)を選ぶと、確約期間より下の欄は隠れ、種別 NONE・定時 8h 固定として保存する。
+   単価と上限下限・基準時間からの計算値を表示)・支援費契約(supportFee)・精算単位(settlementUnitMinutes。
+   稼働時間の端数を切り捨てる分の単位)・
+   プロジェクト継続(continuesPrevious。「待機同士」または明示的な ON の間だけつながるフラグ。
+   同じプロジェクトでも OFF なら継続とみなさない)。
+   待機(プロジェクト未選択)を選ぶと、契約更新より下の欄は隠れ、種別 NONE・定時 8時間 固定として保存する。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/admin-contract.js
    ============================================================ */
 (function () {
@@ -22,13 +23,13 @@ var CM = '2026-09', CU = null;
 var TL = { RANGE: '上限下限', MIDPOINT: '中間', BUSINESS_DAYS: '営業日数連動', NONE: '固定(精算なし)' };
 var CT = {
   '鈴木 一郎': [
-    { effectiveFrom: '2026-04', committedUntil: '2026-12', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, workOnsite: 3, workRemote: 2, unitPrice: 650000, overtimeRate: 4000, deductionRate: 3500, supportFee: { enabled: false } },
+    { effectiveFrom: '2026-04', committedUntil: '2026-12', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, workOnsite: 3, workRemote: 2, unitPrice: 650000, overtimeRate: 4000, deductionRate: 3500, supportFee: { enabled: false }, continuesPrevious: true, settlementUnitMinutes: 15 },
     { effectiveFrom: '2025-10', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 120, upper: 180 },
-    { effectiveFrom: '2027-01', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'MIDPOINT', daily: 8, base: 160 }
+    { effectiveFrom: '2027-01', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'MIDPOINT', daily: 8, base: 160, continuesPrevious: true }
   ],
-  // 確約が未定(committedUntil 無し)の確認用
+  // 契約更新が未定(committedUntil 無し)の確認用
   '佐藤 恵子': [{ effectiveFrom: '2026-01', client: 'ベータ商事', type: 'BUSINESS_DAYS', daily: 7.75, lowerAdj: -20, upperAdj: null, workOnsite: 0, workRemote: 5, unitPrice: 600000, overtimeRate: 3800, deductionRate: 3800, supportFee: { enabled: true, company: '株式会社イプシロン', amount: 30000 } }],
-  // 確約期間を過ぎている(2026-09 時点で committedUntil が過去)の一覧・パネル表示確認用。
+  // 契約更新が必要(2026-09 時点で committedUntil が過去)の一覧・パネル表示確認用。
   // 超過/控除は未入力なので、単価 ÷ 基準時間の計算値((計算値)付き)が出る。プロジェクト継続(継続チェック
   // continuesPrevious)確認用に、直前のデルタシステムズの契約からの継続として扱う設定にしている
   '田中 佑樹': [
@@ -40,17 +41,17 @@ var CT = {
   // 2015-04 起点までつながる(継続チェックは出ない)
   '伊藤 健太': [
     { effectiveFrom: '2015-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2016-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2017-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2018-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2019-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2020-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2021-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2022-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2023-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2024-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2025-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180 },
-    { effectiveFrom: '2026-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, unitPriceUnit: 'HOURLY', unitPrice: 4500 }
+    { effectiveFrom: '2016-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2017-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2018-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2019-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2020-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2021-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2022-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2023-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2024-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2025-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, continuesPrevious: true },
+    { effectiveFrom: '2026-04', client: 'ベータ商事', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 140, upper: 180, unitPriceUnit: 'HOURLY', unitPrice: 4500, continuesPrevious: true }
   ],
   // 客先が無い(=待機)の一覧・パネル表示確認用。待機では勤務形態・単価は持たない
   '渡辺 さゆり': [{ effectiveFrom: '2025-04', client: '', type: 'NONE', daily: 8 }],
@@ -63,11 +64,18 @@ function nm(ym) { var p = ym.split('-'), y = +p[0], m = +p[1] + 1; if (m > 12) {
 function cd(c) { return c ? c : '待機'; }
 // 「適用中」の契約。開始月が当月(CM)以前で一番新しいもの
 function ga(h) { var a = null; h.forEach(function (e) { if (e.effectiveFrom <= CM && (!a || e.effectiveFrom > a.effectiveFrom)) a = e; }); return a; }
-// 確約期間(committedUntil)の表示情報。未定(無し)なら null(呼び出し側で「未設定」を出す)。
-// past: cm(当月)より前=確約期間を過ぎている
+// 契約更新(committedUntil)の表示情報。未定(無し)なら null(呼び出し側で「未設定」を出す)。
+// past: cm(当月)より前=契約更新が必要
 function committedInfo(committedUntil, cm) {
   if (!committedUntil) return null;
-  return { label: ml(committedUntil) + 'まで', past: committedUntil < cm };
+  return { label: ml(committedUntil) + 'まで契約済み', past: committedUntil < cm };
+}
+// 精算単位(settlementUnitMinutes)の表示。未設定は 1(切り捨てなし)扱い
+var SETTLEMENT_UNITS = [1, 5, 10, 15, 30, 60];
+var SETTLEMENT_UNIT_LABELS = { 1: '1分(切り捨てなし)', 5: '5分', 10: '10分', 15: '15分', 30: '30分', 60: '60分' };
+function settlementUnitLabel(ap) {
+  var u = (ap && ap.settlementUnitMinutes) || 1;
+  return SETTLEMENT_UNIT_LABELS[u] || (u + '分');
 }
 // 適用開始月から当月(CM)までの月数(当月を含む)。12か月未満は「Nか月目」、12か月以上は「N年目」/端数があれば「N年Mか月目」。
 // 未来の開始月(月数が0以下)は null(一覧・パネルとも表示しない)
@@ -82,9 +90,10 @@ function durationLabel(effectiveFrom) {
 }
 // 客先(プロジェクト)が同じか(待機同士も同じとみなす)
 function sameProject(clientA, clientB) { return (clientA || '') === (clientB || ''); }
-// プロジェクト継続の起点(適用開始月)。適用中の契約(ap)から履歴を古い方へ遡り、「直前の契約が同じ
-// プロジェクト」または「今見ている契約の continuesPrevious が true」の間はさらに遡る(同じプロジェクトは
-// 常に自動でつながる)。止まった契約の開始月を返す(ap が無ければ null)
+// プロジェクト継続の起点(適用開始月)。適用中の契約(ap)から履歴を古い方へ遡り、「待機同士」または
+// 「今見ている契約の continuesPrevious が true」の間はさらに遡る。同じプロジェクトでも
+// continuesPrevious が無ければ継続とみなさない(契約が切れて再契約したときのため)。
+// 止まった契約の開始月を返す(ap が無ければ null)
 function projectStart(h, ap) {
   if (!ap) return null;
   var sorted = h.slice().sort(function (x, y) { return x.effectiveFrom.localeCompare(y.effectiveFrom); });
@@ -96,7 +105,8 @@ function projectStart(h, ap) {
   var cur = sorted[idx];
   while (idx > 0) {
     var prev = sorted[idx - 1];
-    if (!sameProject(prev.client, cur.client) && cur.continuesPrevious !== true) break;
+    var bothStandby = !prev.client && !cur.client;
+    if (!bothStandby && cur.continuesPrevious !== true) break;
     cur = prev;
     idx -= 1;
   }
@@ -150,8 +160,8 @@ function overtimeDeductionLabel(ap) {
   var dv = ap.deductionRate != null ? ap.deductionRate : dc;
   if (ov == null && dv == null) return null;
   var usedCalc = (ap.overtimeRate == null && oc != null) || (ap.deductionRate == null && dc != null);
-  var o = ov != null ? yen(ov) + '／h' : '未設定';
-  var d = dv != null ? yen(dv) + '／h' : '未設定';
+  var o = ov != null ? yen(ov) + '／時間' : '未設定';
+  var d = dv != null ? yen(dv) + '／時間' : '未設定';
   return o + ' ／ ' + d + (usedCalc ? '(計算値)' : '');
 }
 // 支援費。ON/OFF の二値なので null は返さない(OFF は「なし」)
@@ -166,15 +176,15 @@ function supportFeeLabel(ap) {
 // 契約種別に応じた「下限〜上限」相当のラベル・値(NONE は精算なしなのでこの行を出さない)
 function rangeCell(e) {
   if (e.type === 'RANGE') {
-    var sfx = e.unit === 'RATIO' ? '%' : 'h';
+    var sfx = e.unit === 'RATIO' ? '%' : '時間';
     var lt = e.lower != null ? fn(e.lower) + sfx : null, ut = e.upper != null ? fn(e.upper) + sfx : null;
     var rt = lt && ut ? '下限 ' + lt + ' 〜 上限 ' + ut : lt ? '下限 ' + lt : '上限 ' + ut;
     return { label: '下限〜上限', value: rt };
   }
-  if (e.type === 'MIDPOINT') return { label: '基準時間', value: fn(e.base) + 'h' };
+  if (e.type === 'MIDPOINT') return { label: '基準時間', value: fn(e.base) + '時間' };
   if (e.type === 'BUSINESS_DAYS') {
-    var adj = '下限調整 ' + fn(e.lowerAdj) + 'h';
-    if (e.upperAdj != null) adj += ' ／ 上限調整 ' + fn(e.upperAdj) + 'h';
+    var adj = '下限調整 ' + fn(e.lowerAdj) + '時間';
+    if (e.upperAdj != null) adj += ' ／ 上限調整 ' + fn(e.upperAdj) + '時間';
     return { label: '下限〜上限', value: adj };
   }
   return null;
@@ -187,14 +197,14 @@ function allRows(h) {
 }
 // withDate=false のとき末尾の「○年○月から適用」を付けない(一覧の「現在の契約」列は適用開始月を別列に出すため)
 function dl(e, withDate) {
-  var d = fn(e.daily) + 'h', parts;
+  var d = fn(e.daily) + '時間', parts;
   if (e.type === 'RANGE') {
-    var sfx = e.unit === 'RATIO' ? '%' : 'h';
+    var sfx = e.unit === 'RATIO' ? '%' : '時間';
     var lt = e.lower != null ? fn(e.lower) + sfx : null, ut = e.upper != null ? fn(e.upper) + sfx : null;
     var rt = lt && ut ? '下限 ' + lt + ' 〜 上限 ' + ut : lt ? '下限 ' + lt : '上限 ' + ut;
     parts = ['定時 ' + d, rt];
-  } else if (e.type === 'MIDPOINT') { parts = ['定時 ' + d, '基準 ' + fn(e.base) + 'h']; }
-  else if (e.type === 'BUSINESS_DAYS') { var adj = '下限調整 ' + fn(e.lowerAdj) + 'h'; if (e.upperAdj != null) adj += ' ／ 上限調整 ' + fn(e.upperAdj) + 'h'; parts = ['定時 ' + d, adj]; }
+  } else if (e.type === 'MIDPOINT') { parts = ['定時 ' + d, '基準 ' + fn(e.base) + '時間']; }
+  else if (e.type === 'BUSINESS_DAYS') { var adj = '下限調整 ' + fn(e.lowerAdj) + '時間'; if (e.upperAdj != null) adj += ' ／ 上限調整 ' + fn(e.upperAdj) + '時間'; parts = ['定時 ' + d, adj]; }
   else { parts = ['精算なし']; }
   if (withDate !== false) parts.push(ml(e.effectiveFrom) + 'から適用');
   return parts.join(' ／ ');
@@ -302,6 +312,9 @@ window.CNContracts = {
   rangeCell: rangeCell,
   allRows: allRows,
   committedInfo: committedInfo,
+  SETTLEMENT_UNITS: SETTLEMENT_UNITS,
+  SETTLEMENT_UNIT_LABELS: SETTLEMENT_UNIT_LABELS,
+  settlementUnitLabel: settlementUnitLabel,
   periodFull: periodFull,
   periodShort: periodShort,
   historyLabel: historyLabel,
