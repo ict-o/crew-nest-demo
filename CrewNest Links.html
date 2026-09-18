@@ -198,12 +198,13 @@
                  class="w-full rounded-lg border border-border bg-background-light py-2 pl-10 pr-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
         </div>
         <button type="button" data-link-new data-edit-only class="hidden shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border h-10 px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:inline-flex">リンクを追加</button>
+        <label class="flex min-h-12 shrink-0 cursor-pointer items-center gap-2 px-1 text-sm text-subtle"><span>詳細</span><button type="button" role="switch" aria-checked="false" aria-label="詳細を表示" data-links-view-toggle class="relative inline-flex h-[22px] w-10 shrink-0 rounded-full border-2 border-transparent bg-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span data-knob class="pointer-events-none inline-block h-[18px] w-[18px] translate-x-0 rounded-full bg-background-light shadow-sm transition-transform duration-200"></span></button></label>
         <button type="button" data-links-edit-toggle aria-pressed="false" class="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full h-10 px-5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 border border-border text-subtle hover:bg-black/[0.08] active:bg-black/[0.12]">編集</button>
       </div>
 
       <p data-links-reorder-note hidden class="mb-3 text-xs text-subtle">並び替えは検索を解除して行ってください</p>
 
-      <div data-links-pane class="min-h-0 flex-1">
+      <div data-links-pane data-links-view="slim" class="min-h-0 flex-1">
         <div class="flex flex-col gap-6">
 
           <section data-cat-section="internal" data-cat-name="社内サービス" class="relative rounded-lg border border-border bg-background-light p-4">
@@ -943,6 +944,56 @@ CNTour.define('links', [
   { target: '[data-tour="links-pin"]', title: 'クイックリンク', body: 'ピンを刺したリンクはホームのクイックリンクに並びます。並び順はホームのクイックリンクカードの「並び替え」から変えられます。' },
   { target: '[aria-label="操作ガイドを見る"]', title: 'いつでも見返せます', body: 'このボタンから、いつでもこのガイドをもう一度表示できます。' }
 ]);
+</script>
+<style>
+  /* スリム: ホームのクイックリンクと同じタイル（64px 角のアイコン枠＋10px ラベル）。詳細トグル ON で従来のカード。
+     ピン・鉛筆は行内補助操作の 32dp（§1 公認例外）、ハンドルはホームと同じ dragHandleChip（28dp） */
+  [data-links-view="slim"] .grid.grid-cols-1 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem .5rem; padding-top: .625rem; } /* 上に重なるピンの分 */
+  @media (min-width: 768px) { [data-links-view="slim"] .grid.grid-cols-1 { grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: 1rem .5rem; } }
+  [data-links-view="slim"] [data-link] > a { flex-direction: column; align-items: center; gap: .375rem; padding: 0 !important; border: 0; background: transparent; box-shadow: none; border-radius: .5rem; }
+  [data-links-view="slim"] [data-link] > a:hover { background: transparent; }
+  [data-links-view="slim"] [data-link] > a > span:first-child { height: 4rem; width: 4rem; border-radius: .5rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); transition: box-shadow .15s; font-size: .875rem; overflow: hidden; }
+  [data-links-view="slim"] [data-link] > a:hover > span:first-child { box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1); background-color: var(--color-background-light); }
+  [data-links-view="slim"] [data-link] > a > span:first-child img { width: 48px; height: 48px; }
+  [data-links-view="slim"] [data-link] > a > span.min-w-0 { width: 100%; flex: none; }
+  [data-links-view="slim"] [data-link] .text-base { font-size: 10px; line-height: 1.25; font-weight: 500; text-align: center; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  [data-links-view="slim"] [data-link] .flex-wrap { display: block; }
+  [data-links-view="slim"] [data-link] .line-clamp-2 { display: none; }
+  [data-links-view="slim"] [data-link] [data-edit-only].inline-flex.items-center.rounded-full { display: none !important; } /* 既定チップは詳細のみ */
+  /* ピン: アイコン枠（セル中央の 4rem 幅）の右上に重ねる。枠の右端 = 50% + 2rem */
+  [data-links-view="slim"] [data-pin] { min-height: 2rem; min-width: 2rem; top: 0; right: auto; left: calc(50% + 2rem - 1.25rem); transform: translateY(-.5rem); background: var(--color-background-light); border: 1px solid var(--color-border); box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); }
+  [data-links-view="slim"] [data-pin] svg { width: 16px; height: 16px; }
+  /* 鉛筆（編集中）: 枠の右下 */
+  [data-links-view="slim"] [data-link-edit] { min-height: 2rem; min-width: 2rem; top: auto; bottom: auto; right: auto; left: calc(50% + 2rem - 1.25rem); top: 2.5rem; transform: none; background: var(--color-background-light); border: 1px solid var(--color-border); box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); }
+  [data-links-view="slim"] [data-link-edit] svg { width: 16px; height: 16px; }
+  /* ハンドル（編集中）: ホームと同じく枠の左上（left = 50% - 2rem + .5rem） */
+  [data-links-view="slim"] [data-link-drag] { left: calc(50% - 1.5rem); }
+  body.links-editing [data-links-view="slim"] [data-link] > a { padding: 0 !important; }
+  [data-links-view="slim"] .grid.grid-cols-1.min-h-20 { min-height: 5rem; }
+</style>
+<script>
+(function () {
+  var KEY = 'cn-links-view';
+  var pane = document.querySelector('[data-links-pane]');
+  var toggle = document.querySelector('[data-links-view-toggle]');
+  var knob = toggle.querySelector('[data-knob]');
+  function apply(detail) {
+    pane.setAttribute('data-links-view', detail ? 'detail' : 'slim');
+    toggle.setAttribute('aria-checked', detail ? 'true' : 'false');
+    toggle.classList.toggle('bg-primary', detail);
+    toggle.classList.toggle('bg-border', !detail);
+    knob.classList.toggle('translate-x-[18px]', detail);
+    knob.classList.toggle('translate-x-0', !detail);
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved === 'detail');
+  toggle.addEventListener('click', function () {
+    var next = toggle.getAttribute('aria-checked') !== 'true';
+    apply(next);
+    try { localStorage.setItem(KEY, next ? 'detail' : 'slim'); } catch (e) {}
+  });
+})();
 </script>
 </body>
 </html>
