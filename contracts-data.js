@@ -210,14 +210,17 @@ function dl(e, withDate) {
   return parts.join(' ／ ');
 }
 // nextFuture: ap が無いときに「N年M月からの契約があります」を出すための直近の未来契約(無ければ null)
-function rs(el, ap, nextFuture) {
+function rs(el, ap, nextFuture, h) {
   if (!ap) {
     if (nextFuture) { el.innerHTML = '<p class="text-xs text-subtle">現在適用中の契約はありません(' + esc(ml(nextFuture.effectiveFrom)) + 'からの契約があります)</p>'; return; }
     el.innerHTML = '<p class="text-xs text-subtle">契約が登録されていません</p>';
     return;
   }
   var l1 = cd(ap.client) + ' ・ ' + TL[ap.type];
-  el.innerHTML = '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(dl(ap)) + '</p>';
+  // プロジェクト継続の起点で数えた「2026年4月から ・ 6か月目」(契約タブの「期間」列と同じ。契約権限が無いリーダーにも見える)
+  var origin = projectStart(h || [], ap);
+  var lp = periodFull(origin) + ' ・ ' + durationLabel(origin);
+  el.innerHTML = '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(lp) + '</p><p class="text-xs text-subtle">' + esc(dl(ap)) + '</p>';
 }
 // rows: allRows()/classify() が返す { e, idx }[](idx は CT[名前] 配列内での本来の位置。編集ボタンの対象解決に使う)
 // ap: 適用中の契約(無ければ null)。cm: 当月(渡すと未来の行に「予定」チップを付ける)
@@ -253,7 +256,7 @@ function rSec(s) {
   // visible には「current が無いときの全行」が入るため、開始月が当月以前(=未来ではない)行を
   // nextFuture 扱いしない
   if (nextFuture && nextFuture.effectiveFrom <= CM) nextFuture = null;
-  rs(s.querySelector('[data-ct="summary"]'), c.current, nextFuture);
+  rs(s.querySelector('[data-ct="summary"]'), c.current, nextFuture, h);
 }
 function rAll() {
   document.querySelectorAll('[data-contract-section]').forEach(rSec);
