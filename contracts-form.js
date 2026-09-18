@@ -62,7 +62,7 @@ function refreshODPreview() {
 }
 function setEf(ym) { var p = ym.split('-'); DLG.querySelector('[data-ct-f="effYear"]').value = p[0]; DLG.querySelector('[data-ct-f="effMonth"]').value = p[1]; }
 function getEf() { return DLG.querySelector('[data-ct-f="effYear"]').value + '-' + DLG.querySelector('[data-ct-f="effMonth"]').value; }
-// 契約更新(committedUntil)。年 Select が「未定」(空文字)のときは null
+// 契約状況(committedUntil)。年 Select が「未定」(空文字)のときは null
 function setEt(ym) {
   var y = DLG.querySelector('[data-ct-f="endYear"]'), m = DLG.querySelector('[data-ct-f="endMonth"]');
   if (!ym) { y.value = ''; m.value = '01'; } else { var p = ym.split('-'); y.value = p[0]; m.value = p[1]; }
@@ -72,7 +72,7 @@ function getEt() {
   var y = DLG.querySelector('[data-ct-f="endYear"]').value;
   return y ? (y + '-' + DLG.querySelector('[data-ct-f="endMonth"]').value) : null;
 }
-// 契約更新の年が「未定」のとき月 Select を隠す
+// 契約状況の年が「未定」のとき月 Select を隠す
 function seh() { var y = DLG.querySelector('[data-ct-f="endYear"]').value; DLG.querySelector('[data-ct-f="endMonth"]').style.display = y ? '' : 'none'; }
 function dv() { var sel = DLG.querySelector('[data-ct-f="daily"]'), c = DLG.querySelector('[data-ct-f="dailyCustom"]'); c.style.display = sel.value === 'custom' ? '' : 'none'; }
 function su(u) {
@@ -122,7 +122,7 @@ function sod(on) {
   btn.classList.toggle('bg-border', !on);
   DLG.querySelector('[data-ct="odOverrideFields"]').style.display = on ? '' : 'none';
 }
-// プロジェクトが「待機」(空)のときは契約更新以下(契約更新〜支援費)を隠し、注釈を出す
+// プロジェクトが「待機」(空)のときは契約状況以下(契約状況〜支援費)を隠し、注釈を出す
 function updateStandby() {
   var standby = DLG.querySelector('[data-ct-f="client"]').value === '';
   // 待機の注釈は出さない(依頼者の指示。待機のフォームは適用開始月とプロジェクトだけ)
@@ -199,10 +199,10 @@ function buildDialog() {
           '</div>' +
         '</div>' +
         '<div data-ct="committedBlock">' +
-          '<label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">契約更新</label>' +
+          '<label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">契約状況</label>' +
           '<div class="grid grid-cols-2 gap-2">' +
-            '<select data-ct-f="endYear" aria-label="契約更新(年)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="">未定</option>' + YEAR_OPTS + '</select>' +
-            '<select data-ct-f="endMonth" aria-label="契約更新(月)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' + MONTH_OPTS + '</select>' +
+            '<select data-ct-f="endYear" aria-label="契約状況(年)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"><option value="">未定</option>' + YEAR_OPTS + '</select>' +
+            '<select data-ct-f="endMonth" aria-label="契約状況(月)" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' + MONTH_OPTS + '</select>' +
           '</div>' +
           '<p class="mt-2 text-[11px] text-subtle">いつまで契約済みか。過ぎても契約は続きます</p>' +
         '</div>' +
@@ -496,7 +496,7 @@ function rd() { var sel = DLG.querySelector('[data-ct-f="daily"]'); return sel.v
 function vb() {
   var ef = getEf();
   var et = getEt();
-  if (et && et < ef) return { error: '契約更新は適用開始月以降にしてください' };
+  if (et && et < ef) return { error: '契約状況は適用開始月以降にしてください' };
   var cl = DLG.querySelector('[data-ct-f="client"]').value;
   var editing = DLG.getAttribute('data-editing');
   var h = CT[CNContracts.getCU()] || [];

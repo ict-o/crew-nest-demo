@@ -8,14 +8,14 @@
    表記ヘルパー・ユーザー編集パネルの「契約」セクション(data-contract-section、サマリー表示のみ)の
    再描画を持つ。フォーム(追加・編集ダイアログ)は contracts-form.js が持つ。
    契約の追加・編集・履歴は「契約 › メンバー」パネル(contract-members.js)で行う。
-   「契約の情報追加」モック(実アプリ未実装。demo 専用フィールド): 契約更新(committedUntil。
+   「契約の情報追加」モック(実アプリ未実装。demo 専用フィールド): 契約状況(committedUntil。
    客先といつまで契約済みかを示す最終月で、契約は終了しない)・勤務形態(workOnsite/workRemote)・
    単価と単位(unitPrice/unitPriceUnit)・超過/控除(overtimeRate/deductionRate。未入力時は
    単価と上限下限・基準時間からの計算値を表示)・支援費契約(supportFee)・精算単位(settlementUnitMinutes。
    稼働時間の端数を切り捨てる分の単位)・
    プロジェクト継続(continuesPrevious。「待機同士」または明示的な ON の間だけつながるフラグ。
    同じプロジェクトでも OFF なら継続とみなさない)。
-   待機(プロジェクト未選択)を選ぶと、契約更新より下の欄は隠れ、種別 NONE・定時 8時間 固定として保存する。
+   待機(プロジェクト未選択)を選ぶと、契約状況より下の欄は隠れ、種別 NONE・定時 8時間 固定として保存する。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/admin-contract.js
    ============================================================ */
 (function () {
@@ -27,7 +27,7 @@ var CT = {
     { effectiveFrom: '2025-10', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'RANGE', daily: 8, unit: 'HOURS', lower: 120, upper: 180 },
     { effectiveFrom: '2027-01', client: '株式会社アルファ ／ 基幹刷新PJ', type: 'MIDPOINT', daily: 8, base: 160, continuesPrevious: true }
   ],
-  // 契約更新が未定(committedUntil 無し)の確認用
+  // 契約状況が未定(committedUntil 無し)の確認用
   '佐藤 恵子': [{ effectiveFrom: '2026-01', client: 'ベータ商事', type: 'BUSINESS_DAYS', daily: 7.75, lowerAdj: -20, upperAdj: null, workOnsite: 0, workRemote: 5, unitPrice: 600000, overtimeRate: 3800, deductionRate: 3800, supportFee: { enabled: true, company: '株式会社イプシロン', amount: 30000 } }],
   // 契約更新が必要(2026-09 時点で committedUntil が過去)の一覧・パネル表示確認用。
   // 超過/控除は未入力なので、単価 ÷ 基準時間の計算値((計算値)付き)が出る。プロジェクト継続(継続チェック
@@ -64,7 +64,7 @@ function nm(ym) { var p = ym.split('-'), y = +p[0], m = +p[1] + 1; if (m > 12) {
 function cd(c) { return c ? c : '待機'; }
 // 「適用中」の契約。開始月が当月(CM)以前で一番新しいもの
 function ga(h) { var a = null; h.forEach(function (e) { if (e.effectiveFrom <= CM && (!a || e.effectiveFrom > a.effectiveFrom)) a = e; }); return a; }
-// 契約更新(committedUntil)の表示情報。未定(無し)なら null(呼び出し側で「未設定」を出す)。
+// 契約状況(committedUntil)の表示情報。未定(無し)なら null(呼び出し側で「未設定」を出す)。
 // past: cm(当月)より前=契約更新が必要
 function committedInfo(committedUntil, cm) {
   if (!committedUntil) return null;
@@ -216,11 +216,10 @@ function rs(el, ap, nextFuture, h) {
     el.innerHTML = '<p class="text-xs text-subtle">契約が登録されていません</p>';
     return;
   }
-  var l1 = cd(ap.client) + ' ・ ' + TL[ap.type];
-  // プロジェクト継続の起点で数えた「2026年4月から ・ 6か月目」(契約タブの「期間」列と同じ。契約権限が無いリーダーにも見える)
+  // 出すのはプロジェクトと、プロジェクト継続の起点で数えた「2026年4月から ・ 6か月目」だけ(契約タブの「期間」列と同じ。契約権限が無いリーダーにも見える)
   var origin = projectStart(h || [], ap);
   var lp = periodFull(origin) + ' ・ ' + durationLabel(origin);
-  el.innerHTML = '<p class="text-sm font-semibold text-text">' + esc(l1) + '</p><p class="text-xs text-subtle">' + esc(lp) + '</p><p class="text-xs text-subtle">' + esc(dl(ap)) + '</p>';
+  el.innerHTML = '<p class="text-sm font-semibold text-text">' + esc(cd(ap.client)) + '</p><p class="text-xs text-subtle">' + esc(lp) + '</p>';
 }
 // rows: allRows()/classify() が返す { e, idx }[](idx は CT[名前] 配列内での本来の位置。編集ボタンの対象解決に使う)
 // ap: 適用中の契約(無ければ null)。cm: 当月(渡すと未来の行に「予定」チップを付ける)

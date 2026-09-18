@@ -3,7 +3,7 @@
    使い方: <script src="home-card.js"></script>（CrewNest Home.html の badges.js の後に追加）
    本体 src/features/utilization/ の React 化前の静的再現。カードの状態は "ok" 固定。
    「契約の情報追加」モック（実アプリ未実装。demo 専用）: 予定稼働などの既存 dl の下に「契約」見出し＋
-   契約更新・勤務形態・単価・精算単位・超過／控除の dl を追加する（先頭の sinceLabel 行はそのまま。契約更新は未定なら
+   契約状況・勤務形態・単価・精算単位・超過／控除の dl を追加する（先頭の sinceLabel 行はそのまま。契約状況は未定なら
    行を出さない。超過／控除は時間単価のときは行を出さない）。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/home-card.js
    ============================================================ */
@@ -71,7 +71,7 @@
           '<div>' +
             '<p class="text-[10.5px] font-semibold uppercase tracking-wide text-subtle">契約</p>' +
             '<dl class="mt-1.5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm" data-util-field="contractDl">' +
-              '<div class="contents" data-util-field="committedRow"><dt class="text-subtle">契約更新</dt><dd class="text-right text-text tabular-nums" data-util-field="committed"></dd></div>' +
+              '<div class="contents" data-util-field="committedRow"><dt class="text-subtle">契約状況</dt><dd class="text-right text-text tabular-nums" data-util-field="committed"></dd></div>' +
               '<dt class="text-subtle">勤務形態</dt><dd class="text-right text-text" data-util-field="workStyle"></dd>' +
               '<dt class="text-subtle">単価</dt><dd class="text-right text-text tabular-nums" data-util-field="unitPrice"></dd>' +
               '<div class="contents" data-util-field="settlementUnitRow"><dt class="text-subtle">精算単位</dt><dd class="text-right text-text tabular-nums" data-util-field="settlementUnit"></dd></div>' +
