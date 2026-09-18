@@ -961,7 +961,8 @@ CNTour.define('links', [
   [data-links-view="slim"] [data-link] .line-clamp-2 { display: none; }
   [data-links-view="slim"] [data-link] [data-edit-only].inline-flex.items-center.rounded-full { display: none !important; } /* 既定チップは詳細のみ */
   /* ピン: アイコン枠（セル中央の 4rem 幅）の右上に重ねる。枠の右端 = 50% + 2rem */
-  [data-links-view="slim"] [data-pin] { min-height: 2rem; min-width: 2rem; top: 0; right: auto; left: calc(50% + 2rem - 1.25rem); transform: translateY(-.5rem); background: var(--color-background-light); border: 1px solid var(--color-border); box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); }
+  [data-links-view="slim"] [data-pin] { min-height: 2rem; min-width: 2rem; top: 0; right: auto; left: calc(50% + 2rem - 1.25rem); transform: translateY(-.5rem); color: var(--color-subtle-light); }
+  [data-links-view="slim"] [data-pin][aria-pressed="true"] { color: var(--color-subtle); }
   [data-links-view="slim"] [data-pin] svg { width: 16px; height: 16px; }
   /* 鉛筆（編集中）: 枠の右下 */
   [data-links-view="slim"] [data-link-edit] { min-height: 2rem; min-width: 2rem; top: auto; bottom: auto; right: auto; left: calc(50% + 2rem - 1.25rem); top: 2.5rem; transform: none; background: var(--color-background-light); border: 1px solid var(--color-border); box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); }
@@ -969,6 +970,8 @@ CNTour.define('links', [
   /* ハンドル（編集中）: ホームと同じく枠の左上（left = 50% - 2rem + .5rem） */
   [data-links-view="slim"] [data-link-drag] { left: calc(50% - 1.5rem); }
   body.links-editing [data-links-view="slim"] [data-link] > a { padding: 0 !important; }
+  /* 編集中はピンを出さない（アプリの showPin={!editing} と同じ） */
+  body.links-editing [data-pin] { display: none !important; }
   [data-links-view="slim"] .grid.grid-cols-1.min-h-20 { min-height: 5rem; }
 </style>
 <script>
