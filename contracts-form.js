@@ -124,11 +124,13 @@ function sod(on) {
 }
 // プロジェクトが「待機」(空)のときは契約状況以下(契約状況〜支援費)を隠し、注釈を出す
 function updateStandby() {
-  var standby = DLG.querySelector('[data-ct-f="client"]').value === '';
+  var cl = DLG.querySelector('[data-ct-f="client"]').value;
+  var standby = cl === '';
   // 待機の注釈は出さない(依頼者の指示。待機のフォームは適用開始月とプロジェクトだけ)
   DLG.querySelector('[data-ct="standbyNote"]').style.display = 'none';
   DLG.querySelector('[data-ct="committedBlock"]').style.display = standby ? 'none' : '';
   DLG.querySelector('[data-ct="belowCommitted"]').style.display = standby ? 'none' : '';
+  DLG.querySelector('[data-ct="clientTriggerLabel"]').textContent = standby ? '待機' : cl;
 }
 // 開始月がこの契約(ef)より前で最も近い契約(編集中の行 editingEf 自身は除く)
 function findPrevEntry(ef, editingEf) {
@@ -153,9 +155,48 @@ function updatePrevProjectCheck() {
   if (!show) { scp(false); return; }
   scp(CNContracts.sameProject(prev.client, cl));
 }
+// プロジェクト選択(検索付き一覧)。一覧は「待機」を常に先頭に出し、以降は CLIENT_OPTIONS を
+// 客先名・プロジェクト名の部分一致で絞る。選択中の行は太字+プライマリ色+チェック
+function renderClientOptions(query) {
+  var list = DLG.querySelector('[data-ct-f="clientOptions"]');
+  var cur = DLG.querySelector('[data-ct-f="client"]').value;
+  var q = (query || '').toLowerCase();
+  var matched = CLIENT_OPTIONS.filter(function (c) { return c.toLowerCase().indexOf(q) !== -1; });
+  function row(value, label) {
+    var selected = value === cur;
+    var check = selected ? '<svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path></svg>' : '';
+    return '<div role="option" aria-selected="' + selected + '" data-ct-client-opt="' + esc(value) + '" class="flex cursor-pointer items-center justify-between px-3 py-2 text-sm rounded-md hover:bg-black/[0.08] ' + (selected ? 'font-medium text-primary' : 'text-text') + '">' +
+      '<span class="truncate">' + esc(label) + '</span>' + check + '</div>';
+  }
+  var html = row('', '待機');
+  html += matched.length ? matched.map(function (c) { return row(c, c); }).join('') : '<p class="px-3 py-6 text-center text-sm text-subtle-light">該当するプロジェクトがありません</p>';
+  list.innerHTML = html;
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function isClientListOpen() { return !DLG.querySelector('[data-ct-f="clientList"]').hidden; }
+function openClientList() {
+  var search = DLG.querySelector('[data-ct-f="clientSearch"]');
+  search.value = '';
+  renderClientOptions('');
+  DLG.querySelector('[data-ct-f="clientList"]').hidden = false;
+  DLG.querySelector('[data-ct-f="clientTrigger"]').setAttribute('aria-expanded', 'true');
+  search.focus();
+}
+function closeClientList() {
+  DLG.querySelector('[data-ct-f="clientList"]').hidden = true;
+  DLG.querySelector('[data-ct-f="clientTrigger"]').setAttribute('aria-expanded', 'false');
+}
+function selectClient(value) {
+  DLG.querySelector('[data-ct-f="client"]').value = value;
+  closeClientList();
+  updateStandby();
+  updatePrevProjectCheck();
+}
 var YEAR_OPTS = ['2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'].map(function (y) { return '<option value="' + y + '">' + y + '年</option>'; }).join('');
 var MONTH_OPTS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(function (m) { return '<option value="' + m + '">' + parseInt(m, 10) + '月</option>'; }).join('');
 var SETTLEMENT_UNIT_OPTS = CNContracts.SETTLEMENT_UNITS.map(function (u) { return '<option value="' + u + '">' + CNContracts.SETTLEMENT_UNIT_LABELS[u] + '</option>'; }).join('');
+// プロジェクト選択(検索付き一覧)の選択肢。「待機」(空文字)は一覧側で別途常に先頭へ出すのでここには含めない
+var CLIENT_OPTIONS = ['株式会社アルファ ／ 基幹刷新PJ', '株式会社アルファ ／ 保守PJ', 'ベータ商事', 'ガンマ技研', 'デルタシステムズ'];
 // モーダルの器(body 直下に 1 つだけ)。PC 中央/モバイル ボトムシートの切り替えは home-card.js の buildDetail() と同じ構成
 function buildDialog() {
   var wrap = document.createElement('div');
@@ -181,14 +222,19 @@ function buildDialog() {
         '</div>' +
         '<div>' +
           '<label class="mb-2 block text-[10.5px] font-semibold uppercase tracking-wide text-subtle">プロジェクト</label>' +
-          '<select data-ct-f="client" class="w-full rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' +
-            '<option value="">待機</option>' +
-            '<option value="株式会社アルファ ／ 基幹刷新PJ">株式会社アルファ ／ 基幹刷新PJ</option>' +
-            '<option value="株式会社アルファ ／ 保守PJ">株式会社アルファ ／ 保守PJ</option>' +
-            '<option value="ベータ商事">ベータ商事</option>' +
-            '<option value="ガンマ技研">ガンマ技研</option>' +
-            '<option value="デルタシステムズ">デルタシステムズ</option>' +
-          '</select>' +
+          '<div data-ct="clientPicker" class="relative">' +
+            '<input type="hidden" data-ct-f="client" value="">' +
+            '<button type="button" data-ct-f="clientTrigger" aria-haspopup="listbox" aria-expanded="false" class="w-full flex items-center justify-between rounded-lg border border-border bg-background-light px-2 py-1.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">' +
+              '<span data-ct="clientTriggerLabel">待機</span>' +
+              '<svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M480-360 280-560h400L480-360Z"></path></svg>' +
+            '</button>' +
+            '<div data-ct-f="clientList" hidden class="absolute z-[var(--z-dropdown)] mt-1 w-full rounded-lg border border-border bg-background-light shadow-md">' +
+              '<div class="p-2 border-b border-border">' +
+                '<input type="search" data-ct-f="clientSearch" placeholder="客先名・プロジェクト名で検索" aria-label="プロジェクトを検索" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50">' +
+              '</div>' +
+              '<div data-ct-f="clientOptions" role="listbox" aria-label="プロジェクト" class="max-h-60 overflow-y-auto p-1"></div>' +
+            '</div>' +
+          '</div>' +
           '<div data-ct="continuesWrap" style="display:none" class="mt-2">' +
             '<div class="flex items-center justify-between">' +
               '<span class="text-sm text-text">前の契約からの継続として扱う</span>' +
@@ -381,6 +427,11 @@ function buildDialog() {
     if (sfBtn) { ssf(sfBtn.getAttribute('aria-checked') !== 'true'); return; }
     var cpBtn = e.target.closest('[data-ct-f="continuesPrevious"]');
     if (cpBtn) { scp(!cpOn()); return; }
+    var trigger = e.target.closest('[data-ct-f="clientTrigger"]');
+    if (trigger) { isClientListOpen() ? closeClientList() : openClientList(); return; }
+    var opt = e.target.closest('[data-ct-client-opt]');
+    if (opt) { selectClient(opt.getAttribute('data-ct-client-opt')); return; }
+    if (isClientListOpen() && !e.target.closest('[data-ct="clientPicker"]')) closeClientList();
   });
   wrap.addEventListener('change', function (e) {
     if (e.target.matches('[data-ct-f="type"]')) { gv(e.target.value); return; }
@@ -388,17 +439,22 @@ function buildDialog() {
     if (e.target.matches('[data-ct-f="endYear"]')) { seh(); return; }
     if (e.target.matches('[data-ct-f="unitPriceUnit"]')) { uo(); refreshODPreview(); return; }
     if (e.target.matches('[data-ct-f="rounding"]')) { refreshODPreview(); return; }
-    if (e.target.matches('[data-ct-f="client"]')) { updateStandby(); updatePrevProjectCheck(); return; }
     if (e.target.matches('[data-ct-f="effYear"],[data-ct-f="effMonth"]')) { updatePrevProjectCheck(); return; }
   });
   wrap.addEventListener('input', function (e) {
     if (e.target.matches('[data-ct-f="unitPrice"],[data-ct-f="lower"],[data-ct-f="upper"],[data-ct-f="base"]')) refreshODPreview();
+    if (e.target.matches('[data-ct-f="clientSearch"]')) renderClientOptions(e.target.value);
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !wrap.hidden) cf(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (isClientListOpen()) { closeClientList(); return; }
+    if (!wrap.hidden) cf();
+  });
   return wrap;
 }
 function cf() {
   if (!DLG || DLG.hidden) return;
+  closeClientList();
   DLG.hidden = true;
   DLG.removeAttribute('data-editing');
   he();
