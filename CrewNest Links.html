@@ -198,12 +198,13 @@
                  class="w-full rounded-lg border border-border bg-background-light py-2 pl-10 pr-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
         </div>
         <button type="button" data-link-new data-edit-only class="hidden shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border h-10 px-5 text-sm font-medium text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:inline-flex">リンクを追加</button>
+        <label class="flex min-h-12 shrink-0 cursor-pointer items-center gap-2 px-1 text-sm text-subtle"><span>詳細</span><button type="button" role="switch" aria-checked="false" aria-label="詳細を表示" data-links-view-toggle class="relative inline-flex h-[22px] w-10 shrink-0 rounded-full border-2 border-transparent bg-border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><span data-knob class="pointer-events-none inline-block h-[18px] w-[18px] translate-x-0 rounded-full bg-background-light shadow-sm transition-transform duration-200"></span></button></label>
         <button type="button" data-links-edit-toggle aria-pressed="false" class="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full h-10 px-5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 border border-border text-subtle hover:bg-black/[0.08] active:bg-black/[0.12]">編集</button>
       </div>
 
       <p data-links-reorder-note hidden class="mb-3 text-xs text-subtle">並び替えは検索を解除して行ってください</p>
 
-      <div data-links-pane class="min-h-0 flex-1">
+      <div data-links-pane data-links-view="slim" class="min-h-0 flex-1">
         <div class="flex flex-col gap-6">
 
           <section data-cat-section="internal" data-cat-name="社内サービス" class="relative rounded-lg border border-border bg-background-light p-4">
@@ -326,7 +327,7 @@
                 </a>
                 <button type="button" data-link-drag data-edit-only aria-label="並び替え" class="inline-flex h-7 w-7 cursor-grab touch-none items-center justify-center rounded-full border border-border bg-background-light text-subtle shadow-sm active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 absolute -top-3 left-2 z-10"><svg viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"/></svg></button>
                 <button type="button" data-link-edit data-edit-only aria-label="編集" class="absolute right-12 top-1/2 -translate-y-1/2 inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
-                <button type="button" data-pin aria-pressed="false" aria-label="クイックリンクに追加"
+                <button type="button" data-pin data-tour="links-pin" aria-pressed="false" aria-label="クイックリンクに追加"
                         class="absolute right-0 top-1/2 -translate-y-1/2 inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                   <svg data-pin-on hidden viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Z"/></svg><svg data-pin-off viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
                 </button>
@@ -939,10 +940,63 @@
 CNTour.define('links', [
   { title: 'リンク', body: '社内サービスや各種申請、外部サイトなど、管理者がまとめたリンク集です。カードを押すと新しいタブで開きます。カード右上のピンで、ホームのクイックリンクに追加したり削除したりできます。' },
   { target: '[data-tour="links-search"]', title: '検索', body: '名前や説明で絞り込めます。' },
-  // target なし（画面中央）。案内バーを廃止したため、ピンとホームのクイックリンクの関係はここだけで説明する
-  { title: 'クイックリンク', body: 'カード右上のピンで、ホームのクイックリンクに追加したり削除したりできます。並び順はホーム画面のクイックリンクカードの「並び替え」から変えられます。' },
+  // 最初のカードのピンを指す（アプリの linksTour と同じ）
+  { target: '[data-tour="links-pin"]', title: 'クイックリンク', body: 'ピンを刺したリンクはホームのクイックリンクに並びます。並び順はホームのクイックリンクカードの「並び替え」から変えられます。' },
   { target: '[aria-label="操作ガイドを見る"]', title: 'いつでも見返せます', body: 'このボタンから、いつでもこのガイドをもう一度表示できます。' }
 ]);
+</script>
+<style>
+  /* スリム: ホームのクイックリンクと同じタイル（64px 角のアイコン枠＋10px ラベル）。詳細トグル ON で従来のカード。
+     ピン・鉛筆は行内補助操作の 32dp（§1 公認例外）、ハンドルはホームと同じ dragHandleChip（28dp） */
+  [data-links-view="slim"] .grid.grid-cols-1 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem .5rem; padding-top: .625rem; } /* 上に重なるピンの分 */
+  @media (min-width: 768px) { [data-links-view="slim"] .grid.grid-cols-1 { grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: 1rem .5rem; } }
+  [data-links-view="slim"] [data-link] > a { flex-direction: column; align-items: center; gap: .375rem; padding: 0 !important; border: 0; background: transparent; box-shadow: none; border-radius: .5rem; }
+  [data-links-view="slim"] [data-link] > a:hover { background: transparent; }
+  [data-links-view="slim"] [data-link] > a > span:first-child { height: 4rem; width: 4rem; border-radius: .5rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); transition: box-shadow .15s; font-size: .875rem; overflow: hidden; }
+  [data-links-view="slim"] [data-link] > a:hover > span:first-child { box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1); background-color: var(--color-background-light); }
+  [data-links-view="slim"] [data-link] > a > span:first-child img { width: 48px; height: 48px; }
+  [data-links-view="slim"] [data-link] > a > span.min-w-0 { width: 100%; flex: none; }
+  [data-links-view="slim"] [data-link] .text-base { font-size: 10px; line-height: 1.25; font-weight: 500; text-align: center; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  [data-links-view="slim"] [data-link] .flex-wrap { display: block; }
+  [data-links-view="slim"] [data-link] .line-clamp-2 { display: none; }
+  [data-links-view="slim"] [data-link] [data-edit-only].inline-flex.items-center.rounded-full { display: none !important; } /* 既定チップは詳細のみ */
+  /* ピン: アイコン枠（セル中央の 4rem 幅）の右上に重ねる。枠の右端 = 50% + 2rem */
+  [data-links-view="slim"] [data-pin] { min-height: 2rem; min-width: 2rem; top: 0; right: auto; left: calc(50% + 2rem - 1.25rem); transform: translateY(-.5rem); color: var(--color-subtle-light); }
+  [data-links-view="slim"] [data-pin][aria-pressed="true"] { color: var(--color-subtle); }
+  [data-links-view="slim"] [data-pin] svg { width: 16px; height: 16px; }
+  /* 鉛筆（編集中）: 枠の右下 */
+  [data-links-view="slim"] [data-link-edit] { min-height: 2rem; min-width: 2rem; top: auto; bottom: auto; right: auto; left: calc(50% + 2rem - 1.25rem); top: 2.5rem; transform: none; background: var(--color-background-light); border: 1px solid var(--color-border); box-shadow: 0 1px 2px 0 rgb(0 0 0 / .05); }
+  [data-links-view="slim"] [data-link-edit] svg { width: 16px; height: 16px; }
+  /* ハンドル（編集中）: ホームと同じく枠の左上（left = 50% - 2rem + .5rem） */
+  [data-links-view="slim"] [data-link-drag] { left: calc(50% - 1.5rem); }
+  body.links-editing [data-links-view="slim"] [data-link] > a { padding: 0 !important; }
+  /* 編集中はピンを出さない（アプリの showPin={!editing} と同じ） */
+  body.links-editing [data-pin] { display: none !important; }
+  [data-links-view="slim"] .grid.grid-cols-1.min-h-20 { min-height: 5rem; }
+</style>
+<script>
+(function () {
+  var KEY = 'cn-links-view';
+  var pane = document.querySelector('[data-links-pane]');
+  var toggle = document.querySelector('[data-links-view-toggle]');
+  var knob = toggle.querySelector('[data-knob]');
+  function apply(detail) {
+    pane.setAttribute('data-links-view', detail ? 'detail' : 'slim');
+    toggle.setAttribute('aria-checked', detail ? 'true' : 'false');
+    toggle.classList.toggle('bg-primary', detail);
+    toggle.classList.toggle('bg-border', !detail);
+    knob.classList.toggle('translate-x-[18px]', detail);
+    knob.classList.toggle('translate-x-0', !detail);
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved === 'detail');
+  toggle.addEventListener('click', function () {
+    var next = toggle.getAttribute('aria-checked') !== 'true';
+    apply(next);
+    try { localStorage.setItem(KEY, next ? 'detail' : 'slim'); } catch (e) {}
+  });
+})();
 </script>
 </body>
 </html>
