@@ -2305,9 +2305,6 @@
     <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">リンク</p><p class="mt-0.5 text-xs text-subtle">リンクの登録・並び替えはリンクページで行います</p></div>
     <a href="CrewNest Links.html?edit=1" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</a></div>
                 <div class="flex items-center gap-4 py-4">
-    <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">定期実行</p></div>
-    <button type="button"  class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button></div>
-                <div class="flex items-center gap-4 py-4">
     <div class="min-w-0 flex-1"><p class="text-sm font-semibold text-text">休業日カレンダー</p><p data-bizcal-summary class="mt-0.5 text-xs text-subtle">2026年: 休業日 22日（会社休業日 2日・営業日に変更 2日）</p></div>
     <button type="button" data-open-slide="business-calendar" class="hidden md:inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08]">編集</button>
     <button type="button" data-open-slide="business-calendar-m" class="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-subtle transition-colors hover:bg-black/[0.08] md:hidden">編集</button></div>
@@ -7579,7 +7576,6 @@ document.addEventListener('click', function(e){
     { label: 'システム', items: [
       { key: 'settings.approval', label: '承認設定', desc: '既定の上長', scoped: false },
       { key: 'settings.quickLinks', label: 'リンク', desc: 'カテゴリ・リンクの作成・並び順・アイコン', scoped: false },
-      { key: 'settings.tasks', label: '定期実行', desc: 'タスクの ON/OFF・手動実行。会社をまたぐ共通処理のため管理者だけが扱う', scoped: false, adminOnly: true },
       { key: 'settings.holidays', label: '休業日カレンダー', desc: '休業日・営業日の上書き', scoped: false },
       { key: 'settings.notifications', label: '通知設定', desc: '強制配信・Teams 申請通知・テストメール', scoped: false },
       { key: 'settings.integrations', label: '外部連携', desc: 'M365 連携・ユーザー取り込み・Bot 設定', scoped: false },
