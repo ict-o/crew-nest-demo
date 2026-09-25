@@ -14,6 +14,15 @@
 
   var PREFIX = 'cn-tour-seen:';
   var state = { key: null, base: [], steps: [], i: 0, active: false, el: null };
+  var namedTours = {};
+
+  function finalStep(opts) {
+    return {
+      target: (opts && opts.finalTarget) || '.cn-tour-info, .cn-tour-fab',
+      title: 'いつでも見返せます',
+      body: 'このボタンから、いつでもこのガイドをもう一度表示できます。'
+    };
+  }
 
   var STYLE = [
     '#cn-tour-blocker{position:fixed;inset:0;z-index:300;cursor:pointer;}',
@@ -66,6 +75,17 @@
       n = n.parentElement;
     }
     return false;
+  }
+  /* 対象が固定ダイアログ内の内部スクロール領域（overflow-y-auto）に入っているとき、
+     その祖先要素を返す。window スクロールでは対象を画面内に入れられないため show() で使う */
+  function scrollableAncestor(el) {
+    var n = el.parentElement;
+    while (n && n !== document.body) {
+      var cs = getComputedStyle(n);
+      if ((cs.overflowY === 'auto' || cs.overflowY === 'scroll') && n.scrollHeight > n.clientHeight) return n;
+      n = n.parentElement;
+    }
+    return null;
   }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function $(id) { return document.getElementById(id); }
@@ -231,6 +251,17 @@
     $('cn-tip-next').textContent = i === state.steps.length - 1 ? '完了' : '次へ';
 
     var el = state.el;
+    // 固定ダイアログ（モーダル）内の内部スクロール領域にある対象は window スクロールが効かないため、
+    // コンテナ内で scrollIntoView する（他ページの通常フローには scroller が無いため影響しない）
+    if (el && isFixed(el)) {
+      var scroller = scrollableAncestor(el);
+      if (scroller) {
+        var rEl = el.getBoundingClientRect(), rSc = scroller.getBoundingClientRect();
+        if (rEl.top < rSc.top || rEl.bottom > rSc.bottom) el.scrollIntoView({ block: 'nearest' });
+        place();
+        return;
+      }
+    }
     if (el && !isFixed(el)) {
       var r = el.getBoundingClientRect(), vh = window.innerHeight;
       if (r.top < 80 || r.bottom > vh - 90) {
@@ -301,11 +332,7 @@
     define: function (key, steps, opts) {
       state.key = key;
       state.opts = opts || {};
-      state.base = steps.concat([{
-        target: '.cn-tour-info, .cn-tour-fab',
-        title: 'いつでも見返せます',
-        body: 'このボタンから、いつでもこのガイドをもう一度表示できます。'
-      }]);
+      state.base = steps.concat([finalStep(opts)]);
       ready(function () {
         injectButtons();
         var seen = false;
@@ -313,6 +340,29 @@
         if (!seen) setTimeout(start, 650);
       });
     },
-    start: function () { start(); }
+    start: function () { start(); },
+    /* ページ常設ツアー（define）とは別に、モーダル内のボタン等から手動で始める名前付きツアーを登録する。
+       ページの自動起動・「操作ガイド」ボタンの注入は行わない。既存ページの define の挙動は変えない */
+    defineNamed: function (key, steps, opts) {
+      namedTours[key] = { steps: steps.concat([finalStep(opts)]), opts: opts || {} };
+    },
+    startNamed: function (key) {
+      if (state.active) return;
+      var t = namedTours[key];
+      if (!t || !t.steps.length) return;
+      var prev = { key: state.key, base: state.base, opts: state.opts };
+      var userOnClose = t.opts.onClose;
+      state.key = key;
+      state.base = t.steps;
+      state.opts = {
+        onClose: function () {
+          if (userOnClose) userOnClose();
+          state.key = prev.key;
+          state.base = prev.base;
+          state.opts = prev.opts;
+        }
+      };
+      start();
+    }
   };
 })();
