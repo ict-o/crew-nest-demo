@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREW NEST — 勤怠</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#042154', darkest: '#021640', mid: '#0d3b86', bright: '#2D5BBA', lightest: '#EEF3FF' },
+          accent: { DEFAULT: '#C6A75E', dark: '#7A6030', bright: '#E8C66A', light: '#F5F1E8', surface: '#EDE8DE', border: '#DDD8CC', lightest: '#FDFCF8' },
+          subtle: { DEFAULT: '#5C6B8A', light: '#8A99B8' },
+          background: { DEFAULT: '#F7F8FA', light: '#FFFFFF' },
+          border: { DEFAULT: '#E3E6ED' },
+          text: { DEFAULT: '#333333' },
+          success: { DEFAULT: '#3D7A56', surface: '#EDF5F0', border: '#C5DFD0', strong: '#5A9E74', fill: '#7CC49A', subtle: '#B8E0A0' },
+          danger: { DEFAULT: '#995C6B', fill: '#F09898', subtle: '#E8B0BC', surface: '#F5EDEF', border: '#E5CDD3' },
+          urgent: '#dc2626',
+          warning: { DEFAULT: '#8A7340', fill: '#F0C060', subtle: '#E8D89C', surface: '#F5F1E8', border: '#E5D9C0' },
+          info: { DEFAULT: '#3730A3', surface: '#E0E7FF', border: '#C7D2FE' },
+          neutral: { surface: '#F0F1F4', border: '#D5D9E3' },
+          muted: { DEFAULT: '#6B7280', surface: '#F3F4F6', border: '#D5D7DC' },
+        },
+        borderColor: { DEFAULT: '#E3E6ED' },
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --color-primary: #042154; --color-accent: #C6A75E; --color-border: #E3E6ED;
+    --color-subtle: #5C6B8A; --color-subtle-light: #8A99B8;
+    --z-header: 50; --z-tooltip: 100; --z-pagination: 40; --z-dropdown: 60;
+    --sidebar-w: 280px; --bottom-nav-h: 3rem;
+  }
+  html, body { background: #F7F8FA; }
+  body { color: #171717; font-family: Arial, Helvetica, sans-serif; }
+  .sidebar-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .sidebar-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .nav-ico { width: 28px; height: 28px; flex-shrink: 0; filter: brightness(0) invert(1); }
+  .mask { display:block; background-color: currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
+  [data-panel]:not(.active) { display: none !important; }
+  .tab-btn { position:relative; display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; border-bottom:2px solid transparent; color: var(--color-subtle); transition: color .15s, border-color .15s; cursor:pointer; background:none; }
+  .tab-btn:hover { border-color: var(--color-border); color:#333; }
+  .tab-btn.is-active { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  .tab-btn-primary { padding: .75rem 1rem; font-size:.875rem; font-weight:500; }
+  .tab-btn-secondary { padding: .625rem .75rem; font-size:.75rem; font-weight:500; }
+  .tab-btn.is-active > span.rounded-full { background-color: #EEF3FF !important; color: #042154 !important; font-weight: 500; }
+
+  .admin-tab { display:flex; align-items:center; padding:.5rem .75rem; font-size:.875rem; font-weight:500; color: var(--color-subtle); border-radius:.375rem; cursor:pointer; border-right:3px solid transparent; }
+  .admin-tab.is-active { background: rgba(4,33,84,0.06); color: var(--color-primary); border-right-color: var(--color-primary); font-weight:700; }
+</style>
+<link rel="stylesheet" href="demo-watermark.css">
+<script src="demo-banner.js"></script>
+</head>
+<body>
+
+<header class="fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between bg-primary px-4 shadow-md md:hidden">
+  <button type="button" class="-ml-2 inline-flex h-12 min-w-0 flex-1 items-center gap-2 rounded-full bg-transparent px-2 transition-colors hover:bg-white/10">
+    <img src="public/icons/attendance.png" alt="" aria-hidden="true" class="h-7 w-7 shrink-0" style="filter:brightness(0) invert(1);">
+    <span aria-hidden="true" class="truncate text-lg font-bold tracking-wide text-white">勤怠</span>
+  </button>
+  <div class="flex shrink-0 items-center gap-0.5">
+    <button type="button" aria-label="通知" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10">
+      <img src="public/icons/notification.png" alt="" style="width:24px;height:24px;object-fit:contain;filter:brightness(0) invert(1);">
+      <span class="absolute right-1.5 top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">3</span>
+    </button>
+    <button type="button" aria-label="アカウント" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white/10">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田</span>
+    </button>
+  </div>
+</header>
+
+<aside class="hidden md:flex fixed inset-y-0 left-0 z-[var(--z-header)] w-[280px] flex-col bg-primary shadow-md">
+  <div class="flex items-center justify-between px-4 py-4">
+    <div class="flex min-w-0 flex-1 items-center gap-2">
+      <span class="rounded-lg p-1"><img src="public/images/logo.png" alt="" aria-hidden="true" class="h-10 w-auto shrink-0" style="filter: brightness(0) invert(1);"></span>
+      <span class="truncate text-lg font-bold text-white">CREW NEST</span>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+      <button type="button" aria-label="通知" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10">
+        <img src="public/icons/notification.png" alt="" style="width:22px;height:22px;object-fit:contain;filter:brightness(0) invert(1);">
+        <span class="absolute right-1 top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.55rem] font-bold text-primary">3</span>
+      </button>
+      <button type="button" aria-label="サイドバーを閉じる" class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/60 hover:bg-white/10 hover:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="sidebar-scroll flex-1 overflow-y-auto px-3 py-2" aria-label="メインナビゲーション">
+    <div class="space-y-1">
+      <a href="CrewNest Home.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/home.png" alt="" class="nav-ico"><span class="truncate">ホーム</span>
+
+      </a>
+      <div>
+
+      <a href="CrewNest Quests.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/quest.png" alt="" class="nav-ico"><span class="truncate">クエスト</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+      </a>
+        <div class="grid transition-[grid-template-rows] duration-200 ease-in-out grid-rows-[0fr]" style="overflow:hidden;">
+          <div class="min-h-0 overflow-hidden">
+
+        <div class="ml-3 border-l border-white/30 pb-1 pt-0.5 space-y-0.5">
+
+          <a href="CrewNest My Achievements.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">承認状況</span>
+            <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">4</span>
+          </a>
+          <a href="CrewNest Quests.html"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">クエストボード</span>
+
+          </a>
+          <a href="CrewNest Quests.html#ranking"  class="flex items-center rounded-lg py-2 pl-7 pr-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="truncate">ランキング</span>
+
+          </a>
+        </div>
+          </div>
+        </div>
+      </div>
+      <a href="CrewNest Proposals.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/proposal.png" alt="" class="nav-ico"><span class="truncate">アイデア</span>
+
+      </a>
+      <a href="CrewNest Expense Claims.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/apply.png" alt="" class="nav-ico"><span class="truncate">経費精算</span>
+
+      </a>
+      <a href="CrewNest Attendance.html" aria-current="page" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium bg-white/20 text-white">
+        <img src="public/icons/attendance.png" alt="" class="nav-ico"><span class="truncate">勤怠</span>
+      </a>
+      <a href="CrewNest Announcements.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/megaphone.png" alt="" class="nav-ico"><span class="truncate">お知らせ</span>
+      </a>
+      <a href="CrewNest Documents.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/airplane.png" alt="" class="nav-ico"><span class="truncate">書類提出</span>
+        <span class="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-primary">1</span>
+      </a>
+      <a href="CrewNest Links.html" class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/link.png" alt="" class="nav-ico"><span class="truncate">リンク</span>
+      </a>
+    </div>
+    <div class="mt-2 border-t border-white/10 pt-2">
+
+      <a href="CrewNest Admin.html"  class="relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+        <img src="public/icons/management.png" alt="" class="nav-ico"><span class="truncate">管理</span>
+
+      </a>
+    </div>
+  </nav>
+  <!-- 検索 -->
+  <div class="border-t border-white/10 px-3 py-2">
+    <button type="button" data-open-dialog="search" class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white">
+      <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </span>
+      <span class="truncate">検索</span>
+    </button>
+  </div>
+  <div class="border-t border-white/10 px-3 py-3">
+    <button type="button" data-tour="user-menu" class="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-white/10">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-mid text-sm font-bold text-white">田中</span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-sm font-semibold text-white">田中 佑樹</span>
+        <span class="block truncate text-xs text-white/60">tanaka@ict-o.com</span>
+      </span>
+      <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 shrink-0 text-white/60"><path d="M12 20q-.825 0-1.412-.587T10 18t.588-1.412T12 16t1.413.588T14 18t-.587 1.413T12 20m0-6q-.825 0-1.412-.587T10 12t.588-1.412T12 10t1.413.588T14 12t-.587 1.413T12 14m0-6q-.825 0-1.412-.587T10 6t.588-1.412T12 4t1.413.588T14 6t-.587 1.413T12 8"></path></svg>
+    </button>
+  </div>
+</aside>
+<div class="md:ml-[280px]">
+  <main class="mx-auto max-w-[1440px] px-4 py-3 pb-[calc(var(--bottom-nav-h)+4.5rem)] md:pb-16 pt-[calc(3.5rem+0.75rem)] md:p-6 md:pt-6">
+
+    <div class="flex min-h-0 flex-col" data-att-page>
+      <div class="mb-4 hidden items-center justify-between gap-3 md:flex">
+        <h1 class="text-2xl font-bold text-text">勤怠</h1>
+        <button type="button" data-att-export class="inline-flex h-10 items-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50" data-tour="att-export"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>作業報告書を出力</button>
+      </div>
+
+      <div class="flex items-end gap-2 border-b border-border" data-tour="att-tabs">
+        <div class="flex min-w-0 flex-1 gap-1" role="tablist" aria-label="勤怠の表示切替">
+          <button type="button" role="tab" aria-selected="true" data-tabgroup="primary" data-tabkey="month" class="tab-btn tab-btn-primary is-active">勤怠</button>
+          <button type="button" role="tab" aria-selected="false" data-tabgroup="primary" data-tabkey="settings" class="tab-btn tab-btn-primary">設定</button>
+        </div>
+        <button type="button" data-open-slide="att-notes" data-att-actions class="mb-1 inline-flex h-10 items-center gap-2 rounded-full border border-border bg-background-light px-5 text-sm font-medium text-primary transition-colors hover:bg-black/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>その他事項</button>
+      </div>
+
+      <!-- ================= 勤怠（月次） ================= -->
+      <div data-panel="month" class="active mt-4 flex flex-col gap-4">
+        <!-- 月切替 -->
+        <div class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-background-light px-3 py-2 shadow-sm" data-tour="att-month">
+          <div class="flex items-center gap-1" role="group" aria-label="対象年月">
+            <button type="button" aria-label="前の月" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+            <span class="mx-1 h-6 w-px bg-border" aria-hidden="true"></span>
+            <p class="inline-flex items-center gap-2 px-2 text-base font-bold text-text"><span class="text-primary"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg></span>2026年9月</p>
+            <button type="button" aria-label="次の月" disabled class="inline-flex h-10 w-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08] disabled:cursor-not-allowed disabled:opacity-[0.38]"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+          </div>
+          <p class="px-2 text-xs text-subtle">所定 8:00／日（契約条件より）・ 深夜 22:00〜 ・ 株式会社アルファ 基幹刷新PJ</p>
+        </div>
+
+        <!-- 月次サマリ -->
+        <div class="grid grid-cols-3 gap-2 md:grid-cols-6 md:gap-3" data-tour="att-summary">
+          <div class="rounded-lg border border-border bg-background-light p-2.5 shadow-sm md:p-3">
+            <p class="flex items-center gap-1 text-[11px] text-subtle"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" class="shrink-0 text-primary" aria-hidden="true"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg><span class="truncate">作業日数</span></p>
+            <p class="mt-1 text-lg font-bold tabular-nums text-text md:text-xl">11<span class="text-xs font-medium text-subtle"> 日</span></p>
+            <p class="text-[10px] text-subtle md:text-xs">出社 2日</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-2.5 shadow-sm md:p-3">
+            <p class="flex items-center gap-1 text-[11px] text-subtle"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" class="shrink-0 text-primary" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg><span class="truncate">実働</span></p>
+            <p class="mt-1 text-lg font-bold tabular-nums text-text md:text-xl">90:47</p>
+            <p class="text-[10px] text-subtle md:text-xs">残り営業日 9日</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-2.5 shadow-sm md:p-3">
+            <p class="flex items-center gap-1 text-[11px] text-subtle"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" class="shrink-0 text-primary" aria-hidden="true"><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg><span class="truncate">普通残業</span></p>
+            <p class="mt-1 text-lg font-bold tabular-nums text-text md:text-xl">4:30</p>
+            <p class="text-[10px] text-subtle md:text-xs">45h まで 40:30</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-2.5 shadow-sm md:p-3">
+            <p class="flex items-center gap-1 text-[11px] text-subtle"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" class="shrink-0 text-primary" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg><span class="truncate">深夜残業</span></p>
+            <p class="mt-1 text-lg font-bold tabular-nums text-text md:text-xl">1:10</p>
+            <p class="text-[10px] text-subtle md:text-xs">22:00 以降</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-2.5 shadow-sm md:p-3">
+            <p class="flex items-center gap-1 text-[11px] text-subtle"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" class="shrink-0 text-primary" aria-hidden="true"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg><span class="truncate">交通費</span></p>
+            <p class="mt-1 text-lg font-bold tabular-nums text-primary md:text-xl">¥13,520</p>
+            <p class="text-[10px] text-subtle md:text-xs">定期 ¥12,000</p>
+          </div>
+          <div class="rounded-lg border border-border bg-background-light p-2.5 shadow-sm md:p-3">
+            <p class="flex items-center gap-1 text-[11px] text-subtle"><svg viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" class="shrink-0 text-primary" aria-hidden="true"><path d="M784-120 530-374l56-56 254 254-56 56Zm-546-28q-60-60-89-135t-29-153q0-78 29-152t89-134q60-60 134.5-89.5T525-841q78 0 152.5 29.5T812-722L238-148Z"/></svg><span class="truncate">有休</span></p>
+            <p class="mt-1 text-lg font-bold tabular-nums text-text md:text-xl">1<span class="text-xs font-medium text-subtle"> 日</span></p>
+            <p class="text-[10px] text-subtle md:text-xs">申請 2日（有休CSV）</p>
+          </div>
+        </div>
+
+        <!-- 確認事項（タップで該当日へ） -->
+        <div class="flex flex-col gap-2" aria-label="確認事項" data-att-warnings></div>
+
+        <!-- 勤務表 -->
+        <div class="rounded-lg border border-border bg-background-light shadow-sm" data-tour="att-table">
+          <div class="flex items-center justify-between gap-3 px-4 py-3"><h2 class="text-base font-semibold text-text">勤務表</h2></div>
+          <!-- モバイル（カード） -->
+          <div class="flex flex-col gap-2 border-t border-border p-3 md:hidden" data-att-list-mobile></div>
+          <!-- デスクトップ（表） -->
+          <div class="hidden overflow-x-auto overscroll-x-contain border-t border-border md:block">
+            <table class="w-full min-w-[1000px] table-fixed text-sm">
+              <thead><tr class="border-b border-border text-xs text-subtle [&>th]:whitespace-nowrap">
+                <th data-att-selcol class="w-8 px-2 py-2.5 text-left font-medium" hidden><span class="sr-only">貼り付け先</span></th>
+                <th class="w-48 px-3 py-2.5 text-left font-medium">日付</th>
+                <th class="w-24 px-3 py-2.5 text-left font-medium">種別</th>
+                <th class="w-20 px-3 py-2.5 text-right font-medium">開始</th>
+                <th class="w-20 px-3 py-2.5 text-right font-medium">終了</th>
+                <th class="w-20 px-3 py-2.5 text-right font-medium">休憩</th>
+                <th class="w-20 px-3 py-2.5 text-right font-medium">実働</th>
+                <th class="w-24 px-3 py-2.5 text-right font-medium">残業</th>
+                <th class="w-36 px-3 py-2.5 text-left font-medium">場所・交通費</th>
+                <th class="px-3 py-2.5 text-left font-medium">作業内容</th>
+                <th class="w-20 px-3 py-2.5 text-right font-medium"><span class="sr-only">操作</span></th>
+              </tr></thead>
+              <tbody data-att-list-desktop></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- モバイル: 見出し行が無いので勤務表の直後に全幅 -->
+        <button type="button" data-att-export class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-white transition-colors hover:bg-primary-mid md:hidden"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>作業報告書を出力</button>
+      </div>
+
+      <!-- ================= 設定 ================= -->
+      <div data-panel="settings" class="mt-4">
+        <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
+          <section class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+            <h2 class="text-base font-semibold text-text">打刻の既定値</h2>
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">出勤</span><input type="time" value="10:00" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">退勤</span><input type="time" value="19:00" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">休憩（分）</span><input type="number" value="60" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">作業場所</span><select class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option selected>リモート</option><option>出社</option></select></label>
+              <label class="col-span-2 block"><span class="mb-1 block text-xs font-medium text-subtle">既定の作業内容</span><input type="text" value="担当タスク対応、" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+            </div>
+          </section>
+
+          <section class="rounded-lg border border-border bg-background-light p-4 shadow-sm">
+            <h2 class="text-base font-semibold text-text">通勤</h2>
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <label class="col-span-2 block"><span class="mb-1 block text-xs font-medium text-subtle">通常経路</span><input type="text" value="自宅 〜 品川（JR 山手線）" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">片道金額（円）</span><input type="number" value="380" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <div class="block"><span class="mb-1 block text-xs font-medium text-subtle">往復（自動）</span><p class="flex h-10 items-center text-sm text-text tabular-nums">¥760 ／ 出社日</p><p class="text-[11px] text-subtle">出社の日は、交通費を空のまま保存するとこの往復額が入ります</p></div>
+              <label class="col-span-2 block"><span class="mb-1 block text-xs font-medium text-subtle">定期区間（任意）</span><input type="text" value="渋谷 〜 新宿" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">定期の購入額（円）</span><input type="number" value="36000" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+              <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">期間</span><select class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"><option>1か月</option><option selected>3か月</option><option>6か月</option></select></label>
+              <div class="col-span-2 block"><span class="mb-1 block text-xs font-medium text-subtle">月割（自動）</span><p class="text-sm text-text tabular-nums">¥12,000</p></div>
+            </div>
+          </section>
+        </div>
+        <div class="mt-4 flex flex-col-reverse gap-2 md:flex-row md:justify-end">
+          <button type="button" data-att-save-settings class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid active:bg-primary-darkest md:h-10 md:w-auto">設定を保存</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-border bg-background-light md:hidden" aria-label="メインナビゲーション">
+  <a href="CrewNest Home.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/home.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">ホーム</span>
+  </a>
+  <a href="CrewNest Quests.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/quest.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">クエスト</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">4</span>
+  </a>
+  <a href="CrewNest Proposals.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/proposal.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">アイデア</span>
+  </a>
+  <a href="CrewNest Expense Claims.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/apply.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">経費精算</span>
+  </a>
+  <a href="CrewNest Admin.html" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-subtle">
+    <img src="public/icons/management.png" alt="" style="width:24px;height:24px;object-fit:contain;opacity:0.55;">
+    <span class="whitespace-nowrap">管理</span>
+  </a>
+  <button type="button" id="more-nav-btn" data-nav-active aria-haspopup="dialog" class="relative flex flex-1 flex-col items-center gap-1 py-1 text-[10px] leading-3 text-primary">
+    <span style="display:flex;width:24px;height:24px;align-items:center;justify-content:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"/></svg>
+    </span>
+    <span class="whitespace-nowrap">その他</span>
+    <span class="absolute right-2 top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[0.6rem] font-bold text-primary">1</span>
+  </button>
+</nav>
+<script>
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-tabgroup]');
+  if (!b) return;
+  var group = b.getAttribute('data-tabgroup');
+  if (group === 'primary') {
+    document.querySelectorAll('[data-tabgroup="primary"]').forEach(function(x){ x.classList.remove('is-active'); });
+    b.classList.add('is-active');
+    var key = b.getAttribute('data-tabkey');
+    document.querySelectorAll('[data-panel]').forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-panel') === key); });
+    return;
+  }
+  var panel = b.closest('[data-panel]') || document;
+  panel.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(x){ x.classList.remove('is-active'); });
+  b.classList.add('is-active');
+  var skey = b.getAttribute('data-tabkey');
+  panel.querySelectorAll('[data-item]').forEach(function(item){
+    var st = item.getAttribute('data-status');
+    item.style.display = (skey === 'ALL' || st === skey) ? '' : 'none';
+  });
+});
+</script>
+
+
+<!-- 日の編集: SlideOver（PC 右 420px ／ モバイル ボトムシート） -->
+<div data-overlay="att-day" class="fixed inset-0 z-[90] bg-primary/30" style="display:none;"></div>
+<div data-slide="att-day" data-hidden-transform="translateX(100%)" role="dialog" aria-modal="true" aria-labelledby="att-day-title" class="fixed z-[95] flex flex-col bg-background-light shadow-md transition-transform duration-300 inset-x-0 bottom-0 max-h-[92vh] rounded-t-2xl md:inset-x-auto md:inset-y-0 md:right-0 md:max-h-none md:w-[420px] md:rounded-none" style="transform:translateX(100%);">
+  <div class="mx-auto mt-2 h-1.5 w-12 shrink-0 rounded-full bg-border md:hidden"></div>
+  <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-4">
+    <div class="min-w-0">
+      <h2 id="att-day-title" class="text-[15px] font-bold text-text" data-day="title">9月18日（金）</h2>
+      <p class="text-xs text-subtle" data-day="subtitle">営業日</p>
+    </div>
+    <div class="flex shrink-0 items-center gap-1">
+    <button type="button" data-day="copy" aria-label="この日の内容をコピー" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-primary transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+    <button type="button" data-close-slide aria-label="閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
+    </div>
+  </div>
+  <div class="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-y-contain px-5 py-4">
+    <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">日種別</span>
+      <select data-day="kind" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <option value="WORK">出勤</option><option value="PAID_LEAVE">有休</option><option value="HALF_AM">午前半休</option><option value="HALF_PM">午後半休</option><option value="COMP_LEAVE">代休</option><option value="SUBSTITUTE">振替休日</option><option value="SPECIAL_LEAVE">特別休暇</option><option value="ABSENCE">欠勤</option><option value="OTHER">その他</option>
+      </select>
+    </label>
+    <div data-day="timeBlock">
+      <div class="mb-1 flex items-center justify-between"><span class="text-xs font-medium text-subtle">勤務時間</span><button type="button" data-day="fillDefault" class="inline-flex h-8 items-center gap-1 rounded-full border border-border bg-background-light px-3 text-xs font-medium text-text transition-colors hover:bg-black/[0.08]"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>定時を入力</button></div>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="block"><span class="mb-1 block text-[11px] text-subtle">開始</span><input type="time" data-day="start" class="h-10 w-full rounded-lg border border-border bg-background-light px-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+        <label class="block"><span class="mb-1 block text-[11px] text-subtle">終了</span><input type="time" data-day="end" class="h-10 w-full rounded-lg border border-border bg-background-light px-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+        <label class="col-span-2 block"><span class="mb-1 block text-[11px] text-subtle">休憩（分）</span><input type="number" data-day="break" class="h-10 w-full rounded-lg border border-border bg-background-light px-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+      </div>
+      <p class="mt-2 text-xs text-subtle" data-day="calc">実働 8:13 ・ 普通残業 0:13 ・ 深夜 0:00</p>
+    </div>
+    <div data-day="locBlock">
+      <span class="mb-1 block text-xs font-medium text-subtle">作業場所</span>
+      <div role="group" aria-label="作業場所" class="relative inline-grid grid-cols-2 rounded-full border border-border p-0.5">
+        <span aria-hidden="true" data-day="locThumb" class="absolute inset-y-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-primary-lightest transition-transform duration-200 ease-in-out motion-reduce:transition-none" style="transform:translateX(0)"></span>
+        <button type="button" data-day-loc="REMOTE" aria-pressed="true" class="relative h-9 rounded-full px-4 text-xs font-medium text-primary transition-colors duration-200">リモート</button>
+        <button type="button" data-day-loc="OFFICE" aria-pressed="false" class="relative h-9 rounded-full px-4 text-xs font-medium text-subtle transition-colors duration-200">出社</button>
+      </div>
+    </div>
+    <div data-day="fareBlock">
+      <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">交通費（円）</span><input type="number" data-day="fare" placeholder="¥760（設定の往復金額）" class="h-10 w-full rounded-lg border border-border bg-background-light px-3 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></label>
+    </div>
+    <label class="block"><span class="mb-1 block text-xs font-medium text-subtle">作業内容</span><textarea data-day="note" rows="2" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea></label>
+  </div>
+  <div class="flex shrink-0 flex-col gap-2 border-t border-border px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+    <button type="button" data-day="save" class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid">保存</button>
+    <button type="button" data-close-slide class="inline-flex h-12 w-full items-center justify-center rounded-full border border-border px-6 text-sm font-medium text-primary transition-colors hover:bg-black/[0.04]">キャンセル</button>
+  </div>
+</div>
+
+<!-- その他事項（月 1 回の自由記述） -->
+<div data-overlay="att-notes" class="fixed inset-0 z-[90] bg-primary/30" style="display:none;"></div>
+<div data-slide="att-notes" data-hidden-transform="translateX(100%)" role="dialog" aria-modal="true" aria-labelledby="att-notes-title" class="fixed z-[95] flex flex-col bg-background-light shadow-md transition-transform duration-300 inset-x-0 bottom-0 max-h-[92vh] rounded-t-2xl md:inset-x-auto md:inset-y-0 md:right-0 md:max-h-none md:w-[420px] md:rounded-none" style="transform:translateX(100%);">
+  <div class="mx-auto mt-2 h-1.5 w-12 shrink-0 rounded-full bg-border md:hidden"></div>
+  <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-4">
+    <div><h2 id="att-notes-title" class="text-[15px] font-bold text-text">その他事項（2026年9月）</h2></div>
+    <button type="button" data-close-slide aria-label="閉じる" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-full text-subtle transition-colors hover:bg-black/[0.08]"><svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M256-200 200-256l224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
+  </div>
+  <div class="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+    <textarea rows="8" class="w-full rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text placeholder:text-subtle-light focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="例: 与えられたタスクをこなすことに関しては問題ありません。…">与えられたタスクをこなすことに関しては、なんの問題もありません。
+ただ、関わっている大型のタスクが現在無い以上、手を動かすタスクが割り振られない空白の時間ができています。</textarea>
+  </div>
+  <div class="flex shrink-0 flex-col-reverse gap-2 border-t border-border px-5 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:flex-row md:justify-end md:pb-4">
+    <button type="button" data-close-slide class="inline-flex h-12 w-full items-center justify-center rounded-full border border-border px-6 text-sm font-medium text-primary transition-colors hover:bg-black/[0.04] md:h-10 md:w-auto">キャンセル</button>
+    <button type="button" data-close-slide data-att-notes-save class="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-white transition-colors hover:bg-primary-mid md:h-10 md:w-auto">保存</button>
+  </div>
+</div>
+
+<script src="slide-panels.js"></script>
+<script src="user-menu.js"></script>
+<script src="more-sheet.js"></script>
+<script src="search.js"></script>
+<script src="loading-feedback.js"></script>
+<script src="badges.js"></script>
+<script src="attendance.js"></script>
+<script src="tour.js"></script>
+<script>
+function cnAttTab(k){ return function(){ var b = document.querySelector('[data-tabgroup="primary"][data-tabkey="' + k + '"]'); if (b) b.click(); }; }
+CNTour.define('attendance', [
+  { title: '勤怠', body: '月の勤務表と作業報告書の出力、交通費の計算をここで行います。' },
+  { before: cnAttTab('month'), target: '[data-tour="att-month"]', title: '対象月', body: '左右の矢印で月を切り替えます。所定時間は契約条件から取っています。' },
+  { target: '[data-tour="att-summary"]', title: '今月の集計', body: '作業日数、実働、残業、交通費、有休の日数です。有休は有休ノートの申請と突き合わせ、差があれば下に確認事項が出ます。' },
+  { target: '[data-tour="att-table"]', title: '勤務表', body: '1 日 1 行です。行をタップするとその場で編集できます。空の平日は「未入力」と出るので、打刻を忘れた日はここで入れてください。営業日でない日に打刻があると休日出勤になります。' },
+  { target: '[data-tour="att-table"]', title: 'コピーと貼り付け', body: '行のコピーアイコンで内容をコピーし、貼り付け先の日を選んで一括で反映できます。同じ勤務が続く週に便利です。交通費の上書きはコピーされません。' },
+  { before: cnAttTab('month'), target: '[data-tour="att-export"]', title: '作業報告書', body: '月が終わったら「作業報告書を出力」で、この月の勤務表を会社の Excel 書式でダウンロードします。出力したあとに勤務表を直すと、出力し直すよう確認事項が出ます。' },
+  { before: cnAttTab('settings'), target: '[data-tour="att-tabs"]', title: '設定', body: '「設定」タブで、手入力の初期値（出勤・退勤・休憩・作業場所・作業内容）と、通勤経路・片道金額・定期を登録します。出社の日はここの金額から交通費を計算します。' }
+], { onClose: cnAttTab('month') });
+</script>
+</body>
+</html>
