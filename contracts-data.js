@@ -1,8 +1,11 @@
 /* ============================================================
-   CrewNest DEMO: 契約条件の共通データ・表記ヘルパー(issue #54 稼働早見表 + 契約タブ追補 + 契約の情報追加モック 3版)
+   CrewNest DEMO: 契約条件の共通データ・表記ヘルパー(issue #54 稼働早見表 + 契約タブ追補 + 契約の情報追加モック 3版
+   + ユーザー詳細の契約カードから「プロジェクト」詳細を開く下書き)
    使い方: <script src="contracts-data.js"></script> を先に読み込み、続けて
    <script src="contracts-form.js"></script>(追加・編集ダイアログ側。本ファイルが作る
    window.CNContracts を参照する)を読み込む(CrewNest Admin.html に追加)。
+   ユーザー編集パネルの「契約」カードから開く「プロジェクト」詳細は home-card.js の
+   window.openUtilDetail(state) を使うため、home-card.js も contracts-data.js の後に読み込む。
    本体 src/features/admin/components/ContractSection.tsx・ContractMemberPanel.tsx の
    React 化前の静的再現のうち、本ファイルは契約データ(CT)・種別ラベル(TL)・一覧やパネルの
    表記ヘルパー・ユーザー編集パネルの「契約」セクション(data-contract-section、サマリー表示のみ)の
@@ -209,9 +212,51 @@ function dl(e, withDate) {
   if (withDate !== false) parts.push(ml(e.effectiveFrom) + 'から適用');
   return parts.join(' ／ ');
 }
+var STATIC_SUMMARY_CLASS = 'rounded-lg border border-border bg-background px-3 py-2.5';
+// 客先ラベルの「・」以降(下限〜上限などの簡易表記)。ホームの稼働カードの客先ラベルと同じ体裁
+function limitCompactLabel(e) {
+  if (e.type === 'RANGE') {
+    var sfx = e.unit === 'RATIO' ? '%' : '時間';
+    var lt = e.lower != null ? fn(e.lower) : null, ut = e.upper != null ? fn(e.upper) : null;
+    if (lt && ut) return TL.RANGE + ' ' + lt + '〜' + ut + sfx;
+    if (lt) return TL.RANGE + ' 下限' + lt + sfx;
+    if (ut) return TL.RANGE + ' 上限' + ut + sfx;
+    return null;
+  }
+  if (e.type === 'MIDPOINT') return TL.MIDPOINT + ' ' + fn(e.base) + '時間';
+  if (e.type === 'BUSINESS_DAYS') { var rc = rangeCell(e); return rc ? TL.BUSINESS_DAYS + ' ' + rc.value : null; }
+  return null;
+}
+// ユーザー編集パネルの「契約」カード(ボタン)を押したときに開く「プロジェクト」詳細(home-card.js)用の state。
+// 予定稼働・有休など時間まわりは demo 専用の仮値(下限からの固定式)。それ以外は契約データそのまま
+function detailState(ap, h) {
+  var origin = projectStart(h || [], ap);
+  var limitLabel = limitCompactLabel(ap);
+  var L = ap.type === 'RANGE' && ap.lower != null ? ap.lower : (ap.type === 'MIDPOINT' && ap.base != null ? ap.base : 120);
+  var planned = L + 32, leave = 20, expected = planned - leave, restH = expected - L;
+  if (restH < 0) restH = 0;
+  var ci = committedInfo(ap.committedUntil, CM);
+  var od = (ap.type !== 'NONE' && ap.unitPriceUnit !== 'HOURLY') ? overtimeDeductionLabel(ap) : null;
+  return {
+    clientLabel: cd(ap.client) + (limitLabel ? ' ・ ' + limitLabel : ''),
+    sinceLabel: periodFull(origin) + ' ・ ' + durationLabel(origin),
+    restDays: fn(restH / 8), restHours: restH + '時間',
+    plannedNote: '営業日 19日 × 8時間', planned: planned + '時間', leave: leave + '時間', expected: expected + '時間',
+    limitLabel: '精算下限',
+    limitNote: (ap.type === 'RANGE' && ap.upper != null) ? '上限 ' + fn(ap.upper) + (ap.unit === 'RATIO' ? '%' : '時間') : '',
+    limit: L + '時間',
+    status: null, missing: false, approx: false, importedAt: '有休データ: 9/15 取込',
+    committed: ci ? ci.label : null,
+    workStyle: workStyleLabel(ap),
+    unitPrice: unitPriceLabel(ap),
+    settlementUnit: settlementUnitLabel(ap),
+    overtimeDeduction: od
+  };
+}
 // nextFuture: ap が無いときに「N年M月からの契約があります」を出すための直近の未来契約(無ければ null)
 function rs(el, ap, nextFuture, h) {
   if (!ap) {
+    el.className = STATIC_SUMMARY_CLASS;
     if (nextFuture) { el.innerHTML = '<p class="text-xs text-subtle">現在適用中の契約はありません(' + esc(ml(nextFuture.effectiveFrom)) + 'からの契約があります)</p>'; return; }
     el.innerHTML = '<p class="text-xs text-subtle">契約が登録されていません</p>';
     return;
@@ -219,6 +264,16 @@ function rs(el, ap, nextFuture, h) {
   // 出すのはプロジェクトと、プロジェクト継続の起点で数えた「2026年4月から ・ 6か月目」だけ(契約タブの「期間」列と同じ。契約権限が無いリーダーにも見える)
   var origin = projectStart(h || [], ap);
   var lp = periodFull(origin) + ' ・ ' + durationLabel(origin);
+  // 客先が付いている(=待機ではない)現在の契約はカード全体をボタンにし、押すとホームと同じ「プロジェクト」詳細を開く
+  if (ap.client) {
+    el.className = '';
+    el.innerHTML = '<button type="button" data-ct="open-detail" aria-haspopup="dialog" class="flex w-full items-center justify-between gap-2 ' + STATIC_SUMMARY_CLASS + ' text-left transition-colors hover:bg-black/[0.08] active:bg-black/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">' +
+      '<span class="min-w-0"><span class="block text-sm font-semibold text-text">' + esc(cd(ap.client)) + '</span><span class="block text-xs text-subtle">' + esc(lp) + '</span></span>' +
+      '<svg viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" class="shrink-0 text-subtle-light" aria-hidden="true"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"></path></svg>' +
+      '</button>';
+    return;
+  }
+  el.className = STATIC_SUMMARY_CLASS;
   el.innerHTML = '<p class="text-sm font-semibold text-text">' + esc(cd(ap.client)) + '</p><p class="text-xs text-subtle">' + esc(lp) + '</p>';
 }
 // rows: allRows()/classify() が返す { e, idx }[](idx は CT[名前] 配列内での本来の位置。編集ボタンの対象解決に使う)
@@ -273,6 +328,15 @@ document.addEventListener('slidewillopen', function (e) {
     CU = tr && tr.getAttribute ? tr.getAttribute('data-m-name') : null;
     document.dispatchEvent(new CustomEvent('cn-contract-member-open', { detail: { name: CU } }));
   }
+});
+// ユーザー編集パネルの「契約」カード(ボタン): ホームの稼働カードと同じ「プロジェクト」詳細を開く
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('[data-ct="open-detail"]');
+  if (!btn) return;
+  var h = CT[CU] || [];
+  var ap = ga(h);
+  if (!ap || !window.openUtilDetail) return;
+  window.openUtilDetail(detailState(ap, h));
 });
 // ユーザー編集パネルの「契約タブで管理 →」リンク: パネルを閉じて契約タブ›メンバーへ切り替え、その人のパネルを開く
 document.addEventListener('click', function (e) {

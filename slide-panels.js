@@ -69,5 +69,11 @@
     if (mo && e.target === mo) { closeSlide(mo.getAttribute('data-modal')); return; }
   });
 
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    // 「プロジェクト」詳細（home-card.js）が開いているときは、Escape はその詳細だけを閉じる
+    // （home-card.js 自身の keydown ハンドラが閉じる）。ユーザー編集パネル/シートは開いたままにする
+    if (window.isUtilDetailOpen && window.isUtilDetailOpen()) return;
+    closeAll();
+  });
 })();

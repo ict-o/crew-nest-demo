@@ -1,10 +1,13 @@
 /* ============================================================
    CrewNest DEMO: 今月の稼働カード（ホーム。issue #54 稼働早見表 + 契約の情報追加モック）
-   使い方: <script src="home-card.js"></script>（CrewNest Home.html の badges.js の後に追加）
+   使い方: <script src="home-card.js"></script>（CrewNest Home.html の badges.js の後、
+   CrewNest Admin.html の contracts-data.js の後に追加）
    本体 src/features/utilization/ の React 化前の静的再現。カードの状態は "ok" 固定。
    「契約の情報追加」モック（実アプリ未実装。demo 専用）: 予定稼働などの既存 dl の下に「契約」見出し＋
    契約状況・勤務形態・単価・精算単位・超過／控除の dl を追加する（先頭の sinceLabel 行はそのまま。契約状況は未定なら
    行を出さない。超過／控除は時間単価のときは行を出さない）。
+   window.openUtilDetail(state) で任意の state を渡してこの詳細を開ける（ユーザー編集パネルの
+   「契約」カードから contracts-data.js が呼ぶ。ホームの稼働カードのタップとは独立）。
    ソース: ~/.claude-tools/crew-nest-mock/issue54/fragments/home-card.js
    ============================================================ */
 (function () {
@@ -114,6 +117,9 @@
   }
   function openDetail() { if (!detail) detail = buildDetail(); applyDetail(UTIL_MOCK_STATES[current]); detail.hidden = false; detail.querySelector('[role="dialog"]').focus(); }
   function closeDetail() { if (detail) detail.hidden = true; }
+  // 任意の state でこの詳細を開く（ユーザー編集パネルの「契約」カードから）
+  function openUtilDetail(state) { if (!detail) detail = buildDetail(); applyDetail(state); detail.hidden = false; detail.querySelector('[role="dialog"]').focus(); }
+  function isUtilDetailOpen() { return !!(detail && !detail.hidden); }
 
   function applyUtilState(key) {
     var s = UTIL_MOCK_STATES[key];
@@ -131,4 +137,6 @@
 
   window.UTIL_MOCK_STATES = UTIL_MOCK_STATES;
   window.applyUtilState = applyUtilState;
+  window.openUtilDetail = openUtilDetail;
+  window.isUtilDetailOpen = isUtilDetailOpen;
 })();
