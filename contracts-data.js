@@ -233,15 +233,19 @@ function detailState(ap, h) {
   var origin = projectStart(h || [], ap);
   var limitLabel = limitCompactLabel(ap);
   var L = ap.type === 'RANGE' && ap.lower != null ? ap.lower : (ap.type === 'MIDPOINT' && ap.base != null ? ap.base : 120);
-  var planned = L + 32, leave = 20, expected = planned - leave, restH = expected - L;
+  // demo 専用の仮値。実アプリの式(営業日数 × 定時 − 有休 = 見込み稼働)に合わせて逆算しないよう、
+  // 営業日数・定時・有休を固定値にして揃える(予定稼働=21日×8時間=168時間、見込み稼働=168-20=148時間)
+  var businessDays = 21, dailyHours = 8, leave = 20;
+  var planned = businessDays * dailyHours, expected = planned - leave;
+  var restH = expected - L;
   if (restH < 0) restH = 0;
   var ci = committedInfo(ap.committedUntil, CM);
   var od = (ap.type !== 'NONE' && ap.unitPriceUnit !== 'HOURLY') ? overtimeDeductionLabel(ap) : null;
   return {
     clientLabel: cd(ap.client) + (limitLabel ? ' ・ ' + limitLabel : ''),
     sinceLabel: periodFull(origin) + ' ・ ' + durationLabel(origin),
-    restDays: fn(restH / 8), restHours: restH + '時間',
-    plannedNote: '営業日 19日 × 8時間', planned: planned + '時間', leave: leave + '時間', expected: expected + '時間',
+    restDays: (Math.floor(restH / 8 * 10) / 10).toFixed(1), restHours: restH + '時間',
+    plannedNote: '営業日 ' + businessDays + '日 × ' + dailyHours + '時間', planned: planned + '時間', leave: leave + '時間', expected: expected + '時間',
     limitLabel: '精算下限',
     limitNote: (ap.type === 'RANGE' && ap.upper != null) ? '上限 ' + fn(ap.upper) + (ap.unit === 'RATIO' ? '%' : '時間') : '',
     limit: L + '時間',
