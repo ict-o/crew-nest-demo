@@ -3959,6 +3959,8 @@ document.addEventListener('click', function(e){
             <select data-repeat-anchor aria-label="繰り返しの日付" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
               <option data-repeat-anchor-day value="ANCHOR_DAY" selected>18日（公開開始日と同じ）</option><option value="MONTH_END">月末</option><option value="LAST_BUSINESS_DAY">最終営業日</option>
             </select></label>
+          <div data-repeat-offset-row class="flex flex-col gap-1" style="display:none;"><span class="text-[11px] text-subtle-light">何営業日前に公開</span>
+            <div role="group" aria-label="何営業日前に公開" class="flex gap-1.5"><button type="button" data-offset-chip="0" aria-pressed="true" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">当日</button><button type="button" data-offset-chip="1" aria-pressed="false" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">1日前</button><button type="button" data-offset-chip="2" aria-pressed="false" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">2日前</button><button type="button" data-offset-chip="3" aria-pressed="false" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">3日前</button></div></div>
           <label data-repeat-shift-row class="flex flex-col gap-1"><span class="text-[11px] text-subtle-light">休業日に当たったとき</span>
             <select data-repeat-shift aria-label="休業日に当たったときの調整" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
               <option value="NONE">そのまま公開</option><option value="NEXT" selected>翌営業日に公開</option><option value="PREV">前営業日に公開</option>
@@ -4059,6 +4061,8 @@ document.addEventListener('click', function(e){
             <select data-repeat-anchor aria-label="繰り返しの日付" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
               <option data-repeat-anchor-day value="ANCHOR_DAY" selected>18日（公開開始日と同じ）</option><option value="MONTH_END">月末</option><option value="LAST_BUSINESS_DAY">最終営業日</option>
             </select></label>
+          <div data-repeat-offset-row class="flex flex-col gap-1" style="display:none;"><span class="text-[11px] text-subtle-light">何営業日前に公開</span>
+            <div role="group" aria-label="何営業日前に公開" class="flex gap-1.5"><button type="button" data-offset-chip="0" aria-pressed="true" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">当日</button><button type="button" data-offset-chip="1" aria-pressed="false" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">1日前</button><button type="button" data-offset-chip="2" aria-pressed="false" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">2日前</button><button type="button" data-offset-chip="3" aria-pressed="false" class="min-h-12 flex-1 rounded-full border border-border bg-background-light px-1 text-xs font-medium text-text transition-colors hover:bg-black/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:min-h-10">3日前</button></div></div>
           <label data-repeat-shift-row class="flex flex-col gap-1"><span class="text-[11px] text-subtle-light">休業日に当たったとき</span>
             <select data-repeat-shift aria-label="休業日に当たったときの調整" class="rounded-lg border border-border bg-background-light px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
               <option value="NONE">そのまま公開</option><option value="NEXT" selected>翌営業日に公開</option><option value="PREV">前営業日に公開</option>
@@ -7362,7 +7366,7 @@ document.addEventListener('click', function(e){
     var y = Math.floor(total / 12), m = (total % 12) + 1;
     return { y: y, m: m, d: Math.min(targetDay, daysInMonth(y, m)) };
   }
-  function computeNext(freq, anchor, shift, bizOnly, ay, am, ad){
+  function computeNext(freq, anchor, shift, bizOnly, ay, am, ad, offset){
     var after = afterObj(ay, am, ad), i, cand, key, wasHoliday, shifted;
     if (freq === 'DAILY') {
       cand = addDays(ay, am, ad, 1);
@@ -7387,8 +7391,12 @@ document.addEventListener('click', function(e){
       if (anchor === 'LAST_BUSINESS_DAY') {
         for (i = 1; i <= 24; i++){
           var mo = monthAnchor(ay, am, 1, i);
-          var lb = lastBusinessDayOfMonth(mo.y, mo.m);
-          if (afterObj(lb.y, lb.m, lb.d) > after) return { result: lb, note: null };
+          var res = lastBusinessDayOfMonth(mo.y, mo.m);
+          for (var k = 0; k < offset; k++){
+            res = addDays(res.y, res.m, res.d, -1);
+            while (!isBusinessDayKey(toKey(res.y, res.m, res.d))) res = addDays(res.y, res.m, res.d, -1);
+          }
+          if (afterObj(res.y, res.m, res.d) > after) return { result: res, note: null };
         }
       } else {
         var targetDay = anchor === 'MONTH_END' ? 31 : ad;
@@ -7417,12 +7425,12 @@ document.addEventListener('click', function(e){
     return { result: null, note: null };
   }
   function fmtDate(y,m,d,time){ return y + '/' + pad(m) + '/' + pad(d) + '（' + WD_JP[weekdayOf(y,m,d)] + '）' + time; }
-  function freqPart(freq, anchor, ad, wdName){
+  function freqPart(freq, anchor, ad, wdName, offset){
     if (freq === 'DAILY') return '毎日';
     if (freq === 'WEEKLY') return '毎週 ' + wdName + '曜';
     if (freq === 'MONTHLY') {
       if (anchor === 'MONTH_END') return '毎月 月末';
-      if (anchor === 'LAST_BUSINESS_DAY') return '毎月 最終営業日';
+      if (anchor === 'LAST_BUSINESS_DAY') return '毎月 最終営業日' + (offset > 0 ? 'の' + offset + '営業日前' : '');
       return '毎月 ' + ad + '日';
     }
     return '毎年';
@@ -7449,6 +7457,14 @@ document.addEventListener('click', function(e){
     var shiftSel = root.querySelector('[data-repeat-shift]');
     var bizSwitch = root.querySelector('[data-repeat-bizonly]');
     var freq = freqSel.value, anchor = anchorSel.value, shift = shiftSel.value;
+    var offset = anchor === 'LAST_BUSINESS_DAY' ? parseInt(root.getAttribute('data-offset') || '0', 10) : 0;
+    root.querySelector('[data-repeat-offset-row]').style.display = (freq === 'MONTHLY' && anchor === 'LAST_BUSINESS_DAY') ? '' : 'none';
+    root.querySelectorAll('[data-offset-chip]').forEach(function(b){
+      var on = b.getAttribute('data-offset-chip') === String(offset);
+      b.setAttribute('aria-pressed', String(on));
+      b.classList.toggle('bg-primary', on); b.classList.toggle('text-white', on); b.classList.toggle('border-primary', on);
+      b.classList.toggle('bg-background-light', !on); b.classList.toggle('text-text', !on); b.classList.toggle('border-border', !on);
+    });
     var bizOnly = bizSwitch.getAttribute('aria-checked') === 'true';
     root.querySelector('[data-repeat-anchor-row]').style.display = freq === 'MONTHLY' ? '' : 'none';
     root.querySelector('[data-repeat-bizonly-row]').style.display = freq === 'DAILY' ? '' : 'none';
@@ -7463,13 +7479,20 @@ document.addEventListener('click', function(e){
     if (dayOpt) dayOpt.textContent = ad + '日（公開開始日と同じ）';
     var wdName = WD_JP[weekdayOf(ay, am, ad)];
     root.querySelector('[data-repeat-desc]').textContent =
-      freqPart(freq, anchor, ad, wdName) + ' ' + time + ' にこの公開設定で再掲載します' + suffixPart(freq, anchor, shift, bizOnly);
-    var calc = computeNext(freq, anchor, shift, bizOnly, ay, am, ad);
+      freqPart(freq, anchor, ad, wdName, offset) + ' ' + time + ' にこの公開設定で再掲載します' + suffixPart(freq, anchor, shift, bizOnly);
+    var calc = computeNext(freq, anchor, shift, bizOnly, ay, am, ad, offset);
     root.querySelector('[data-repeat-next]').textContent = calc.result ? fmtDate(calc.result.y, calc.result.m, calc.result.d, time) : '—';
     var noteEl = root.querySelector('[data-repeat-shift-note]');
     if (calc.note) { noteEl.textContent = fmtNote(calc.note); noteEl.style.display = ''; }
     else { noteEl.textContent = ''; noteEl.style.display = 'none'; }
   }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest('[data-offset-chip]');
+    if (!chip) return;
+    var root = chip.closest('[data-repeat-root]');
+    root.setAttribute('data-offset', chip.getAttribute('data-offset-chip'));
+    updateRepeatRoot(root);
+  });
   function allRepeatRoots(){ return document.querySelectorAll('[data-repeat-root]'); }
   allRepeatRoots().forEach(updateRepeatRoot);
   document.addEventListener('change', function(e){
